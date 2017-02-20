@@ -2,7 +2,7 @@
 #define _ots_PSI46DigROCDEfinitions_h_
 
 #include "otsdaq-components/DetectorHardware/VROCDefinitions.h"
-#include "otsdaq-core/BitManipulator/BitManipulator.h"
+//#include "otsdaq-core/BitManipulator/BitManipulator.h"
 //#include "otsdaq/DAQHardware/PSI46DigFirmwareDefinitions.h"
 //#include "otsdaq/DAQHardware/PSI46DigFirmware.h"
 //#include "otsdaq-core/DataTypes/DataTypes.h"

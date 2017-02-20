@@ -6,7 +6,8 @@
  */
 
 #include "otsdaq-components/DetectorHardware/VIPICROCDefinitions.h"
-#include "otsdaq-core/MessageFacility/MessageFacility.h"
+#include "otsdaq-core/BitManipulator/BitManipulator.h"
+//#include "otsdaq-core/MessageFacility/MessageFacility.h"
 #include "otsdaq-core/Macros/CoutHeaderMacros.h"
 #include <cassert>
 #include <iostream>
