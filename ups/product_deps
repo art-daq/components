@@ -20,7 +20,7 @@ fcldir      fq_dir      fcl
 product		 version	optional
 otsdaq           v1_00_06
 otsdaq_utilities v1_00_06
-cetbuildtools    v5_06_03       -       only_for_build
+cetbuildtools    v5_06_07    -        only_for_build
 end_product_list
 
 # -nq- here means there is no qualifier
