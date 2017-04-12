@@ -186,13 +186,13 @@ std::string FSSRFirmware::setDataDestination(std::string ip, uint32_t port)
 //========================================================================================================================
 std::string FSSRFirmware::resetBCO(void)
 {
-	std::cout << __COUT_HDR_FL__ << "Reset BCO!!!" << std::endl;
+	std::cout << __COUT_HDR_PL__ << "Reset BCO!!!" << std::endl;
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::string buffer;
 
 	resetTriggerCounterStripCSR(buffer);
 	//write(buffer, STRIP_CSR, stripCSRRegisterValue_);//the write is done in the reset
-	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 
 	//msg->Write(STRIP_SC_CSR,0x90000b95|(chmask<<16));
 	protocolInstance_->write(buffer,STRIP_SC_CSR,0x903f0b95);//  This is the <SCR,set> command with the bit set to sync SHIFT with BCO=0.
@@ -200,7 +200,7 @@ std::string FSSRFirmware::resetBCO(void)
 	//enableBCOStripCSR(true);
 	//protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
-	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Done reset BCO!!!" << std::endl;
 
 	return buffer;
@@ -210,12 +210,12 @@ std::string FSSRFirmware::resetBCO(void)
 std::string FSSRFirmware::armBCOReset(void)
 {
 	std::cout << __COUT_HDR_FL__ << std::endl;
-	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::string buffer;
 
 	enableBCOStripCSR(true);
 	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
-	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Done!" << std::endl;
 
 	return buffer;

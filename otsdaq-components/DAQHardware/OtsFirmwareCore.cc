@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <iostream>
 #include <cstdlib>
+#include <iomanip>
 //#include "../UserConfigurationDataFormats/FEOtsUDPFSSRInterfaceConfiguration.h"
 
 using namespace ots;
@@ -72,7 +73,7 @@ std::string OtsFirmwareCore::write(char* address, char* data)
 //    std::cout << __COUT_HDR_FL__ << __COUT_HDR_PL__ <<"\tMessage:-" << std::endl;
 //
 //    for(uint32_t i=0; i<buffer.size(); i++)
-//        std::cout << __COUT_HDR_FL__ << std::hex << (int16_t)buffer[i] << "-" << std::endl;
+//        std::cout << __COUT_HDR_FL__ << std::setfill('0') << std::setw(2) << std::hex << (int16_t) buffer[i] << "-" << std::endl;
 //
 //    std::cout << __COUT_HDR_FL__ << std::dec << std::endl;
 //
@@ -95,7 +96,7 @@ unsigned int OtsFirmwareCore::write(std::string& buffer, uint64_t address, uint6
 
     //std::cout << __COUT_HDR_FL__ <<"\tAdded to Buffer:-";
     //for(uint32_t i=begin; i<buffer.size(); i++)
-    //    std::cout << std::hex << (int16_t)buffer[i] << "-" << std::dec;
+    //    std::cout << std::setfill('0') << std::setw(2) << std::hex << (int16_t) buffer[i] << "-" << std::dec;
     //std::cout << std::endl;
 
     return 1;
@@ -114,7 +115,7 @@ unsigned int OtsFirmwareCore::read(std::string& buffer, uint64_t address)
 
     std::cout << __COUT_HDR_FL__ <<"\tAdded to Buffer:-";
     for(uint32_t i=begin; i<buffer.size(); i++)
-        std::cout << std::hex << (int16_t)buffer[i] << "-" << std::dec;
+        std::cout << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
     std::cout << std::endl;
 /*
     OtsUDPHardware::sendAndReceive(buffer,value);

@@ -2,6 +2,7 @@
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
 #include "otsdaq-core/Macros/CoutHeaderMacros.h"
 #include <iostream>
+#include <iomanip>
 
 using namespace ots;
 
@@ -84,10 +85,10 @@ int OtsUDPHardware::read(const std::string& sendBuffer, std::string& receiveBuff
 	if(TransceiverSocket::receive(receiveBuffer) < 0) return -1;
 	//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "done" << std::endl;
 
-	//std::cout << __COUT_HDR_FL__ << "RECEIVED MESSAGE: ";
-	//for(uint32_t i=0; i<receiveBuffer.size(); i++)
-	//	std::cout << std::hex << (int16_t)receiveBuffer[i] << "-" << std::dec;
-	//std::cout << std::endl;
+	std::cout << __COUT_HDR_FL__ << "RECEIVED MESSAGE: ";
+	for(uint32_t i=0; i<receiveBuffer.size(); i++)
+		std::cout << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) receiveBuffer[i]) &0xff) << "-" << std::dec;
+	std::cout << std::endl;
 
 
 	return 1;
