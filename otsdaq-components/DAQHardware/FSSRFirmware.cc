@@ -410,7 +410,7 @@ void FSSRFirmware::makeDACBuffer(std::string& buffer, unsigned int channel, cons
 		buffer += bufferElement;
 		//break;
 	}
-	//std::cout << __COUT_HDR_FL__ << "BufferOUTsize: " << buffer.size() << std::endl;
+	std::cout << __COUT_HDR_FL__ << "BufferOUTsize: " << buffer.size() << std::endl;
 }
 
 //========================================================================================================================
