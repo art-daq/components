@@ -94,10 +94,10 @@ unsigned int OtsFirmwareCore::write(std::string& buffer, uint64_t address, uint6
     //memcpy(&buffer[10], &value,  sizeof(uint64_t));
     std::copy_n((char *)&value,sizeof(uint64_t),&buffer[begin + 10]);
 
-    //std::cout << __COUT_HDR_FL__ <<"\tAdded to Buffer:-";
-    //for(uint32_t i=begin; i<buffer.size(); i++)
-    //    std::cout << std::setfill('0') << std::setw(2) << std::hex << (int16_t) buffer[i] << "-" << std::dec;
-    //std::cout << std::endl;
+    std::cout << __COUT_HDR_FL__ <<"\tAdded to Buffer:-";
+    for(uint32_t i=begin; i<buffer.size(); i++)
+        std::cout << std::setfill('0') << std::setw(2) << std::hex << (int16_t) buffer[i] << "-" << std::dec;
+    std::cout << std::endl;
 
     return 1;
 }
