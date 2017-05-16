@@ -96,7 +96,10 @@ unsigned int OtsFirmwareCore::write(std::string& buffer, uint64_t address, uint6
 
     std::cout << __COUT_HDR_FL__ <<"\tAdded to Buffer:-";
     for(uint32_t i=begin; i<buffer.size(); i++)
-      std::cout << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
+      if(i==begin+2) std::cout << "  " << std::endl;
+      else if(i==begin+10) std::cout << "  " << std::endl;
+      else
+	std::cout << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
     std::cout << std::endl;
 
     return 1;
@@ -115,7 +118,10 @@ unsigned int OtsFirmwareCore::read(std::string& buffer, uint64_t address)
 
     std::cout << __COUT_HDR_FL__ <<"\tAdded to Buffer:-";
     for(uint32_t i=begin; i<buffer.size(); i++)
-      std::cout << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
+      if(i==begin+2) std::cout << "  " << std::endl;
+      else if(i==begin+10) std::cout << "  " << std::endl;
+      else
+	std::cout << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
     std::cout << std::endl;
 /*
     OtsUDPHardware::sendAndReceive(buffer,value);
