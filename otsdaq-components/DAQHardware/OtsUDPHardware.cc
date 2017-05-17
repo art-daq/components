@@ -79,6 +79,12 @@ int OtsUDPHardware::writeAndAcknowledge(const std::vector<std::string>& buffer)
 //return -1 on failure
 int OtsUDPHardware::read(const std::string& sendBuffer, std::string& receiveBuffer)
 {
+  { //clear packets so that read matches!
+    int clearedPackets = OtsUDPHardware::clearReadSocket();
+    if(clearedPackets)
+      std::cout << __COUT_HDR_FL__ << "Cleared receive socket buffer: " << clearedPackets << " packets cleared." << std::endl;
+  }
+
 	//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "sending" << std::endl;
 	TransceiverSocket::send(OtsUDPBoard_, sendBuffer);
 	//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "receiving" << std::endl;
