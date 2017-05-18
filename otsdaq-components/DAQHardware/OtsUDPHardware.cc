@@ -85,11 +85,11 @@ int OtsUDPHardware::read(const std::string& sendBuffer, std::string& receiveBuff
       std::cout << __COUT_HDR_FL__ << "Cleared receive socket buffer: " << clearedPackets << " packets cleared." << std::endl;
   }
 
-	//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "sending" << std::endl;
+    std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "sending" << std::endl;
 	TransceiverSocket::send(OtsUDPBoard_, sendBuffer);
-	//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "receiving" << std::endl;
+	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "receiving" << std::endl;
 	if(TransceiverSocket::receive(receiveBuffer) < 0) return -1;
-	//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "done" << std::endl;
+	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "done" << std::endl;
 
 	std::cout << __COUT_HDR_FL__ << "RECEIVED MESSAGE: ";
 	for(uint32_t i=0; i<receiveBuffer.size(); i++)
