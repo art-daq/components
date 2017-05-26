@@ -29,11 +29,11 @@ include(CetCMakeEnv)
 cet_cmake_env()
 include(FindUpsXdaq)
 
-#cet_set_compiler_flags(DIAGS VIGILANT
-# WERROR
-# NO_UNDEFINED
-# EXTRA_FLAGS -pedantic -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-ignored-qualifiers -Wno-unused-variable
-# )
+cet_set_compiler_flags(DIAGS VIGILANT
+ WERROR
+ NO_UNDEFINED
+ EXTRA_FLAGS -pedantic -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-ignored-qualifiers -Wno-unused-variable
+ )
 
 #string(TOUPPER ${CMAKE_BUILD_TYPE} BTYPE_UC )
 #if( ${BTYPE_UC} MATCHES "DEBUG" )
@@ -45,6 +45,7 @@ cet_report_compiler_flags()
 # these are minimum required versions, not the actual product versions
 #find_ups_product( epics v3_15_2 )
 find_ups_product( cetbuildtools v3_03_00 )
+find_ups_product( otsdaq v1_00_00 )
 find_ups_product( artdaq v0_04_02 )
 find_ups_product( artdaq_core v1_00_00 )
 find_ups_product( artdaq_utilities v1_00_00 )
@@ -61,17 +62,6 @@ find_ups_boost( v1_50_0 filesystem
  )
 
 
-# Include at the top level to make sure include directory is visible
-# everywhere.
-include(ProcessSmc)
-
-# Needed if using old art with new cetbuildtools / CMake.
-check_ups_version(art "$ENV{ART_VERSION}" v1_11_00 PRODUCT_OLDER_VAR have_old_art)
-if (have_old_art)
-  cmake_policy(SET CMP0046 OLD)
-endif()
-unset(have_old_art)
-
 find_package(MPI QUIET)
 
 # macros for art_dictionary and simple_plugin
@@ -83,6 +73,8 @@ include(CetTest)
 # Code
 add_subdirectory(otsdaq-components)
 
+# UPS Config
+add_subdirectory(ups)
 
 # packaging utility
 include(UseCPack)
