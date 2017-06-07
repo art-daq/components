@@ -38,6 +38,8 @@ void DACStream::makeStream(const ConfigurationTree& feToDetectorTree)
 		currentElement->second.setROCStatus    (detectorConfiguration.getNode("Status").getValue<bool>());
 		currentElement->second.setFEWROCAddress(it.second.getNode("FEWriterDetectorAddress").getValue<unsigned int>());
 		currentElement->second.setROCDACs      (dacsMaker.getROCDACs(dacsConfiguration));
+//		__MOUT__ << "MASK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+//		__MOUT__ << maskConfiguration.getNode("KillMask").getValue<std::string>() << std::endl;
 		currentElement->second.setROCMask      (maskConfiguration.getNode("KillMask").getValue<std::string>());
 	}
 
