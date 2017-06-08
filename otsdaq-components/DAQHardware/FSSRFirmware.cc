@@ -509,10 +509,11 @@ void FSSRFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel,
 //========================================================================================================================
 void FSSRFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream, const std::string& registerName)
 {
-	std::cout << __COUT_HDR_FL__ << "\tMaking mask! " << std::endl;
 	int chipId = rocStream.getFEWROCAddress();
-	std::string mask = rocStream.getROCMask();
-	std::cout << __COUT_HDR_FL__ << "\tMask length: " << mask.length() << std::endl;
+	const std::string& mask = rocStream.getROCMask();
+	std::cout << __COUT_HDR_FL__ << "\tMaking mask! Length = " << mask.length() << std::endl;
+//	std::cout << __COUT_HDR_FL__ << "\tMask length: " << mask.length() << std::endl;
+//	std::cout << __COUT_HDR_FL__ << "\tMask: " << mask << std::endl;
 
 	unsigned int data[4] = { 0, 0, 0, 0 };
 
