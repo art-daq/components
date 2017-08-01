@@ -1,4 +1,4 @@
-#include "otsdaq-demo/UserConfigurationDataFormats/FSSRDACsConfiguration.h"
+#include "otsdaq-components/UserConfigurationDataFormats/FSSRDACsConfiguration.h"
 #include "otsdaq-core/Macros/ConfigurationPluginMacros.h"
 
 #include <iostream>

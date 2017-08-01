@@ -2,7 +2,7 @@
 #include "otsdaq-core/Macros/ConfigurationPluginMacros.h"
 
 #include <iostream>
-#include "FEOtsUDPTemplateInterfaceConfiguration.h"
+#include "otsdaq-components/UserConfigurationDataFormats/FEOtsUDPTemplateInterfaceConfiguration.h"
 
 using namespace ots;
 
