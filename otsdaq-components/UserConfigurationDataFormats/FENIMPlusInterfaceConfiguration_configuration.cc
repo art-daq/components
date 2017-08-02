@@ -1,4 +1,4 @@
-#include "otsdaq-demo/UserConfigurationDataFormats/FENIMPlusInterfaceConfiguration.h"
+#include "otsdaq-components/UserConfigurationDataFormats/FENIMPlusInterfaceConfiguration.h"
 #include "otsdaq-core/ConfigurationPluginDataFormats/DataManagerConfiguration.h"
 #include "otsdaq-core/Macros/ConfigurationPluginMacros.h"
 

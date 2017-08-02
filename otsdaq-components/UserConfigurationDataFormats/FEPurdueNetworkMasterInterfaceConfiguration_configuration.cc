@@ -1,4 +1,4 @@
-#include "otsdaq-demo/UserConfigurationDataFormats/FEPurdueNetworkMasterInterfaceConfiguration.h"
+#include "otsdaq-components/UserConfigurationDataFormats/FEPurdueNetworkMasterInterfaceConfiguration.h"
 #include "otsdaq-core/ConfigurationPluginDataFormats/DataManagerConfiguration.h"
 #include "otsdaq-core/Macros/ConfigurationPluginMacros.h"
 
