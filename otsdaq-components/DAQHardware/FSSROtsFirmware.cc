@@ -16,13 +16,18 @@ using namespace ots;
 
 //========================================================================================================================
 FSSROtsFirmware::FSSROtsFirmware(unsigned int version, std::string type) :
-		FrontEndFirmwareBase(version),
+		OtsUDPFirmwareCore(version),//FrontEndFirmwareBase(version),
 		stripCSRRegisterValue_(0)
 {
  
+	//FIXME -- RAR this protocolInstance thing seems completely unnecessary.. since this class already of type OtsFirmwareCore
+	//	this concept doesn't even really make sense if the PURDUE and OTS firmware and the same function calls
+	//	If this "Firmware" layer is using a "Firmware Core" layer then there is no need to also inherit from the "Firmware Core" layer
+	//	Or, inherit and do not instantiate a new protocol instance.
+
 	//make protocol a class member
-	protocolInstance_ = FrontEndFirmwareBase::getInstance(type,version);
-	assert(protocolInstance_ != NULL);
+	//protocolInstance_ = new OtsFirmwareCore(version);//AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls // //FrontEndFirmwareBase::getInstance(type,version);
+	//assert(protocolInstance_ != NULL);
 	//returns either new OtsUDPFirmware or new PurdueFirmwareCore,
 	//now we can call write/read etc with protocol->write, protocol->read, etc
 }
@@ -30,15 +35,13 @@ FSSROtsFirmware::FSSROtsFirmware(unsigned int version, std::string type) :
 //========================================================================================================================
 FSSROtsFirmware::~FSSROtsFirmware(void)
 {
-	delete protocolInstance_;
-	protocolInstance_ = NULL;
+	//delete protocolInstance_;
+	//protocolInstance_ = NULL;
 }
 
 //========================================================================================================================
-int FSSROtsFirmware::init(void)
-{
-	return 0;
-}
+void FSSROtsFirmware::init(void)
+{ }
 
 //========================================================================================================================
 std::string FSSROtsFirmware::configureClocks(std::string source, double frequency)
@@ -50,29 +53,29 @@ std::string FSSROtsFirmware::configureClocks(std::string source, double frequenc
 
 	setPacketSizeStripCSR(6);
 	setExternalBCOClockSourceStripCSR(source); //(source)
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Reset CSR - reset trigger counter, external 27 MHz clock
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Reset CSR - reset trigger counter, external 27 MHz clock
 
 	resetDCMStripCSR(true);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Set reset to DCM
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Set reset to DCM
 
 	resetDCMStripCSR(false);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Clear reset to DCM
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Clear reset to DCM
 
 	;
-	protocolInstance_->waitClear(buffer, STRIP_CSR, waitDCMResetStripCSR()); //  Wait for DCM to lock
+	//FIXME? Does Nothing RAR Aug 2017// OtsUDPFirmwareCore::waitClear(buffer, STRIP_CSR, waitDCMResetStripCSR()); //  Wait for DCM to lock
 
-	protocolInstance_->write(buffer, STRIP_TRIM_CSR, 0x00002000); //  MCLKB edge for channel 5 // was 0x00002000
+	OtsUDPFirmwareCore::write(buffer, STRIP_TRIM_CSR, 0x00002000); //  MCLKB edge for channel 5 // was 0x00002000
 
 	setFrequencyFromClockState(buffer, frequency);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
 	resetDCMStripCSR(true);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
 	resetDCMStripCSR(false);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
-	protocolInstance_->waitClear(buffer, STRIP_CSR, waitDCMResetStripCSR()); //  Wait for DCM to lock
+	//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(buffer, STRIP_CSR, waitDCMResetStripCSR()); //  Wait for DCM to lock
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 
 	return buffer;
@@ -86,12 +89,12 @@ std::string FSSROtsFirmware::resetDetector(int channel)
 	if (channel == -1)//reset all channels
 	{
 		//write(buffer,STRIP_RESET,0xd000003f);                  //  Issue reset
-		protocolInstance_->write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset // was 0xf000003f
-		protocolInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete // was 0xf0000000
+		OtsUDPFirmwareCore::write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset // was 0xf000003f
+		//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete // was 0xf0000000
 	} else
 	{
-		protocolInstance_->write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset
-		protocolInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete
+		OtsUDPFirmwareCore::write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset
+		//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete
 	}
 
 	return buffer;
@@ -109,11 +112,11 @@ std::string FSSROtsFirmware::enableTrigger(void)
 	sendTriggerDataStripCSR(true);
 	sendTriggerNumberStripCSR(true);
 	sendBCOStripCSR(true);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
 	stripTriggerCSRRegisterValue_ = 0;
 	BCOOffset(4);
-	protocolInstance_->write(buffer, STRIP_TRIG_CSR, stripTriggerCSRRegisterValue_); //  BCO offset // was 0x00000004
+	OtsUDPFirmwareCore::write(buffer, STRIP_TRIG_CSR, stripTriggerCSRRegisterValue_); //  BCO offset // was 0x00000004
 
 	//  write(buffer,STRIP_TRIG_INPUT_0,0x1f060040);  //  FSSR GOTHIT trigger input - timed in for the 27 MHz external clock
 	//  write(buffer,STRIP_TRIG_INPUT_3,0x3f874040);  //  Unbiased trigger input + external trigger
@@ -124,14 +127,16 @@ std::string FSSROtsFirmware::enableTrigger(void)
 
 	//FIXME for IP .36 the number to set is 0x20401000
 
-	if (ots::FrontEndFirmwareBase::version_ == 1)
-		protocolInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20401000); // Turn on streaming hits along with BCO data
-	else if (ots::FrontEndFirmwareBase::version_ == 2)
-		protocolInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20301000); // Turn on streaming hits along with BCO data
+	if (OtsUDPFirmwareCore::version_ == 1)
+		OtsUDPFirmwareCore::write(buffer, STRIP_TRIG_INPUT_3, 0x20401000); // Turn on streaming hits along with BCO data
+	else if (OtsUDPFirmwareCore::version_ == 2)
+		OtsUDPFirmwareCore::write(buffer, STRIP_TRIG_INPUT_3, 0x20301000); // Turn on streaming hits along with BCO data
 	else
 	{
-		std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "what version is this?" << ots::FrontEndFirmwareBase::version_ << std::endl;
-		assert(0);
+		__SS__ << "what version is this?" <<
+				OtsUDPFirmwareCore::version_ << std::endl;
+		__MOUT_ERR__ << ss.str();
+		throw std::runtime_error(ss.str());
 	}
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;
@@ -142,37 +147,37 @@ std::string FSSROtsFirmware::enableTrigger(void)
 //========================================================================================================================
 void FSSROtsFirmware::readBurstDestinationIP(std::string& buffer)
 {
-	protocolInstance_->read(buffer, (uint64_t)0x0000000100000006);
+	OtsUDPFirmwareCore::read(buffer, (uint64_t)0x0000000100000006);
 }
 
 //========================================================================================================================
 void FSSROtsFirmware::readBurstDestinationMAC(std::string& buffer)
 {
-	protocolInstance_->read(buffer, (uint64_t)0x0000000100000007);
+	OtsUDPFirmwareCore::read(buffer, (uint64_t)0x0000000100000007);
 }
 
 //========================================================================================================================
 void FSSROtsFirmware::readBurstDestinationPort(std::string& buffer)
 {
-	protocolInstance_->read(buffer, (uint64_t)0x0000000100000008);
+	OtsUDPFirmwareCore::read(buffer, (uint64_t)0x0000000100000008);
 }
 
 //========================================================================================================================
 void FSSROtsFirmware::writeBurstDestinationIP(std::string& buffer, const uint64_t value)
 {
-	protocolInstance_->write(buffer, (uint64_t)0x0000000100000006, value);
+	OtsUDPFirmwareCore::write(buffer, (uint64_t)0x0000000100000006, value);
 }
 
 //========================================================================================================================
 void FSSROtsFirmware::writeBurstDestinationMAC(std::string& buffer, const uint64_t value)
 {
-	protocolInstance_->write(buffer, (uint64_t)0x0000000100000007, value);
+	OtsUDPFirmwareCore::write(buffer, (uint64_t)0x0000000100000007, value);
 }
 
 //========================================================================================================================
 void FSSROtsFirmware::writeBurstDestinationPort(std::string& buffer, const uint64_t value)
 {
-	protocolInstance_->write(buffer, 0x0000000100000008, value);
+	OtsUDPFirmwareCore::write(buffer, 0x0000000100000008, value);
 }
 
 //========================================================================================================================
@@ -191,7 +196,7 @@ std::string FSSROtsFirmware::resetBCO(void)
 
 
 	enableBCOStripCSR(true);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Done reset BCO!!!" << std::endl;
 
@@ -214,7 +219,7 @@ std::string FSSROtsFirmware::startStream(bool channel0, bool channel1, bool chan
 	//        enableChannelsStripCSR(true, true, true, true, true, true);
 
 	enableStreamStripCSR(true); //  Turn on streaming hits along with BCO data // was 0x0f000f30
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Done start Stream!" << std::endl;
@@ -228,7 +233,7 @@ std::string FSSROtsFirmware::stopStream(void)
 	std::string buffer;
 	enableChannelsStripCSR(false, false, false, false, false, false);
 	enableStreamStripCSR(false);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 	return buffer;
 }
 
@@ -305,12 +310,12 @@ void FSSROtsFirmware::makeDACBuffer(std::string& buffer,
 	for (DACList::const_iterator it = rocDACs.getDACList().begin(); it != rocDACs.getDACList().end(); it++)
 	{
 		std::string bufferElement;
-		protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+		//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 		uint32_t registerHeader = 0;
 		//FIXME This must go in the FSSRROCDefinitions stuff
 		if (it->first != "RejectHits" && it->first != "SendData")
 		{
-			protocolInstance_->write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
+			OtsUDPFirmwareCore::write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
 			registerHeader = FSSRROCDefinitions::makeDACWriteHeader(
 					rocStream.getFEWROCAddress(), it->first);
 			//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << std::hex << " -> Data: " << registerHeader << std::dec << std::endl;
@@ -340,8 +345,8 @@ void FSSROtsFirmware::makeDACBuffer(std::string& buffer,
 
 		}
 		//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << std::hex << " -> Data: " << registerHeader << std::dec << std::endl;
-		protocolInstance_->write(bufferElement, STRIP_SC_CSR, registerHeader);
-		protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+		OtsUDPFirmwareCore::write(bufferElement, STRIP_SC_CSR, registerHeader);
+		//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 
 		//buffer.push_back(bufferElement);
 		buffer += bufferElement;
@@ -366,12 +371,12 @@ void FSSROtsFirmware:: makeDACBuffer(std::vector<std::string>& buffer, unsigned 
 	std::string bufferElement;
 	for (DACList::const_iterator it = rocDACs.getDACList().begin(); it != rocDACs.getDACList().end(); it++)
 	{
-		protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+		//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 		uint32_t registerHeader = 0;
 		//FIXME This must go in the FSSRROCDefinitions stuff
 		if (it->first != "RejectHits" && it->first != "SendData")
 		{
-			protocolInstance_->write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
+			OtsUDPFirmwareCore::write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
 			registerHeader = FSSRROCDefinitions::makeDACWriteHeader(
 					rocStream.getFEWROCAddress(), it->first);
 			std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << std::hex << " -> Data: " << registerHeader << std::dec << std::endl;
@@ -401,8 +406,8 @@ void FSSROtsFirmware:: makeDACBuffer(std::vector<std::string>& buffer, unsigned 
 
 		}
 		//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << std::hex << " -> Data: " << registerHeader << std::dec << std::endl;
-		protocolInstance_->write(bufferElement, STRIP_SC_CSR, registerHeader);
-		protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+		OtsUDPFirmwareCore::write(bufferElement, STRIP_SC_CSR, registerHeader);
+		//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 
 		//alternateBuffer += bufferElement;
 		limitCount++;
@@ -471,17 +476,18 @@ void FSSROtsFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, 
 	unsigned char bitMask = 1 << channel;
 	unsigned char inst = WRITE;
 
-	protocolInstance_->waitClear(buffer, STRIP_SC_CSR, 0x80000000);
+	//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(buffer, STRIP_SC_CSR, 0x80000000);
 
 	for (i = 0; i < 4; i++)
 		//write(buffer, STRIP_SCI + 4 * i, data[i]);
-		protocolInstance_->write(buffer, STRIP_SCI + 4 * (4 - i - 1), data[i]);
+		OtsUDPFirmwareCore::write(buffer, STRIP_SCI + 4 * (4 - i - 1), data[i]);
 
 	w = 0x80000000 | (len << 24) | (bitMask << 16) | (inst << 10) | (addr << 5) | chipId;
 
-	ierr = protocolInstance_->write(buffer, STRIP_SC_CSR, w);
+	//ierr = OtsUDPFirmwareCore::write(buffer, STRIP_SC_CSR, w);
+	OtsUDPFirmwareCore::write(buffer, STRIP_SC_CSR, w);
 
-	protocolInstance_->waitClear(buffer, STRIP_SC_CSR, 0x80000000);
+	//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(buffer, STRIP_SC_CSR, 0x80000000);
 }
 
 //========================================================================================================================
@@ -588,7 +594,7 @@ void FSSROtsFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
 std::string FSSROtsFirmware::readCSRRegister()
 {
 	std::string buffer;
-	protocolInstance_->read(buffer,STRIP_CSR);
+	OtsUDPFirmwareCore::read(buffer,STRIP_CSR);
 	return buffer;
 }
 
@@ -676,7 +682,7 @@ void FSSROtsFirmware::setCSRRegister(uint32_t total)
 //========================================================================================================================
 void FSSROtsFirmware::writeCSRRegister(std::string& buffer)
 {
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 }
 
 //========================================================================================================================
@@ -731,10 +737,10 @@ void FSSROtsFirmware::flushBuffersStripCSR(void)
 void FSSROtsFirmware::resetTriggerCounterStripCSR(std::string& buffer)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
 	BitManipulator::insertBits(stripCSRRegisterValue_, 0, 21, 1);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 }
 
 //========================================================================================================================
@@ -859,11 +865,11 @@ void FSSROtsFirmware::resetChip(bool channel0, bool channel1, bool channel2,
 void FSSROtsFirmware::setFrequencyRatio(std::string& buffer, int numerator, int denominator)
 {
 	//The device need to load numerator minus one and denominator minus one, with an internal address of 0x50 and 052 respectively
-	protocolInstance_->write(buffer, STRIP_BCO_DCM, 0x80500000 + (numerator - 1)); //  Set BCOCLK numerator // was 0x80500003
-	protocolInstance_->waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish // was 0x80000000
+	OtsUDPFirmwareCore::write(buffer, STRIP_BCO_DCM, 0x80500000 + (numerator - 1)); //  Set BCOCLK numerator // was 0x80500003
+	//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish // was 0x80000000
 
-	protocolInstance_->write(buffer, STRIP_BCO_DCM, 0x80520000 + (denominator - 1)); //  Set BCOCLK denominator // was 0x80520001
-	protocolInstance_->waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish - BCO frequency should be 13.513 MHz // was 0x80000000
+	OtsUDPFirmwareCore::write(buffer, STRIP_BCO_DCM, 0x80520000 + (denominator - 1)); //  Set BCOCLK denominator // was 0x80520001
+	//FIXME? Does Nothing RAR Aug 2017//OtsUDPFirmwareCore::waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish - BCO frequency should be 13.513 MHz // was 0x80000000
 }
 
 //========================================================================================================================
@@ -887,22 +893,22 @@ void FSSROtsFirmware::halt(bool halt)
 //========================================================================================================================
 void FSSROtsFirmware::configureStripTriggerUnbiased(std::string& buffer)
 {
-	protocolInstance_->write(buffer, STRIP_TRIG_UNBIASED, 0x002805c); //  Configure unbiased trigger
+	OtsUDPFirmwareCore::write(buffer, STRIP_TRIG_UNBIASED, 0x002805c); //  Configure unbiased trigger
 }
 
 //========================================================================================================================
 void FSSROtsFirmware::configureTriggerInputs(std::string& buffer)
 {
-	protocolInstance_->write(buffer, STRIP_TRIG_INPUT_0, 0x3f440000); //  FSSR GOTHIT trigger input channel 0,1
-	protocolInstance_->write(buffer, STRIP_TRIG_INPUT_1, 0x3f440000); //  FSSR GOTHIT trigger input channel 2,3
-	protocolInstance_->write(buffer, STRIP_TRIG_INPUT_2, 0x0); //  FSSR GOTHIT trigger input channel 4,5
+	OtsUDPFirmwareCore::write(buffer, STRIP_TRIG_INPUT_0, 0x3f440000); //  FSSR GOTHIT trigger input channel 0,1
+	OtsUDPFirmwareCore::write(buffer, STRIP_TRIG_INPUT_1, 0x3f440000); //  FSSR GOTHIT trigger input channel 2,3
+	OtsUDPFirmwareCore::write(buffer, STRIP_TRIG_INPUT_2, 0x0); //  FSSR GOTHIT trigger input channel 4,5
 }
 
 //========================================================================================================================
 std::string FSSROtsFirmware::resetSlaveBCO(void)
 {
 	std::string buffer;
-	protocolInstance_->write(buffer, (uint64_t)0xc5000000, (uint64_t)0x00000008);
+	OtsUDPFirmwareCore::write(buffer, (uint64_t)0xc5000000, (uint64_t)0x00000008);
 	return buffer;
 }
 

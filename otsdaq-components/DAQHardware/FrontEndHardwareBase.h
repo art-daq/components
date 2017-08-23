@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <stdexcept> /*for std::runtime_error*/
 
 namespace ots
 {
@@ -20,12 +21,13 @@ public:
 	FrontEndHardwareBase();
 	virtual ~FrontEndHardwareBase();
 
-	virtual int write              (const std::string&              writeBuffer) = 0;
-	virtual int write              (const std::vector<std::string>& writeBuffer) = 0;
-	virtual int writeAndAcknowledge(const std::string&              writeBuffer) = 0;
-	virtual int writeAndAcknowledge(const std::vector<std::string>& writeBuffer) = 0;
-	virtual int read               (const std::string&              writeBuffer, std::string&              readBuffer) = 0;
-	virtual int read               (const std::vector<std::string>& writeBuffer, std::vector<std::string>& readBuffer) = 0;
+	//pure virtual function declarations
+	virtual void write              (const std::string&              sendBuffer) throw(std::runtime_error){throw std::runtime_error("Illegal call to undefined base class member function");}
+	virtual void write              (const std::vector<std::string>& sendBuffers) throw(std::runtime_error){throw std::runtime_error("Illegal call to undefined base class member function");}
+	virtual void writeAndAcknowledge(const std::string&              sendBuffer, int timeoutSeconds = -1) throw(std::runtime_error){throw std::runtime_error("Illegal call to undefined base class member function");}
+	virtual void writeAndAcknowledge(const std::vector<std::string>& sendBuffers, int timeoutSeconds = -1) throw(std::runtime_error){throw std::runtime_error("Illegal call to undefined base class member function");}
+	virtual void read               (const std::string&              sendBuffer , std::string&              	receiveBuffer, int timeoutSeconds = -1) throw(std::runtime_error){throw std::runtime_error("Illegal call to undefined base class member function");}
+	virtual void read               (const std::vector<std::string>& sendBuffers, std::vector<std::string>& 	receiveBuffers, int timeoutSeconds = -1) throw(std::runtime_error){throw std::runtime_error("Illegal call to undefined base class member function");}
 };
 
 } // namespace ots

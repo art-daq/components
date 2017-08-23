@@ -2,19 +2,22 @@
 #define _ots_FSSROtsFirmware_h_
 
 #include <string>
-#include "otsdaq-components/DAQHardware/FrontEndFirmwareBase.h"
-#include "otsdaq-components/DAQHardware/OtsFirmwareCore.h"
+//#include "otsdaq-components/DAQHardware/FrontEndFirmwareBase.h"
+#include "otsdaq-components/DAQHardware/FirmwareSequence.h"
+#include "otsdaq-components/DetectorConfiguration/ROCStream.h"
+#include "otsdaq-components/DAQHardware/OtsUDPFirmwareCore.h"
 
 namespace ots
 {
 
-class FSSROtsFirmware : public FrontEndFirmwareBase/*, public OtsFirmwareCore*/
+class FSSROtsFirmware : public OtsUDPFirmwareCore//AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls ///*, public FrontEndFirmwareBase*/
 {
 
 public:
     FSSROtsFirmware (unsigned int version, std::string type);
     virtual ~FSSROtsFirmware(void);
-    int  init(void);
+    virtual void init(void);
+
     //FEW specific methods
     std::string configureClocks(std::string source, double frequency);
     std::string resetDetector  (int channel=-1);
@@ -97,8 +100,6 @@ public:
 
 
 	std::string  resetSlaveBCO(void);
-protected:
-	FrontEndFirmwareBase* protocolInstance_;
 };
 
 }

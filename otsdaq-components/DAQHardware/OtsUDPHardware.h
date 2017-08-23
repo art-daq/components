@@ -14,13 +14,16 @@ public:
 	OtsUDPHardware (std::string interfaceIPAddress, unsigned int interfacePort, std::string boardIPAddress, unsigned int boardPort);
 	virtual ~OtsUDPHardware(void);
 
-	int write              (const std::string&              writeBuffer);
-	int write              (const std::vector<std::string>& writeBuffer);
-	int writeAndAcknowledge(const std::string&              writeBuffer);
-	int writeAndAcknowledge(const std::vector<std::string>& writeBuffer);
-	int read               (const std::string&              writeBuffer, std::string&              readBuffer);
-	int read               (const std::vector<std::string>& writeBuffer, std::vector<std::string>& readBuffer);
+	virtual void write              (const std::string&              sendBuffer) throw(std::runtime_error);
+	virtual void write              (const std::vector<std::string>& sendBuffers) throw(std::runtime_error);
+	virtual void writeAndAcknowledge(const std::string&              sendBuffer, int timeoutSeconds = -1) throw(std::runtime_error);
+	virtual void writeAndAcknowledge(const std::vector<std::string>& sendBuffers, int timeoutSeconds = -1) throw(std::runtime_error);
+	virtual void read               (const std::string&              sendBuffer , std::string&              	receiveBuffer, int timeoutSeconds = -1) throw(std::runtime_error);
+	virtual void read               (const std::vector<std::string>& sendBuffers, std::vector<std::string>& 	receiveBuffers, int timeoutSeconds = -1) throw(std::runtime_error);
 
+	void read	          			(const std::string&              sendBuffer, uint64_t&	              receiveQuadWord, int timeoutSeconds = -1) throw(std::runtime_error);
+	void read	        		   	(const std::string&              sendBuffer, std::vector<uint64_t>&	  receiveQuadWords, int timeoutSeconds = -1) throw(std::runtime_error);
+	void read			           	(const std::vector<std::string>& sendBuffers, std::vector<std::vector<uint64_t> >&	receiveQuadWordsVector, int timeoutSeconds = -1) throw(std::runtime_error);
 	int clearReadSocket	   ();
 	//
 //    virtual int write(uint64_t address, const std::string& value){return 0;}
