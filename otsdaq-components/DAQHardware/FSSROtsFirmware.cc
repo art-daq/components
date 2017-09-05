@@ -135,7 +135,7 @@ std::string FSSROtsFirmware::enableTrigger(void)
 	{
 		__SS__ << "what version is this?" <<
 				OtsUDPFirmwareCore::version_ << std::endl;
-		__MOUT_ERR__ << ss.str();
+		__MOUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;

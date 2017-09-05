@@ -72,7 +72,7 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
 	if(size > 182)
 	{
 		__SS__ << "Invalid write size: " << size << std::endl;
-		__MOUT_ERR__ << ss.str();
+		__MOUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 
@@ -80,7 +80,7 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
 	{
 		__SS__ << "Aborting. Buffer overflow attempt: " << buffer.size() << " + " <<
 				2 + 8 + 8*size << " > " << 2 + 8 + 8*182 << std::endl;
-		__MOUT_ERR__ << ss.str();
+		__MOUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 
@@ -104,7 +104,7 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
     	ss << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
     }
     ss << std::endl;
-    __MOUT__ << ss.str();
+    __MOUT__ << "\n" << ss.str();
 }
 
 //========================================================================================================================
@@ -146,7 +146,7 @@ void OtsUDPFirmwareCore::read(std::string& buffer,
 	if(size > 182)
 	{
 		__SS__ << "Invalid read size: " << size << std::endl;
-		__MOUT_ERR__ << ss.str();
+		__MOUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 
@@ -154,7 +154,7 @@ void OtsUDPFirmwareCore::read(std::string& buffer,
 	{
 		__SS__ << "Aborting. Buffer overflow attempt: " << buffer.size() << " + " <<
 				2 + 8 << " > " << 2 + 8 + 8*182 << std::endl;
-		__MOUT_ERR__ << ss.str();
+		__MOUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 
@@ -175,7 +175,7 @@ void OtsUDPFirmwareCore::read(std::string& buffer,
     	ss << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
     }
     ss << std::endl;
-    __MOUT__ << ss.str();
+    __MOUT__ << "\n" << ss.str();
 }
 
 
