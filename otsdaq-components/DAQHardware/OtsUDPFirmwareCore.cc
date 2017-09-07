@@ -220,6 +220,8 @@ void OtsUDPFirmwareCore::setDataDestination(std::string& buffer,
 		const std::string& ipAddress, const uint16_t port)
 {
 	//put firmware in dynamic mac resolution mode for burst mode
+	__MOUT__ << "dynamic mac address: " << std::hex <<
+			uint64_t(UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_RESOLVE_MAC) << std::endl;
 	write(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_RESOLVE_MAC /* addr */,
 			1 /* data */);
