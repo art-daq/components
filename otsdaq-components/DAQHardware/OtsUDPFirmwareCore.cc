@@ -91,7 +91,7 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
     buffer[begin + 0] = 1 | commandTypeOptions;//WRITE
     buffer[begin + 1] = size;//# of 64 bits words
 
-	std::copy_n((char *)&address,sizeof(uint64_t),&buffer[begin + 2]);
+	std::copy_n(address,sizeof(uint64_t),&buffer[begin + 2]);
     for(uint8_t i=0;i<size;++i)
     	std::copy_n((char *)&data[8*i],sizeof(uint64_t),&buffer[begin + 2 + 8 + 8*i]);
 
@@ -164,7 +164,7 @@ void OtsUDPFirmwareCore::read(std::string& buffer,
     buffer[begin + 0] = (uint8_t)0 | commandTypeOptions;//READ
     buffer[begin + 1] = size;//# of 64 bits words
 
-	std::copy_n((char *)&address,sizeof(uint64_t),&buffer[begin + 2]);
+	std::copy_n(address,sizeof(uint64_t),&buffer[begin + 2]);
 
 	///////
     __SS__ << "\tAdded READ to Buffer:-";
