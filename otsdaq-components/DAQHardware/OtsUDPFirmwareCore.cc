@@ -99,8 +99,8 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
     __SS__ << "\tAdded WRITE to Buffer:-";
     for(uint32_t i=begin; i<buffer.size(); i++)
     {
-    	if(i==begin+2) std::cout << ":::";
-    	else if(i==begin+10) std::cout << ":::";
+    	if(i==begin+2) ss << ":::";
+    	else if(i==begin+10) ss << ":::";
     	ss << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
     }
     ss << std::endl;
@@ -170,8 +170,8 @@ void OtsUDPFirmwareCore::read(std::string& buffer,
     __SS__ << "\tAdded READ to Buffer:-";
     for(uint32_t i=begin; i<buffer.size(); i++)
     {
-    	if(i==begin+2) std::cout << ":::";
-    	else if(i==begin+10) std::cout << ":::";
+    	if(i==begin+2) ss << ":::";
+    	else if(i==begin+10) ss << ":::";
     	ss << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
     }
     ss << std::endl;
