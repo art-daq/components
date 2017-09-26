@@ -9,15 +9,15 @@ using namespace ots;
 
 //========================================================================================================================
 OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort) :
-        		OtsUDPBoard_(boardIPAddress, boardPort)
+        						OtsUDPBoard_(boardIPAddress, boardPort)
 {
 	Socket::initialize();
 }
 
 //========================================================================================================================
 OtsUDPHardware::OtsUDPHardware (std::string interfaceIPAddress, unsigned int interfacePort, std::string OtsUDPHardwareIPAddress, unsigned int OtsUDPHardwarePort) :
-        		Socket        (interfaceIPAddress,      interfacePort),
-				OtsUDPBoard_  (OtsUDPHardwareIPAddress, OtsUDPHardwarePort)
+        						Socket        (interfaceIPAddress,      interfacePort),
+								OtsUDPBoard_  (OtsUDPHardwareIPAddress, OtsUDPHardwarePort)
 {
 	Socket::initialize();
 }
@@ -27,68 +27,138 @@ OtsUDPHardware::~OtsUDPHardware(void)
 {}
 
 //========================================================================================================================
-int OtsUDPHardware::write(const std::string& sendBuffer)
+void OtsUDPHardware::write(const std::string& sendBuffer)
+throw(std::runtime_error)
+try
 {
 
-	TransceiverSocket::send(OtsUDPBoard_, sendBuffer);
-	return 1;
+	if(TransceiverSocket::send(OtsUDPBoard_, sendBuffer) < 0)
+	{
+		__SS__ << "Write failed." << std::endl;
+		__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+		throw std::runtime_error(ss.str());
+	}
+}
+catch(std::runtime_error &e)
+{
+	throw;
+}
+catch(...)
+{
+	__SS__ << "Unrecognized exception caught!" << std::endl;
+	__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+	throw std::runtime_error(ss.str());
 }
 
 //========================================================================================================================
-int OtsUDPHardware::write(const std::vector<std::string>& sendBuffer)
+void OtsUDPHardware::write(const std::vector<std::string>& sendBuffer)
+throw(std::runtime_error)
 {
 	for(const auto& it : sendBuffer)
 		write(it);
-	return 1;
 }
 
 //========================================================================================================================
-int OtsUDPHardware::writeAndAcknowledge(const std::string& buffer)
+void OtsUDPHardware::writeAndAcknowledge(const std::string& buffer,
+		int timeoutSeconds)
+throw(std::runtime_error)
+try
 {
 
-//	std::cout << __COUT_HDR_FL__ << std::endl;
-//	for(auto& b: buffer)
-//	{
-//		std::cout << __COUT_HDR_FL__ << std::hex << (uint16_t)b << std::dec << std::endl;
-//	}
+	//	std::cout << __COUT_HDR_FL__ << std::endl;
+	//	for(auto& b: buffer)
+	//	{
+	//		std::cout << __COUT_HDR_FL__ << std::hex << (uint16_t)b << std::dec << std::endl;
+	//	}
 	TransceiverSocket::send(OtsUDPBoard_, buffer);
 	//acknowledgment_.clear();
-	TransceiverSocket::receive(acknowledgment_);
 
-//	std::cout << __COUT_HDR_FL__ << "Acknowledgment size: " << acknowledgment_.size() << std::endl;
-//	for(unsigned int i=0; i< acknowledgment_.size(); i++)
-//	{
-//		if(i%24 == 0) 
-//		std::cout << __COUT_HDR_FL__ << i << "("<< (unsigned int)acknowledgment_[i] << ")-" << std::endl;
-//	}
-//	
+	if(timeoutSeconds < 0) //use default timeout
+	{
+		if(TransceiverSocket::receive(acknowledgment_) < 0)
+		{
+			__SS__ << "writeAndAcknowledge failed. Default timeout period reached without response." << std::endl;
+			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			throw std::runtime_error(ss.str());
+		}
+	}
+	else
+	{
+		if(TransceiverSocket::receive(acknowledgment_,timeoutSeconds) < 0)
+		{
+			__SS__ << "writeAndAcknowledge failed. " << timeoutSeconds <<
+					" second timeout period reached without response." << std::endl;
+			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			throw std::runtime_error(ss.str());
+		}
+	}
 
-	return 1;
+
+	//	std::cout << __COUT_HDR_FL__ << "Acknowledgment size: " << acknowledgment_.size() << std::endl;
+	//	for(unsigned int i=0; i< acknowledgment_.size(); i++)
+	//	{
+	//		if(i%24 == 0)
+	//		std::cout << __COUT_HDR_FL__ << i << "("<< (unsigned int)acknowledgment_[i] << ")-" << std::endl;
+	//	}
+	//
+
+}
+catch(std::runtime_error &e)
+{
+	throw;
+}
+catch(...)
+{
+	__SS__ << "Unrecognized exception caught!" << std::endl;
+	__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+	throw std::runtime_error(ss.str());
 }
 
 //========================================================================================================================
-int OtsUDPHardware::writeAndAcknowledge(const std::vector<std::string>& buffer)
+void OtsUDPHardware::writeAndAcknowledge(const std::vector<std::string>& buffer,
+		int timeoutSeconds)
+throw(std::runtime_error)
 {
 	for(const auto& it : buffer)
 		writeAndAcknowledge(it);
-
-	return 1;
 }
 
 //========================================================================================================================
 //return -1 on failure
-int OtsUDPHardware::read(const std::string& sendBuffer, std::string& receiveBuffer)
+void OtsUDPHardware::read(const std::string& sendBuffer, std::string& receiveBuffer,
+		int timeoutSeconds)
+throw(std::runtime_error)
+try
 {
-  { //clear packets so that read matches!
-    int clearedPackets = OtsUDPHardware::clearReadSocket();
-    if(clearedPackets)
-      std::cout << __COUT_HDR_FL__ << "Cleared receive socket buffer: " << clearedPackets << " packets cleared." << std::endl;
-  }
+	{ //clear packets so that read matches!
+		int clearedPackets = OtsUDPHardware::clearReadSocket();
+		if(clearedPackets)
+			std::cout << __COUT_HDR_FL__ << "Cleared receive socket buffer: " << clearedPackets << " packets cleared." << std::endl;
+	}
 
-    std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "sending" << std::endl;
+	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "sending" << std::endl;
 	TransceiverSocket::send(OtsUDPBoard_, sendBuffer);
 	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "receiving" << std::endl;
-	if(TransceiverSocket::receive(receiveBuffer) < 0) return -1;
+
+	if(timeoutSeconds < 0) //use default timeout
+	{
+		if(TransceiverSocket::receive(receiveBuffer) < 0)
+		{
+			__SS__ << "Read failed. Default timeout period reached without response." << std::endl;
+			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			throw std::runtime_error(ss.str());
+		}
+	}
+	else
+	{
+		if(TransceiverSocket::receive(receiveBuffer,timeoutSeconds) < 0)
+		{
+			__SS__ << "Read failed. " << timeoutSeconds <<
+					" second timeout period reached without response." << std::endl;
+			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			throw std::runtime_error(ss.str());
+		}
+	}
 	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "done" << std::endl;
 
 	std::cout << __COUT_HDR_FL__ << "RECEIVED MESSAGE: ";
@@ -96,20 +166,111 @@ int OtsUDPHardware::read(const std::string& sendBuffer, std::string& receiveBuff
 		std::cout << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) receiveBuffer[i]) &0xff) << "-" << std::dec;
 	std::cout << std::endl;
 
-
-	return 1;
+}
+catch(std::runtime_error &e)
+{
+	throw;
+}
+catch(...)
+{
+	__SS__ << "Unrecognized exception caught!" << std::endl;
+	__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+	throw std::runtime_error(ss.str());
 }
 
 //========================================================================================================================
-int OtsUDPHardware::read(const std::vector<std::string>& sendBuffer, std::vector<std::string>& receiveBuffer)
+void OtsUDPHardware::read(const std::vector<std::string>& sendBuffers,
+		std::vector<std::string>& receiveBuffers,
+		int timeoutSeconds)
+throw(std::runtime_error)
 {
-	receiveBuffer.resize(sendBuffer.size());
-	auto receiveIt = receiveBuffer.begin();
-	//    for(std::vector<std::string>::const_iterator it=sendBuffer.begin(); it!=sendBuffer.end(); it++, receiveIt++)
-	for(const auto& it : sendBuffer)
-		read(it,*(receiveIt++));
+	receiveBuffers.resize(sendBuffers.size());
+	auto receiveBufferIterator = receiveBuffers.begin();
+	for(const auto& sendBuffer : sendBuffers)
+		read(sendBuffer, *(receiveBufferIterator++));
+}
 
-	return 1;
+//========================================================================================================================
+void OtsUDPHardware::read(const std::string& sendBuffer,
+		uint64_t& receiveQuadWord,
+		int timeoutSeconds)
+throw(std::runtime_error)
+{
+	std::string receiveBuffer;
+	read(sendBuffer,receiveBuffer);
+
+	//force response to be only one quad word
+	if(receiveBuffer.length() != 10)
+	{
+		__SS__ << "Read uint64_t quad-word failed. Invalid size of received buffer: " <<
+				receiveBuffer.length() << " != " << 10 << std::endl;
+		__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+		throw std::runtime_error(ss.str());
+	}
+	std::copy_n((char *)&receiveBuffer[2],sizeof(uint64_t),&receiveQuadWord);
+}
+
+//========================================================================================================================
+void OtsUDPHardware::read(const std::string& sendBuffer,
+		std::vector<uint64_t>& receiveQuadWords,
+		int timeoutSeconds)
+throw(std::runtime_error)
+{
+	receiveQuadWords.resize(0); //clear
+
+	std::string receiveBuffer;
+	read(sendBuffer,receiveBuffer);
+
+	//force response to be only integer quad words
+	if((receiveBuffer.length()-2) % 8 != 0)
+	{
+		__SS__ << "Read vector of uint64_t quad-word failed. Invalid size of received buffer: (" <<
+				receiveBuffer.length() << " - 2) % 8 != 0" << std::endl;
+		__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+		throw std::runtime_error(ss.str());
+	}
+
+	for(unsigned int i = 2; i < receiveBuffer.length(); i += 8)
+	{
+		receiveQuadWords.push_back(uint64_t());
+		std::copy_n((char *)&receiveBuffer[i],sizeof(uint64_t),&receiveQuadWords[receiveQuadWords.size()-1]);
+	}
+}
+
+//========================================================================================================================
+void OtsUDPHardware::read(const std::vector<std::string>& sendBuffers,
+		std::vector<std::vector<uint64_t> >& receiveQuadWordsVector,
+		int timeoutSeconds)
+throw(std::runtime_error)
+{
+	receiveQuadWordsVector.resize(sendBuffers.size()); //create a return vector for each send buffer
+
+	std::string receiveBuffer;
+
+	//for each send buffere
+	for(unsigned int b = 0; b < sendBuffers.size(); ++b)
+	{
+		receiveQuadWordsVector[b].resize(0); //clear
+
+		read(sendBuffers[b], receiveBuffer);
+
+		//force response to be only integer quad words
+		if((receiveBuffer.length()-2) % 8 != 0)
+		{
+			__SS__ << "Read vector of uint64_t quad-word failed. Invalid size of received buffer: (" <<
+					receiveBuffer.length() << " - 2) % 8 != 0" << std::endl;
+			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			throw std::runtime_error(ss.str());
+		}
+
+		//copy to uint64_t's
+		for(unsigned int i = 2; i < receiveBuffer.length(); i += 8)
+		{
+			receiveQuadWordsVector[b].push_back(uint64_t());
+			std::copy_n((char *)&receiveBuffer[i],sizeof(uint64_t),
+					&receiveQuadWordsVector[b][receiveQuadWordsVector[b].size()-1]);
+		}
+	}
 }
 
 //========================================================================================================================
@@ -119,7 +280,17 @@ int OtsUDPHardware::clearReadSocket()
 {
 	std::string dummerReceiveBuffer;
 	int cnt = 0;
-	while(TransceiverSocket::receive(dummerReceiveBuffer) >= 0) ++cnt;
+
+	//receive with no timeout
+	try
+	{
+		while(TransceiverSocket::receive(dummerReceiveBuffer,0,0) >= 0)
+			++cnt;
+	}
+	catch(...)
+	{
+		//ignore exceptions... assume due to there be nothing to read
+	}
 	return cnt;
 }
 
