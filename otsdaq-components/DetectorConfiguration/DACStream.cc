@@ -27,10 +27,10 @@ void DACStream::makeStream(const ConfigurationTree& feToDetectorTree)
 		const ConfigurationTree& detectorConfiguration = it.second.getNode("LinkToDetectorConfiguration");
 		const ConfigurationTree& dacsConfiguration = detectorConfiguration.getNode("LinkToDACsConfiguration");
 		const ConfigurationTree& maskConfiguration = detectorConfiguration.getNode("LinkToMaskConfiguration");
-		__MOUT__ << feToDetectorTree << std::endl;
-		__MOUT__ << detectorConfiguration << std::endl;
-		//__MOUT__ << dacsConfiguration << std::endl;
-		//__MOUT__ << dacsConfiguration << std::endl;
+		__COUT__ << feToDetectorTree << std::endl;
+		__COUT__ << detectorConfiguration << std::endl;
+		//__COUT__ << dacsConfiguration << std::endl;
+		//__COUT__ << dacsConfiguration << std::endl;
 		currentElement = theChannelStreamMap_.insert(std::pair<unsigned int, ROCStream>(it.second.getNode("FEWriterChannel").getValue<unsigned int>(),ROCStream()));
 		currentElement->second.setDetectorID   (it.first);
 		detectorType = detectorConfiguration.getNode("DetectorType").getValue<std::string>();
@@ -38,8 +38,8 @@ void DACStream::makeStream(const ConfigurationTree& feToDetectorTree)
 		currentElement->second.setROCStatus    (detectorConfiguration.getNode("Status").getValue<bool>());
 		currentElement->second.setFEWROCAddress(it.second.getNode("FEWriterDetectorAddress").getValue<unsigned int>());
 		currentElement->second.setROCDACs      (dacsMaker.getROCDACs(dacsConfiguration));
-//		__MOUT__ << "MASK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-//		__MOUT__ << maskConfiguration.getNode("KillMask").getValue<std::string>() << std::endl;
+//		__COUT__ << "MASK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+//		__COUT__ << maskConfiguration.getNode("KillMask").getValue<std::string>() << std::endl;
 		currentElement->second.setROCMask      (maskConfiguration.getNode("KillMask").getValue<std::string>());
 	}
 

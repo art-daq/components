@@ -35,7 +35,7 @@ try
 	if(TransceiverSocket::send(OtsUDPBoard_, sendBuffer) < 0)
 	{
 		__SS__ << "Write failed." << std::endl;
-		__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+		__COUT_ERR__ << "\n" << ss.str() << std::endl;
 		throw std::runtime_error(ss.str());
 	}
 }
@@ -46,7 +46,7 @@ catch(std::runtime_error &e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
-	__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+	__COUT_ERR__ << "\n" << ss.str() << std::endl;
 	throw std::runtime_error(ss.str());
 }
 
@@ -78,7 +78,7 @@ try
 		if(TransceiverSocket::receive(acknowledgment_) < 0)
 		{
 			__SS__ << "writeAndAcknowledge failed. Default timeout period reached without response." << std::endl;
-			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			__COUT_ERR__ << "\n" << ss.str() << std::endl;
 			throw std::runtime_error(ss.str());
 		}
 	}
@@ -88,7 +88,7 @@ try
 		{
 			__SS__ << "writeAndAcknowledge failed. " << timeoutSeconds <<
 					" second timeout period reached without response." << std::endl;
-			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			__COUT_ERR__ << "\n" << ss.str() << std::endl;
 			throw std::runtime_error(ss.str());
 		}
 	}
@@ -110,7 +110,7 @@ catch(std::runtime_error &e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
-	__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+	__COUT_ERR__ << "\n" << ss.str() << std::endl;
 	throw std::runtime_error(ss.str());
 }
 
@@ -145,7 +145,7 @@ try
 		if(TransceiverSocket::receive(receiveBuffer) < 0)
 		{
 			__SS__ << "Read failed. Default timeout period reached without response." << std::endl;
-			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			__COUT_ERR__ << "\n" << ss.str() << std::endl;
 			throw std::runtime_error(ss.str());
 		}
 	}
@@ -155,7 +155,7 @@ try
 		{
 			__SS__ << "Read failed. " << timeoutSeconds <<
 					" second timeout period reached without response." << std::endl;
-			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			__COUT_ERR__ << "\n" << ss.str() << std::endl;
 			throw std::runtime_error(ss.str());
 		}
 	}
@@ -174,7 +174,7 @@ catch(std::runtime_error &e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
-	__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+	__COUT_ERR__ << "\n" << ss.str() << std::endl;
 	throw std::runtime_error(ss.str());
 }
 
@@ -204,7 +204,7 @@ throw(std::runtime_error)
 	{
 		__SS__ << "Read uint64_t quad-word failed. Invalid size of received buffer: " <<
 				receiveBuffer.length() << " != " << 10 << std::endl;
-		__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+		__COUT_ERR__ << "\n" << ss.str() << std::endl;
 		throw std::runtime_error(ss.str());
 	}
 	std::copy_n((char *)&receiveBuffer[2],sizeof(uint64_t),&receiveQuadWord);
@@ -226,7 +226,7 @@ throw(std::runtime_error)
 	{
 		__SS__ << "Read vector of uint64_t quad-word failed. Invalid size of received buffer: (" <<
 				receiveBuffer.length() << " - 2) % 8 != 0" << std::endl;
-		__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+		__COUT_ERR__ << "\n" << ss.str() << std::endl;
 		throw std::runtime_error(ss.str());
 	}
 
@@ -259,7 +259,7 @@ throw(std::runtime_error)
 		{
 			__SS__ << "Read vector of uint64_t quad-word failed. Invalid size of received buffer: (" <<
 					receiveBuffer.length() << " - 2) % 8 != 0" << std::endl;
-			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			__COUT_ERR__ << "\n" << ss.str() << std::endl;
 			throw std::runtime_error(ss.str());
 		}
 

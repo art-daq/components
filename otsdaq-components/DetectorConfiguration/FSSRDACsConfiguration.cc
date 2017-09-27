@@ -75,8 +75,8 @@ const ROCDACs FSSRDACsConfiguration::getROCDACs(const ConfigurationTree& dacsCon
 	for(auto& it: dacNameToDACAddress_)
     {
 		rocDACs.setDAC(it.first, it.second, dacsConfiguration.getNode(it.first).getValue<unsigned int>());
-       // __MOUT__ << "DAC. Name: " << it.first << " addr: " << it.second << " val: " << dacsConfiguration.getNode(it.first).getValue<unsigned int>() << " size: " << rocDACs.getDACList().size()<< std::endl;
+       // __COUT__ << "DAC. Name: " << it.first << " addr: " << it.second << " val: " << dacsConfiguration.getNode(it.first).getValue<unsigned int>() << " size: " << rocDACs.getDACList().size()<< std::endl;
     }
-    //__MOUT__ << "Size: " << rocDACs.getDACList().size()<< std::endl;
+    //__COUT__ << "Size: " << rocDACs.getDACList().size()<< std::endl;
     return rocDACs;
 }

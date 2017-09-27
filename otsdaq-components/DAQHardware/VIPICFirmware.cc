@@ -9,7 +9,6 @@
 #include <arpa/inet.h>
 #include <iostream>
 #include <cstdlib>
-#include "../UserConfigurationDataFormats/FEOtsUDPFSSRInterfaceConfiguration.h"
 
 using namespace ots;
 

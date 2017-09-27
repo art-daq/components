@@ -72,7 +72,7 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
 	if(size > 182)
 	{
 		__SS__ << "Invalid write size: " << size << std::endl;
-		__MOUT_ERR__ << "\n" << ss.str();
+		__COUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 
@@ -80,7 +80,7 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
 	{
 		__SS__ << "Aborting. Buffer overflow attempt: " << buffer.size() << " + " <<
 				2 + 8 + 8*size << " > " << 2 + 8 + 8*182 << std::endl;
-		__MOUT_ERR__ << "\n" << ss.str();
+		__COUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 
@@ -104,7 +104,7 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
     	ss << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
     }
     ss << std::endl;
-    __MOUT__ << "\n" << ss.str();
+    __COUT__ << "\n" << ss.str();
 }
 
 //========================================================================================================================
@@ -146,7 +146,7 @@ void OtsUDPFirmwareCore::read(std::string& buffer,
 	if(size > 182)
 	{
 		__SS__ << "Invalid read size: " << size << std::endl;
-		__MOUT_ERR__ << "\n" << ss.str();
+		__COUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 
@@ -154,7 +154,7 @@ void OtsUDPFirmwareCore::read(std::string& buffer,
 	{
 		__SS__ << "Aborting. Buffer overflow attempt: " << buffer.size() << " + " <<
 				2 + 8 << " > " << 2 + 8 + 8*182 << std::endl;
-		__MOUT_ERR__ << "\n" << ss.str();
+		__COUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
 
@@ -175,7 +175,7 @@ void OtsUDPFirmwareCore::read(std::string& buffer,
     	ss << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
     }
     ss << std::endl;
-    __MOUT__ << "\n" << ss.str();
+    __COUT__ << "\n" << ss.str();
 }
 
 
@@ -220,14 +220,14 @@ void OtsUDPFirmwareCore::setDataDestination(std::string& buffer,
 		const std::string& ipAddress, const uint16_t port)
 {
 	//put firmware in dynamic mac resolution mode for burst mode
-	__MOUT__ << "dynamic mac address: " << std::hex <<
+	__COUT__ << "dynamic mac address: " << std::hex <<
 			uint64_t(UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_RESOLVE_MAC) << std::endl;
 	write(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_RESOLVE_MAC /* addr */,
 			1 /* data */);
 
 	//extract ip address from string
-	__MOUT__ << "ipAddress = " << ipAddress << std::endl;
+	__COUT__ << "ipAddress = " << ipAddress << std::endl;
 	uint64_t ip = 0;
 	int ipArr[4];
 	sscanf(ipAddress.c_str(),"%d.%d.%d.%d",
@@ -253,7 +253,7 @@ void OtsUDPFirmwareCore::setControlDestination(std::string& buffer,
 			1 /* data */);
 
 	//extract ip address from string
-	__MOUT__ << "ipAddress = " << ipAddress << std::endl;
+	__COUT__ << "ipAddress = " << ipAddress << std::endl;
 	uint64_t ip = 0;
 	int ipArr[4];
 	sscanf(ipAddress.c_str(),"%d.%d.%d.%d",
@@ -377,7 +377,7 @@ void OtsUDPFirmwareCore::forceReset(std::string& buffer)
 //========================================================================================================================
 void OtsUDPFirmwareCore::startBurst(std::string& buffer)
 {
-	__MOUT__ << std::endl;
+	__COUT__ << std::endl;
 	write(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_BURST_MODE /* addr */,
 			1 /* data */);
@@ -386,7 +386,7 @@ void OtsUDPFirmwareCore::startBurst(std::string& buffer)
 //========================================================================================================================
 void OtsUDPFirmwareCore::stopBurst(std::string& buffer)
 {
-	__MOUT__ << std::endl;
+	__COUT__ << std::endl;
 	write(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_BURST_MODE /* addr */,
 			0 /* data */);
