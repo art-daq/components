@@ -8,11 +8,17 @@
 namespace ots
 {
 
-class FSSRFirmware : public FrontEndFirmwareBase//, public OtsUDPFirmware/*, public PurdueFirmwareCore*/
+//FSSRFirmware is high level used by FE interface
+//	in constructor choose FSSR base firmware type (FSSROtsFirmware or FSSRPurdueFirmware)
+//		- (FSSROtsFirmware or FSSRPurdueFirmware) inherit from FSSRApplicationFirmwareBase
+//	and core firmware (OtsUDPFirmwareCore or PurdueFirmwareCore)
+//		- (OtsUDPFirmwareCore or PurdueFirmwareCore) inherit from FrontEndFirmwareBase
+
+class FSSRFirmware
 {
 
 public:
-    FSSRFirmware (unsigned int version, std::string type);
+    FSSRFirmware (unsigned int version, const std::string& communicationFirmwareType, const std::string& applicationFirmwareType);
     virtual ~FSSRFirmware(void);
     void  init(void);
 
@@ -25,7 +31,7 @@ public:
     std::string configureClocks     (std::string source, double frequency);
     std::string resetDetector       (int channel=-1);
     std::string enableTrigger       (void);
-    virtual void setDataDestination (std::string& buffer, const std::string& ip, const uint16_t port);
+    //virtual void setDataDestination (std::string& buffer, const std::string& ip, const uint16_t port);
     //std::string setDataDestination  (std::string ip, uint32_t port);
 
     void resetDCM                   (std::string& buffer);
@@ -49,7 +55,9 @@ public:
     std::string stopStream          (void);
 
 protected:
-    FrontEndFirmwareBase* protocolInstance_;
+    FrontEndFirmwareBase* 	     communicationFirmwareInstance_;
+    FSSRApplicationFirmwareBase* applicationFirmwareInstance_;
+
     void makeMaskSequence(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream, const std::string& registerName);
     void makeMaskSequence(FirmwareSequence<uint32_t>& sequence, unsigned int channel, const ROCStream& rocStream, const std::string& registerName);
     void makeMaskBuffer  (std::string& buffer, unsigned int channel, const ROCStream& rocStream, const std::string& registerName);

@@ -15,22 +15,32 @@ using namespace ots;
 
 
 //========================================================================================================================
-FSSRFirmware::FSSRFirmware(unsigned int version, std::string type) :
-		FrontEndFirmwareBase(version),
-		stripCSRRegisterValue_(0)
+FSSRFirmware::FSSRFirmware(unsigned int version,
+		const std::string& communicationFirmwareType,
+		const std::string& applicationFirmwareType)
+:	stripCSRRegisterValue_(0)
 {
-	protocolInstance_ = FrontEndFirmwareBase::getInstance(type,version);
-	assert(protocolInstance_ != NULL);
-	//returns either new OtsUDPFirmware or new PurdueFirmwareCore,
-	//now we can call write/read etc with protocol->write, protocol->read, etc
+	//returns (OtsUDPFirmwareCore or PurdueFirmwareCore)
+	communicationFirmwareInstance_ = FrontEndFirmwareBase::getInstance(type,version);
+
+
+	//returns (FSSROtsFirmware or FSSRPurdueFirmware)
+	applicationFirmwareInstance_ = FSSRApplicationFirmwareBase::getInstance(type,version);
+
+
+	//now we can call write/read etc with communicationFirmwareInstance_->write,
+	//	communicationFirmwareInstance_->read, etc
 
 }
 
 //========================================================================================================================
 FSSRFirmware::~FSSRFirmware(void)
 {
-	delete protocolInstance_;
-	protocolInstance_= NULL;
+	delete communicationFirmwareInstance_;
+	communicationFirmwareInstance_= NULL;
+
+	delete applicationFirmwareInstance_;
+	applicationFirmwareInstance_= NULL;
 }
 
 //========================================================================================================================
@@ -41,19 +51,19 @@ void FSSRFirmware::init(void)
 //========================================================================================================================
 std::string FSSRFirmware::universalRead(char* address)
 {
-	return protocolInstance_->read(address);
+	return communicationFirmwareInstance_->read(address);
 }
 
 //========================================================================================================================
 std::string FSSRFirmware::universalWrite(char* address, char* data)
 {
-	return protocolInstance_->write(address, data);
+	return communicationFirmwareInstance_->write(address, data);
 }
 
 //========================================================================================================================
 uint32_t FSSRFirmware::createRegisterFromValue (std::string& readBuffer, std::string& receivedValue)
 {
-	return protocolInstance_->createRegisterFromValue(readBuffer,receivedValue);
+	return communicationFirmwareInstance_->createRegisterFromValue(readBuffer,receivedValue);
 }
 
 //========================================================================================================================
@@ -66,13 +76,13 @@ std::string FSSRFirmware::configureClocks(std::string source, double frequency)
 
 	setPacketSizeStripCSR(6);
 	setExternalBCOClockSourceStripCSR(source); //(source)
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Reset CSR - reset trigger counter, external 27 MHz clock
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Reset CSR - reset trigger counter, external 27 MHz clock
 
 	resetDCM(buffer);
 	alignReadOut(buffer,0x3000);//0x3000
 
 	setFrequencyFromClockState(buffer, frequency);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
 	resetDCM(buffer);
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
@@ -83,25 +93,25 @@ std::string FSSRFirmware::configureClocks(std::string source, double frequency)
 //========================================================================================================================
 void FSSRFirmware::resetDCM(std::string& buffer)
 {
-	__COUT__ << protocolInstance_ << std::endl;
+	__COUT__ << communicationFirmwareInstance_ << std::endl;
 	resetDCMStripCSR(true);
-	__COUT__ << protocolInstance_ << std::endl;
+	__COUT__ << communicationFirmwareInstance_ << std::endl;
 
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Set reset to DCM
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Set reset to DCM
 
-	__COUT__ << protocolInstance_ << std::endl;
+	__COUT__ << communicationFirmwareInstance_ << std::endl;
 
 	resetDCMStripCSR(false);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Clear reset to DCM
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Clear reset to DCM
 
-	protocolInstance_->waitClear(buffer, STRIP_CSR, waitDCMResetStripCSR()); //  Wait for DCM to lock
+	communicationFirmwareInstance_->waitClear(buffer, STRIP_CSR, waitDCMResetStripCSR()); //  Wait for DCM to lock
 }
 
 
 //========================================================================================================================
 void FSSRFirmware::alignReadOut(std::string& buffer, uint32_t value)
 {
-	protocolInstance_->write(buffer, STRIP_TRIM_CSR, value); //  MCLKB edge for channel 5 // was 0x00002000
+	communicationFirmwareInstance_->write(buffer, STRIP_TRIM_CSR, value); //  MCLKB edge for channel 5 // was 0x00002000
 }
 //========================================================================================================================
 std::string FSSRFirmware::resetDetector(int channel)
@@ -111,12 +121,12 @@ std::string FSSRFirmware::resetDetector(int channel)
 	if (channel == -1)//reset all channels
 	{
 		//write(buffer,STRIP_RESET,0xd000003f);                  //  Issue reset
-		protocolInstance_->write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset // was 0xf000003f
-		protocolInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete // was 0xf0000000
+		communicationFirmwareInstance_->write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset // was 0xf000003f
+		communicationFirmwareInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete // was 0xf0000000
 	} else
 	{
-		protocolInstance_->write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset
-		protocolInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete
+		communicationFirmwareInstance_->write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset
+		communicationFirmwareInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete
 	}
 
 	return buffer;
@@ -133,11 +143,11 @@ std::string FSSRFirmware::enableTrigger(void)
 	sendTriggerDataStripCSR(true);
 	sendTriggerNumberStripCSR(true);
 	sendBCOStripCSR(true);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
 	stripTriggerCSRRegisterValue_ = 0;
 	BCOOffset(4);
-	protocolInstance_->write(buffer, STRIP_TRIG_CSR, stripTriggerCSRRegisterValue_); //  BCO offset // was 0x00000004
+	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_CSR, stripTriggerCSRRegisterValue_); //  BCO offset // was 0x00000004
 
 	//  write(buffer,STRIP_TRIG_INPUT_0,0x1f060040);  //  FSSR GOTHIT trigger input - timed in for the 27 MHz external clock
 	//  write(buffer,STRIP_TRIG_INPUT_3,0x3f874040);  //  Unbiased trigger input + external trigger
@@ -149,9 +159,9 @@ std::string FSSRFirmware::enableTrigger(void)
 	//FIXME for IP .36 the number to set is 0x20401000
 
 	if (ots::FrontEndFirmwareBase::version_ == 1)
-		protocolInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20401000); // Turn on streaming hits along with BCO data
+		communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20401000); // Turn on streaming hits along with BCO data
 	else if (ots::FrontEndFirmwareBase::version_ == 2)
-		protocolInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20301000); // Turn on streaming hits along with BCO data
+		communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20301000); // Turn on streaming hits along with BCO data
 	else
 	{
 		std::cout << __COUT_HDR_FL__ << "what version is this?" << ots::FrontEndFirmwareBase::version_ << std::endl;
@@ -163,25 +173,25 @@ std::string FSSRFirmware::enableTrigger(void)
 	return buffer;
 }
 
-//========================================================================================================================
-void FSSRFirmware::setDataDestination(std::string& buffer, const std::string& ip, const uint16_t port)
-//(std::string ip, uint32_t port)
-{
-    std::cout << __COUT_HDR_FL__ << "Set data destination!" << std::endl;
-
-    struct sockaddr_in socketAddress;
-    inet_pton(AF_INET, ip.c_str(), &(socketAddress.sin_addr));
-    std::cout << __COUT_HDR_FL__ << "ADDRESS: " << std::hex << ntohl(socketAddress.sin_addr.s_addr) << std::dec << std::endl;
-    protocolInstance_->write(buffer, DATA_DESTINATION_IP, ntohl(socketAddress.sin_addr.s_addr)); //  Set data destination IP 192.168.133.1
-    std::cout << __COUT_HDR_FL__ << "PORT: " << std::hex << port << std::dec << std::endl;
-    protocolInstance_->write(buffer, DATA_SOURCE_DESTINATION_PORT, port); //  Set data destination port
-    std::cout << __COUT_HDR_FL__ << "THIS IS THE BUFFER: " << buffer << std::endl;
-
-    for(uint32_t i=0; i<buffer.size(); i++)
-        printf("%2.2X-",(uint8_t)buffer[i]);
-    std::cout << std::dec << std::endl;
-
-}
+////========================================================================================================================
+//void FSSRFirmware::setDataDestination(std::string& buffer, const std::string& ip, const uint16_t port)
+////(std::string ip, uint32_t port)
+//{
+//    std::cout << __COUT_HDR_FL__ << "Set data destination!" << std::endl;
+//
+//    struct sockaddr_in socketAddress;
+//    inet_pton(AF_INET, ip.c_str(), &(socketAddress.sin_addr));
+//    std::cout << __COUT_HDR_FL__ << "ADDRESS: " << std::hex << ntohl(socketAddress.sin_addr.s_addr) << std::dec << std::endl;
+//    communicationFirmwareInstance_->write(buffer, DATA_DESTINATION_IP, ntohl(socketAddress.sin_addr.s_addr)); //  Set data destination IP 192.168.133.1
+//    std::cout << __COUT_HDR_FL__ << "PORT: " << std::hex << port << std::dec << std::endl;
+//    communicationFirmwareInstance_->write(buffer, DATA_SOURCE_DESTINATION_PORT, port); //  Set data destination port
+//    std::cout << __COUT_HDR_FL__ << "THIS IS THE BUFFER: " << buffer << std::endl;
+//
+//    for(uint32_t i=0; i<buffer.size(); i++)
+//        printf("%2.2X-",(uint8_t)buffer[i]);
+//    std::cout << std::dec << std::endl;
+//
+//}
 
 
 
@@ -198,10 +208,10 @@ std::string FSSRFirmware::resetBCO(void)
 	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 
 	//msg->Write(STRIP_SC_CSR,0x90000b95|(chmask<<16));
-	protocolInstance_->write(buffer,STRIP_SC_CSR,0x903f0b95);//  This is the <SCR,set> command with the bit set to sync SHIFT with BCO=0.
+	communicationFirmwareInstance_->write(buffer,STRIP_SC_CSR,0x903f0b95);//  This is the <SCR,set> command with the bit set to sync SHIFT with BCO=0.
 
 	//enableBCOStripCSR(true);
-	//protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	//communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
 	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Done reset BCO!!!" << std::endl;
@@ -217,7 +227,7 @@ std::string FSSRFirmware::armBCOReset(void)
 	std::string buffer;
 
 	enableBCOStripCSR(true);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Done!" << std::endl;
 
@@ -240,7 +250,7 @@ std::string FSSRFirmware::startStream(bool channel0, bool channel1, bool channel
 	//        enableChannelsStripCSR(true, true, true, true, true, true);
 
 	enableStreamStripCSR(true); //  Turn on streaming hits along with BCO data // was 0x0f000f30
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
 	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_PL__ << "Done start Stream!" << std::endl;
@@ -254,7 +264,7 @@ std::string FSSRFirmware::stopStream(void)
 	std::string buffer;
 	enableChannelsStripCSR(false, false, false, false, false, false);
 	enableStreamStripCSR(false);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 	return buffer;
 }
 
@@ -329,13 +339,13 @@ void FSSRFirmware::makeDACBuffer(std::string& buffer, unsigned int channel, cons
 //	for (DACList::const_iterator it = rocDACs.getDACList().begin(); it != rocDACs.getDACList().end(); it++)
 //	{
 //		std::string bufferElement;
-//		protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+//		communicationFirmwareInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 //		uint32_t registerHeader = 0;
 //		//FIXME This must go in the FSSRROCDefinitions stuff
 //		//if (it->first != "RejectHits" && it->first != "SendData")
 //		if (it->first == "VTp0")
 //		{
-//			//protocolInstance_->write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
+//			//communicationFirmwareInstance_->write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
 //			registerHeader = FSSRROCDefinitions::makeDACReadHeader(rocStream.getFEWROCAddress(), it->first);
 //			//Insert channel
 //			BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
@@ -363,8 +373,8 @@ void FSSRFirmware::makeDACBuffer(std::string& buffer, unsigned int channel, cons
 ////		}
 //
 //	    std::cout << __COUT_HDR_FL__ << "Register: " << it->first << " value: " << it->second.second << std::hex << " -> Data: " << registerHeader << std::dec << std::endl;
-//		protocolInstance_->write(bufferElement, STRIP_SC_CSR, registerHeader);
-//		protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+//		communicationFirmwareInstance_->write(bufferElement, STRIP_SC_CSR, registerHeader);
+//		communicationFirmwareInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 //
 //		//buffer.push_back(bufferElement);
 //		buffer += bufferElement;
@@ -374,12 +384,12 @@ void FSSRFirmware::makeDACBuffer(std::string& buffer, unsigned int channel, cons
 	for (DACList::const_iterator it = rocDACs.getDACList().begin(); it != rocDACs.getDACList().end(); it++)
 	{
 		std::string bufferElement;
-		protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+		communicationFirmwareInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 		uint32_t registerHeader = 0;
 		//FIXME This must go in the FSSRROCDefinitions stuff
 		if (it->first != "RejectHits" && it->first != "SendData")
 		{
-			protocolInstance_->write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
+			communicationFirmwareInstance_->write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
 			registerHeader = FSSRROCDefinitions::makeDACWriteHeader(rocStream.getFEWROCAddress(), it->first);
 			//Insert channel
 			BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
@@ -406,8 +416,8 @@ void FSSRFirmware::makeDACBuffer(std::string& buffer, unsigned int channel, cons
 		}
 
 	    //std::cout << __COUT_HDR_FL__ << "Register: " << it->first << " value: " << it->second.second << std::hex << " -> Data: " << registerHeader << std::dec << std::endl;
-		protocolInstance_->write(bufferElement, STRIP_SC_CSR, registerHeader);
-		protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+		communicationFirmwareInstance_->write(bufferElement, STRIP_SC_CSR, registerHeader);
+		communicationFirmwareInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 
 		//buffer.push_back(bufferElement);
 		buffer += bufferElement;
@@ -439,14 +449,14 @@ void FSSRFirmware::makeDACBuffer(std::vector<std::string>& buffer, unsigned int 
 		//std::cout << __COUT_HDR_FL__ << "Register?" << std::endl;
 //		if (it.first != "ActiveLines") continue;
 //		std::cout << __COUT_HDR_FL__ << "Register-1: " << it->first << " val: " << it->second.first  << " = " << it->second.second << std::endl;
-		protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+		communicationFirmwareInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 		uint32_t registerHeader = 0;
 		//FIXME This must go in the FSSRROCDefinitions stuff
 		//std::cout << __COUT_HDR_FL__ << "Register0: " << it.first << std::endl;
 		if (it.first != "RejectHits" && it.first != "SendData")
 		{
 			//std::cout << __COUT_HDR_FL__ << "Register1: " << it.first << "Channel: " << channel << " fifo address: " << ChannelFIFOAddress[channel] << std::endl;
-			protocolInstance_->write(bufferElement, ChannelFIFOAddress[channel], it.second.second);
+			communicationFirmwareInstance_->write(bufferElement, ChannelFIFOAddress[channel], it.second.second);
 			registerHeader = FSSRROCDefinitions::makeDACWriteHeader(rocStream.getFEWROCAddress(), it.first);
 			//Insert channel
 			BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
@@ -473,8 +483,8 @@ void FSSRFirmware::makeDACBuffer(std::vector<std::string>& buffer, unsigned int 
 
 		}
 		//std::cout << __COUT_HDR_FL__ << "Register: " << it.first << " value: " << it.second.second << std::hex << " -> Data: " << registerHeader << std::dec << std::endl;
-		protocolInstance_->write(bufferElement, STRIP_SC_CSR, registerHeader);
-		protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+		communicationFirmwareInstance_->write(bufferElement, STRIP_SC_CSR, registerHeader);
+		communicationFirmwareInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 
 		//std::cout << __COUT_HDR_FL__ << "Register3: " << it.first << std::endl;
 		//alternateBuffer += bufferElement;
@@ -545,17 +555,17 @@ void FSSRFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, con
 	unsigned char bitMask = 1 << channel;
 	unsigned char inst = WRITE;
 
-	protocolInstance_->waitClear(buffer, STRIP_SC_CSR, 0x80000000);
+	communicationFirmwareInstance_->waitClear(buffer, STRIP_SC_CSR, 0x80000000);
 
 	for (i = 0; i < 4; i++)
 		//write(buffer, STRIP_SCI + 4 * i, data[i]);
-		protocolInstance_->write(buffer, STRIP_SCI + 4 * (4 - i - 1), data[i]);
+		communicationFirmwareInstance_->write(buffer, STRIP_SCI + 4 * (4 - i - 1), data[i]);
 
 	w = 0x80000000 | (len << 24) | (bitMask << 16) | (inst << 10) | (addr << 5) | chipId;
 
-	ierr = protocolInstance_->write(buffer, STRIP_SC_CSR, w);
+	ierr = communicationFirmwareInstance_->write(buffer, STRIP_SC_CSR, w);
 
-	protocolInstance_->waitClear(buffer, STRIP_SC_CSR, 0x80000000);
+	communicationFirmwareInstance_->waitClear(buffer, STRIP_SC_CSR, 0x80000000);
 }
 
 //========================================================================================================================
@@ -663,7 +673,7 @@ std::string FSSRFirmware::readCSRRegister()
 {
 	std::string buffer;
 	std::cout << __COUT_HDR_FL__ << "FSSR readCSRRegister" << std::endl;
-	protocolInstance_->read(buffer,STRIP_CSR);
+	communicationFirmwareInstance_->read(buffer,STRIP_CSR);
 	return buffer;
 }
 
@@ -672,7 +682,7 @@ std::string FSSRFirmware::readSCCSRRegister()
 {
 	std::string buffer;
 	std::cout << __COUT_HDR_FL__ << "FSSR readCSRRegister" << std::endl;
-	protocolInstance_->read(buffer,STRIP_SC_CSR);
+	communicationFirmwareInstance_->read(buffer,STRIP_SC_CSR);
 	return buffer;
 }
 
@@ -810,10 +820,10 @@ void FSSRFirmware::resetTriggerCounterStripCSR(std::string& buffer)
 {
 	//Ryan's firmware is too fast so I need to make sure he understand the 1!!!!
 	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
 	BitManipulator::insertBits(stripCSRRegisterValue_, 0, 21, 1);
-	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 }
 
 //========================================================================================================================
@@ -938,11 +948,11 @@ void FSSRFirmware::resetChip(bool channel0, bool channel1, bool channel2,
 void FSSRFirmware::setFrequencyRatio(std::string& buffer, int numerator, int denominator)
 {
 	//The device need to load numerator minus one and denominator minus one, with an internal address of 0x50 and 052 respectively
-	protocolInstance_->write(buffer, STRIP_BCO_DCM, 0x80500000 + (numerator - 1)); //  Set BCOCLK numerator // was 0x80500003
-	protocolInstance_->waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish // was 0x80000000
+	communicationFirmwareInstance_->write(buffer, STRIP_BCO_DCM, 0x80500000 + (numerator - 1)); //  Set BCOCLK numerator // was 0x80500003
+	communicationFirmwareInstance_->waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish // was 0x80000000
 
-	protocolInstance_->write(buffer, STRIP_BCO_DCM, 0x80520000 + (denominator - 1)); //  Set BCOCLK denominator // was 0x80520001
-	protocolInstance_->waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish - BCO frequency should be 13.513 MHz // was 0x80000000
+	communicationFirmwareInstance_->write(buffer, STRIP_BCO_DCM, 0x80520000 + (denominator - 1)); //  Set BCOCLK denominator // was 0x80520001
+	communicationFirmwareInstance_->waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish - BCO frequency should be 13.513 MHz // was 0x80000000
 }
 
 //========================================================================================================================
@@ -966,17 +976,17 @@ void FSSRFirmware::halt(bool halt)
 //========================================================================================================================
 void FSSRFirmware::configureStripTriggerUnbiased(std::string& buffer)
 {
-	protocolInstance_->write(buffer, STRIP_TRIG_UNBIASED, 0x002805c); //  Configure unbiased trigger
+	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_UNBIASED, 0x002805c); //  Configure unbiased trigger
 }
 
 //========================================================================================================================
 void FSSRFirmware::configureTriggerInputs(std::string& buffer)
 {
-//	protocolInstance_->write(buffer, STRIP_TRIG_INPUT_0, 0x3f440000); //  FSSR GOTHIT trigger input channel 0,1
-//	protocolInstance_->write(buffer, STRIP_TRIG_INPUT_1, 0x3f440000); //  FSSR GOTHIT trigger input channel 2,3
-	protocolInstance_->write(buffer, STRIP_TRIG_INPUT_0, 0x0); //  FSSR GOTHIT trigger input channel 0,1
-	protocolInstance_->write(buffer, STRIP_TRIG_INPUT_1, 0x0); //  FSSR GOTHIT trigger input channel 2,3
-	protocolInstance_->write(buffer, STRIP_TRIG_INPUT_2, 0x0); //  FSSR GOTHIT trigger input channel 4,5
+//	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_0, 0x3f440000); //  FSSR GOTHIT trigger input channel 0,1
+//	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_1, 0x3f440000); //  FSSR GOTHIT trigger input channel 2,3
+	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_0, 0x0); //  FSSR GOTHIT trigger input channel 0,1
+	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_1, 0x0); //  FSSR GOTHIT trigger input channel 2,3
+	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_2, 0x0); //  FSSR GOTHIT trigger input channel 4,5
 }
 
 //========================================================================================================================
@@ -984,7 +994,7 @@ std::string FSSRFirmware::resetSlaveBCO(void)
 {
 	std::string buffer;
 	/*TODO:make unambiguous by casting to uint32_t*/
-	protocolInstance_->write(buffer, (uint32_t)0xc5000000, (uint32_t)0x00000008);
+	communicationFirmwareInstance_->write(buffer, (uint32_t)0xc5000000, (uint32_t)0x00000008);
 	return buffer;
 }
 
