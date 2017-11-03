@@ -22,10 +22,8 @@ PurdueFirmwareCore::~PurdueFirmwareCore(void)
 {}
 
 //========================================================================================================================
-int PurdueFirmwareCore::init(void)
-{
-	return 0;
-}
+void PurdueFirmwareCore::init(void)
+{}
 
 //========================================================================================================================
 std::string PurdueFirmwareCore::read(char* address)

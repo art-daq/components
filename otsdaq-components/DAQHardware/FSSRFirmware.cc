@@ -34,10 +34,8 @@ FSSRFirmware::~FSSRFirmware(void)
 }
 
 //========================================================================================================================
-int FSSRFirmware::init(void)
-{
-	return 0;
-}
+void FSSRFirmware::init(void)
+{}
 
 
 //========================================================================================================================
@@ -85,8 +83,13 @@ std::string FSSRFirmware::configureClocks(std::string source, double frequency)
 //========================================================================================================================
 void FSSRFirmware::resetDCM(std::string& buffer)
 {
+	__COUT__ << protocolInstance_ << std::endl;
 	resetDCMStripCSR(true);
+	__COUT__ << protocolInstance_ << std::endl;
+
 	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Set reset to DCM
+
+	__COUT__ << protocolInstance_ << std::endl;
 
 	resetDCMStripCSR(false);
 	protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Clear reset to DCM
@@ -161,10 +164,11 @@ std::string FSSRFirmware::enableTrigger(void)
 }
 
 //========================================================================================================================
-std::string FSSRFirmware::setDataDestination(std::string ip, uint32_t port)
+void FSSRFirmware::setDataDestination(std::string& buffer, const std::string& ip, const uint16_t port)
+//(std::string ip, uint32_t port)
 {
     std::cout << __COUT_HDR_FL__ << "Set data destination!" << std::endl;
-    std::string buffer;
+
     struct sockaddr_in socketAddress;
     inet_pton(AF_INET, ip.c_str(), &(socketAddress.sin_addr));
     std::cout << __COUT_HDR_FL__ << "ADDRESS: " << std::hex << ntohl(socketAddress.sin_addr.s_addr) << std::dec << std::endl;
@@ -177,7 +181,6 @@ std::string FSSRFirmware::setDataDestination(std::string ip, uint32_t port)
         printf("%2.2X-",(uint8_t)buffer[i]);
     std::cout << std::dec << std::endl;
 
-    return buffer;
 }
 
 

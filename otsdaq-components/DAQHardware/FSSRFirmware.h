@@ -14,7 +14,7 @@ class FSSRFirmware : public FrontEndFirmwareBase//, public OtsUDPFirmware/*, pub
 public:
     FSSRFirmware (unsigned int version, std::string type);
     virtual ~FSSRFirmware(void);
-    int  init(void);
+    void  init(void);
 
     std::string universalRead	  (char* address);
     std::string universalWrite	  (char* address, char* data);
@@ -25,7 +25,8 @@ public:
     std::string configureClocks     (std::string source, double frequency);
     std::string resetDetector       (int channel=-1);
     std::string enableTrigger       (void);
-    std::string setDataDestination  (std::string ip, uint32_t port);
+    virtual void setDataDestination (std::string& buffer, const std::string& ip, const uint16_t port);
+    //std::string setDataDestination  (std::string ip, uint32_t port);
 
     void resetDCM                   (std::string& buffer);
     void alignReadOut               (std::string& buffer, uint32_t value);

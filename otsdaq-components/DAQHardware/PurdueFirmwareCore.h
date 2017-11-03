@@ -15,7 +15,7 @@ class PurdueFirmwareCore : public FrontEndFirmwareBase
 public:
     PurdueFirmwareCore                               (unsigned int version);
     virtual ~PurdueFirmwareCore                      (void);
-    virtual int init                  			     (void);
+    virtual void init                  			     (void);
 
 
     std::string read	  (char* address);

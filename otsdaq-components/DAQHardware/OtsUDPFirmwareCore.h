@@ -13,7 +13,7 @@ namespace ots
 {
 //class FrontEndFirmwareBase; //FIXME AUG-17-2017 RAR
 // FIXME --AUG-17-2017 RAR  FrontEndFirmwareBase should have only init, version, universal read/write, and setDataDestination .. everything else should be defined by a particular "core" class
-class OtsUDPFirmwareCore //AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls // : public FrontEndFirmwareBase
+class OtsUDPFirmwareCore : public FrontEndFirmwareBase //AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls // : public FrontEndFirmwareBase
 {
 	//===============================================
 	//OtsUDPFirmwareCore
