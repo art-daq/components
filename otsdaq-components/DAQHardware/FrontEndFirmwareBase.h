@@ -4,11 +4,12 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <assert.h>
-//#include "otsdaq-core/ConfigurationInterface/DACStream.h"
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
 #include "otsdaq-core/Macros/CoutHeaderMacros.h"
-#include "otsdaq-components/DetectorConfiguration/ROCStream.h"
+//#include <assert.h>
+//#include "otsdaq-core/ConfigurationInterface/DACStream.h"
+//#include "otsdaq-core/Macros/CoutHeaderMacros.h"
+//#include "otsdaq-components/DetectorConfiguration/ROCStream.h"
 
 namespace ots
 {
@@ -22,7 +23,7 @@ public:
 	FrontEndFirmwareBase          (void);
     FrontEndFirmwareBase          (unsigned int version);
     virtual ~FrontEndFirmwareBase (void);
-    virtual void init             (void);
+    //virtual void init             (void);
 
     //ryan's firmware
     //TODO: these should never be called directly if the factory is used correctly, but
@@ -64,16 +65,16 @@ public:
     /*these functions have to be in FirmwareBase because the FEWOtsGenericInterface wants to access them
      *through a pointer to FirmwareBase. Might want to change how that works.
      */
-    virtual std::string readCSRRegister(void)
-    {
-    	__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");
-    	std::cout << __COUT_HDR_FL__ << "Something bad happened!" << std::endl;
-    	return "";
-    };
+//    virtual std::string readCSRRegister(void)
+//    {
+//    	__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");
+//    	std::cout << __COUT_HDR_FL__ << "Something bad happened!" << std::endl;
+//    	return "";
+//    };
 //    virtual void makeDACBuffer(std::vector<std::string>& buffer, unsigned int channel, const ROCStream& rocStream){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");  return;};
 //    virtual void makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");  return;};
 
-	static FrontEndFirmwareBase* getInstance(std::string choice, unsigned int version);
+	//static FrontEndFirmwareBase* getInstance(std::string choice, unsigned int version);
 protected:
     unsigned int version_;
 };

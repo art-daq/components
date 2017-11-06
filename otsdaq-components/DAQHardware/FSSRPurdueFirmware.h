@@ -1,5 +1,5 @@
-#ifndef _ots_FSSROtsFirmware_h_
-#define _ots_FSSROtsFirmware_h_
+#ifndef _ots_FSSRPurdueFirmware_h_
+#define _ots_FSSRPurdueFirmware_h_
 
 #include <string>
 #include "otsdaq-components/DAQHardware/FSSRApplicationFirmwareBase.h"
@@ -10,15 +10,15 @@
 namespace ots
 {
 
-class FSSROtsFirmware : public FSSRApplicationFirmwareBase//AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls ///*, public FrontEndFirmwareBase*/
+class FSSRPurdueFirmware : public FSSRApplicationFirmwareBase//AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls ///*, public FrontEndFirmwareBase*/
 {
 
 public:
-    FSSROtsFirmware (unsigned int version, std::string type);
-    virtual ~FSSROtsFirmware(void);
+    FSSRPurdueFirmware (unsigned int version, std::string type);
+    virtual ~FSSRPurdueFirmware(void);
     virtual void init(void);
 
-/*
+    /*
     //FEW specific methods
     std::string configureClocks(std::string source, double frequency);
     std::string resetDetector  (int channel=-1);

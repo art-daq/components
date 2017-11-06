@@ -3,7 +3,9 @@
 
 #include <string>
 #include "otsdaq-components/DAQHardware/FrontEndFirmwareBase.h"
+#include "otsdaq-components/DAQHardware/FSSRApplicationFirmwareBase.h"
 #include "otsdaq-components/DAQHardware/PurdueFirmwareCore.h"
+#include "otsdaq-components/DetectorConfiguration/ROCStream.h"
 
 namespace ots
 {
@@ -37,11 +39,12 @@ public:
     void resetDCM                   (std::string& buffer);
     void alignReadOut               (std::string& buffer, uint32_t value);
     void makeDACSequence 			(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream);
-    void makeMaskSequence			(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream);
     void makeDACSequence 			(FirmwareSequence<uint32_t>& sequence, unsigned int channel, const ROCStream& rocStream);
+    void makeMaskSequence			(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream);
+    void makeMaskSequence			(FirmwareSequence<uint32_t>& sequence, unsigned int channel, const ROCStream& rocStream);
+
     void makeDACBuffer   			(std::string& buffer, unsigned int channel, const ROCStream& rocStream);
     void makeDACBuffer   			(std::vector<std::string>& buffer, unsigned int channel, const ROCStream& rocStream);
-    void makeMaskSequence			(FirmwareSequence<uint32_t>& sequence, unsigned int channel, const ROCStream& rocStream);
     void makeMaskBuffer  			(std::string& buffer, unsigned int channel, const ROCStream& rocStream);
     void setFrequencyFromClockState	(std::string& buffer, double frequency);
     bool isClockStateExternal		(void);

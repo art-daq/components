@@ -43,6 +43,7 @@ FSSROtsFirmware::~FSSROtsFirmware(void)
 void FSSROtsFirmware::init(void)
 { }
 
+/*
 //========================================================================================================================
 std::string FSSROtsFirmware::configureClocks(std::string source, double frequency)
 {
@@ -274,19 +275,19 @@ void FSSROtsFirmware::makeDACSequence(FirmwareSequence<uint32_t>& sequence,
 	for (DACList::const_iterator it = rocDACs.getDACList().begin(); it
 	!= rocDACs.getDACList().end(); it++)
 	{
-		/*RYAN
+		 //RYAN
          //if(it->first != "SendData" && it->first != "RejectHits") continue;
          uint64_t data = FSSRROCDefinitions::makeDACWriteCommand(rocStream.getFEWROCAddress(), it->first, it->second.second);
-         sequence.pushBack(ChannelFIFOAddress[channel], data);
-         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0x48,56,8));
+         //sequence.pushBack(ChannelFIFOAddress[channel], data);
+         //sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0x48,56,8));
          //set WRITE
-         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)1,60,1));
+         //sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)1,60,1));
          //clr WRITE
-         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0,60,1));
+         //sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0,60,1));
          //clr TALK
-         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0,62,1));
-         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0x40,56,8));
-		 */
+         //sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0,62,1));
+         //sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0x40,56,8));
+
 
 		//if(it->first != "SendData" && it->first != "RejectHits") continue;
 		uint32_t data = FSSRROCDefinitions::makeDACWriteHeader(
@@ -810,16 +811,16 @@ void FSSROtsFirmware::resetLink(bool channel0, bool channel1, bool channel2,
 			+ ((uint32_t) channel4 << 4) + ((uint32_t) channel5 << 5),
 			0, 6);
 	BitManipulator::insertBits(stripResetRegisterValue_, 1, 29, 1);
-	/*
-     write(buffer, STRIP_RESET, (1<<28) +
-     ((uint32_t)channel0) +
-     ((uint32_t)channel1<<1) +
-     ((uint32_t)channel2<<2) +
-     ((uint32_t)channel3<<3) +
-     ((uint32_t)channel4<<4) +
-     ((uint32_t)channel5<<5)
-     );
-	 */
+
+    // write(buffer, STRIP_RESET, (1<<28) +
+    // ((uint32_t)channel0) +
+    // ((uint32_t)channel1<<1) +
+    // ((uint32_t)channel2<<2) +
+    // ((uint32_t)channel3<<3) +
+    // ((uint32_t)channel4<<4) +
+    // ((uint32_t)channel5<<5)
+    // );
+
 }
 
 //========================================================================================================================
@@ -912,7 +913,6 @@ std::string FSSROtsFirmware::resetSlaveBCO(void)
 	return buffer;
 }
 
-/*
  //========================================================================================================================
  void FSSROtsFirmware::chipID(uint32_t size)
  {
