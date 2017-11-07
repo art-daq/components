@@ -20,29 +20,36 @@ class FrontEndFirmwareBase
 
 public:
 	//factory method for choosing network protocol
-	FrontEndFirmwareBase          (void);
-    FrontEndFirmwareBase          (unsigned int version);
-    virtual ~FrontEndFirmwareBase (void);
-    //virtual void init             (void);
 
-    //ryan's firmware
-    //TODO: these should never be called directly if the factory is used correctly, but
-    //not all classes will implement every function (so no pure virtuals). should be obvious
-    //that the wrong thing is happening if these are called
-    virtual std::string  read	  					 (char* address){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
-    virtual std::string  write	  					 (char* address, char* data){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
+	//FrontEndFirmwareBase          	(void){;}
+	FrontEndFirmwareBase          	(unsigned int version = -1):version_(version){;}
+    virtual ~FrontEndFirmwareBase 	(void){;}
+    virtual void init             	(void){;}
 
-    virtual void  		 setDataDestination          (std::string& buffer, const std::string& ip, const uint16_t port){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    const unsigned int	 getVersion	() 	  {return version_;}
+
+    //These should never be called directly if used correctly, but
+    //not all classes will implement every function (so no pure virtuals). Should be obvious
+    //that the wrong thing is happening if these are called because exceptions are thrown!
+
+    virtual std::string  read	  					 (char* address)				{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return "";};
+    virtual std::string  write	  					 (char* address, char* data)	{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return "";};
+    virtual void  		 read	  					 (std::string& buffer, char* address)				{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void  		 write	  					 (std::string& buffer, char* address, char* data)	{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+
+    //virtual void  		 setDataDestination          (std::string& buffer, const std::string& ip, const uint16_t port)					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
     //virtual unsigned int write                       (std::string& buffer, uint64_t address, const std::string& value);
-    virtual unsigned int write                       (std::string& buffer, uint64_t address, uint64_t data){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
-    virtual unsigned int write                       (std::string& buffer, uint32_t address, uint32_t data){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
-    virtual unsigned int waitSet                     (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
-    virtual unsigned int waitClear                   (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
-    virtual unsigned int read                        (std::string& buffer, uint64_t address){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
-    virtual unsigned int read                        (std::string& buffer, uint32_t address){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
-    virtual unsigned int getNumberOfBufferedCommands (std::string& buffer){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
-    virtual std::string  compareSendAndReceive       (const std::string& sentBuffer, std::string& acknowledgment){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return "";};
-    virtual uint32_t     createRegisterFromValue     (std::string& readBuffer, std::string& receivedValue){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
+    virtual void 		 write                       (std::string& buffer, uint64_t address, uint64_t data)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void		 write                       (std::string& buffer, uint32_t address, uint32_t data)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void 		 waitSet                     (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void 		 waitClear                   (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void 		 read                        (std::string& buffer, uint64_t address)					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void 		 read                        (std::string& buffer, uint32_t address)					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual unsigned int getNumberOfBufferedCommands (std::string& buffer)			{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
+   // virtual std::string  compareSendAndReceive       (const std::string& sentBuffer, std::string& acknowledgment)						{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return "";};
+    virtual uint32_t     createRegisterFromValue     (std::string& readBuffer, std::string& receivedValue)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
+    //virtual uint64_t     createRegisterFromValue     (std::string& readBuffer, std::string& receivedValue)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
+
 
     //purdue firmware
 //    virtual std::string  setDataDestination          (std::string ip, unsigned int port);
@@ -75,9 +82,15 @@ public:
 //    virtual void makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");  return;};
 
 	//static FrontEndFirmwareBase* getInstance(std::string choice, unsigned int version);
+
+
+    static const std::string PURDUE_CORE_FIRMWARE_NAME;
+    static const std::string OTS_CORE_FIRMWARE_NAME;
 protected:
     unsigned int version_;
 };
+
+
 
 }
 

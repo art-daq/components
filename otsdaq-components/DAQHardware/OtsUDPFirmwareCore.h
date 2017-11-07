@@ -11,9 +11,8 @@
 
 namespace ots
 {
-//class FrontEndFirmwareBase; //FIXME AUG-17-2017 RAR
-// FIXME --AUG-17-2017 RAR  FrontEndFirmwareBase should have only init, version, universal read/write, and setDataDestination .. everything else should be defined by a particular "core" class
-class OtsUDPFirmwareCore : public FrontEndFirmwareBase //AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls // : public FrontEndFirmwareBase
+
+class OtsUDPFirmwareCore : public FrontEndFirmwareBase
 {
 	//===============================================
 	//OtsUDPFirmwareCore
@@ -21,7 +20,8 @@ class OtsUDPFirmwareCore : public FrontEndFirmwareBase //AUG-17-2017 RAR dissoci
 	//	The intent of this class is to be the core UDP firmware functionality.
 	//	This should handle everything except the user block 0x0 of the address space.
 	//
-	//		Currently there are these other blocks of the address space:
+	//
+	//		Note: Currently there are these other blocks of the address space:
 	//			block 0x1 -- UDP core
 	//			block 0x2 -- Programming over Ethernet core
 
@@ -35,12 +35,12 @@ protected:
 
     /////////////////////////////////////
     //low level functionality
-    void write	  									(std::string& buffer, const char* address, const char* data, uint8_t size = 1, uint8_t commandTypeOptions = 0);
-    void write                       				(std::string& buffer, const uint64_t& address, const char* data, uint8_t size, uint8_t commandTypeOptions = 0); //size is required, to remove ambiguity when calling write with data=0
-    void write                       				(std::string& buffer, const uint64_t& address, const uint64_t& data, uint8_t commandTypeOptions = 0);
-    void write                       				(std::string& buffer, const uint64_t& address, const std::vector<uint64_t>& data, uint8_t commandTypeOptions = 0);
-    void read	  									(std::string& buffer, char* address, uint8_t size = 1, uint8_t commandTypeOptions = 0);
-    void read                        				(std::string& buffer, const uint64_t& address, uint8_t size = 1, uint8_t commandTypeOptions = 0);
+    void writeAdvanced 									(std::string& buffer, const char* address, const char* data, uint8_t size = 1, uint8_t commandTypeOptions = 0);
+    void writeAdvanced                     				(std::string& buffer, const uint64_t& address, const char* data, uint8_t size, uint8_t commandTypeOptions = 0); //size is required, to remove ambiguity when calling write with data=0
+    void writeAdvanced                     				(std::string& buffer, const uint64_t& address, const uint64_t& data, uint8_t commandTypeOptions = 0);
+    void writeAdvanced                     				(std::string& buffer, const uint64_t& address, const std::vector<uint64_t>& data, uint8_t commandTypeOptions = 0);
+    void readAdvanced  									(std::string& buffer, char* address, uint8_t size = 1, uint8_t commandTypeOptions = 0);
+    void readAdvanced                      				(std::string& buffer, const uint64_t& address, uint8_t size = 1, uint8_t commandTypeOptions = 0);
 
     /////////////////////////////////////
     //next level functionality

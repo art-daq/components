@@ -7,11 +7,11 @@
 namespace ots
 {
 
-class OtsUDPHardware : public FrontEndHardwareBase, public TransceiverSocket
+class OtsUDPHardware : public TransceiverSocket, public FrontEndHardwareBase
 {
 
 public:
-	OtsUDPHardware (std::string interfaceIPAddress, unsigned int interfacePort, std::string boardIPAddress, unsigned int boardPort);
+	OtsUDPHardware (std::string hostIPAddress, unsigned int hostPort, std::string boardIPAddress, unsigned int boardPort, unsigned int version = -1);
 	virtual ~OtsUDPHardware(void);
 
 	virtual void write              (const std::string&              sendBuffer) throw(std::runtime_error);
@@ -33,7 +33,9 @@ protected:
 	OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort);
 	Socket      OtsUDPBoard_;
 	std::string acknowledgment_;
+
 };
+
 
 }
 

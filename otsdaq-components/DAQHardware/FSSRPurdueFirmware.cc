@@ -1,7 +1,13 @@
 #include "otsdaq-components/DAQHardware/FSSRPurdueFirmware.h"
-#include "otsdaq-components/DAQHardware/FSSRFirmwareDefinitions.h"
-#include "otsdaq-core/BitManipulator/BitManipulator.h"
-#include "otsdaq-components/DetectorHardware/FSSRROCDefinitions.h"
+
+//#include "otsdaq-components/DAQHardware/FSSRFirmwareDefinitions.h"
+//#include "otsdaq-core/BitManipulator/BitManipulator.h"
+//#include "otsdaq-components/DetectorHardware/FSSRROCDefinitions.h"
+
+#include "otsdaq-components/DAQHardware/FrontEndFirmwareBase.h"
+#include "otsdaq-components/DAQHardware/PurdueFirmwareCore.h"
+#include "otsdaq-components/DAQHardware/OtsUDPFirmwareCore.h"
+
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
 #include "otsdaq-core/Macros/CoutHeaderMacros.h"
 #include <sys/socket.h>
@@ -15,22 +21,30 @@ using namespace ots;
 
 
 //========================================================================================================================
-FSSRPurdueFirmware::FSSRPurdueFirmware(unsigned int version, std::string type) :
-		OtsUDPFirmwareCore(version),//FrontEndFirmwareBase(version),
-		stripCSRRegisterValue_(0)
-{
- 
-	//FIXME -- RAR this protocolInstance thing seems completely unnecessary.. since this class already of type OtsFirmwareCore
-	//	this concept doesn't even really make sense if the PURDUE and OTS firmware and the same function calls
-	//	If this "Firmware" layer is using a "Firmware Core" layer then there is no need to also inherit from the "Firmware Core" layer
-	//	Or, inherit and do not instantiate a new protocol instance.
-
-	//make protocol a class member
-	//protocolInstance_ = new OtsFirmwareCore(version);//AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls // //FrontEndFirmwareBase::getInstance(type,version);
-	//assert(protocolInstance_ != NULL);
-	//returns either new OtsUDPFirmware or new PurdueFirmwareCore,
-	//now we can call write/read etc with protocol->write, protocol->read, etc
-}
+FSSRPurdueFirmware::FSSRPurdueFirmware(std::string communicationFirmwareType,
+		unsigned int communicationFirmwareVersion,
+		unsigned int applicationFirmwareVersion)
+: FSSRFirmwareBase				(communicationFirmwareType,communicationFirmwareVersion,applicationFirmwareVersion)
+{}
+//	//choose: OtsUDPFirmwareCore or PurdueFirmwareCore
+//	if(communicationFirmwareType == FrontEndFirmwareBase::PURDUE_CORE_FIRMWARE_NAME)
+//		communicationFirmwareInstance_  = new PurdueFirmwareCore(communicationFirmwareVersion);
+//	if(communicationFirmwareType == FrontEndFirmwareBase::OTS_CORE_FIRMWARE_NAME)
+//		communicationFirmwareInstance_  = new OtsUDPFirmwareCore(communicationFirmwareVersion);
+//	else
+//	{
+//		__SS__ << "Unknown firmware type choice: " << choice << std::endl;
+//		__COUT_ERR__ << ss.str();
+//		throw std::runtime_error(ss.str());
+//	}
+//
+//
+//	//make protocol a class member
+//	//protocolInstance_ = new OtsFirmwareCore(version);//AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls // //FrontEndFirmwareBase::getInstance(type,version);
+//	//assert(protocolInstance_ != NULL);
+//	//returns either new OtsUDPFirmware or new PurdueFirmwareCore,
+//	//now we can call write/read etc with protocol->write, protocol->read, etc
+//}
 
 //========================================================================================================================
 FSSRPurdueFirmware::~FSSRPurdueFirmware(void)

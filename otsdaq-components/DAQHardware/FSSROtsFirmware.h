@@ -2,21 +2,25 @@
 #define _ots_FSSROtsFirmware_h_
 
 #include <string>
-#include "otsdaq-components/DAQHardware/FSSRApplicationFirmwareBase.h"
-#include "otsdaq-components/DAQHardware/FirmwareSequence.h"
-#include "otsdaq-components/DetectorConfiguration/ROCStream.h"
-#include "otsdaq-components/DAQHardware/OtsUDPFirmwareCore.h"
+#include "otsdaq-components/DAQHardware/FSSRFirmwareBase.h"
+//#include "otsdaq-components/DAQHardware/FirmwareSequence.h"
+//#include "otsdaq-components/DetectorConfiguration/ROCStream.h"
+//#include "otsdaq-components/DAQHardware/OtsUDPFirmwareCore.h"
 
 namespace ots
 {
 
-class FSSROtsFirmware : public FSSRApplicationFirmwareBase//AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls ///*, public FrontEndFirmwareBase*/
+class FrontEndFirmwareBase;
+
+class FSSROtsFirmware : public FSSRFirmwareBase
 {
 
 public:
-    FSSROtsFirmware (unsigned int version, std::string type);
+	FSSROtsFirmware (std::string communicationFirmwareType, unsigned int communicationFirmwareVersion = -1, unsigned int applicationFirmwareVersion = -1);
     virtual ~FSSROtsFirmware(void);
     virtual void init(void);
+
+protected:
 
 /*
     //FEW specific methods

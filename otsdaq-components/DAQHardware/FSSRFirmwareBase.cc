@@ -1,9 +1,12 @@
-#include "otsdaq-components/DAQHardware/FSSRFirmware.h"
+#include "otsdaq-components/DAQHardware/FSSRFirmwareBase.h"
+
+#include "otsdaq-core/MessageFacility/MessageFacility.h"
+#include "otsdaq-core/Macros/CoutHeaderMacros.h"
+
 #include "otsdaq-components/DAQHardware/FSSRFirmwareDefinitions.h"
 #include "otsdaq-core/BitManipulator/BitManipulator.h"
 #include "otsdaq-components/DetectorHardware/FSSRROCDefinitions.h"
-#include "otsdaq-core/MessageFacility/MessageFacility.h"
-#include "otsdaq-core/Macros/CoutHeaderMacros.h"
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -11,73 +14,75 @@
 #include <iostream>
 #include <cstdlib>
 
+#include "otsdaq-components/DAQHardware/FrontEndFirmwareBase.h"
+#include "otsdaq-components/DAQHardware/PurdueFirmwareCore.h"
+#include "otsdaq-components/DAQHardware/OtsUDPFirmwareCore.h"
+
 using namespace ots;
+
+const std::string FSSRFirmwareBase::PURDUE_APPLICATION_FIRMWARE_NAME 	= "PurdueFSSRApplicationFirmware";
+const std::string FSSRFirmwareBase::OTS_APPLICATION_FIRMWARE_NAME 		= "OtsUDPFSSRApplicationFirmware";
 
 
 //========================================================================================================================
-FSSRFirmware::FSSRFirmware(unsigned int version,
+FSSRFirmwareBase::FSSRFirmwareBase(
 		const std::string& communicationFirmwareType,
-		const std::string& applicationFirmwareType)
+		unsigned int communicationFirmwareVersion,
+		unsigned int version)
 :	stripCSRRegisterValue_(0)
 {
-	//(OtsUDPFirmwareCore or PurdueFirmwareCore)
-	if(communicationFirmwareType == "PurdueFirmwareCore") //could also use string and: if(choice == "purdue") etc.
-		communicationFirmwareInstance_  = new PurdueFirmwareCore(version);
-	if(communicationFirmwareType == "OtsUDPFirmwareCore") //AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls //
-		communicationFirmwareInstance_  = new OtsUDPFirmwareCore(version);
+	//choose: OtsUDPFirmwareCore or PurdueFirmwareCore
+	if(communicationFirmwareType == FrontEndFirmwareBase::PURDUE_CORE_FIRMWARE_NAME) //could also use string and: if(choice == "purdue") etc.
+		communicationFirmwareInstance_  = new PurdueFirmwareCore(communicationFirmwareVersion);
+	if(communicationFirmwareType == FrontEndFirmwareBase::PURDUE_CORE_FIRMWARE_NAME) //AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls //
+		communicationFirmwareInstance_  = new OtsUDPFirmwareCore(communicationFirmwareVersion);
 	else
 	{
-		__SS__ << "Unknown firmware type choice: " << choice << std::endl;
+		__SS__ << "Unknown communication firmware type choice: " <<
+				communicationFirmwareType << std::endl;
 		__COUT_ERR__ << ss.str();
 		throw std::runtime_error(ss.str());
-		return NULL;
 	}
 
-	//returns (FSSROtsFirmware or FSSRPurdueFirmware)
-	applicationFirmwareInstance_ = new FSSROtsFirmware();
-			//FSSRApplicationFirmwareBase::getInstance(type,version);
 
-
-	//now we can call write/read etc with communicationFirmwareInstance_->write,
+	//now we can call write/read etc with
+	//	communicationFirmwareInstance_->write,
 	//	communicationFirmwareInstance_->read, etc
 
 }
 
 //========================================================================================================================
-FSSRFirmware::~FSSRFirmware(void)
+FSSRFirmwareBase::~FSSRFirmwareBase(void)
 {
 	delete communicationFirmwareInstance_;
 	communicationFirmwareInstance_= NULL;
-
-	delete applicationFirmwareInstance_;
-	applicationFirmwareInstance_= NULL;
 }
 
 //========================================================================================================================
-void FSSRFirmware::init(void)
+void FSSRFirmwareBase::init(void)
 {}
 
 
 //========================================================================================================================
-std::string FSSRFirmware::universalRead(char* address)
+std::string FSSRFirmwareBase::universalRead(char* address)
 {
 	return communicationFirmwareInstance_->read(address);
 }
 
 //========================================================================================================================
-std::string FSSRFirmware::universalWrite(char* address, char* data)
+std::string FSSRFirmwareBase::universalWrite(char* address, char* data)
 {
 	return communicationFirmwareInstance_->write(address, data);
 }
 
 //========================================================================================================================
-uint32_t FSSRFirmware::createRegisterFromValue (std::string& readBuffer, std::string& receivedValue)
+uint32_t FSSRFirmwareBase::createRegisterFromValue (std::string& readBuffer, std::string& receivedValue)
 {
 	return communicationFirmwareInstance_->createRegisterFromValue(readBuffer,receivedValue);
 }
 
 //========================================================================================================================
-std::string FSSRFirmware::configureClocks(std::string source, double frequency)
+std::string FSSRFirmwareBase::configureClocks(std::string source, double frequency)
 {
 	std::cout << __COUT_HDR_FL__ << "Writing Clock configuration!" << std::endl;
 
@@ -101,7 +106,7 @@ std::string FSSRFirmware::configureClocks(std::string source, double frequency)
 }
 
 //========================================================================================================================
-void FSSRFirmware::resetDCM(std::string& buffer)
+void FSSRFirmwareBase::resetDCM(std::string& buffer)
 {
 	__COUT__ << communicationFirmwareInstance_ << std::endl;
 	resetDCMStripCSR(true);
@@ -119,12 +124,12 @@ void FSSRFirmware::resetDCM(std::string& buffer)
 
 
 //========================================================================================================================
-void FSSRFirmware::alignReadOut(std::string& buffer, uint32_t value)
+void FSSRFirmwareBase::alignReadOut(std::string& buffer, uint32_t value)
 {
 	communicationFirmwareInstance_->write(buffer, STRIP_TRIM_CSR, value); //  MCLKB edge for channel 5 // was 0x00002000
 }
 //========================================================================================================================
-std::string FSSRFirmware::resetDetector(int channel)
+std::string FSSRFirmwareBase::resetDetector(int channel)
 {
 	std::cout << __COUT_HDR_FL__ << "Resetting detector!" << std::endl;
 	std::string buffer;
@@ -143,7 +148,7 @@ std::string FSSRFirmware::resetDetector(int channel)
 }
 
 //========================================================================================================================
-std::string FSSRFirmware::enableTrigger(void)
+std::string FSSRFirmwareBase::enableTrigger(void)
 {
 	std::string buffer;
 	std::cout << __COUT_HDR_FL__ << "Enabling Trigger!!!" << std::endl;
@@ -168,14 +173,15 @@ std::string FSSRFirmware::enableTrigger(void)
 
 	//FIXME for IP .36 the number to set is 0x20401000
 
-	if (ots::FrontEndFirmwareBase::version_ == 1)
+	if (communicationFirmwareInstance_->getVersion() == 1)
 		communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20401000); // Turn on streaming hits along with BCO data
-	else if (ots::FrontEndFirmwareBase::version_ == 2)
+	else if (communicationFirmwareInstance_->getVersion() == 2)
 		communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20301000); // Turn on streaming hits along with BCO data
 	else
 	{
-		std::cout << __COUT_HDR_FL__ << "what version is this?" << ots::FrontEndFirmwareBase::version_ << std::endl;
-		assert(0);
+		__SS__ << "what version is this?" << communicationFirmwareInstance_->getVersion() << std::endl;
+		__COUT__ << ss.str();
+		throw std::runtime_error(ss.str());
 	}
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;
@@ -184,30 +190,30 @@ std::string FSSRFirmware::enableTrigger(void)
 }
 
 ////========================================================================================================================
-//void FSSRFirmware::setDataDestination(std::string& buffer, const std::string& ip, const uint16_t port)
+void FSSRFirmwareBase::setDataDestination(std::string& buffer, const std::string& ip, const uint16_t port)
 ////(std::string ip, uint32_t port)
-//{
-//    std::cout << __COUT_HDR_FL__ << "Set data destination!" << std::endl;
-//
-//    struct sockaddr_in socketAddress;
-//    inet_pton(AF_INET, ip.c_str(), &(socketAddress.sin_addr));
-//    std::cout << __COUT_HDR_FL__ << "ADDRESS: " << std::hex << ntohl(socketAddress.sin_addr.s_addr) << std::dec << std::endl;
-//    communicationFirmwareInstance_->write(buffer, DATA_DESTINATION_IP, ntohl(socketAddress.sin_addr.s_addr)); //  Set data destination IP 192.168.133.1
-//    std::cout << __COUT_HDR_FL__ << "PORT: " << std::hex << port << std::dec << std::endl;
-//    communicationFirmwareInstance_->write(buffer, DATA_SOURCE_DESTINATION_PORT, port); //  Set data destination port
-//    std::cout << __COUT_HDR_FL__ << "THIS IS THE BUFFER: " << buffer << std::endl;
-//
-//    for(uint32_t i=0; i<buffer.size(); i++)
-//        printf("%2.2X-",(uint8_t)buffer[i]);
-//    std::cout << std::dec << std::endl;
-//
-//}
+{
+    std::cout << __COUT_HDR_FL__ << "Set data destination!" << std::endl;
+
+    struct sockaddr_in socketAddress;
+    inet_pton(AF_INET, ip.c_str(), &(socketAddress.sin_addr));
+    std::cout << __COUT_HDR_FL__ << "ADDRESS: " << std::hex << ntohl(socketAddress.sin_addr.s_addr) << std::dec << std::endl;
+    communicationFirmwareInstance_->write(buffer, DATA_DESTINATION_IP, ntohl(socketAddress.sin_addr.s_addr)); //  Set data destination IP 192.168.133.1
+    std::cout << __COUT_HDR_FL__ << "PORT: " << std::hex << port << std::dec << std::endl;
+    communicationFirmwareInstance_->write(buffer, DATA_SOURCE_DESTINATION_PORT, port); //  Set data destination port
+    std::cout << __COUT_HDR_FL__ << "THIS IS THE BUFFER: " << buffer << std::endl;
+
+    for(uint32_t i=0; i<buffer.size(); i++)
+        printf("%2.2X-",(uint8_t)buffer[i]);
+    std::cout << std::dec << std::endl;
+
+}
 
 
 
 
 //========================================================================================================================
-std::string FSSRFirmware::resetBCO(void)
+std::string FSSRFirmwareBase::resetBCO(void)
 {
 	std::cout << __COUT_HDR_PL__ << "Reset BCO!!!" << std::endl;
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
@@ -230,7 +236,7 @@ std::string FSSRFirmware::resetBCO(void)
 }
 
 //========================================================================================================================
-std::string FSSRFirmware::armBCOReset(void)
+std::string FSSRFirmwareBase::armBCOReset(void)
 {
 	std::cout << __COUT_HDR_FL__ << std::endl;
 	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
@@ -245,7 +251,7 @@ std::string FSSRFirmware::armBCOReset(void)
 }
 
 //========================================================================================================================
-std::string FSSRFirmware::startStream(bool channel0, bool channel1, bool channel2, bool channel3, bool channel4, bool channel5)
+std::string FSSRFirmwareBase::startStream(bool channel0, bool channel1, bool channel2, bool channel3, bool channel4, bool channel5)
 {
 	std::cout << __COUT_HDR_FL__ << "Start Stream!" << std::endl;
 	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue in:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
@@ -269,7 +275,7 @@ std::string FSSRFirmware::startStream(bool channel0, bool channel1, bool channel
 }
 
 //========================================================================================================================
-std::string FSSRFirmware::stopStream(void)
+std::string FSSRFirmwareBase::stopStream(void)
 {
 	std::string buffer;
 	enableChannelsStripCSR(false, false, false, false, false, false);
@@ -279,7 +285,7 @@ std::string FSSRFirmware::stopStream(void)
 }
 
 //========================================================================================================================
-void FSSRFirmware::makeDACSequence(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream)
+void FSSRFirmwareBase::makeDACSequence(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream)
 {
 	const ROCDACs& rocDACs = rocStream.getROCDACs();
 	for (DACList::const_iterator it = rocDACs.getDACList().begin(); it	!= rocDACs.getDACList().end(); it++)
@@ -306,7 +312,7 @@ void FSSRFirmware::makeDACSequence(FirmwareSequence<uint64_t>& sequence, unsigne
 }
 
 //========================================================================================================================
-void FSSRFirmware::makeDACSequence(FirmwareSequence<uint32_t>& sequence,
+void FSSRFirmwareBase::makeDACSequence(FirmwareSequence<uint32_t>& sequence,
 		unsigned int channel, const ROCStream& rocStream)
 {
 	const ROCDACs& rocDACs = rocStream.getROCDACs();
@@ -341,7 +347,7 @@ void FSSRFirmware::makeDACSequence(FirmwareSequence<uint32_t>& sequence,
 }
 
 //========================================================================================================================
-void FSSRFirmware::makeDACBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream)
+void FSSRFirmwareBase::makeDACBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream)
 {
 	std::cout << __COUT_HDR_FL__ << "Channel: " << channel << std::endl;
 	std::cout << __COUT_HDR_FL__ << "BufferINsize: " << buffer.size() << std::endl;
@@ -437,7 +443,7 @@ void FSSRFirmware::makeDACBuffer(std::string& buffer, unsigned int channel, cons
 }
 
 //========================================================================================================================
-void FSSRFirmware::makeDACBuffer(std::vector<std::string>& buffer, unsigned int channel, const ROCStream& rocStream)
+void FSSRFirmwareBase::makeDACBuffer(std::vector<std::string>& buffer, unsigned int channel, const ROCStream& rocStream)
 {
 
 	std::cout << __COUT_HDR_FL__ << "\tMaking DAC Buffer" << std::endl;
@@ -521,7 +527,7 @@ void FSSRFirmware::makeDACBuffer(std::vector<std::string>& buffer, unsigned int 
 }
 
 //========================================================================================================================
-void FSSRFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel,
+void FSSRFirmwareBase::makeMaskBuffer(std::string& buffer, unsigned int channel,
 		const ROCStream& rocStream)
 {
 	std::cout << __COUT_HDR_FL__ << "Making mask! " << std::endl;
@@ -530,7 +536,7 @@ void FSSRFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel,
 }
 
 //========================================================================================================================
-void FSSRFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream, const std::string& registerName)
+void FSSRFirmwareBase::makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream, const std::string& registerName)
 {
 	int chipId = rocStream.getFEWROCAddress();
 	const std::string& mask = rocStream.getROCMask();
@@ -558,7 +564,7 @@ void FSSRFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, con
 		//
 	}
 
-	int i, ierr;
+	int i;
 	unsigned int w;
 	unsigned char len = 4;
 	unsigned char addr = 17;//Kill
@@ -573,13 +579,13 @@ void FSSRFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, con
 
 	w = 0x80000000 | (len << 24) | (bitMask << 16) | (inst << 10) | (addr << 5) | chipId;
 
-	ierr = communicationFirmwareInstance_->write(buffer, STRIP_SC_CSR, w);
+	communicationFirmwareInstance_->write(buffer, STRIP_SC_CSR, w);
 
 	communicationFirmwareInstance_->waitClear(buffer, STRIP_SC_CSR, 0x80000000);
 }
 
 //========================================================================================================================
-void FSSRFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
+void FSSRFirmwareBase::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
 		unsigned int channel, const ROCStream& rocStream)
 {
 	std::cout << __COUT_HDR_FL__ << "Making mask! " << std::endl;
@@ -588,7 +594,7 @@ void FSSRFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
 }
 
 //========================================================================================================================
-void FSSRFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
+void FSSRFirmwareBase::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
 		unsigned int channel, const ROCStream& rocStream)
 {
 	std::cout << __COUT_HDR_FL__ << "Making mask! " << std::endl;
@@ -597,7 +603,7 @@ void FSSRFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
 }
 
 //========================================================================================================================
-void FSSRFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
+void FSSRFirmwareBase::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
 		unsigned int channel, const ROCStream& rocStream,
 		const std::string& registerName)
 {
@@ -673,13 +679,13 @@ void FSSRFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
 }
 
 //========================================================================================================================
-void FSSRFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
+void FSSRFirmwareBase::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
 		unsigned int channel, const ROCStream& rocStream,
 		const std::string& registerName)
 {}
 
 //========================================================================================================================
-std::string FSSRFirmware::readCSRRegister()
+std::string FSSRFirmwareBase::readCSRRegister()
 {
 	std::string buffer;
 	std::cout << __COUT_HDR_FL__ << "FSSR readCSRRegister" << std::endl;
@@ -688,7 +694,7 @@ std::string FSSRFirmware::readCSRRegister()
 }
 
 //========================================================================================================================
-std::string FSSRFirmware::readSCCSRRegister()
+std::string FSSRFirmwareBase::readSCCSRRegister()
 {
 	std::string buffer;
 	std::cout << __COUT_HDR_FL__ << "FSSR readCSRRegister" << std::endl;
@@ -697,7 +703,7 @@ std::string FSSRFirmware::readSCCSRRegister()
 }
 
 //========================================================================================================================
-void FSSRFirmware::setFrequencyFromClockState(std::string& buffer, double frequency)
+void FSSRFirmwareBase::setFrequencyFromClockState(std::string& buffer, double frequency)
 {
 	std::cout << __COUT_HDR_FL__ << "Setting up clock frequency!!!" << std::endl;
 
@@ -763,7 +769,7 @@ void FSSRFirmware::setFrequencyFromClockState(std::string& buffer, double freque
 	std::cout << __COUT_HDR_FL__ << "Done with clock frequency setup!!!" << std::endl;
 }
 //========================================================================================================================
-bool FSSRFirmware::isClockStateExternal() //returns true if the clock state is External
+bool FSSRFirmwareBase::isClockStateExternal() //returns true if the clock state is External
 {
 	if (BitManipulator::readBits(stripCSRRegisterValue_, 16, 1) == 1)
 		return true;
@@ -772,13 +778,13 @@ bool FSSRFirmware::isClockStateExternal() //returns true if the clock state is E
 }
 
 //========================================================================================================================
-void FSSRFirmware::setCSRRegister(uint32_t total)
+void FSSRFirmwareBase::setCSRRegister(uint32_t total)
 {
 	stripCSRRegisterValue_ = total;
 }
 
 //========================================================================================================================
-void FSSRFirmware::setPacketSizeStripCSR(uint32_t size)
+void FSSRFirmwareBase::setPacketSizeStripCSR(uint32_t size)
 {
 	if (size > 31)
 		std::cout << __COUT_HDR_FL__
@@ -789,7 +795,7 @@ void FSSRFirmware::setPacketSizeStripCSR(uint32_t size)
 }
 
 //========================================================================================================================
-void FSSRFirmware::enableChannelsStripCSR(bool channel0, bool channel1,
+void FSSRFirmwareBase::enableChannelsStripCSR(bool channel0, bool channel1,
 		bool channel2, bool channel3, bool channel4, bool channel5)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, ((uint32_t) channel0)
@@ -799,7 +805,7 @@ void FSSRFirmware::enableChannelsStripCSR(bool channel0, bool channel1,
 }
 
 //========================================================================================================================
-void FSSRFirmware::setExternalBCOClockSourceStripCSR(std::string clockSource)
+void FSSRFirmwareBase::setExternalBCOClockSourceStripCSR(std::string clockSource)
 {
 	if (clockSource == "External")
 		BitManipulator::insertBits(stripCSRRegisterValue_, 1, 16, 1);
@@ -808,25 +814,25 @@ void FSSRFirmware::setExternalBCOClockSourceStripCSR(std::string clockSource)
 }
 
 //========================================================================================================================
-void FSSRFirmware::setHaltStripCSR(bool set)
+void FSSRFirmwareBase::setHaltStripCSR(bool set)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) set, 17, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::enableBCOStripCSR(bool enable)
+void FSSRFirmwareBase::enableBCOStripCSR(bool enable)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) enable, 19, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::flushBuffersStripCSR(void)
+void FSSRFirmwareBase::flushBuffersStripCSR(void)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 20, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::resetTriggerCounterStripCSR(std::string& buffer)
+void FSSRFirmwareBase::resetTriggerCounterStripCSR(std::string& buffer)
 {
 	//Ryan's firmware is too fast so I need to make sure he understand the 1!!!!
 	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
@@ -837,49 +843,49 @@ void FSSRFirmware::resetTriggerCounterStripCSR(std::string& buffer)
 }
 
 //========================================================================================================================
-void FSSRFirmware::resetBCOCounterStripCSR(void)
+void FSSRFirmwareBase::resetBCOCounterStripCSR(void)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 22, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::enableTriggerStripCSR(bool enable)
+void FSSRFirmwareBase::enableTriggerStripCSR(bool enable)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) enable, 23, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::sendTriggerDataStripCSR(bool send)
+void FSSRFirmwareBase::sendTriggerDataStripCSR(bool send)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) send, 24, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::sendTriggerNumberStripCSR(bool send)
+void FSSRFirmwareBase::sendTriggerNumberStripCSR(bool send)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) send, 25, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::sendBCOStripCSR(bool send)
+void FSSRFirmwareBase::sendBCOStripCSR(bool send)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) send, 26, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::enableStreamStripCSR(bool enable)
+void FSSRFirmwareBase::enableStreamStripCSR(bool enable)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) enable, 27, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::resetDCMStripCSR(bool clear)
+void FSSRFirmwareBase::resetDCMStripCSR(bool clear)
 {
 	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) clear, 31, 1);
 }
 
 //========================================================================================================================
-uint32_t FSSRFirmware::waitDCMResetStripCSR(void)
+uint32_t FSSRFirmwareBase::waitDCMResetStripCSR(void)
 {
 	uint32_t bitToCheck = 0;
 	BitManipulator::insertBits(bitToCheck, 1, 31, 2);
@@ -887,13 +893,13 @@ uint32_t FSSRFirmware::waitDCMResetStripCSR(void)
 }
 
 //========================================================================================================================
-void FSSRFirmware::resetDAC(void)
+void FSSRFirmwareBase::resetDAC(void)
 {
 	BitManipulator::insertBits(stripResetRegisterValue_, 1, 27, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::resetLink(bool channel0, bool channel1, bool channel2,
+void FSSRFirmwareBase::resetLink(bool channel0, bool channel1, bool channel2,
 		bool channel3, bool channel4, bool channel5)
 {
 	stripResetRegisterValue_ = 0;
@@ -916,7 +922,7 @@ void FSSRFirmware::resetLink(bool channel0, bool channel1, bool channel2,
 }
 
 //========================================================================================================================
-void FSSRFirmware::clearErrors(bool channel0, bool channel1, bool channel2,
+void FSSRFirmwareBase::clearErrors(bool channel0, bool channel1, bool channel2,
 		bool channel3, bool channel4, bool channel5)
 {
 	stripResetRegisterValue_ = 0;
@@ -929,7 +935,7 @@ void FSSRFirmware::clearErrors(bool channel0, bool channel1, bool channel2,
 }
 
 //========================================================================================================================
-void FSSRFirmware::clearFIFO(bool channel0, bool channel1, bool channel2,
+void FSSRFirmwareBase::clearFIFO(bool channel0, bool channel1, bool channel2,
 		bool channel3, bool channel4, bool channel5)
 {
 	stripResetRegisterValue_ = 0;
@@ -942,7 +948,7 @@ void FSSRFirmware::clearFIFO(bool channel0, bool channel1, bool channel2,
 }
 
 //========================================================================================================================
-void FSSRFirmware::resetChip(bool channel0, bool channel1, bool channel2,
+void FSSRFirmwareBase::resetChip(bool channel0, bool channel1, bool channel2,
 		bool channel3, bool channel4, bool channel5)
 {
 	stripResetRegisterValue_ = 0;
@@ -955,7 +961,7 @@ void FSSRFirmware::resetChip(bool channel0, bool channel1, bool channel2,
 }
 
 //========================================================================================================================
-void FSSRFirmware::setFrequencyRatio(std::string& buffer, int numerator, int denominator)
+void FSSRFirmwareBase::setFrequencyRatio(std::string& buffer, int numerator, int denominator)
 {
 	//The device need to load numerator minus one and denominator minus one, with an internal address of 0x50 and 052 respectively
 	communicationFirmwareInstance_->write(buffer, STRIP_BCO_DCM, 0x80500000 + (numerator - 1)); //  Set BCOCLK numerator // was 0x80500003
@@ -966,31 +972,31 @@ void FSSRFirmware::setFrequencyRatio(std::string& buffer, int numerator, int den
 }
 
 //========================================================================================================================
-void FSSRFirmware::BCOOffset(uint32_t offset)
+void FSSRFirmwareBase::BCOOffset(uint32_t offset)
 {
 	BitManipulator::insertBits(stripTriggerCSRRegisterValue_, offset, 0, 4);
 }
 
 //========================================================================================================================
-void FSSRFirmware::selectSpyFIFO(uint32_t input)
+void FSSRFirmwareBase::selectSpyFIFO(uint32_t input)
 {
 	BitManipulator::insertBits(stripTriggerCSRRegisterValue_, input, 4, 3);
 }
 
 //========================================================================================================================
-void FSSRFirmware::halt(bool halt)
+void FSSRFirmwareBase::halt(bool halt)
 {
 	BitManipulator::insertBits(stripTriggerCSRRegisterValue_, (uint32_t) halt, 7, 1);
 }
 
 //========================================================================================================================
-void FSSRFirmware::configureStripTriggerUnbiased(std::string& buffer)
+void FSSRFirmwareBase::configureStripTriggerUnbiased(std::string& buffer)
 {
 	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_UNBIASED, 0x002805c); //  Configure unbiased trigger
 }
 
 //========================================================================================================================
-void FSSRFirmware::configureTriggerInputs(std::string& buffer)
+void FSSRFirmwareBase::configureTriggerInputs(std::string& buffer)
 {
 //	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_0, 0x3f440000); //  FSSR GOTHIT trigger input channel 0,1
 //	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_1, 0x3f440000); //  FSSR GOTHIT trigger input channel 2,3
@@ -1000,7 +1006,7 @@ void FSSRFirmware::configureTriggerInputs(std::string& buffer)
 }
 
 //========================================================================================================================
-std::string FSSRFirmware::resetSlaveBCO(void)
+std::string FSSRFirmwareBase::resetSlaveBCO(void)
 {
 	std::string buffer;
 	/*TODO:make unambiguous by casting to uint32_t*/
@@ -1010,74 +1016,74 @@ std::string FSSRFirmware::resetSlaveBCO(void)
 
 /*
  //========================================================================================================================
- void FSSRFirmware::chipID(uint32_t size)
+ void FSSRFirmwareBase::chipID(uint32_t size)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, size, 0, 5);
  }
 
  //========================================================================================================================
- void FSSRFirmware::addressSlowControls(uint32_t size)
+ void FSSRFirmwareBase::addressSlowControls(uint32_t size)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, size, 5, 5);
  }
 
  //========================================================================================================================
- void FSSRFirmware::instructionSlowControls(uint32_t size)
+ void FSSRFirmwareBase::instructionSlowControls(uint32_t size)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, size, 10, 3);
  }
 
  //========================================================================================================================
- void FSSRFirmware::channelreadSelect(uint32_t size)
+ void FSSRFirmwareBase::channelreadSelect(uint32_t size)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, size, 13, 3);
  }
 
  //========================================================================================================================
- void FSSRFirmware::channelMask(uint32_t size)
+ void FSSRFirmwareBase::channelMask(uint32_t size)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, size, 16, 8);
  }
 
  //========================================================================================================================
- void FSSRFirmware::bitsLength(uint32_t length)
+ void FSSRFirmwareBase::bitsLength(uint32_t length)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, length, 26, 3);
  }
 
 
  //========================================================================================================================
- void FSSRFirmware::syncFallingBCO(bool sync)
+ void FSSRFirmwareBase::syncFallingBCO(bool sync)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, (uint32_t)sync, 28, 1);
  }
 
  //========================================================================================================================
- void FSSRFirmware::syncRisingBCO(bool sync)
+ void FSSRFirmwareBase::syncRisingBCO(bool sync)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, (uint32_t)sync, 29, 1);
  }
 
  //========================================================================================================================
- void FSSRFirmware::setRaw(bool set)
+ void FSSRFirmwareBase::setRaw(bool set)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, (uint32_t)set, 30, 1);
  }
 
  //========================================================================================================================
- void FSSRFirmware::initSlowControls(bool init)
+ void FSSRFirmwareBase::initSlowControls(bool init)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, (uint32_t)init, 31, 1);
  }
 
  //========================================================================================================================
- void FSSRFirmware::resetCount(bool reset)
+ void FSSRFirmwareBase::resetCount(bool reset)
  {
  BitManipulator::insertBits(stripAnalysisCSRRegisterValue_, (uint32_t)reset, 30, 1);
  }
 
  //========================================================================================================================
- void FSSRFirmware::setBCO_0(uint32_t void FSSRFirmware::BCOOffset(uint32_t offset)
+ void FSSRFirmwareBase::setBCO_0(uint32_t void FSSRFirmwareBase::BCOOffset(uint32_t offset)
  {
  BitManipulator::insertBits(stripTrigCSRRegisterValue_, offset, 0, 4);
  }input)
@@ -1086,31 +1092,31 @@ std::string FSSRFirmware::resetSlaveBCO(void)
  }
 
  //========================================================================================================================
- void FSSRFirmware::setBCO_1(uint32_t input)
+ void FSSRFirmwareBase::setBCO_1(uint32_t input)
  {
  BitManipulator::insertBits(trigInputRegisterValue_, input, 8, 8);
  }
 
  //========================================================================================================================
- void FSSRFirmware::trimFracBCO_0(uint32_t input)
+ void FSSRFirmwareBase::trimFracBCO_0(uint32_t input)
  {
  BitManipulator::insertBits(trigInputRegisterValue_, input, 16, 4);
  }
 
  //========================================================================================================================
- void FSSRFirmware::trimFracBCO_1(uint32_t input)
+ void FSSRFirmwareBase::trimFracBCO_1(uint32_t input)
  {
  BitManipulator::insertBits(trigInputRegisterValue_, input, 20, 4);
  }
 
  //========================================================================================================================
- void FSSRFirmware::enable_0(bool enable)
+ void FSSRFirmwareBase::enable_0(bool enable)
  {
  BitManipulator::insertBits(trigInputRegisterValue_, (uint32_t)enable, 28, 1);
  }
 
  //========================================================================================================================
- void FSSRFirmware::enable_1(bool enable)
+ void FSSRFirmwareBase::enable_1(bool enable)
  {
  BitManipulator::insertBits(trigInputRegisterValue_, (uint32_t)enable, 29, 1);
  }

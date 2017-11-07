@@ -63,7 +63,7 @@ void OtsUDPFirmwareCore::init(void)
 //========================================================================================================================
 //write
 //	size is in units of quad-words (8-Bytes)
-void OtsUDPFirmwareCore::write(std::string& buffer,
+void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 		const char* address,
 		const char* data,
 		uint8_t size,
@@ -110,35 +110,35 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
 //========================================================================================================================
 //write
 // 	Note: size is required, to remove ambiguity when calling write with data=0
-void OtsUDPFirmwareCore::write(std::string& buffer,
+void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 		const uint64_t& address,
 		const char* data,
 		uint8_t size,
 		uint8_t commandTypeOptions)
 {
-	write(buffer,(char *)&address,data,size,commandTypeOptions);
+	writeAdvanced(buffer,(char *)&address,data,size,commandTypeOptions);
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::write(std::string& buffer,
+void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 		const uint64_t& address,
 		const uint64_t& data,
 		uint8_t commandTypeOptions)
 {
-	write(buffer,(char *)&address,(char *)&data,1 /*size*/,commandTypeOptions);
+	writeAdvanced(buffer,(char *)&address,(char *)&data,1 /*size*/,commandTypeOptions);
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::write(std::string& buffer,
+void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 		const uint64_t& address,
 		const std::vector<uint64_t>& data,
 		uint8_t commandTypeOptions)
 {
-	write(buffer,(char *)&address,(char *)&data[0],data.size() /*size*/,commandTypeOptions);
+	writeAdvanced(buffer,(char *)&address,(char *)&data[0],data.size() /*size*/,commandTypeOptions);
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::read(std::string& buffer,
+void OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
 		char* address,
 		uint8_t size,
 		uint8_t commandTypeOptions)
@@ -180,12 +180,12 @@ void OtsUDPFirmwareCore::read(std::string& buffer,
 
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::read(std::string& buffer,
+void OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
 		const uint64_t& address,
 		uint8_t size,
 		uint8_t commandTypeOptions)
 {
-	read(buffer,(char *)&address,size,commandTypeOptions);
+	readAdvanced(buffer,(char *)&address,size,commandTypeOptions);
 //	unsigned int begin = buffer.length();
 //    buffer.resize(buffer.length() + 10, '\0');
 //    //buffer.resize(10);

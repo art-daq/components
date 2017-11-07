@@ -8,16 +8,21 @@ using namespace ots;
 
 
 //========================================================================================================================
-OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort) :
-        						OtsUDPBoard_(boardIPAddress, boardPort)
+OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort)
+:	//Socket() default constructor
+	OtsUDPBoard_	(boardIPAddress, 		boardPort)
+//	FrontEndHardwareBase ()
 {
 	Socket::initialize();
 }
 
 //========================================================================================================================
-OtsUDPHardware::OtsUDPHardware (std::string interfaceIPAddress, unsigned int interfacePort, std::string OtsUDPHardwareIPAddress, unsigned int OtsUDPHardwarePort) :
-        						Socket        (interfaceIPAddress,      interfacePort),
-								OtsUDPBoard_  (OtsUDPHardwareIPAddress, OtsUDPHardwarePort)
+OtsUDPHardware::OtsUDPHardware (std::string hostIPAddress, unsigned int hostPort,
+		std::string OtsUDPHardwareIPAddress, unsigned int OtsUDPHardwarePort,
+		unsigned int version)
+:	Socket        (hostIPAddress,      hostPort)
+, 	FrontEndHardwareBase (version)
+,	OtsUDPBoard_  (OtsUDPHardwareIPAddress, OtsUDPHardwarePort)
 {
 	Socket::initialize();
 }
