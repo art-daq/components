@@ -37,8 +37,8 @@ using namespace ots;
 #define ADDR_BURST_MODE 			(uint64_t)(0x9)			//1
 #define ADDR_CTRL_RESOLVE_MAC		(uint64_t)(0xA)			//1
 #define ADDR_DATA_RESOLVE_MAC		(uint64_t)(0xB)			//1
-#define ADDR_SELF_VERSION			(uint64_t)(0x64)		//16 (read only)
-#define ADDR_SELF_RESET				(uint64_t)(0x64)		//1  (write only)
+#define ADDR_SELF_VERSION			(uint64_t)(0x64)		//16 (OtsUDPFirmwareCore::readAdvanced only)
+#define ADDR_SELF_RESET				(uint64_t)(0x64)		//1  (OtsUDPFirmwareCore::writeAdvanced only)
 
 //end ADDRESS SPACE
 /////////////////////////////////=======================================
@@ -61,9 +61,9 @@ void OtsUDPFirmwareCore::init(void)
 {}
 
 //========================================================================================================================
-//write
+//OtsUDPFirmwareCore::writeAdvanced
 //	size is in units of quad-words (8-Bytes)
-void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
+void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 		const char* address,
 		const char* data,
 		uint8_t size,
@@ -71,7 +71,7 @@ void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 {
 	if(size > 182)
 	{
-		__SS__ << "Invalid write size: " << size << std::endl;
+		__SS__ << "Invalid OtsUDPFirmwareCore::writeAdvanced size: " << size << std::endl;
 		__COUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
@@ -88,7 +88,7 @@ void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 	unsigned int begin = buffer.length();
 	buffer.resize(buffer.length() + 2 + 8 + 8*size, '\0');
 
-    buffer[begin + 0] = 1 | commandTypeOptions;//WRITE
+    buffer[begin + 0] = 1 | commandTypeOptions;//OtsUDPFirmwareCore::writeAdvanced
     buffer[begin + 1] = size;//# of 64 bits words
 
 	std::copy_n(address,sizeof(uint64_t),&buffer[begin + 2]);
@@ -96,7 +96,7 @@ void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
     	std::copy_n((char *)&data[8*i],sizeof(uint64_t),&buffer[begin + 2 + 8 + 8*i]);
 
 	///////
-    __SS__ << "\tAdded WRITE to Buffer:-";
+    __SS__ << "\tAdded OtsUDPFirmwareCore::writeAdvanced to Buffer:-";
     for(uint32_t i=begin; i<buffer.size(); i++)
     {
     	if(i==begin+2) ss << ":::";
@@ -108,44 +108,44 @@ void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 }
 
 //========================================================================================================================
-//write
-// 	Note: size is required, to remove ambiguity when calling write with data=0
-void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
+//OtsUDPFirmwareCore::writeAdvanced
+// 	Note: size is required, to remove ambiguity when calling OtsUDPFirmwareCore::writeAdvanced with data=0
+void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 		const uint64_t& address,
 		const char* data,
 		uint8_t size,
 		uint8_t commandTypeOptions)
 {
-	writeAdvanced(buffer,(char *)&address,data,size,commandTypeOptions);
+	OtsUDPFirmwareCore::writeAdvanced(buffer,(char *)&address,data,size,commandTypeOptions);
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
+void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 		const uint64_t& address,
 		const uint64_t& data,
 		uint8_t commandTypeOptions)
 {
-	writeAdvanced(buffer,(char *)&address,(char *)&data,1 /*size*/,commandTypeOptions);
+	OtsUDPFirmwareCore::writeAdvanced(buffer,(char *)&address,(char *)&data,1 /*size*/,commandTypeOptions);
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
+void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 		const uint64_t& address,
 		const std::vector<uint64_t>& data,
 		uint8_t commandTypeOptions)
 {
-	writeAdvanced(buffer,(char *)&address,(char *)&data[0],data.size() /*size*/,commandTypeOptions);
+	OtsUDPFirmwareCore::writeAdvanced(buffer,(char *)&address,(char *)&data[0],data.size() /*size*/,commandTypeOptions);
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
+void OtsUDPFirmwareCore::OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
 		char* address,
 		uint8_t size,
 		uint8_t commandTypeOptions)
 {
 	if(size > 182)
 	{
-		__SS__ << "Invalid read size: " << size << std::endl;
+		__SS__ << "Invalid OtsUDPFirmwareCore::readAdvanced size: " << size << std::endl;
 		__COUT_ERR__ << "\n" << ss.str();
 		throw std::runtime_error(ss.str());
 	}
@@ -161,13 +161,13 @@ void OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
 	unsigned int begin = buffer.length();
 	buffer.resize(buffer.length() + 2 + 8, '\0');
 
-    buffer[begin + 0] = (uint8_t)0 | commandTypeOptions;//READ
+    buffer[begin + 0] = (uint8_t)0 | commandTypeOptions;//OtsUDPFirmwareCore::readAdvanced
     buffer[begin + 1] = size;//# of 64 bits words
 
 	std::copy_n(address,sizeof(uint64_t),&buffer[begin + 2]);
 
 	///////
-    __SS__ << "\tAdded READ to Buffer:-";
+    __SS__ << "\tAdded OtsUDPFirmwareCore::readAdvanced to Buffer:-";
     for(uint32_t i=begin; i<buffer.size(); i++)
     {
     	if(i==begin+2) ss << ":::";
@@ -180,16 +180,16 @@ void OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
 
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
+void OtsUDPFirmwareCore::OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
 		const uint64_t& address,
 		uint8_t size,
 		uint8_t commandTypeOptions)
 {
-	readAdvanced(buffer,(char *)&address,size,commandTypeOptions);
+	OtsUDPFirmwareCore::readAdvanced(buffer,(char *)&address,size,commandTypeOptions);
 //	unsigned int begin = buffer.length();
 //    buffer.resize(buffer.length() + 10, '\0');
 //    //buffer.resize(10);
-//    buffer[begin + 0] = (uint8_t)0 | commandTypeOptions;//READ
+//    buffer[begin + 0] = (uint8_t)0 | commandTypeOptions;//OtsUDPFirmwareCore::readAdvanced
 //    buffer[begin + 1] = size;//# of 64 bits words
 //    std::copy_n((char *)&address,sizeof(uint64_t),&buffer[begin + 2]);
 //
@@ -222,7 +222,7 @@ void OtsUDPFirmwareCore::setDataDestination(std::string& buffer,
 	//put firmware in dynamic mac resolution mode for burst mode
 	__COUT__ << "dynamic mac address: " << std::hex <<
 			uint64_t(UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_RESOLVE_MAC) << std::endl;
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_RESOLVE_MAC /* addr */,
 			1 /* data */);
 
@@ -248,7 +248,7 @@ void OtsUDPFirmwareCore::setControlDestination(std::string& buffer,
 		const std::string& ipAddress, const uint16_t port)
 {
 	//put firmware in dynamic mac resolution mode for burst mode
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_RESOLVE_MAC /* addr */,
 			1 /* data */);
 
@@ -272,7 +272,7 @@ void OtsUDPFirmwareCore::setControlDestination(std::string& buffer,
 //========================================================================================================================
 void OtsUDPFirmwareCore::writeDataDestinationIP(std::string& buffer, const uint64_t value)
 {
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_DEST_IP /* addr */,
 			value /* data */);
 }
@@ -280,7 +280,7 @@ void OtsUDPFirmwareCore::writeDataDestinationIP(std::string& buffer, const uint6
 //========================================================================================================================
 void OtsUDPFirmwareCore::writeDataDestinationMAC(std::string& buffer, const uint64_t value)
 {
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_DEST_MAC /* addr */,
 			value /* data */);
 }
@@ -288,7 +288,7 @@ void OtsUDPFirmwareCore::writeDataDestinationMAC(std::string& buffer, const uint
 //========================================================================================================================
 void OtsUDPFirmwareCore::writeDataDestinationPort(std::string& buffer, const uint64_t value)
 {
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_DEST_PORT /* addr */,
 			value /* data */);
 }
@@ -296,28 +296,28 @@ void OtsUDPFirmwareCore::writeDataDestinationPort(std::string& buffer, const uin
 //========================================================================================================================
 void OtsUDPFirmwareCore::readDataDestinationIP(std::string& buffer)
 {
-	read(buffer,
+	OtsUDPFirmwareCore::readAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_DEST_IP /* addr */);
 }
 
 //========================================================================================================================
 void OtsUDPFirmwareCore::readDataDestinationMAC(std::string& buffer)
 {
-	read(buffer,
+	OtsUDPFirmwareCore::readAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_DEST_MAC /* addr */);
 }
 
 //========================================================================================================================
 void OtsUDPFirmwareCore::readDataDestinationPort(std::string& buffer)
 {
-	read(buffer,
+	OtsUDPFirmwareCore::readAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_DEST_PORT /* addr */);
 }
 
 //========================================================================================================================
 void OtsUDPFirmwareCore::writeControlDestinationIP(std::string& buffer, const uint64_t value)
 {
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_IP /* addr */,
 			value /* data */);
 }
@@ -325,7 +325,7 @@ void OtsUDPFirmwareCore::writeControlDestinationIP(std::string& buffer, const ui
 //========================================================================================================================
 void OtsUDPFirmwareCore::writeControlDestinationMAC(std::string& buffer, const uint64_t value)
 {
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_MAC /* addr */,
 			value /* data */);
 }
@@ -333,7 +333,7 @@ void OtsUDPFirmwareCore::writeControlDestinationMAC(std::string& buffer, const u
 //========================================================================================================================
 void OtsUDPFirmwareCore::writeControlDestinationPort(std::string& buffer, const uint64_t value)
 {
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_PORT /* addr */,
 			value /* data */);
 }
@@ -341,35 +341,35 @@ void OtsUDPFirmwareCore::writeControlDestinationPort(std::string& buffer, const 
 //========================================================================================================================
 void OtsUDPFirmwareCore::readControlDestinationIP(std::string& buffer)
 {
-	read(buffer,
+	OtsUDPFirmwareCore::readAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_IP /* addr */);
 }
 
 //========================================================================================================================
 void OtsUDPFirmwareCore::readControlDestinationMAC(std::string& buffer)
 {
-	read(buffer,
+	OtsUDPFirmwareCore::readAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_MAC /* addr */);
 }
 
 //========================================================================================================================
 void OtsUDPFirmwareCore::readControlDestinationPort(std::string& buffer)
 {
-	read(buffer,
+	OtsUDPFirmwareCore::readAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_PORT /* addr */);
 }
 
 //========================================================================================================================
 void OtsUDPFirmwareCore::readUDPFirmwareVersion(std::string& buffer)
 {
-	read(buffer,
+	OtsUDPFirmwareCore::readAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_VERSION /* addr */);
 }
 
 //========================================================================================================================
 void OtsUDPFirmwareCore::forceReset(std::string& buffer)
 {
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */,
 			1 /* data */);
 }
@@ -378,7 +378,7 @@ void OtsUDPFirmwareCore::forceReset(std::string& buffer)
 void OtsUDPFirmwareCore::startBurst(std::string& buffer)
 {
 	__COUT__ << std::endl;
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_BURST_MODE /* addr */,
 			1 /* data */);
 }
@@ -387,7 +387,7 @@ void OtsUDPFirmwareCore::startBurst(std::string& buffer)
 void OtsUDPFirmwareCore::stopBurst(std::string& buffer)
 {
 	__COUT__ << std::endl;
-	write(buffer,
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_BURST_MODE /* addr */,
 			0 /* data */);
 }
