@@ -21,12 +21,12 @@ public:
     std::string read	  (char* address);
     std::string write	  (char* address, char* data);
 
-    virtual void write                       (std::string& buffer, uint32_t address, uint32_t data);
-    virtual void waitSet                     (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255);
-    virtual void waitClear                   (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255);
-    virtual void read                        (std::string& buffer, uint32_t address);
+    virtual void write                       (std::string& buffer, uint32_t address, uint32_t data, bool clearBuffer=true);
+    virtual void waitSet                     (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255, bool clearBuffer=true);
+    virtual void waitClear                   (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255, bool clearBuffer=true);
+    virtual void read                        (std::string& buffer, uint32_t address, bool clearBuffer=true);
 
-    virtual void setDataDestination          (std::string& buffer, const std::string& ip, const uint16_t port);
+    virtual void setDataDestination          (std::string& buffer, const std::string& ip, const uint16_t port, bool clearBuffer=true);
 
 	/*This prevents "hidden virtual" problem, since PurdueFirmwareCore, unlike the ots firmware
 	 * only defines write/read for 32 bits. if, somehow, a 64 bit write/read gets called, it will

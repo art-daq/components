@@ -6,10 +6,6 @@
 #include <vector>
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
 #include "otsdaq-core/Macros/CoutHeaderMacros.h"
-//#include <assert.h>
-//#include "otsdaq-core/ConfigurationInterface/DACStream.h"
-//#include "otsdaq-core/Macros/CoutHeaderMacros.h"
-//#include "otsdaq-components/DetectorConfiguration/ROCStream.h"
 
 namespace ots
 {
@@ -33,18 +29,18 @@ public:
     //that the wrong thing is happening if these are called because exceptions are thrown!
 
     virtual std::string  read	  					 (char* address)				{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return "";};
-    virtual std::string  write	  					 (char* address, char* data)	{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return "";};
-    virtual void  		 read	  					 (std::string& buffer, char* address)				{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
-    virtual void  		 write	  					 (std::string& buffer, char* address, char* data)	{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void  		 read	  					 (std::string& buffer, char* address, bool clearBuffer=true)				{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void 		 read                        (std::string& buffer, uint64_t address, bool clearBuffer=true)					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void 		 read                        (std::string& buffer, uint32_t address, bool clearBuffer=true)					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
 
-    //virtual void  		 setDataDestination          (std::string& buffer, const std::string& ip, const uint16_t port)					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
-    //virtual unsigned int write                       (std::string& buffer, uint64_t address, const std::string& value);
-    virtual void 		 write                       (std::string& buffer, uint64_t address, uint64_t data)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
-    virtual void		 write                       (std::string& buffer, uint32_t address, uint32_t data)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
-    virtual void 		 waitSet                     (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
-    virtual void 		 waitClear                   (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
-    virtual void 		 read                        (std::string& buffer, uint64_t address)					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
-    virtual void 		 read                        (std::string& buffer, uint32_t address)					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual std::string  write	  					 (char* address, char* data)	{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return "";};
+    virtual void  		 write	  					 (std::string& buffer, char* address, char* data, bool clearBuffer=true)	{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+
+    virtual void  		 setDataDestination          (std::string& buffer, const std::string& ip, const uint16_t port, bool clearBuffer=true)					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void 		 write                       (std::string& buffer, uint64_t address, uint64_t data, bool clearBuffer=true)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void		 write                       (std::string& buffer, uint32_t address, uint32_t data, bool clearBuffer=true)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void 		 waitSet                     (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255, bool clearBuffer=true)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    virtual void 		 waitClear                   (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255, bool clearBuffer=true)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
     virtual unsigned int getNumberOfBufferedCommands (std::string& buffer)			{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
    // virtual std::string  compareSendAndReceive       (const std::string& sentBuffer, std::string& acknowledgment)						{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return "";};
     virtual uint32_t     createRegisterFromValue     (std::string& readBuffer, std::string& receivedValue)		{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;};
@@ -83,11 +79,7 @@ public:
 
 	//static FrontEndFirmwareBase* getInstance(std::string choice, unsigned int version);
 
-
-    static const std::string PURDUE_CORE_FIRMWARE_NAME;
-    static const std::string OTS_CORE_FIRMWARE_NAME;
-protected:
-    unsigned int version_;
+    const unsigned int version_;
 };
 
 

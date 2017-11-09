@@ -35,6 +35,9 @@ public:
 	virtual void read               (const std::string&              sendBuffer , std::string&              	receiveBuffer,  int timeoutSeconds = -1) throw(std::runtime_error){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");}
 	virtual void read               (const std::vector<std::string>& sendBuffers, std::vector<std::string>& 	receiveBuffers, int timeoutSeconds = -1) throw(std::runtime_error){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");}
 
+	//return count of 'things' flushed
+	virtual	int flushRead			()		throw(std::runtime_error){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;}
+
     static const std::string PURDUE_HARDWARE_NAME;
     static const std::string OTS_HARDWARE_NAME;
 protected:

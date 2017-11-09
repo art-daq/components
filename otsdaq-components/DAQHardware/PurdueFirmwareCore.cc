@@ -27,9 +27,12 @@ void PurdueFirmwareCore::init(void)
 
 //========================================================================================================================
 void PurdueFirmwareCore::setDataDestination(std::string& buffer,
-		const std::string& ipAddress, const uint16_t port)
+		const std::string& ipAddress, const uint16_t port,bool clearBuffer)
 {
 	//do nothing
+
+	if(clearBuffer)
+		buffer.resize(0);
 }
 
 //========================================================================================================================
@@ -49,8 +52,11 @@ std::string PurdueFirmwareCore::write(char* address, char* data)
 }
 
 //========================================================================================================================
-void PurdueFirmwareCore::write(std::string& buffer, uint32_t address, uint32_t data)
+void PurdueFirmwareCore::write(std::string& buffer, uint32_t address, uint32_t data,bool clearBuffer)
 {
+	if(clearBuffer)
+		buffer.resize(0);
+
 	//std::cout << __COUT_HDR_FL__ << "Making buffer" << std::endl;
 	unsigned int begin = buffer.length();
 	unsigned int numberOfBufferedCommands = getNumberOfBufferedCommands(buffer);
@@ -75,8 +81,11 @@ void PurdueFirmwareCore::write(std::string& buffer, uint32_t address, uint32_t d
 }
 
 //========================================================================================================================
-void PurdueFirmwareCore::waitSet(std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout)
+void PurdueFirmwareCore::waitSet(std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout,bool clearBuffer)
 {
+	if(clearBuffer)
+		buffer.resize(0);
+
 	unsigned int begin = buffer.length();
 	unsigned int numberOfBufferedCommands = getNumberOfBufferedCommands(buffer);
 	buffer.resize(buffer.length() + 16, '\0');
@@ -104,8 +113,11 @@ void PurdueFirmwareCore::waitSet(std::string& buffer, uint32_t address, uint32_t
 }
 
 //========================================================================================================================
-void PurdueFirmwareCore::waitClear(std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout)
+void PurdueFirmwareCore::waitClear(std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout,bool clearBuffer)
 {
+	if(clearBuffer)
+		buffer.resize(0);
+
 	unsigned int begin = buffer.length();
 	unsigned int numberOfBufferedCommands = getNumberOfBufferedCommands(buffer);
 	buffer.resize(buffer.length() + 16, '\0');
@@ -133,8 +145,11 @@ void PurdueFirmwareCore::waitClear(std::string& buffer, uint32_t address, uint32
 }
 
 //========================================================================================================================
-void PurdueFirmwareCore::read(std::string& buffer, uint32_t address)
+void PurdueFirmwareCore::read(std::string& buffer, uint32_t address,bool clearBuffer)
 {
+	if(clearBuffer)
+		buffer.resize(0);
+
 	unsigned int begin = buffer.length();
 	unsigned int numberOfBufferedCommands = getNumberOfBufferedCommands(buffer);
 	buffer.resize(buffer.length() + 8, '\0');

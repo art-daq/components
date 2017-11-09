@@ -57,7 +57,7 @@ public:
     std::string 			universalRead	  				(char* address);
     std::string 			universalWrite	  				(char* address, char* data);
 
-    virtual void  		    setDataDestination              (std::string& buffer, const std::string& ip, const uint16_t port);//					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    //virtual void  		    setDataDestination              (std::string& buffer, const std::string& ip, const uint16_t port);//					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
     uint32_t 				createRegisterFromValue 		(std::string& readBuffer, std::string& receivedValue);
 
     //FEW specific methods
@@ -144,13 +144,14 @@ public:
 
 	std::string  			resetSlaveBCO(void);
 
-public:
-    static const std::string PURDUE_APPLICATION_FIRMWARE_NAME;
-    static const std::string OTS_APPLICATION_FIRMWARE_NAME;
+    static const std::string PURDUE_FIRMWARE_NAME;
+    static const std::string OTS_FIRMWARE_NAME;
+
+    FrontEndFirmwareBase* 	communicationFirmwareInstance_;
 
 protected:
-    FrontEndFirmwareBase* 	communicationFirmwareInstance_;
     unsigned int version_;
+    const std::string communicationFirmwareType_;
 };
 
 }
