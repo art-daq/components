@@ -9,7 +9,6 @@
 #include <iostream>
 #include <cstdlib>
 
-#include "../UserConfigurationDataFormats/FEOtsUDPFSSRInterfaceConfiguration.h"
 using namespace ots;
 
 //========================================================================================================================
@@ -23,9 +22,17 @@ PurdueFirmwareCore::~PurdueFirmwareCore(void)
 {}
 
 //========================================================================================================================
-int PurdueFirmwareCore::init(void)
+void PurdueFirmwareCore::init(void)
+{}
+
+//========================================================================================================================
+void PurdueFirmwareCore::setDataDestination(std::string& buffer,
+		const std::string& ipAddress, const uint16_t port,bool clearBuffer)
 {
-	return 0;
+	//do nothing
+
+	if(clearBuffer)
+		buffer.resize(0);
 }
 
 //========================================================================================================================
@@ -45,8 +52,11 @@ std::string PurdueFirmwareCore::write(char* address, char* data)
 }
 
 //========================================================================================================================
-unsigned int PurdueFirmwareCore::write(std::string& buffer, uint32_t address, uint32_t data)
+void PurdueFirmwareCore::write(std::string& buffer, uint32_t address, uint32_t data,bool clearBuffer)
 {
+	if(clearBuffer)
+		buffer.resize(0);
+
 	//std::cout << __COUT_HDR_FL__ << "Making buffer" << std::endl;
 	unsigned int begin = buffer.length();
 	unsigned int numberOfBufferedCommands = getNumberOfBufferedCommands(buffer);
@@ -67,12 +77,15 @@ unsigned int PurdueFirmwareCore::write(std::string& buffer, uint32_t address, ui
 	buffer[begin + 11] = data & 0xff;
 	if (begin == 0)
 		buffer += '\0';
-	return (unsigned int) buffer[begin] + 1;
+	//return (unsigned int) buffer[begin] + 1;
 }
 
 //========================================================================================================================
-unsigned int PurdueFirmwareCore::waitSet(std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout)
+void PurdueFirmwareCore::waitSet(std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout,bool clearBuffer)
 {
+	if(clearBuffer)
+		buffer.resize(0);
+
 	unsigned int begin = buffer.length();
 	unsigned int numberOfBufferedCommands = getNumberOfBufferedCommands(buffer);
 	buffer.resize(buffer.length() + 16, '\0');
@@ -96,12 +109,15 @@ unsigned int PurdueFirmwareCore::waitSet(std::string& buffer, uint32_t address, 
 	buffer[begin + 15] = timeout & 0xff;
 	if (begin == 0)
 		buffer += '\0';
-	return (unsigned int) buffer[begin] + 1;
+	//return (unsigned int) buffer[begin] + 1;
 }
 
 //========================================================================================================================
-unsigned int PurdueFirmwareCore::waitClear(std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout)
+void PurdueFirmwareCore::waitClear(std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout,bool clearBuffer)
 {
+	if(clearBuffer)
+		buffer.resize(0);
+
 	unsigned int begin = buffer.length();
 	unsigned int numberOfBufferedCommands = getNumberOfBufferedCommands(buffer);
 	buffer.resize(buffer.length() + 16, '\0');
@@ -125,12 +141,15 @@ unsigned int PurdueFirmwareCore::waitClear(std::string& buffer, uint32_t address
 	buffer[begin + 15] = timeout & 0xff;
 	if (begin == 0)
 		buffer += '\0';
-	return (unsigned int) buffer[begin] + 1;
+	//return (unsigned int) buffer[begin] + 1;
 }
 
 //========================================================================================================================
-unsigned int PurdueFirmwareCore::read(std::string& buffer, uint32_t address)
+void PurdueFirmwareCore::read(std::string& buffer, uint32_t address,bool clearBuffer)
 {
+	if(clearBuffer)
+		buffer.resize(0);
+
 	unsigned int begin = buffer.length();
 	unsigned int numberOfBufferedCommands = getNumberOfBufferedCommands(buffer);
 	buffer.resize(buffer.length() + 8, '\0');
@@ -146,7 +165,7 @@ unsigned int PurdueFirmwareCore::read(std::string& buffer, uint32_t address)
 	buffer[begin + 7] = address & 0xff;
 	if (begin == 0)
 		buffer += '\0';
-	return (unsigned int) buffer[begin] + 1;
+	//return (unsigned int) buffer[begin] + 1;
 }
 
 //========================================================================================================================

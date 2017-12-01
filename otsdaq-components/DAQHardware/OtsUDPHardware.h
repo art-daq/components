@@ -7,11 +7,11 @@
 namespace ots
 {
 
-class OtsUDPHardware : public FrontEndHardwareBase, public TransceiverSocket
+class OtsUDPHardware : public TransceiverSocket, public FrontEndHardwareBase
 {
 
 public:
-	OtsUDPHardware (std::string interfaceIPAddress, unsigned int interfacePort, std::string boardIPAddress, unsigned int boardPort);
+	OtsUDPHardware (std::string hostIPAddress, unsigned int hostPort, std::string boardIPAddress, unsigned int boardPort, unsigned int version = -1);
 	virtual ~OtsUDPHardware(void);
 
 	virtual void write              (const std::string&              sendBuffer) throw(std::runtime_error);
@@ -21,10 +21,12 @@ public:
 	virtual void read               (const std::string&              sendBuffer , std::string&              	receiveBuffer, int timeoutSeconds = -1) throw(std::runtime_error);
 	virtual void read               (const std::vector<std::string>& sendBuffers, std::vector<std::string>& 	receiveBuffers, int timeoutSeconds = -1) throw(std::runtime_error);
 
+	virtual int  flushRead			() throw(std::runtime_error) {return clearReadSocket();}
+
 	void read	          			(const std::string&              sendBuffer, uint64_t&	              receiveQuadWord, int timeoutSeconds = -1) throw(std::runtime_error);
 	void read	        		   	(const std::string&              sendBuffer, std::vector<uint64_t>&	  receiveQuadWords, int timeoutSeconds = -1) throw(std::runtime_error);
 	void read			           	(const std::vector<std::string>& sendBuffers, std::vector<std::vector<uint64_t> >&	receiveQuadWordsVector, int timeoutSeconds = -1) throw(std::runtime_error);
-	int clearReadSocket	   ();
+	int  clearReadSocket	   		();
 	//
 //    virtual int write(uint64_t address, const std::string& value){return 0;}
 //    virtual int read (uint64_t address, std::string& value){return 0;}
@@ -33,7 +35,9 @@ protected:
 	OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort);
 	Socket      OtsUDPBoard_;
 	std::string acknowledgment_;
+
 };
+
 
 }
 

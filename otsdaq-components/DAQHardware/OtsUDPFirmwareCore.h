@@ -11,9 +11,8 @@
 
 namespace ots
 {
-//class FrontEndFirmwareBase; //FIXME AUG-17-2017 RAR
-// FIXME --AUG-17-2017 RAR  FrontEndFirmwareBase should have only init, version, universal read/write, and setDataDestination .. everything else should be defined by a particular "core" class
-class OtsUDPFirmwareCore //AUG-17-2017 RAR dissociated because function calls are entirely independent from PURDUE firmware calls // : public FrontEndFirmwareBase
+
+class OtsUDPFirmwareCore : public FrontEndFirmwareBase
 {
 	//===============================================
 	//OtsUDPFirmwareCore
@@ -21,7 +20,8 @@ class OtsUDPFirmwareCore //AUG-17-2017 RAR dissociated because function calls ar
 	//	The intent of this class is to be the core UDP firmware functionality.
 	//	This should handle everything except the user block 0x0 of the address space.
 	//
-	//		Currently there are these other blocks of the address space:
+	//
+	//		Note: Currently there are these other blocks of the address space:
 	//			block 0x1 -- UDP core
 	//			block 0x2 -- Programming over Ethernet core
 
@@ -31,26 +31,42 @@ public:
     virtual ~OtsUDPFirmwareCore                     (void);
     virtual void init                  			  	(void);
 
-protected:
 
     /////////////////////////////////////
+    //implementation of base class virtual functionality
+
+    //std::string read	  (char* address);
+    virtual std::string  write	  					 (char* address, char* data);
+    virtual void  		 write	  					 (std::string& buffer, char* address, char* data, bool clearBuffer=true);
+    virtual void		 write                       (std::string& buffer, uint32_t address, uint32_t data, bool clearBuffer=true);
+    virtual void		 write                       (std::string& buffer, uint64_t address, uint64_t data, bool clearBuffer=true);
+    virtual void 		 waitClear                   (std::string& buffer, uint32_t address, uint32_t data, uint32_t timeout = 255, bool clearBuffer=true){}
+
+    virtual std::string  read	  					 (char* address);
+	virtual void  		 read	  					 (std::string& buffer, char* address, bool clearBuffer=true);
+	virtual void 		 read                        (std::string& buffer, uint64_t address, bool clearBuffer=true);
+	virtual void 		 read                        (std::string& buffer, uint32_t address, bool clearBuffer=true);
+
+
+    virtual void 		setDataDestination     		 (std::string& buffer, const std::string& ip, const uint16_t port, bool clearBuffer=true);
+
+    virtual uint32_t 	createRegisterFromValue		 (std::string& readBuffer, std::string& receivedValue);
+    /////////////////////////////////////
     //low level functionality
-    void write	  									(std::string& buffer, const char* address, const char* data, uint8_t size = 1, uint8_t commandTypeOptions = 0);
-    void write                       				(std::string& buffer, const uint64_t& address, const char* data, uint8_t size, uint8_t commandTypeOptions = 0); //size is required, to remove ambiguity when calling write with data=0
-    void write                       				(std::string& buffer, const uint64_t& address, const uint64_t& data, uint8_t commandTypeOptions = 0);
-    void write                       				(std::string& buffer, const uint64_t& address, const std::vector<uint64_t>& data, uint8_t commandTypeOptions = 0);
-    void read	  									(std::string& buffer, char* address, uint8_t size = 1, uint8_t commandTypeOptions = 0);
-    void read                        				(std::string& buffer, const uint64_t& address, uint8_t size = 1, uint8_t commandTypeOptions = 0);
+    void writeAdvanced 									(std::string& buffer, const char* address, const char* data, uint8_t size = 1, uint8_t commandTypeOptions = 0, bool clearBuffer=true);
+    void writeAdvanced                     				(std::string& buffer, const uint64_t& address, const char* data, uint8_t size, uint8_t commandTypeOptions = 0, bool clearBuffer=true); //size is required, to remove ambiguity when calling write with data=0
+    void writeAdvanced                     				(std::string& buffer, const uint64_t& address, const uint64_t& data, uint8_t commandTypeOptions = 0, bool clearBuffer=true);
+    void writeAdvanced                     				(std::string& buffer, const uint64_t& address, const std::vector<uint64_t>& data, uint8_t commandTypeOptions = 0, bool clearBuffer=true);
+    void readAdvanced  									(std::string& buffer, char* address, uint8_t size = 1, uint8_t commandTypeOptions = 0, bool clearBuffer=true);
+    void readAdvanced                      				(std::string& buffer, const uint64_t& address, uint8_t size = 1, uint8_t commandTypeOptions = 0, bool clearBuffer=true);
 
     /////////////////////////////////////
     //next level functionality
 
     //data destination read/write
-    virtual void setDataDestination          		(std::string& buffer, const std::string& ip, const uint16_t port);
-
-    void writeDataDestinationIP  					(std::string& buffer, const uint64_t value);
-    void writeDataDestinationMAC 					(std::string& buffer, const uint64_t value);
-    void writeDataDestinationPort					(std::string& buffer, const uint64_t value);
+    void writeDataDestinationIP  					(std::string& buffer, const uint64_t value, bool clearBuffer=true);
+    void writeDataDestinationMAC 					(std::string& buffer, const uint64_t value, bool clearBuffer=true);
+    void writeDataDestinationPort					(std::string& buffer, const uint64_t value, bool clearBuffer=true);
 
     void readDataDestinationIP   					(std::string& buffer);
     void readDataDestinationMAC  					(std::string& buffer);
@@ -81,8 +97,6 @@ protected:
 
     void startBurst        							(std::string& buffer);
     void stopBurst         							(std::string& buffer);
-
-    const unsigned int version_;
 
     //command type options that can be OR'd
     static const uint8_t FIFO_ADDRESS_CMD_TYPE;

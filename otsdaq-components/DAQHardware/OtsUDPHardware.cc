@@ -8,18 +8,39 @@ using namespace ots;
 
 
 //========================================================================================================================
-OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort) :
-        						OtsUDPBoard_(boardIPAddress, boardPort)
+OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort)
+:	//Socket() default constructor
+	OtsUDPBoard_	(boardIPAddress, 		boardPort)
+//	FrontEndHardwareBase ()
 {
 	Socket::initialize();
+
+
+//	char msg[100];
+//	sprintf(msg,"_%d",getPort());
+//	std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
+//	FILE *fp = fopen(fn.c_str(),"w");
+//	if(fp) fclose(fp);
+//	std::cout << __COUT_HDR_FL__ << fn << std::endl;
 }
 
 //========================================================================================================================
-OtsUDPHardware::OtsUDPHardware (std::string interfaceIPAddress, unsigned int interfacePort, std::string OtsUDPHardwareIPAddress, unsigned int OtsUDPHardwarePort) :
-        						Socket        (interfaceIPAddress,      interfacePort),
-								OtsUDPBoard_  (OtsUDPHardwareIPAddress, OtsUDPHardwarePort)
+OtsUDPHardware::OtsUDPHardware (std::string hostIPAddress, unsigned int hostPort,
+		std::string OtsUDPHardwareIPAddress, unsigned int OtsUDPHardwarePort,
+		unsigned int version)
+:	Socket        (hostIPAddress,      hostPort)
+, 	FrontEndHardwareBase (version)
+,	OtsUDPBoard_  (OtsUDPHardwareIPAddress, OtsUDPHardwarePort)
 {
 	Socket::initialize();
+
+
+//	char msg[100];
+//	sprintf(msg,"_%d",getPort());
+//	std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
+//	FILE *fp = fopen(fn.c_str(),"w");
+//	if(fp) fclose(fp);
+//	std::cout << __COUT_HDR_FL__ << fn << std::endl;
 }
 
 //========================================================================================================================
@@ -31,11 +52,34 @@ void OtsUDPHardware::write(const std::string& sendBuffer)
 throw(std::runtime_error)
 try
 {
+//	char msg[100];
+//	sprintf(msg,"_%d",getPort());
+//	std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
+//	FILE *fp = fopen(fn.c_str(),"a");
+//	std::cout << __COUT_HDR_FL__ << fn << std::endl;
+
+//
+//	if(fp) //debug
+//	{
+//		std::stringstream ss;
+//		ss << "\t";
+//		uint32_t begin = 0;
+//		for(uint32_t i=begin; i<sendBuffer.size(); i++)
+//		{
+//			if(i==begin+2) ss << ":::";
+//			else if(i==begin+10) ss << ":::";
+//			ss << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) sendBuffer[i]) &0xFF) << "-" << std::dec;
+//		}
+//		ss << std::endl;
+//		fprintf(fp,"%s",ss.str().c_str());
+//	}
+//	if(fp) fclose(fp);
+
 
 	if(TransceiverSocket::send(OtsUDPBoard_, sendBuffer) < 0)
 	{
 		__SS__ << "Write failed." << std::endl;
-		__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+		__COUT_ERR__ << "\n" << ss.str() << std::endl;
 		throw std::runtime_error(ss.str());
 	}
 }
@@ -46,7 +90,7 @@ catch(std::runtime_error &e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
-	__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+	__COUT_ERR__ << "\n" << ss.str() << std::endl;
 	throw std::runtime_error(ss.str());
 }
 
@@ -55,7 +99,33 @@ void OtsUDPHardware::write(const std::vector<std::string>& sendBuffer)
 throw(std::runtime_error)
 {
 	for(const auto& it : sendBuffer)
+	{
+
+//		char msg[100];
+//		sprintf(msg,"_%d",getPort());
+//		std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
+//		FILE *fp = fopen(fn.c_str(),"a");
+//		std::cout << __COUT_HDR_FL__ << fn << std::endl;
+
+
+//		if(fp) //debug
+//		{
+//			std::stringstream ss;
+//			ss << "\t";
+//			uint32_t begin = 0;
+//			for(uint32_t i=begin; i<it.size(); i++)
+//			{
+//				if(i==begin+2) ss << ":::";
+//				else if(i==begin+10) ss << ":::";
+//				ss << std::setfill('0') << std::setw(2) << std::hex << (((const int16_t) it[i]) &0xFF) << "-" << std::dec;
+//			}
+//			ss << std::endl;
+//			fprintf(fp,"%s",ss.str().c_str());
+//		}
+//		if(fp) fclose(fp);
+
 		write(it);
+	}
 }
 
 //========================================================================================================================
@@ -64,6 +134,29 @@ void OtsUDPHardware::writeAndAcknowledge(const std::string& buffer,
 throw(std::runtime_error)
 try
 {
+
+//	char msg[100];
+//	sprintf(msg,"_%d",getPort());
+//	std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
+//	FILE *fp = fopen(fn.c_str(),"a");
+//	std::cout << __COUT_HDR_FL__ << fn << std::endl;
+
+
+//	if(fp) //debug
+//	{
+//		std::stringstream ss;
+//		ss << "\tack ";
+//		uint32_t begin = 0;
+//		for(uint32_t i=begin; i<buffer.size(); i++)
+//		{
+//			if(i==begin+2) ss << ":::";
+//			else if(i==begin+10) ss << ":::";
+//			ss << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
+//		}
+//		ss << std::endl;
+//		fprintf(fp,"%s",ss.str().c_str());
+//	}
+//	if(fp) fclose(fp);
 
 	//	std::cout << __COUT_HDR_FL__ << std::endl;
 	//	for(auto& b: buffer)
@@ -78,7 +171,7 @@ try
 		if(TransceiverSocket::receive(acknowledgment_) < 0)
 		{
 			__SS__ << "writeAndAcknowledge failed. Default timeout period reached without response." << std::endl;
-			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			__COUT_ERR__ << "\n" << ss.str() << std::endl;
 			throw std::runtime_error(ss.str());
 		}
 	}
@@ -88,7 +181,7 @@ try
 		{
 			__SS__ << "writeAndAcknowledge failed. " << timeoutSeconds <<
 					" second timeout period reached without response." << std::endl;
-			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			__COUT_ERR__ << "\n" << ss.str() << std::endl;
 			throw std::runtime_error(ss.str());
 		}
 	}
@@ -110,7 +203,7 @@ catch(std::runtime_error &e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
-	__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+	__COUT_ERR__ << "\n" << ss.str() << std::endl;
 	throw std::runtime_error(ss.str());
 }
 
@@ -120,7 +213,32 @@ void OtsUDPHardware::writeAndAcknowledge(const std::vector<std::string>& buffer,
 throw(std::runtime_error)
 {
 	for(const auto& it : buffer)
+	{
+//		char msg[100];
+//		sprintf(msg,"_%d",getPort());
+//		std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
+//		FILE *fp = fopen(fn.c_str(),"a");
+//		std::cout << __COUT_HDR_FL__ << fn << std::endl;
+
+
+//		if(fp) //debug
+//		{
+//			std::stringstream ss;
+//			ss << "\tack ";
+//			uint32_t begin = 0;
+//			for(uint32_t i=begin; i<it.size(); i++)
+//			{
+//				if(i==begin+2) ss << ":::";
+//				else if(i==begin+10) ss << ":::";
+//				ss << std::setfill('0') << std::setw(2) << std::hex << (((const int16_t) it[i]) &0xFF) << "-" << std::dec;
+//			}
+//			ss << std::endl;
+//			fprintf(fp,"%s",ss.str().c_str());
+//		}
+//		if(fp) fclose(fp);
+
 		writeAndAcknowledge(it);
+	}
 }
 
 //========================================================================================================================
@@ -136,16 +254,16 @@ try
 			std::cout << __COUT_HDR_FL__ << "Cleared receive socket buffer: " << clearedPackets << " packets cleared." << std::endl;
 	}
 
-	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "sending" << std::endl;
+	__COUT__ << "sending" << std::endl;
 	TransceiverSocket::send(OtsUDPBoard_, sendBuffer);
-	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "receiving" << std::endl;
+	__COUT__ << "receiving" << std::endl;
 
 	if(timeoutSeconds < 0) //use default timeout
 	{
 		if(TransceiverSocket::receive(receiveBuffer) < 0)
 		{
 			__SS__ << "Read failed. Default timeout period reached without response." << std::endl;
-			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			__COUT_ERR__ << "\n" << ss.str() << std::endl;
 			throw std::runtime_error(ss.str());
 		}
 	}
@@ -155,11 +273,11 @@ try
 		{
 			__SS__ << "Read failed. " << timeoutSeconds <<
 					" second timeout period reached without response." << std::endl;
-			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			__COUT_ERR__ << "\n" << ss.str() << std::endl;
 			throw std::runtime_error(ss.str());
 		}
 	}
-	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "done" << std::endl;
+	__COUT__ << "done" << std::endl;
 
 	std::cout << __COUT_HDR_FL__ << "RECEIVED MESSAGE: ";
 	for(uint32_t i=0; i<receiveBuffer.size(); i++)
@@ -174,7 +292,7 @@ catch(std::runtime_error &e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
-	__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+	__COUT_ERR__ << "\n" << ss.str() << std::endl;
 	throw std::runtime_error(ss.str());
 }
 
@@ -204,7 +322,7 @@ throw(std::runtime_error)
 	{
 		__SS__ << "Read uint64_t quad-word failed. Invalid size of received buffer: " <<
 				receiveBuffer.length() << " != " << 10 << std::endl;
-		__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+		__COUT_ERR__ << "\n" << ss.str() << std::endl;
 		throw std::runtime_error(ss.str());
 	}
 	std::copy_n((char *)&receiveBuffer[2],sizeof(uint64_t),&receiveQuadWord);
@@ -226,7 +344,7 @@ throw(std::runtime_error)
 	{
 		__SS__ << "Read vector of uint64_t quad-word failed. Invalid size of received buffer: (" <<
 				receiveBuffer.length() << " - 2) % 8 != 0" << std::endl;
-		__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+		__COUT_ERR__ << "\n" << ss.str() << std::endl;
 		throw std::runtime_error(ss.str());
 	}
 
@@ -259,7 +377,7 @@ throw(std::runtime_error)
 		{
 			__SS__ << "Read vector of uint64_t quad-word failed. Invalid size of received buffer: (" <<
 					receiveBuffer.length() << " - 2) % 8 != 0" << std::endl;
-			__MOUT_ERR__ << "\n" << ss.str() << std::endl;
+			__COUT_ERR__ << "\n" << ss.str() << std::endl;
 			throw std::runtime_error(ss.str());
 		}
 
@@ -274,7 +392,11 @@ throw(std::runtime_error)
 }
 
 //========================================================================================================================
-//reads from read socket until timeout is reached (remove stale packets)
+//clearReadSocket
+//
+//	flushes read socket.
+//
+//	reads from read socket until timeout is reached (remove stale packets)
 // returns count of packets that were cleared
 int OtsUDPHardware::clearReadSocket()
 {
@@ -284,7 +406,10 @@ int OtsUDPHardware::clearReadSocket()
 	//receive with no timeout
 	try
 	{
-		while(TransceiverSocket::receive(dummerReceiveBuffer,0,0) >= 0)
+		while(TransceiverSocket::receive(dummerReceiveBuffer,
+				0/*timeoutSeconds*/,
+				0/*timeoutUSeconds*/,
+				false /*verbose*/)>= 0)
 			++cnt;
 	}
 	catch(...)

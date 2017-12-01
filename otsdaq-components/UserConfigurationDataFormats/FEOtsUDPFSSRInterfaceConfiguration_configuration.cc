@@ -164,8 +164,9 @@ bool  FEOtsUDPFSSRInterfaceConfiguration::getChannelStatus(std::string interface
 		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus5);
 		break;
 	default: //There are only 6 channels on OtsUDPHardware board
-		std::cout << __COUT_HDR_FL__ << "Configuration Error:\t" << "OtsUDPHardware FER Channel " << std::dec << channel << " does not exist" << std::endl;
-		throw std::runtime_error("Status problem!");
+		__SS__ << "Configuration Error:\t" << "OtsUDPHardware FER Channel " << std::dec << channel << " does not exist" << std::endl;
+		__COUT_ERR__ << "\n" << ss.str();
+		throw std::runtime_error(ss.str());
 	}
 	return tmpStatus;
 }

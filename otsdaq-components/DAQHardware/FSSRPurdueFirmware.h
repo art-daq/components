@@ -1,59 +1,64 @@
-#ifndef _ots_FSSRFirmware_h_
-#define _ots_FSSRFirmware_h_
+#ifndef _ots_FSSRPurdueFirmware_h_
+#define _ots_FSSRPurdueFirmware_h_
 
 #include <string>
-#include "otsdaq-components/DAQHardware/FrontEndFirmwareBase.h"
-#include "otsdaq-components/DAQHardware/PurdueFirmwareCore.h"
+#include "otsdaq-components/DAQHardware/FSSRFirmwareBase.h"
+//#include "otsdaq-components/DAQHardware/FirmwareSequence.h"
+//#include "otsdaq-components/DetectorConfiguration/ROCStream.h"
+//#include "otsdaq-components/DAQHardware/OtsUDPFirmwareCore.h"
 
 namespace ots
 {
 
-class FSSRFirmware : public FrontEndFirmwareBase//, public OtsUDPFirmware/*, public PurdueFirmwareCore*/
+class FrontEndFirmwareBase;
+
+class FSSRPurdueFirmware : public FSSRFirmwareBase
 {
 
 public:
-    FSSRFirmware (unsigned int version, std::string type);
-    virtual ~FSSRFirmware(void);
-    int  init(void);
-
-    std::string universalRead	  (char* address);
-    std::string universalWrite	  (char* address, char* data);
-
-    uint32_t createRegisterFromValue (std::string& readBuffer, std::string& receivedValue);
-
-    //FEW specific methods
-    std::string configureClocks     (std::string source, double frequency);
-    std::string resetDetector       (int channel=-1);
-    std::string enableTrigger       (void);
-    std::string setDataDestination  (std::string ip, uint32_t port);
-
-    void resetDCM                   (std::string& buffer);
-    void alignReadOut               (std::string& buffer, uint32_t value);
-    void makeDACSequence 			(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream);
-    void makeMaskSequence			(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream);
-    void makeDACSequence 			(FirmwareSequence<uint32_t>& sequence, unsigned int channel, const ROCStream& rocStream);
-    void makeDACBuffer   			(std::string& buffer, unsigned int channel, const ROCStream& rocStream);
-    void makeDACBuffer   			(std::vector<std::string>& buffer, unsigned int channel, const ROCStream& rocStream);
-    void makeMaskSequence			(FirmwareSequence<uint32_t>& sequence, unsigned int channel, const ROCStream& rocStream);
-    void makeMaskBuffer  			(std::string& buffer, unsigned int channel, const ROCStream& rocStream);
-    void setFrequencyFromClockState	(std::string& buffer, double frequency);
-    bool isClockStateExternal		(void);
-
-    std::string readFromAddress		(uint64_t address);
-
-    //FER specific methods
-    std::string resetBCO            (void);
-    std::string armBCOReset         (void);
-    std::string startStream         (bool channel0, bool channel1, bool channel2, bool channel3, bool channel4, bool channel5);
-    std::string stopStream          (void);
+    FSSRPurdueFirmware (std::string communicationFirmwareType, unsigned int communicationFirmwareVersion = -1, unsigned int applicationFirmwareVersion = -1);
+    virtual ~FSSRPurdueFirmware(void);
+    virtual void init(void);
 
 protected:
-    FrontEndFirmwareBase* protocolInstance_;
+
+    /*
+    //FEW specific methods
+    std::string configureClocks(std::string source, double frequency);
+    std::string resetDetector  (int channel=-1);
+    std::string enableTrigger  (void);
+
+    void readBurstDestinationIP(std::string& buffer);
+    void readBurstDestinationMAC(std::string& buffer);
+    void readBurstDestinationPort(std::string& buffer);
+
+    void writeBurstDestinationIP  (std::string& buffer, const uint64_t value);
+    void writeBurstDestinationMAC (std::string& buffer, const uint64_t value);
+    void writeBurstDestinationPort(std::string& buffer, const uint64_t value);
+
+
+    void makeDACSequence 				(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream);
+    void makeMaskSequence				(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream);
+    void makeDACSequence 				(FirmwareSequence<uint32_t>& sequence, unsigned int channel, const ROCStream& rocStream);
+    void makeDACBuffer   				(std::string& buffer, unsigned int channel, const ROCStream& rocStream);
+    void makeDACBuffer   				(std::vector<std::string>& buffer, unsigned int channel, const ROCStream& rocStream);
+    void makeMaskSequence				(FirmwareSequence<uint32_t>& sequence, unsigned int channel, const ROCStream& rocStream);
+    void makeMaskBuffer  				(std::string& buffer, unsigned int channel, const ROCStream& rocStream);
+    void setFrequencyFromClockState		        (std::string& buffer, double frequency);
+    bool isClockStateExternal			        (void);
+
+    //FER specific methods
+    std::string resetBCO           (void);
+    std::string startStream        (bool channel0, bool channel1, bool channel2, bool channel3, bool channel4, bool channel5);
+    std::string stopStream         (void);
+
+//protected:
     void makeMaskSequence(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream, const std::string& registerName);
     void makeMaskSequence(FirmwareSequence<uint32_t>& sequence, unsigned int channel, const ROCStream& rocStream, const std::string& registerName);
     void makeMaskBuffer  (std::string& buffer, unsigned int channel, const ROCStream& rocStream, const std::string& registerName);
 
     void setCSRRegister						(uint32_t total);
+    void writeCSRRegister				    (std::string& buffer);
 
     uint32_t stripCSRRegisterValue_;
     //Set values for register STRIP_CSR (Strip Control Register)
@@ -73,8 +78,6 @@ protected:
 	void resetDCMStripCSR                 (bool clear);
 	uint32_t waitDCMResetStripCSR         (void);
 	std::string readCSRRegister			  (void);
-
-	std::string readSCCSRRegister   	  (void);
 
     uint32_t stripResetRegisterValue_;
     //Set values for register STRIP_RESET (Strip Reset)
@@ -102,7 +105,7 @@ protected:
 
 
 	std::string  resetSlaveBCO(void);
-
+	*/
 };
 
 }

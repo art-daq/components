@@ -2,6 +2,7 @@
 #define _ots_ROCStream_h_
 
 #include "otsdaq-components/DetectorConfiguration/ROCDACs.h"
+#include "otsdaq-core/Macros/CoutHeaderMacros.h"
 
 #include <string>
 #include <iostream>
@@ -77,7 +78,11 @@ inline void  ots::ROCStream::setROCMask(const std::string& rocMask)
 				++col;
 			}
 			else
-				throw std::runtime_error("Too many [ in bit mask configuration");
+			{
+				__SS__ << "Too many [ in bit mask configuration" << std::endl;
+				__COUT_ERR__ << "\n" << ss.str();
+				throw std::runtime_error(ss.str());
+			}
 		else if(rocMask[i] == ']')
 			if(openCol)
 			{
@@ -90,7 +95,11 @@ inline void  ots::ROCStream::setROCMask(const std::string& rocMask)
 				--row;
 			}
 			else
-				throw std::runtime_error("Too many ] in bit mask configuration");
+			{
+				__SS__ << "Too many ] in bit mask configuration" << std::endl;
+				__COUT_ERR__ << "\n" << ss.str();
+				throw std::runtime_error(ss.str());
+			}
 		else if(rocMask[i] == '0' || rocMask[i] == '1')
 			theROCMask_ += rocMask[i];//No matrix style mask ... needs to be changed //TODO
 //	std::cout << theROCMask_ << std::endl;
