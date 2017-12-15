@@ -11,7 +11,7 @@ class OtsUDPHardware : public TransceiverSocket, public FrontEndHardwareBase
 {
 
 public:
-	OtsUDPHardware (std::string hostIPAddress, unsigned int hostPort, std::string boardIPAddress, unsigned int boardPort, unsigned int version = -1);
+	OtsUDPHardware (std::string hostIPAddress, unsigned int hostPort, std::string boardIPAddress, unsigned int boardPort, unsigned int version = -1, bool verbose = false);
 	virtual ~OtsUDPHardware(void);
 
 	virtual void write              (const std::string&              sendBuffer) throw(std::runtime_error);
@@ -32,9 +32,10 @@ public:
 //    virtual int read (uint64_t address, std::string& value){return 0;}
 
 protected:
-	OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort);
+	OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort, unsigned int version = -1, bool verbose = false);
 	Socket      OtsUDPBoard_;
 	std::string acknowledgment_;
+	bool		verbose_;
 
 };
 

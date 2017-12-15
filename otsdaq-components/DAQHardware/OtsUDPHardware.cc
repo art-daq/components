@@ -8,10 +8,13 @@ using namespace ots;
 
 
 //========================================================================================================================
-OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort)
-:	//Socket() default constructor
-	OtsUDPBoard_	(boardIPAddress, 		boardPort)
-//	FrontEndHardwareBase ()
+//This one is often (e.g. FENIMPlusInterface) called by FEs inheriting OtsUDPHardware
+OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort,
+		unsigned int version, bool verbose)
+:	//Socket				() default constructor
+	FrontEndHardwareBase 	(version)
+,	OtsUDPBoard_			(boardIPAddress, 		boardPort)
+,	verbose_				(verbose)
 {
 	Socket::initialize();
 
@@ -27,10 +30,11 @@ OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPo
 //========================================================================================================================
 OtsUDPHardware::OtsUDPHardware (std::string hostIPAddress, unsigned int hostPort,
 		std::string OtsUDPHardwareIPAddress, unsigned int OtsUDPHardwarePort,
-		unsigned int version)
-:	Socket        (hostIPAddress,      hostPort)
-, 	FrontEndHardwareBase (version)
-,	OtsUDPBoard_  (OtsUDPHardwareIPAddress, OtsUDPHardwarePort)
+		unsigned int version, bool verbose)
+:	Socket        			(hostIPAddress,      hostPort)
+, 	FrontEndHardwareBase 	(version)
+,	OtsUDPBoard_  			(OtsUDPHardwareIPAddress, OtsUDPHardwarePort)
+,	verbose_				(verbose)
 {
 	Socket::initialize();
 
@@ -76,7 +80,7 @@ try
 //	if(fp) fclose(fp);
 
 
-	if(TransceiverSocket::send(OtsUDPBoard_, sendBuffer) < 0)
+	if(TransceiverSocket::send(OtsUDPBoard_, sendBuffer, verbose_) < 0)
 	{
 		__SS__ << "Write failed." << std::endl;
 		__COUT_ERR__ << "\n" << ss.str() << std::endl;
@@ -163,7 +167,7 @@ try
 	//	{
 	//		std::cout << __COUT_HDR_FL__ << std::hex << (uint16_t)b << std::dec << std::endl;
 	//	}
-	TransceiverSocket::send(OtsUDPBoard_, buffer);
+	TransceiverSocket::send(OtsUDPBoard_, buffer, verbose_);
 	//acknowledgment_.clear();
 
 	if(timeoutSeconds < 0) //use default timeout
@@ -255,12 +259,12 @@ try
 	}
 
 	__COUT__ << "sending" << std::endl;
-	TransceiverSocket::send(OtsUDPBoard_, sendBuffer);
+	TransceiverSocket::send(OtsUDPBoard_, sendBuffer, verbose_);
 	__COUT__ << "receiving" << std::endl;
 
 	if(timeoutSeconds < 0) //use default timeout
 	{
-		if(TransceiverSocket::receive(receiveBuffer) < 0)
+		if(TransceiverSocket::receive(receiveBuffer,1 /*timeoutSeconds*/,0 /*timeoutUSeconds*/,verbose_) < 0)
 		{
 			__SS__ << "Read failed. Default timeout period reached without response." << std::endl;
 			__COUT_ERR__ << "\n" << ss.str() << std::endl;
@@ -269,7 +273,7 @@ try
 	}
 	else
 	{
-		if(TransceiverSocket::receive(receiveBuffer,timeoutSeconds) < 0)
+		if(TransceiverSocket::receive(receiveBuffer,timeoutSeconds,0 /*timeoutUSeconds*/,verbose_) < 0)
 		{
 			__SS__ << "Read failed. " << timeoutSeconds <<
 					" second timeout period reached without response." << std::endl;
