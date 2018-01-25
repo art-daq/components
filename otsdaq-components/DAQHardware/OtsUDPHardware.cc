@@ -264,7 +264,7 @@ try
 
 	if(timeoutSeconds < 0) //use default timeout
 	{
-		if(TransceiverSocket::receive(receiveBuffer,1 /*timeoutSeconds*/,0 /*timeoutUSeconds*/,verbose_) < 0)
+		if(TransceiverSocket::receive(receiveBuffer,5 /*timeoutSeconds*/,0 /*timeoutUSeconds*/,verbose_) < 0)
 		{
 			__SS__ << "Read failed. Default timeout period reached without response." << std::endl;
 			__COUT_ERR__ << "\n" << ss.str() << std::endl;

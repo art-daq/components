@@ -841,8 +841,8 @@ void FSSRFirmwareBase::resetTriggerCounterStripCSR(std::string& buffer)
 	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
 
-	BitManipulator::insertBits(stripCSRRegisterValue_, 0, 21, 1);
-	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
+	//BitManipulator::insertBits(stripCSRRegisterValue_, 0, 21, 1);
+	//communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
 }
 
 //========================================================================================================================
