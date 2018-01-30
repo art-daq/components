@@ -329,7 +329,16 @@ throw(std::runtime_error)
 		__COUT_ERR__ << "\n" << ss.str() << std::endl;
 		throw std::runtime_error(ss.str());
 	}
-	std::copy_n((char *)&receiveBuffer[2],sizeof(uint64_t),&receiveQuadWord);
+	//copy_n does not work!! alert?! it only copies the first byte?
+//	std::copy_n((char *)&receiveBuffer[2],sizeof(uint64_t),&receiveQuadWord);
+//
+//	__COUT__ << "receiveQuadWord all = 0x" << std::hex <<
+//			receiveQuadWord << std::dec << std::endl;
+
+	receiveQuadWord = *((uint64_t *)&receiveBuffer[2]);
+//	//memcpy((char *)&receiveBuffer[2],sizeof(uint64_t),&receiveQuadWord);
+//	__COUT__ << "receiveQuadWord all = 0x" << std::hex <<
+//			receiveQuadWord << std::dec << std::endl;
 }
 
 //========================================================================================================================
@@ -355,7 +364,10 @@ throw(std::runtime_error)
 	for(unsigned int i = 2; i < receiveBuffer.length(); i += 8)
 	{
 		receiveQuadWords.push_back(uint64_t());
-		std::copy_n((char *)&receiveBuffer[i],sizeof(uint64_t),&receiveQuadWords[receiveQuadWords.size()-1]);
+
+		//copy_n does not work!! alert?! it only copies the first byte?
+		//std::copy_n((char *)&receiveBuffer[i],sizeof(uint64_t),&receiveQuadWords[receiveQuadWords.size()-1]);
+		receiveQuadWords[receiveQuadWords.size()-1] = *((uint64_t *)&receiveBuffer[i]);
 	}
 }
 
