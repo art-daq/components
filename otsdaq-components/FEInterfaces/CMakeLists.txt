@@ -1,5 +1,19 @@
 include_directories(${MPI_INCLUDE_PATH})
 
+
+simple_plugin(FEOtsUDPTemplateInterface "interface"
+  DAQHardware
+  FECore
+  WorkLoopManager
+  MessageFacility
+  NetworkUtilities
+  ConfigurationInterface
+  ConfigurationDataFormats
+  $ENV{XERCES_C_LIB}/libxerces-c.so
+  ${CETLIB}
+  ${CETLIB_EXCEPT}
+  )
+
 #simple_plugin(FEOuterTrackerInterface "interface"
 #  NetworkUtilities
 #  FECore
