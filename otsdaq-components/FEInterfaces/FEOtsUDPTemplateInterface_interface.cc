@@ -1,4 +1,4 @@
-#include "otsdaq-demo/FEInterfaces/FEOtsUDPTemplateInterface.h"
+#include "otsdaq-components/FEInterfaces/FEOtsUDPTemplateInterface.h"
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
 #include "otsdaq-core/Macros/CoutHeaderMacros.h"
 #include "otsdaq-core/Macros/InterfacePluginMacros.h"
