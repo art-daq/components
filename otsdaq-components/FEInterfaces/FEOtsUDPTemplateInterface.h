@@ -29,7 +29,6 @@ public:
 	virtual int universalRead	  	(char* address, char* readValue) override;
 	virtual void universalWrite	  	(char* address, char* writeValue) override;
 
-
 private:
 
 };

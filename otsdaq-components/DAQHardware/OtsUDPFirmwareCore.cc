@@ -37,8 +37,8 @@ using namespace ots;
 #define ADDR_BURST_MODE 			(uint64_t)(0x9)			//1
 #define ADDR_CTRL_RESOLVE_MAC		(uint64_t)(0xA)			//1
 #define ADDR_DATA_RESOLVE_MAC		(uint64_t)(0xB)			//1
-#define ADDR_SELF_VERSION			(uint64_t)(0x64)		//16 (OtsUDPFirmwareCore::readAdvanced only)
-#define ADDR_SELF_RESET				(uint64_t)(0x64)		//1  (OtsUDPFirmwareCore::writeAdvanced only)
+#define ADDR_SELF_VERSION			(uint64_t)(0x64)		//16 (read only)
+#define ADDR_SELF_RESET				(uint64_t)(0xFFFFFFFF)	//1  (write only)
 
 //end ADDRESS SPACE
 /////////////////////////////////=======================================
@@ -442,11 +442,18 @@ void OtsUDPFirmwareCore::readUDPFirmwareVersion(std::string& buffer)
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::forceReset(std::string& buffer)
+void OtsUDPFirmwareCore::ethernetReset(std::string& buffer)
 {
 	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */,
 			1 /* data */);
+}
+//========================================================================================================================
+void OtsUDPFirmwareCore::ethernetUnreset(std::string& buffer)
+{
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
+			UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */,
+			0 /* data */);
 }
 
 //========================================================================================================================
