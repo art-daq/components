@@ -13,7 +13,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
-//#include "../UserConfigurationDataFormats/FEOtsUDPFSSRInterfaceConfiguration.h"
+//#include "otsdaq-components/UserConfigurationDataFormats/FEOtsUDPFSSRInterfaceConfiguration.h"
 
 using namespace ots;
 
