@@ -5,7 +5,7 @@ simple_plugin(FEOtsUDPTemplateInterface "interface"
   DAQHardware
   FECore
   WorkLoopManager
-  MessageFacility
+  #MessageFacility
   NetworkUtilities
   ConfigurationInterface
   ConfigurationDataFormats
