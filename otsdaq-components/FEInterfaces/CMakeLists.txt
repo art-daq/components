@@ -24,3 +24,7 @@ simple_plugin(FEOtsUDPTemplateInterface "interface"
 #  cactus_uhal_grammars 
 #  $ENV{MRB_SOURCE}/otsdaq_cmsoutertracker/uhal/uhal_2_4_2/cactuscore/extern/pugixml/pugixml-1.2/libcactus_extern_pugixml.so
 #  )
+
+install_headers()
+install_source()
+
