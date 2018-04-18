@@ -8,10 +8,13 @@ using namespace ots;
 
 
 //========================================================================================================================
-OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort)
-:	//Socket() default constructor
-	OtsUDPBoard_	(boardIPAddress, 		boardPort)
-//	FrontEndHardwareBase ()
+//This one is often (e.g. FENIMPlusInterface) called by FEs inheriting OtsUDPHardware
+OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPort,
+		unsigned int version, bool verbose)
+:	//Socket				() default constructor
+	FrontEndHardwareBase 	(version)
+,	OtsUDPBoard_			(boardIPAddress, 		boardPort)
+,	verbose_				(verbose)
 {
 	Socket::initialize();
 
@@ -21,16 +24,17 @@ OtsUDPHardware::OtsUDPHardware (std::string boardIPAddress, unsigned int boardPo
 //	std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
 //	FILE *fp = fopen(fn.c_str(),"w");
 //	if(fp) fclose(fp);
-//	std::cout << __COUT_HDR_FL__ << fn << std::endl;
+//	__COUT__ << fn << std::endl;
 }
 
 //========================================================================================================================
 OtsUDPHardware::OtsUDPHardware (std::string hostIPAddress, unsigned int hostPort,
 		std::string OtsUDPHardwareIPAddress, unsigned int OtsUDPHardwarePort,
-		unsigned int version)
-:	Socket        (hostIPAddress,      hostPort)
-, 	FrontEndHardwareBase (version)
-,	OtsUDPBoard_  (OtsUDPHardwareIPAddress, OtsUDPHardwarePort)
+		unsigned int version, bool verbose)
+:	Socket        			(hostIPAddress,      hostPort)
+, 	FrontEndHardwareBase 	(version)
+,	OtsUDPBoard_  			(OtsUDPHardwareIPAddress, OtsUDPHardwarePort)
+,	verbose_				(verbose)
 {
 	Socket::initialize();
 
@@ -40,7 +44,7 @@ OtsUDPHardware::OtsUDPHardware (std::string hostIPAddress, unsigned int hostPort
 //	std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
 //	FILE *fp = fopen(fn.c_str(),"w");
 //	if(fp) fclose(fp);
-//	std::cout << __COUT_HDR_FL__ << fn << std::endl;
+//	__COUT__ << fn << std::endl;
 }
 
 //========================================================================================================================
@@ -56,7 +60,7 @@ try
 //	sprintf(msg,"_%d",getPort());
 //	std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
 //	FILE *fp = fopen(fn.c_str(),"a");
-//	std::cout << __COUT_HDR_FL__ << fn << std::endl;
+//	__COUT__ << fn << std::endl;
 
 //
 //	if(fp) //debug
@@ -76,7 +80,7 @@ try
 //	if(fp) fclose(fp);
 
 
-	if(TransceiverSocket::send(OtsUDPBoard_, sendBuffer) < 0)
+	if(TransceiverSocket::send(OtsUDPBoard_, sendBuffer, verbose_) < 0)
 	{
 		__SS__ << "Write failed." << std::endl;
 		__COUT_ERR__ << "\n" << ss.str() << std::endl;
@@ -105,7 +109,7 @@ throw(std::runtime_error)
 //		sprintf(msg,"_%d",getPort());
 //		std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
 //		FILE *fp = fopen(fn.c_str(),"a");
-//		std::cout << __COUT_HDR_FL__ << fn << std::endl;
+//		__COUT__ << fn << std::endl;
 
 
 //		if(fp) //debug
@@ -139,7 +143,7 @@ try
 //	sprintf(msg,"_%d",getPort());
 //	std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
 //	FILE *fp = fopen(fn.c_str(),"a");
-//	std::cout << __COUT_HDR_FL__ << fn << std::endl;
+//	__COUT__ << fn << std::endl;
 
 
 //	if(fp) //debug
@@ -158,12 +162,12 @@ try
 //	}
 //	if(fp) fclose(fp);
 
-	//	std::cout << __COUT_HDR_FL__ << std::endl;
+	//	__COUT__ << std::endl;
 	//	for(auto& b: buffer)
 	//	{
-	//		std::cout << __COUT_HDR_FL__ << std::hex << (uint16_t)b << std::dec << std::endl;
+	//		__COUT__ << std::hex << (uint16_t)b << std::dec << std::endl;
 	//	}
-	TransceiverSocket::send(OtsUDPBoard_, buffer);
+	TransceiverSocket::send(OtsUDPBoard_, buffer, verbose_);
 	//acknowledgment_.clear();
 
 	if(timeoutSeconds < 0) //use default timeout
@@ -187,13 +191,29 @@ try
 	}
 
 
-	//	std::cout << __COUT_HDR_FL__ << "Acknowledgment size: " << acknowledgment_.size() << std::endl;
+	//	__COUT__ << "Acknowledgment size: " << acknowledgment_.size() << std::endl;
 	//	for(unsigned int i=0; i< acknowledgment_.size(); i++)
 	//	{
 	//		if(i%24 == 0)
-	//		std::cout << __COUT_HDR_FL__ << i << "("<< (unsigned int)acknowledgment_[i] << ")-" << std::endl;
+	//		__COUT__ << i << "("<< (unsigned int)acknowledgment_[i] << ")-" << std::endl;
 	//	}
 	//
+
+
+	//Check First Byte: (https://docs.google.com/document/d/1i3Z07n8Jq78NwgUFdjAv2sLGhH4rWjHeYEScAWBzSyw/edit?usp=sharing)
+	//	bits 2:0 = Packet Type (0: Read, 1: First in Burst, 2: Burst Middle, 3: Last in Burst, 4: Read Ack, 5: Write Ack, 6: Burst Start Ack, 7: Burst Stop Ack)
+	//	bit 3 = ack of no address increment op
+	//	bit 4 = err detected in protocol since reset
+	//	bit 5 = rx overflow since reset
+	//	bit 6 = crc err flag
+	//	bit 7 = crc err detected
+
+	if((acknowledgment_[0]>>4))
+	{
+		__SS__ << "Error in OTS protocol encountered! " << std::setfill('0') << std::setw(2) << std::hex <<
+				(((int16_t) acknowledgment_[0]) &0xff) << "-" << std::dec << __E__;
+		__SS_THROW__;
+	}
 
 }
 catch(std::runtime_error &e)
@@ -218,7 +238,7 @@ throw(std::runtime_error)
 //		sprintf(msg,"_%d",getPort());
 //		std::string fn = "/tmp/new_udp_chk" + std::string(msg) + ".dat";
 //		FILE *fp = fopen(fn.c_str(),"a");
-//		std::cout << __COUT_HDR_FL__ << fn << std::endl;
+//		__COUT__ << fn << std::endl;
 
 
 //		if(fp) //debug
@@ -251,16 +271,16 @@ try
 	{ //clear packets so that read matches!
 		int clearedPackets = OtsUDPHardware::clearReadSocket();
 		if(clearedPackets)
-			std::cout << __COUT_HDR_FL__ << "Cleared receive socket buffer: " << clearedPackets << " packets cleared." << std::endl;
+			__COUT__ << "Cleared receive socket buffer: " << clearedPackets << " packets cleared." << std::endl;
 	}
 
 	__COUT__ << "sending" << std::endl;
-	TransceiverSocket::send(OtsUDPBoard_, sendBuffer);
+	TransceiverSocket::send(OtsUDPBoard_, sendBuffer, verbose_);
 	__COUT__ << "receiving" << std::endl;
 
 	if(timeoutSeconds < 0) //use default timeout
 	{
-		if(TransceiverSocket::receive(receiveBuffer) < 0)
+		if(TransceiverSocket::receive(receiveBuffer,5 /*timeoutSeconds*/,0 /*timeoutUSeconds*/,verbose_) < 0)
 		{
 			__SS__ << "Read failed. Default timeout period reached without response." << std::endl;
 			__COUT_ERR__ << "\n" << ss.str() << std::endl;
@@ -269,7 +289,7 @@ try
 	}
 	else
 	{
-		if(TransceiverSocket::receive(receiveBuffer,timeoutSeconds) < 0)
+		if(TransceiverSocket::receive(receiveBuffer,timeoutSeconds,0 /*timeoutUSeconds*/,verbose_) < 0)
 		{
 			__SS__ << "Read failed. " << timeoutSeconds <<
 					" second timeout period reached without response." << std::endl;
@@ -277,12 +297,27 @@ try
 			throw std::runtime_error(ss.str());
 		}
 	}
-	__COUT__ << "done" << std::endl;
 
-	std::cout << __COUT_HDR_FL__ << "RECEIVED MESSAGE: ";
+
+	__COUT__ << "RECEIVED MESSAGE: ";
 	for(uint32_t i=0; i<receiveBuffer.size(); i++)
 		std::cout << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) receiveBuffer[i]) &0xff) << "-" << std::dec;
 	std::cout << std::endl;
+
+	//Check First Byte: (https://docs.google.com/document/d/1i3Z07n8Jq78NwgUFdjAv2sLGhH4rWjHeYEScAWBzSyw/edit?usp=sharing)
+	//	bits 2:0 = Packet Type (0: Read, 1: First in Burst, 2: Burst Middle, 3: Last in Burst, 4: Read Ack, 5: Write Ack, 6: Burst Start Ack, 7: Burst Stop Ack)
+	//	bit 3 = ack of no address increment op
+	//	bit 4 = err detected in protocol since reset
+	//	bit 5 = rx overflow since reset
+	//	bit 6 = crc err flag
+	//	bit 7 = crc err detected
+
+	if((receiveBuffer[0]>>4))
+	{
+		__SS__ << "Error in OTS protocol encountered! " << std::setfill('0') << std::setw(2) << std::hex <<
+				(((int16_t) receiveBuffer[0]) &0xff) << "-" << std::dec << __E__;
+		__SS_THROW__;
+	}
 
 }
 catch(std::runtime_error &e)
@@ -292,8 +327,7 @@ catch(std::runtime_error &e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
-	__COUT_ERR__ << "\n" << ss.str() << std::endl;
-	throw std::runtime_error(ss.str());
+	__SS_THROW__;
 }
 
 //========================================================================================================================
@@ -325,7 +359,16 @@ throw(std::runtime_error)
 		__COUT_ERR__ << "\n" << ss.str() << std::endl;
 		throw std::runtime_error(ss.str());
 	}
-	std::copy_n((char *)&receiveBuffer[2],sizeof(uint64_t),&receiveQuadWord);
+	//copy_n does not work!! alert?! it only copies the first byte?
+//	std::copy_n((char *)&receiveBuffer[2],sizeof(uint64_t),&receiveQuadWord);
+//
+//	__COUT__ << "receiveQuadWord all = 0x" << std::hex <<
+//			receiveQuadWord << std::dec << std::endl;
+
+	receiveQuadWord = *((uint64_t *)&receiveBuffer[2]);
+//	//memcpy((char *)&receiveBuffer[2],sizeof(uint64_t),&receiveQuadWord);
+//	__COUT__ << "receiveQuadWord all = 0x" << std::hex <<
+//			receiveQuadWord << std::dec << std::endl;
 }
 
 //========================================================================================================================
@@ -351,7 +394,10 @@ throw(std::runtime_error)
 	for(unsigned int i = 2; i < receiveBuffer.length(); i += 8)
 	{
 		receiveQuadWords.push_back(uint64_t());
-		std::copy_n((char *)&receiveBuffer[i],sizeof(uint64_t),&receiveQuadWords[receiveQuadWords.size()-1]);
+
+		//copy_n does not work!! alert?! it only copies the first byte?
+		//std::copy_n((char *)&receiveBuffer[i],sizeof(uint64_t),&receiveQuadWords[receiveQuadWords.size()-1]);
+		receiveQuadWords[receiveQuadWords.size()-1] = *((uint64_t *)&receiveBuffer[i]);
 	}
 }
 
