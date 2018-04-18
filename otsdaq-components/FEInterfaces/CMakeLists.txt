@@ -6,6 +6,7 @@ simple_plugin(FEOtsUDPTemplateInterface "interface"
   FECore
   WorkLoopManager
   #MessageFacility
+  Configurable
   NetworkUtilities
   ConfigurationInterface
   ConfigurationDataFormats
