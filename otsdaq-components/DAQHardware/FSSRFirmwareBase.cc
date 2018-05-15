@@ -753,7 +753,7 @@ void FSSRFirmwareBase::setFrequencyFromClockState(std::string& buffer, double fr
 		}
 		//Done finding the GCD
 
-		if (gcd == 1) //if there's no GCD, just divide by 2 to find the nearest approssimation with less bits
+		if (gcd == 1) //if there's no GCD, just divide by 2 to find the nearest approximation with less bits
 		{
 			numerator /= 2;
 			denominator /= 2;
@@ -766,6 +766,9 @@ void FSSRFirmwareBase::setFrequencyFromClockState(std::string& buffer, double fr
 
 	}
 	while (denominator >= 32 || numerator >= 32);
+
+	//numerator = 2;
+	//denominator = 1;
 	std::cout << __COUT_HDR_FL__ << "Numerator: " << numerator << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Denominator: " << denominator << std::endl;
 	setFrequencyRatio(buffer, numerator, denominator);

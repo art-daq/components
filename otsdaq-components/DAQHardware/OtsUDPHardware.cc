@@ -312,11 +312,11 @@ try
 	//	bit 6 = crc err flag
 	//	bit 7 = crc err detected
 
-	if((receiveBuffer[0]>>4))
+	if((receiveBuffer[0]>>5)) //FIXME?? also consider bit 4?
 	{
 		__SS__ << "Error in OTS protocol encountered! " << std::setfill('0') << std::setw(2) << std::hex <<
 				(((int16_t) receiveBuffer[0]) &0xff) << "-" << std::dec << __E__;
-		__SS_THROW__;
+		//__SS_THROW__;
 	}
 
 }
