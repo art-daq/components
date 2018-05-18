@@ -22,6 +22,7 @@ set(CMAKE_MODULE_PATH
         $ENV{ART_DIR}/Modules
         $ENV{CETBUILDTOOLS_DIR}/Modules
         $ENV{XDAQ_DIR}/Modules
+        $ENV{ARTDAQ_UTILITIES_DIR}/Modules
         ${CMAKE_MODULE_PATH})
 message(STATUS "CMAKE_MODULE_PATH is ${CMAKE_MODULE_PATH}")
 
@@ -77,6 +78,9 @@ include(CetTest)
 
 # Code
 add_subdirectory(otsdaq-components)
+
+# doxygen
+add_subdirectory(doc)
 
 # UPS Config
 add_subdirectory(ups)
