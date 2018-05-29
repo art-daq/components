@@ -1,7 +1,7 @@
 #include "OtsUDPFirmwareCore.h"
 
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
-#include "otsdaq-core/Macros/CoutHeaderMacros.h"
+#include "otsdaq-core/Macros/CoutMacros.h"
 
 //#include "otsdaq-core/BitManipulator/BitManipulator.h"
 //#include "otsdaq-components/DAQHardware/FirmwareBaseDefinitions.h"
@@ -446,7 +446,7 @@ void OtsUDPFirmwareCore::ethernetReset(std::string& buffer)
 {
 	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */,
-			1 /* data */);
+			1 | (1<<1 /*for soft reset*/) /* data */);
 }
 //========================================================================================================================
 void OtsUDPFirmwareCore::ethernetUnreset(std::string& buffer)

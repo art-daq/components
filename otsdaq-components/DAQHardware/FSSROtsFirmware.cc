@@ -10,7 +10,7 @@
 
 
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
-#include "otsdaq-core/Macros/CoutHeaderMacros.h"
+#include "otsdaq-core/Macros/CoutMacros.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>

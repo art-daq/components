@@ -9,7 +9,7 @@
 #define _ots_FrontEndHardwareBase_h_
 
 
-#include "otsdaq-core/Macros/CoutHeaderMacros.h"
+#include "otsdaq-core/Macros/CoutMacros.h"
 
 #include <string>
 #include <vector>
