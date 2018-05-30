@@ -38,6 +38,8 @@ OtsUDPHardware::OtsUDPHardware (std::string hostIPAddress, unsigned int hostPort
 {
 	Socket::initialize();
 
+	__COUT__ << "Socket for hardware is initialized at IP:Port " <<
+			OtsUDPBoard_.getIPAddress() << ":" << OtsUDPBoard_.getPort() << __E__;
 
 //	char msg[100];
 //	sprintf(msg,"_%d",getPort());
@@ -82,9 +84,9 @@ try
 
 	if(TransceiverSocket::send(OtsUDPBoard_, sendBuffer, verbose_) < 0)
 	{
-		__SS__ << "Write failed." << std::endl;
-		__COUT_ERR__ << "\n" << ss.str() << std::endl;
-		throw std::runtime_error(ss.str());
+		__SS__ << "Write failed to hardware at IP:Port " <<
+				OtsUDPBoard_.getIPAddress() << ":" << OtsUDPBoard_.getPort() << __E__;
+		__SS_THROW__;
 	}
 }
 catch(std::runtime_error &e)
@@ -94,8 +96,7 @@ catch(std::runtime_error &e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
-	__COUT_ERR__ << "\n" << ss.str() << std::endl;
-	throw std::runtime_error(ss.str());
+	__SS_THROW__;
 }
 
 //========================================================================================================================
@@ -171,23 +172,15 @@ try
 	//acknowledgment_.clear();
 
 	if(timeoutSeconds < 0) //use default timeout
+		timeoutSeconds = 5;
+
+	if(TransceiverSocket::receive(acknowledgment_,timeoutSeconds) < 0)
 	{
-		if(TransceiverSocket::receive(acknowledgment_) < 0)
-		{
-			__SS__ << "writeAndAcknowledge failed. Default timeout period reached without response." << std::endl;
-			__COUT_ERR__ << "\n" << ss.str() << std::endl;
-			throw std::runtime_error(ss.str());
-		}
-	}
-	else
-	{
-		if(TransceiverSocket::receive(acknowledgment_,timeoutSeconds) < 0)
-		{
-			__SS__ << "writeAndAcknowledge failed. " << timeoutSeconds <<
-					" second timeout period reached without response." << std::endl;
-			__COUT_ERR__ << "\n" << ss.str() << std::endl;
-			throw std::runtime_error(ss.str());
-		}
+		__SS__ << "writeAndAcknowledge failed from hardware at IP:Port " <<
+				OtsUDPBoard_.getIPAddress() << ":" << OtsUDPBoard_.getPort() <<
+				". Timeout period of " << timeoutSeconds << " seconds reached without response." << std::endl;
+		__COUT_ERR__ << "\n" << ss.str() << std::endl;
+		throw std::runtime_error(ss.str());
 	}
 
 
@@ -279,25 +272,15 @@ try
 	__COUT__ << "receiving" << std::endl;
 
 	if(timeoutSeconds < 0) //use default timeout
-	{
-		if(TransceiverSocket::receive(receiveBuffer,5 /*timeoutSeconds*/,0 /*timeoutUSeconds*/,verbose_) < 0)
-		{
-			__SS__ << "Read failed. Default timeout period reached without response." << std::endl;
-			__COUT_ERR__ << "\n" << ss.str() << std::endl;
-			throw std::runtime_error(ss.str());
-		}
-	}
-	else
-	{
-		if(TransceiverSocket::receive(receiveBuffer,timeoutSeconds,0 /*timeoutUSeconds*/,verbose_) < 0)
-		{
-			__SS__ << "Read failed. " << timeoutSeconds <<
-					" second timeout period reached without response." << std::endl;
-			__COUT_ERR__ << "\n" << ss.str() << std::endl;
-			throw std::runtime_error(ss.str());
-		}
-	}
+		timeoutSeconds = 5;
 
+	if(TransceiverSocket::receive(receiveBuffer,timeoutSeconds,0 /*timeoutUSeconds*/,verbose_) < 0)
+	{
+		__SS__ << "Read failed from hardware at IP:Port " <<
+				OtsUDPBoard_.getIPAddress() << ":" << OtsUDPBoard_.getPort() <<
+				". Timeout period of " << timeoutSeconds << " seconds reached without response." << __E__;
+		__SS_THROW__;
+	}
 
 	__COUT__ << "RECEIVED MESSAGE: ";
 	for(uint32_t i=0; i<receiveBuffer.size(); i++)
@@ -356,8 +339,7 @@ throw(std::runtime_error)
 	{
 		__SS__ << "Read uint64_t quad-word failed. Invalid size of received buffer: " <<
 				receiveBuffer.length() << " != " << 10 << std::endl;
-		__COUT_ERR__ << "\n" << ss.str() << std::endl;
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 	//copy_n does not work!! alert?! it only copies the first byte?
 //	std::copy_n((char *)&receiveBuffer[2],sizeof(uint64_t),&receiveQuadWord);
@@ -387,8 +369,7 @@ throw(std::runtime_error)
 	{
 		__SS__ << "Read vector of uint64_t quad-word failed. Invalid size of received buffer: (" <<
 				receiveBuffer.length() << " - 2) % 8 != 0" << std::endl;
-		__COUT_ERR__ << "\n" << ss.str() << std::endl;
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 	for(unsigned int i = 2; i < receiveBuffer.length(); i += 8)
@@ -423,8 +404,7 @@ throw(std::runtime_error)
 		{
 			__SS__ << "Read vector of uint64_t quad-word failed. Invalid size of received buffer: (" <<
 					receiveBuffer.length() << " - 2) % 8 != 0" << std::endl;
-			__COUT_ERR__ << "\n" << ss.str() << std::endl;
-			throw std::runtime_error(ss.str());
+			__SS_THROW__;
 		}
 
 		//copy to uint64_t's
