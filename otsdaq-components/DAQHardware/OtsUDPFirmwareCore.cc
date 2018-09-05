@@ -442,11 +442,11 @@ void OtsUDPFirmwareCore::readUDPFirmwareVersion(std::string& buffer)
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::ethernetReset(std::string& buffer)
+void OtsUDPFirmwareCore::ethernetReset(std::string& buffer, bool hard, bool soft)
 {
 	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */,
-			1 | (1<<1 /*for soft reset*/) /* data */);
+			(hard) | (soft<<1 /*for soft reset*/) /* data */);
 }
 //========================================================================================================================
 void OtsUDPFirmwareCore::ethernetUnreset(std::string& buffer)

@@ -97,7 +97,7 @@ std::string FSSRFirmwareBase::configureClocks(std::string source, double frequen
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Reset CSR - reset trigger counter, external 27 MHz clock
 
 	resetDCM(buffer);
-	alignReadOut(buffer,0x3000);//0x3000
+	//alignReadOut(buffer,0x3000);//0x3000
 
 	setFrequencyFromClockState(buffer, frequency);
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_,false/*clearBuffer*/);
@@ -127,9 +127,14 @@ void FSSRFirmwareBase::resetDCM(std::string& buffer)
 
 
 //========================================================================================================================
-void FSSRFirmwareBase::alignReadOut(std::string& buffer, uint32_t value)
+void FSSRFirmwareBase::alignReadOut(std::string& buffer, unsigned int sensor, unsigned int chip)
 {
-	communicationFirmwareInstance_->write(buffer, STRIP_TRIM_CSR, value); //  MCLKB edge for channel 5 // was 0x00002000
+	//(2:0) sensor
+	//(7:3) chip
+	//28 up/down (-> here we always move up)
+	//31 must be set 1
+	//It shifts the readout every time is called by few picosends (likely) if bit 31 is set
+	communicationFirmwareInstance_->write(buffer, STRIP_TRIM_CSR, (0x9<<28)+((chip&0xf)<<3)+(sensor&0x7)); //  MCLKB edge for channel 5 // was 0x00002000
 }
 //========================================================================================================================
 std::string FSSRFirmwareBase::resetDetector(int channel)

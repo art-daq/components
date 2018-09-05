@@ -68,7 +68,7 @@ public:
     //std::string setDataDestination  (std::string ip, uint32_t port);
 
     void 					resetDCM                   		(std::string& buffer);
-    void 					alignReadOut               		(std::string& buffer, uint32_t value);
+    void 					alignReadOut               		(std::string& buffer, unsigned int sensor, unsigned int chip);
     void 					makeDACSequence 				(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream);
     void 					makeDACSequence 				(FirmwareSequence<uint32_t>& sequence, unsigned int channel, const ROCStream& rocStream);
     void 					makeMaskSequence				(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream& rocStream);
