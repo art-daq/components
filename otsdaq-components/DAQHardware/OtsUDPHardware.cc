@@ -180,7 +180,7 @@ try
 				OtsUDPBoard_.getIPAddress() << ":" << OtsUDPBoard_.getPort() <<
 				". Timeout period of " << timeoutSeconds << " seconds reached without response." << std::endl;
 		__COUT_ERR__ << "\n" << ss.str() << std::endl;
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 
@@ -217,7 +217,7 @@ catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
 	__COUT_ERR__ << "\n" << ss.str() << std::endl;
-	throw std::runtime_error(ss.str());
+	__SS_THROW__;
 }
 
 //========================================================================================================================

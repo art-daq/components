@@ -28,15 +28,15 @@ public:
     //not all classes will implement every function (so no pure virtuals). Should be obvious
     //that the wrong thing is happening if these are called because exceptions are thrown!
 
-	virtual void write              (const std::string&              sendBuffer)  	throw(std::runtime_error){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");}
-	virtual void write              (const std::vector<std::string>& sendBuffers) 	throw(std::runtime_error){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");}
-	virtual void writeAndAcknowledge(const std::string&              sendBuffer,  int timeoutSeconds = -1) throw(std::runtime_error){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");}
-	virtual void writeAndAcknowledge(const std::vector<std::string>& sendBuffers, int timeoutSeconds = -1) throw(std::runtime_error){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");}
-	virtual void read               (const std::string&              sendBuffer , std::string&              	receiveBuffer,  int timeoutSeconds = -1) throw(std::runtime_error){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");}
-	virtual void read               (const std::vector<std::string>& sendBuffers, std::vector<std::string>& 	receiveBuffers, int timeoutSeconds = -1) throw(std::runtime_error){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function");}
+	virtual void write              (const std::string&              sendBuffer)  	throw(std::runtime_error){__SS__; __THROW__(ss.str() + "Illegal call to undefined base class member function");}
+	virtual void write              (const std::vector<std::string>& sendBuffers) 	throw(std::runtime_error){__SS__; __THROW__(ss.str() + "Illegal call to undefined base class member function");}
+	virtual void writeAndAcknowledge(const std::string&              sendBuffer,  int timeoutSeconds = -1) throw(std::runtime_error){__SS__; __THROW__(ss.str() + "Illegal call to undefined base class member function");}
+	virtual void writeAndAcknowledge(const std::vector<std::string>& sendBuffers, int timeoutSeconds = -1) throw(std::runtime_error){__SS__; __THROW__(ss.str() + "Illegal call to undefined base class member function");}
+	virtual void read               (const std::string&              sendBuffer , std::string&              	receiveBuffer,  int timeoutSeconds = -1) throw(std::runtime_error){__SS__; __THROW__(ss.str() + "Illegal call to undefined base class member function");}
+	virtual void read               (const std::vector<std::string>& sendBuffers, std::vector<std::string>& 	receiveBuffers, int timeoutSeconds = -1) throw(std::runtime_error){__SS__; __THROW__(ss.str() + "Illegal call to undefined base class member function");}
 
 	//return count of 'things' flushed
-	virtual	int flushRead			()		throw(std::runtime_error){__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return 0;}
+	virtual	int flushRead			()		throw(std::runtime_error){__SS__; __THROW__(ss.str() + "Illegal call to undefined base class member function"); return 0;}
 
     static const std::string PURDUE_HARDWARE_NAME;
     static const std::string OTS_HARDWARE_NAME;

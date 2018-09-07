@@ -42,7 +42,7 @@ FSSRFirmwareBase::FSSRFirmwareBase(
 		__SS__ << "Unknown communication firmware type choice: " <<
 				communicationFirmwareType << std::endl;
 		__COUT_ERR__ << ss.str();
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 
@@ -189,7 +189,7 @@ std::string FSSRFirmwareBase::enableTrigger(void)
 	{
 		__SS__ << "what version is this?" << communicationFirmwareInstance_->getVersion() << std::endl;
 		__COUT__ << ss.str();
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;

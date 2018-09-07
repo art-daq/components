@@ -57,7 +57,7 @@ public:
     std::string 			universalRead	  				(char* address);
     std::string 			universalWrite	  				(char* address, char* data);
 
-    //virtual void  		    setDataDestination              (std::string& buffer, const std::string& ip, const uint16_t port);//					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    //virtual void  		    setDataDestination              (std::string& buffer, const std::string& ip, const uint16_t port);//					{__SS__; __THROW__(ss.str() + "Illegal call to undefined base class member function"); return;};
     uint32_t 				createRegisterFromValue 		(std::string& readBuffer, std::string& receivedValue);
 
     //FEW specific methods

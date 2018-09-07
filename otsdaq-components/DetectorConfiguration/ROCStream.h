@@ -81,7 +81,7 @@ inline void  ots::ROCStream::setROCMask(const std::string& rocMask)
 			{
 				__SS__ << "Too many [ in bit mask configuration" << std::endl;
 				__COUT_ERR__ << "\n" << ss.str();
-				throw std::runtime_error(ss.str());
+				__SS_THROW__;
 			}
 		else if(rocMask[i] == ']')
 			if(openCol)
@@ -98,7 +98,7 @@ inline void  ots::ROCStream::setROCMask(const std::string& rocMask)
 			{
 				__SS__ << "Too many ] in bit mask configuration" << std::endl;
 				__COUT_ERR__ << "\n" << ss.str();
-				throw std::runtime_error(ss.str());
+				__SS_THROW__;
 			}
 		else if(rocMask[i] == '0' || rocMask[i] == '1')
 			theROCMask_ += rocMask[i];//No matrix style mask ... needs to be changed //TODO

@@ -109,7 +109,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 	{
 		__SS__ << "Invalid OtsUDPFirmwareCore::writeAdvanced size: " << size << std::endl;
 		__COUT_ERR__ << "\n" << ss.str();
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 	if(buffer.size() + 2 + 8 + 8*size > 2 + 8 + 8*182)
@@ -117,7 +117,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 		__SS__ << "Aborting. Buffer overflow attempt: " << buffer.size() << " + " <<
 				2 + 8 + 8*size << " > " << 2 + 8 + 8*182 << std::endl;
 		__COUT_ERR__ << "\n" << ss.str();
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 	if(clearBuffer)
@@ -221,7 +221,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
 	{
 		__SS__ << "Invalid OtsUDPFirmwareCore::readAdvanced size: " << size << std::endl;
 		__COUT_ERR__ << "\n" << ss.str();
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 	if(buffer.size() + 2 + 8 > 2 + 8 + 8*182)
@@ -229,7 +229,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
 		__SS__ << "Aborting. Buffer overflow attempt: " << buffer.size() << " + " <<
 				2 + 8 << " > " << 2 + 8 + 8*182 << std::endl;
 		__COUT_ERR__ << "\n" << ss.str();
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 	if(clearBuffer)
