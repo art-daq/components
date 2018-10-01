@@ -12,16 +12,16 @@ using namespace ots;
 
 //========================================================================================================================
 FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath)
-: Socket               (
+: Socket (
 		theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>())
-, FEVInterface         (interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
-, OtsUDPHardware       (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
+, FEVInterface (interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
+, OtsUDPHardware (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
 , OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
 	universalAddressSize_ = 8;
-	universalDataSize_    = 8;
+	universalDataSize_ = 8;
 }
 
 //========================================================================================================================
@@ -64,7 +64,7 @@ void FEOtsUDPTemplateInterface::configure(void)
 	);
 	OtsUDPHardware::write(sendBuffer);
 
-	__CFG_COUT__ << "Reading back burst dest MAC/IP/Port: "  << std::endl;
+	__CFG_COUT__ << "Reading back burst dest MAC/IP/Port: " << std::endl;
 
 	OtsUDPFirmwareCore::readDataDestinationMAC(sendBuffer);
 	OtsUDPHardware::read(sendBuffer,readQuadWord);
@@ -83,7 +83,7 @@ void FEOtsUDPTemplateInterface::configure(void)
 	//Run Configure Sequence Commands
 	FEVInterface::runSequenceOfCommands("LinkToConfigureSequence");
 
-	__CFG_COUT__ << "Done with ots Template configuring."  << std::endl;
+	__CFG_COUT__ << "Done with ots Template configuring." << std::endl;
 }
 
 //========================================================================================================================
