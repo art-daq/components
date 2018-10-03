@@ -20,7 +20,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
 , OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
-	//registration of FEMacro 'TestMyMacro' generated, Oct-03-2018 04:00:22, by 'admin' using MacroMaker.
+	//registration of FEMacro 'TestMyMacro' generated, Oct-03-2018 04:54:57, by 'admin' using MacroMaker.
 	registerFEMacroFunction("TestMyMacro",//feMacroName 
 		static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::TestMyMacro), //feMacroFunction 
 		std::vector<std::string>{}, //namesOfInputArgs 
@@ -28,7 +28,6 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 		1); //requiredUserPermissions 
 
 
-	
 
 	universalAddressSize_ = 8;
 	universalDataSize_ = 8;
@@ -263,11 +262,9 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 
 
 
-
-
 //========================================================================================================================
 //TestMyMacro
-//	FEMacro 'TestMyMacro' generated, Oct-03-2018 04:00:22, by 'admin' using MacroMaker.
+//	FEMacro 'TestMyMacro' generated, Oct-03-2018 04:54:57, by 'admin' using MacroMaker.
 void FEOtsUDPTemplateInterface::TestMyMacro(__ARGS__)
 {
 	__CFG_COUT__ << "# of input args = " << argsIn.size() << __E__; 
@@ -275,36 +272,23 @@ void FEOtsUDPTemplateInterface::TestMyMacro(__ARGS__)
 	for(auto &argIn:argsIn) 
 		__CFG_COUT__ << argIn.first << ": " << argIn.second << __E__; 
 
+	//macro commands section 
 	{
 
-		char *addrs = new char[universalAddressSize_];	//create address buffer of interface size
-		char *data = new char[universalDataSize_];		//create data buffer of interface size
-
-		{
-			uint64_t macroAddrs;
-
-			macroAddrs = 0x0110;
-			universalRead((char *)&macroAddrs,(char *)data);
-		}
+		char *address 	= new char[universalAddressSize_]{0};	//create address buffer of interface size and init to all 0
+		char *data 		= new char[universalDataSize_]{0};		//create data buffer of interface size and init to all 0
+		uint64_t macroAddress;		//create macro address buffer (size 8 bytes)
+		uint64_t macroData;			//create macro address buffer (size 8 bytes)
 
 		// universalRead(0x1001,data);
-		{
-			uint8_t macroAddrs[2] = {0x01, 0x10};	//create macro address buffer
-			for(unsigned int i=0;i<universalAddressSize_;++i) //fill with macro address and 0 fill
-					addrs[i] = (i < 2)?macroAddrs[i]:0;
-
-			universalRead((char *)addrs,(char *)data);
-		}
+		macroAddress = 0x1001; memcpy(address,&macroAddress,8);	//copy macro address to buffer
+		universalRead(address,data);
 
 		// universalRead(0x1002,data);
-		{
-			uint8_t macroAddrs[2] = {0x02, 0x10};	//create macro address buffer
-			for(unsigned int i=0;i<universalAddressSize_;++i) //fill with macro address and 0 fill
-					addrs[i] = (i < 2)?macroAddrs[i]:0;
+		macroAddress = 0x1002; memcpy(address,&macroAddress,8);	//copy macro address to buffer
+		universalRead(address,data);
 
-			universalRead((char *)addrs,(char *)data);
-		}
-		delete[] addrs; //free the memory
+		delete[] address; //free the memory
 		delete[] data; //free the memory
 	}
 

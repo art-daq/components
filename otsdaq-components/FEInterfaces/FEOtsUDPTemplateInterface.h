@@ -32,8 +32,7 @@ public:
 private:
 
 
-
-public: // FEMacro 'TestMyMacro' generated, Oct-03-2018 04:00:22, by 'admin' using MacroMaker.
+public: // FEMacro 'TestMyMacro' generated, Oct-03-2018 04:54:57, by 'admin' using MacroMaker.
 	void TestMyMacro	(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
 };
 
