@@ -20,15 +20,6 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
 , OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
-	//registration of FEMacro 'TestMyMacro' generated, Oct-03-2018 04:54:57, by 'admin' using MacroMaker.
-	registerFEMacroFunction("TestMyMacro",//feMacroName 
-		static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::TestMyMacro), //feMacroFunction 
-		std::vector<std::string>{}, //namesOfInputArgs 
-		std::vector<std::string>{}, //namesOfOutputArgs 
-		1); //requiredUserPermissions 
-
-
-
 	universalAddressSize_ = 8;
 	universalDataSize_ = 8;
 }
@@ -241,7 +232,7 @@ int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnVal
 	__CFG_COUT__ << "Result SIZE: " << readBuffer.size() << std::endl;
 	std::memcpy(returnValue,readBuffer.substr(2).c_str(),universalDataSize_);
 	return 0;
-}
+} //end universalRead()
 
 //========================================================================================================================
 //NOTE: buffer for address must be at least size universalAddressSize_
@@ -258,43 +249,8 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 	std::string sendBuffer;
 	OtsUDPFirmwareCore::writeAdvanced(sendBuffer,address,writeValue,1 /*size*/);
 	OtsUDPHardware::write(sendBuffer); // data request
-}
+} //end universalWrite()
 
 
-
-//========================================================================================================================
-//TestMyMacro
-//	FEMacro 'TestMyMacro' generated, Oct-03-2018 04:54:57, by 'admin' using MacroMaker.
-void FEOtsUDPTemplateInterface::TestMyMacro(__ARGS__)
-{
-	__CFG_COUT__ << "# of input args = " << argsIn.size() << __E__; 
-	__CFG_COUT__ << "# of output args = " << argsOut.size() << __E__; 
-	for(auto &argIn:argsIn) 
-		__CFG_COUT__ << argIn.first << ": " << argIn.second << __E__; 
-
-	//macro commands section 
-	{
-
-		char *address 	= new char[universalAddressSize_]{0};	//create address buffer of interface size and init to all 0
-		char *data 		= new char[universalDataSize_]{0};		//create data buffer of interface size and init to all 0
-		uint64_t macroAddress;		//create macro address buffer (size 8 bytes)
-		uint64_t macroData;			//create macro address buffer (size 8 bytes)
-
-		// universalRead(0x1001,data);
-		macroAddress = 0x1001; memcpy(address,&macroAddress,8);	//copy macro address to buffer
-		universalRead(address,data);
-
-		// universalRead(0x1002,data);
-		macroAddress = 0x1002; memcpy(address,&macroAddress,8);	//copy macro address to buffer
-		universalRead(address,data);
-
-		delete[] address; //free the memory
-		delete[] data; //free the memory
-	}
-
-	for(auto &argOut:argsOut) 
-		__CFG_COUT__ << argOut.first << ": " << argOut.second << __E__; 
-
-} 
 
 DEFINE_OTS_INTERFACE(FEOtsUDPTemplateInterface)
