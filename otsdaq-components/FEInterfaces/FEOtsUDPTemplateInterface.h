@@ -32,8 +32,11 @@ public:
 private:
 
 
-public: // FEMacro 'varTest' generated, Oct-11-2018 10:56:40, by 'admin' using MacroMaker.
+public: // FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
 	void varTest	(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
+
+public: // FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
+	void varTest2	(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
 };
 
 }
