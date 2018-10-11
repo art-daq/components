@@ -20,7 +20,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
 , OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
-	//registration of FEMacro 'varTest' generated, Oct-07-2018 01:03:35, by 'admin' using MacroMaker.
+	//registration of FEMacro 'varTest' generated, Oct-11-2018 10:56:40, by 'admin' using MacroMaker.
 	registerFEMacroFunction("varTest",//feMacroName 
 		static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::varTest), //feMacroFunction 
 		std::vector<std::string>{}, //namesOfInputArgs 
@@ -269,10 +269,9 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 
 
 
-
 //========================================================================================================================
 //varTest
-//	FEMacro 'varTest' generated, Oct-07-2018 01:03:35, by 'admin' using MacroMaker.
+//	FEMacro 'varTest' generated, Oct-11-2018 10:56:40, by 'admin' using MacroMaker.
 //	Macro Notes: [Modified 12:07 10/4/2018] This is a great test!
 void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 {
@@ -310,7 +309,8 @@ void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 		universalWrite(address,data);
 
 		// command-#4: delay(4000);
-		sleep(4000 /* milliseconds */);
+		__CFG_COUT__ << "Sleeping for... " << 4000 << " milliseconds " << __E__;
+		usleep(4000*1000 /* microseconds */);
 
 
 		delete[] address; //free the memory
