@@ -20,6 +20,15 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
 , OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
+	//registration of FEMacro 'varTest' generated, Oct-07-2018 01:03:35, by 'admin' using MacroMaker.
+	registerFEMacroFunction("varTest",//feMacroName 
+		static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::varTest), //feMacroFunction 
+		std::vector<std::string>{}, //namesOfInputArgs 
+		std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs 
+		1); //requiredUserPermissions 
+
+
+
 	universalAddressSize_ = 8;
 	universalDataSize_ = 8;
 }
@@ -31,6 +40,12 @@ FEOtsUDPTemplateInterface::~FEOtsUDPTemplateInterface(void)
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::configure(void)
 {
+	//if(i < 10)
+	//	VStateMachine::indicateStillWorking();
+
+	__CFG_COUTV__(VStateMachine::getIterationIndex());
+	__CFG_COUTV__(VStateMachine::getStillWorking());
+
 	__CFG_COUT__ << "configure" << std::endl;
 	__CFG_COUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket() << " packets cleared." << std::endl;
 
@@ -252,5 +267,59 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 } //end universalWrite()
 
 
+
+
+
+//========================================================================================================================
+//varTest
+//	FEMacro 'varTest' generated, Oct-07-2018 01:03:35, by 'admin' using MacroMaker.
+//	Macro Notes: [Modified 12:07 10/4/2018] This is a great test!
+void FEOtsUDPTemplateInterface::varTest(__ARGS__)
+{
+	__CFG_COUT__ << "# of input args = " << argsIn.size() << __E__; 
+	__CFG_COUT__ << "# of output args = " << argsOut.size() << __E__; 
+	for(auto &argIn:argsIn) 
+		__CFG_COUT__ << argIn.first << ": " << argIn.second << __E__; 
+
+	//macro commands section 
+	{
+		char *address 	= new char[universalAddressSize_]{0};	//create address buffer of interface size and init to all 0
+		char *data 		= new char[universalDataSize_]{0};		//create data buffer of interface size and init to all 0
+		uint64_t macroAddress;		//create macro address buffer (size 8 bytes)
+		uint64_t macroData;			//create macro address buffer (size 8 bytes)
+		std::map<std::string /*arg name*/,uint64_t /*arg val*/> macroArgs; //create map from arg name to 64-bit number
+
+		// command-#0: Read(0x1002 /*address*/,myArg /*data*/);
+		macroAddress = 0x1002; memcpy(address,&macroAddress,8);	//copy macro address to buffer
+		universalRead(address,data);		memcpy(&macroArgs["myArg"],data,8); //copy buffer to argument map
+		__SET_ARG_OUT__("myArg",macroArgs["myArg"]); //update output argument result
+
+		// command-#1: Read(0x1001 /*address*/,data);
+		macroAddress = 0x1001; memcpy(address,&macroAddress,8);	//copy macro address to buffer
+		universalRead(address,data);		memcpy(&macroArgs["outArg1"],data,8); //copy buffer to argument map
+		__SET_ARG_OUT__("outArg1",macroArgs["outArg1"]); //update output argument result
+
+		// command-#2: Write(0x1002 /*address*/,0x0000000000000064 /*data*/);
+		macroAddress = 0x1002; memcpy(address,&macroAddress,8);	//copy macro address to buffer
+		macroData = 0x0000000000000064; memcpy(data,&macroData,8);	//copy macro data to buffer
+		universalWrite(address,data);
+
+		// command-#3: Write(0x1001 /*address*/,myArg /*data*/);
+		macroAddress = 0x1001; memcpy(address,&macroAddress,8);	//copy macro address to buffer	//get macro data argument
+		memcpy(data,&macroArgs["myArg"],8); //copy macro data argument to buffer
+		universalWrite(address,data);
+
+		// command-#4: delay(4000);
+		sleep(4000 /* milliseconds */);
+
+
+		delete[] address; //free the memory
+		delete[] data; //free the memory
+	}
+
+	for(auto &argOut:argsOut) 
+		__CFG_COUT__ << argOut.first << ": " << argOut.second << __E__; 
+
+} //end varTest()
 
 DEFINE_OTS_INTERFACE(FEOtsUDPTemplateInterface)

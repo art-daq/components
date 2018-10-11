@@ -31,6 +31,9 @@ public:
 
 private:
 
+
+public: // FEMacro 'varTest' generated, Oct-07-2018 01:03:35, by 'admin' using MacroMaker.
+	void varTest	(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
 };
 
 }
