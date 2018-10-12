@@ -47,11 +47,21 @@ FEOtsUDPTemplateInterface::~FEOtsUDPTemplateInterface(void)
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::configure(void)
 {
-	//if(i < 10)
-	//	VStateMachine::indicateStillWorking();
+	unsigned int i = VStateMachine::getIterationIndex();
+	unsigned int j = VStateMachine::getSubIterationIndex();
+	if(i == 0 && j < 5)
+		VStateMachine::indicateSubIterationWork();
+	else if(i < 10)
+		VStateMachine::indicateIterationWork();
 
+
+	__CFG_COUTV__(VStateMachine::getSubIterationIndex());
+	__CFG_COUTV__(VStateMachine::getSubIterationWork());
 	__CFG_COUTV__(VStateMachine::getIterationIndex());
-	__CFG_COUTV__(VStateMachine::getStillWorking());
+	__CFG_COUTV__(VStateMachine::getIterationWork());
+
+
+	return;
 
 	__CFG_COUT__ << "configure" << std::endl;
 	__CFG_COUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket() << " packets cleared." << std::endl;
