@@ -47,12 +47,12 @@ FEOtsUDPTemplateInterface::~FEOtsUDPTemplateInterface(void)
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::configure(void)
 {
-	unsigned int i = VStateMachine::getIterationIndex();
-	unsigned int j = VStateMachine::getSubIterationIndex();
-	if(i == 0 && j < 5)
-		VStateMachine::indicateSubIterationWork();
-	else if(i < 10)
-		VStateMachine::indicateIterationWork();
+//	unsigned int i = VStateMachine::getIterationIndex();
+//	unsigned int j = VStateMachine::getSubIterationIndex();
+//	if(i == 0 && j < 5)
+//		VStateMachine::indicateSubIterationWork();
+//	else if(i < 10)
+//		VStateMachine::indicateIterationWork();
 
 
 	__CFG_COUTV__(VStateMachine::getSubIterationIndex());
@@ -61,10 +61,10 @@ void FEOtsUDPTemplateInterface::configure(void)
 	__CFG_COUTV__(VStateMachine::getIterationWork());
 
 
-	return;
+//	return;
 
-	__CFG_COUT__ << "configure" << std::endl;
-	__CFG_COUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket() << " packets cleared." << std::endl;
+	__CFG_COUT__ << "configure" << __E__;
+	__CFG_COUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket() << " packets cleared." << __E__;
 
 	std::string sendBuffer;
 	std::string recvBuffer;
@@ -74,21 +74,21 @@ void FEOtsUDPTemplateInterface::configure(void)
 				theXDAQContextConfigTree_.getNode(theConfigurationPath_).getConfigurationName() <<
 				"-v" <<
 				theXDAQContextConfigTree_.getNode(theConfigurationPath_).getConfigurationVersion() <<
-				std::endl;
+				__E__;
 
 	__CFG_COUT__ << "Interface name: " <<
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_) << __E__;
 
 	__CFG_COUT__ << "Configured Firmware Version: " <<
 				theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("FirmwareVersion").getValue<unsigned int>()
-				<< std::endl;
+				<< __E__;
 
 	__CFG_COUT__ << "Setting Destination IP: " <<
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToIPAddress").getValue<std::string>()
-			<< std::endl;
+			<< __E__;
 	__CFG_COUT__ << "And Destination Port: " <<
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToPort").getValue<unsigned int>()
-			<< std::endl;
+			<< __E__;
 
 	OtsUDPFirmwareCore::setDataDestination(sendBuffer,
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToIPAddress").getValue<std::string>(),
@@ -96,7 +96,7 @@ void FEOtsUDPTemplateInterface::configure(void)
 	);
 	OtsUDPHardware::write(sendBuffer);
 
-	__CFG_COUT__ << "Reading back burst dest MAC/IP/Port: " << std::endl;
+	__CFG_COUT__ << "Reading back burst dest MAC/IP/Port: " << __E__;
 
 	OtsUDPFirmwareCore::readDataDestinationMAC(sendBuffer);
 	OtsUDPHardware::read(sendBuffer,readQuadWord);
@@ -115,40 +115,58 @@ void FEOtsUDPTemplateInterface::configure(void)
 	//Run Configure Sequence Commands
 	FEVInterface::runSequenceOfCommands("LinkToConfigureSequence");
 
-	__CFG_COUT__ << "Done with ots Template configuring." << std::endl;
+	__CFG_COUT__ << "Done with ots Template configuring." << __E__;
 }
 
 //========================================================================================================================
 //void FEOtsUDPTemplateInterface::configureDetector(const DACStream& theDACStream)
 //{
-//	__CFG_COUT__ << "\tconfigureDetector" << std::endl;
+//	__CFG_COUT__ << "\tconfigureDetector" << __E__;
 //}
 
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::halt(void)
 {
-	__CFG_COUT__ << "\tHalt" << std::endl;
+	__CFG_COUT__ << "\tHalt" << __E__;
 	stop();
 }
 
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::pause(void)
 {
-	__CFG_COUT__ << "\tPause" << std::endl;
+	__CFG_COUT__ << "\tPause" << __E__;
 	stop();
 }
 
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::resume(void)
 {
-	__CFG_COUT__ << "\tResume" << std::endl;
+	__CFG_COUT__ << "\tResume" << __E__;
 	start("");
 }
 
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::start(std::string )//runNumber)
 {
-	__CFG_COUT__ << "\tStart" << std::endl;
+	__CFG_COUT__ << "\tStart" << __E__;
+
+
+	unsigned int i = VStateMachine::getIterationIndex();
+	unsigned int j = VStateMachine::getSubIterationIndex();
+	if(i == 0 && j < 5)
+		VStateMachine::indicateSubIterationWork();
+	else if(i < 10)
+		VStateMachine::indicateIterationWork();
+
+
+	__CFG_COUTV__(VStateMachine::getSubIterationIndex());
+	__CFG_COUTV__(VStateMachine::getSubIterationWork());
+	__CFG_COUTV__(VStateMachine::getIterationIndex());
+	__CFG_COUTV__(VStateMachine::getIterationWork());
+
+
+	return;
+
 
 
 	//Run Start Sequence Commands
@@ -162,7 +180,7 @@ void FEOtsUDPTemplateInterface::start(std::string )//runNumber)
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::stop(void)
 {
-	__CFG_COUT__ << "\tStop" << std::endl;
+	__CFG_COUT__ << "\tStop" << __E__;
 
 	//Run Stop Sequence Commands
 
@@ -176,7 +194,11 @@ void FEOtsUDPTemplateInterface::stop(void)
 //========================================================================================================================
 bool FEOtsUDPTemplateInterface::running(void)
 {
-	__CFG_COUT__ << "\tRunning" << std::endl;
+	__CFG_COUT__ << "\tRunning" << __E__;
+
+	//__SS__ << "?" << __E__; //test exceptions during running
+	//__SS_THROW__;
+
 
 	int state = -1;
 	while(WorkLoop::continueWorkLoop_)
@@ -239,12 +261,12 @@ bool FEOtsUDPTemplateInterface::running(void)
 //NOTE: buffer for returnValue must be max UDP size to handle return possibility
 int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnValue)
 {
-	__CFG_COUT__ << "address size " << universalAddressSize_ << std::endl;
+	__CFG_COUT__ << "address size " << universalAddressSize_ << __E__;
 
 	__CFG_COUT__ << "Request: ";
 	for(unsigned int i=0;i<universalAddressSize_;++i)
 		printf("%2.2X",(unsigned char)address[i]);
-	std::cout << std::endl;
+	std::cout << __E__;
 
 	std::string readBuffer, sendBuffer;
 	OtsUDPFirmwareCore::readAdvanced(sendBuffer,address,1 /*size*/);
@@ -256,12 +278,12 @@ int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnVal
 	}
 	catch(std::runtime_error &e)
 	{
-		__CFG_COUT__ << "Caught it! This is when it's getting time out error" << std::endl;
-		__CFG_COUT_ERR__ << e.what() << std::endl;
+		__CFG_COUT__ << "Caught it! This is when it's getting time out error" << __E__;
+		__CFG_COUT_ERR__ << e.what() << __E__;
 		return -1;
 	}
 
-	__CFG_COUT__ << "Result SIZE: " << readBuffer.size() << std::endl;
+	__CFG_COUT__ << "Result SIZE: " << readBuffer.size() << __E__;
 	std::memcpy(returnValue,readBuffer.substr(2).c_str(),universalDataSize_);
 	return 0;
 } //end universalRead()
@@ -271,12 +293,12 @@ int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnVal
 //NOTE: buffer for writeValue must be at least size universalDataSize_
 void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeValue)
 {
-	__CFG_COUT__ << "address size " << universalAddressSize_ << std::endl;
-	__CFG_COUT__ << "data size " << universalDataSize_ << std::endl;
+	__CFG_COUT__ << "address size " << universalAddressSize_ << __E__;
+	__CFG_COUT__ << "data size " << universalDataSize_ << __E__;
 	__CFG_COUT__ << "Sending: ";
 	for(unsigned int i=0;i<universalAddressSize_;++i)
 		printf("%2.2X",(unsigned char)address[i]);
-	std::cout << std::endl;
+	std::cout << __E__;
 
 	std::string sendBuffer;
 	OtsUDPFirmwareCore::writeAdvanced(sendBuffer,address,writeValue,1 /*size*/);
