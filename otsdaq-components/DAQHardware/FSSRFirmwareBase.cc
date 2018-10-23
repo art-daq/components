@@ -87,7 +87,7 @@ uint32_t FSSRFirmwareBase::createRegisterFromValue (std::string& readBuffer, std
 //========================================================================================================================
 std::string FSSRFirmwareBase::configureClocks(std::string source, double frequency)
 {
-	std::cout << __COUT_HDR_FL__ << "Writing Clock configuration!" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Writing Clock configuration!" << std::endl;
 
 	std::string buffer;
 	//NoNeedNowwrite(buffer, ETHIO_DESTINATION_PORT, 0x0000b798); //  Listen port for ethio stuff
@@ -103,7 +103,7 @@ std::string FSSRFirmwareBase::configureClocks(std::string source, double frequen
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_,false/*clearBuffer*/);
 
 	resetDCM(buffer);
-	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 
 	return buffer;
 }
@@ -111,13 +111,13 @@ std::string FSSRFirmwareBase::configureClocks(std::string source, double frequen
 //========================================================================================================================
 void FSSRFirmwareBase::resetDCM(std::string& buffer)
 {
-	__COUT__ << communicationFirmwareInstance_ << std::endl;
+	//__COUT__ << communicationFirmwareInstance_ << std::endl;
 	resetDCMStripCSR(true);
-	__COUT__ << communicationFirmwareInstance_ << std::endl;
+	//__COUT__ << communicationFirmwareInstance_ << std::endl;
 
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_,false/*clearBuffer*/); //  Set reset to DCM
 
-	__COUT__ << communicationFirmwareInstance_ << std::endl;
+	//__COUT__ << communicationFirmwareInstance_ << std::endl;
 
 	resetDCMStripCSR(false);
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_,false/*clearBuffer*/); //  Clear reset to DCM
@@ -139,7 +139,7 @@ void FSSRFirmwareBase::alignReadOut(std::string& buffer, unsigned int sensor, un
 //========================================================================================================================
 std::string FSSRFirmwareBase::resetDetector(int channel)
 {
-	std::cout << __COUT_HDR_FL__ << "Resetting detector!" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Resetting detector!" << std::endl;
 	std::string buffer;
 	if (channel == -1)//reset all channels
 	{
@@ -454,14 +454,14 @@ void FSSRFirmwareBase::makeDACBuffer(std::string& buffer, unsigned int channel, 
 void FSSRFirmwareBase::makeDACBuffer(std::vector<std::string>& buffer, unsigned int channel, const ROCStream& rocStream)
 {
 
-	std::cout << __COUT_HDR_FL__ << "\tMaking DAC Buffer" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "\tMaking DAC Buffer" << std::endl;
 
 	int limitCount = 0;
 	unsigned int singleVectorCount = 0;
 
 	std::string alternateBuffer;
 
-	std::cout << __COUT_HDR_FL__ << "Channel: " << channel << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Channel: " << channel << std::endl;
 	const ROCDACs& rocDACs = rocStream.getROCDACs();
 	//std::cout << __COUT_HDR_FL__ << "Number of DACs: " << rocDACs.getDACList().size() << std::endl;
 	std::string bufferElement;
@@ -530,7 +530,7 @@ void FSSRFirmwareBase::makeDACBuffer(std::vector<std::string>& buffer, unsigned 
 		//buffer.push_back(bufferElement);
 		//break;
 	}
-	std::cout << __COUT_HDR_FL__ << "\tDone making DAC Buffer" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "\tDone making DAC Buffer" << std::endl;
 
 }
 
@@ -538,7 +538,7 @@ void FSSRFirmwareBase::makeDACBuffer(std::vector<std::string>& buffer, unsigned 
 void FSSRFirmwareBase::makeMaskBuffer(std::string& buffer, unsigned int channel,
 		const ROCStream& rocStream)
 {
-	std::cout << __COUT_HDR_FL__ << "Making mask! " << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Making mask! " << std::endl;
 	makeMaskBuffer(buffer, channel, rocStream, "Kill");
 	//    makeMaskSequence(buffer, channel, rocStream, "Inject");
 }
@@ -548,7 +548,7 @@ void FSSRFirmwareBase::makeMaskBuffer(std::string& buffer, unsigned int channel,
 {
 	int chipId = rocStream.getFEWROCAddress();
 	const std::string& mask = rocStream.getROCMask();
-	std::cout << __COUT_HDR_FL__ << "\tMaking mask! Length = " << mask.length() << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "\tMaking mask! Length = " << mask.length() << std::endl;
 //	std::cout << __COUT_HDR_FL__ << "\tMask length: " << mask.length() << std::endl;
 //	std::cout << __COUT_HDR_FL__ << "\tMask: " << mask << std::endl;
 
@@ -696,7 +696,7 @@ void FSSRFirmwareBase::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
 std::string FSSRFirmwareBase::readCSRRegister()
 {
 	std::string buffer;
-	std::cout << __COUT_HDR_FL__ << "FSSR readCSRRegister" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "FSSR readCSRRegister" << std::endl;
 	communicationFirmwareInstance_->read(buffer,STRIP_CSR);
 	return buffer;
 }
@@ -713,7 +713,7 @@ std::string FSSRFirmwareBase::readSCCSRRegister()
 //========================================================================================================================
 void FSSRFirmwareBase::setFrequencyFromClockState(std::string& buffer, double frequency)
 {
-	std::cout << __COUT_HDR_FL__ << "Setting up clock frequency!!!" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Setting up clock frequency!!!" << std::endl;
 
 	int quotient;
 	int numerator;
@@ -774,10 +774,10 @@ void FSSRFirmwareBase::setFrequencyFromClockState(std::string& buffer, double fr
 
 	//numerator = 2;
 	//denominator = 1;
-	std::cout << __COUT_HDR_FL__ << "Numerator: " << numerator << std::endl;
-	std::cout << __COUT_HDR_FL__ << "Denominator: " << denominator << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Numerator: " << numerator << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Denominator: " << denominator << std::endl;
 	setFrequencyRatio(buffer, numerator, denominator);
-	std::cout << __COUT_HDR_FL__ << "Done with clock frequency setup!!!" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Done with clock frequency setup!!!" << std::endl;
 }
 //========================================================================================================================
 bool FSSRFirmwareBase::isClockStateExternal() //returns true if the clock state is External
