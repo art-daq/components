@@ -22,10 +22,10 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 {
 	//registration of FEMacro 'TestMyMacro' generated, Oct-03-2018 04:54:57, by 'admin' using MacroMaker.
 	registerFEMacroFunction("TestMyMacro",//feMacroName 
-		static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::TestMyMacro), //feMacroFunction 
-		std::vector<std::string>{}, //namesOfInputArgs 
-		std::vector<std::string>{}, //namesOfOutputArgs 
-		1); //requiredUserPermissions 
+			static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::TestMyMacro), //feMacroFunction
+			std::vector<std::string>{}, //namesOfInputArgs
+			std::vector<std::string>{}, //namesOfOutputArgs
+			1); //requiredUserPermissions
 
 
 
@@ -48,17 +48,17 @@ void FEOtsUDPTemplateInterface::configure(void)
 	uint64_t 	readQuadWord;
 
 	__CFG_COUT__ << "Configuration Path Table: " <<
-				theXDAQContextConfigTree_.getNode(theConfigurationPath_).getConfigurationName() <<
-				"-v" <<
-				theXDAQContextConfigTree_.getNode(theConfigurationPath_).getConfigurationVersion() <<
-				std::endl;
+			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getConfigurationName() <<
+			"-v" <<
+			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getConfigurationVersion() <<
+			std::endl;
 
 	__CFG_COUT__ << "Interface name: " <<
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_) << __E__;
 
 	__CFG_COUT__ << "Configured Firmware Version: " <<
-				theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("FirmwareVersion").getValue<unsigned int>()
-				<< std::endl;
+			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("FirmwareVersion").getValue<unsigned int>()
+			<< std::endl;
 
 	__CFG_COUT__ << "Setting Destination IP: " <<
 			theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToIPAddress").getValue<std::string>()
