@@ -25,14 +25,17 @@ public:
 	void stop 	   (void) override;
 	bool running   (void) override;
 
-	virtual int universalRead		(char* address, char* readValue) override;
-	virtual void universalWrite		(char* address, char* writeValue) override;
+	virtual int universalRead			(char* address, char* readValue) override;
+	virtual void universalWrite			(char* address, char* writeValue) override;
 
 private:
 
 
-public: // FEMacro 'TestMyMacro' generated, Oct-03-2018 04:54:57, by 'admin' using MacroMaker.
-	void TestMyMacro	(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
+public: // FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
+	void varTest	(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
+
+public: // FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
+	void varTest2	(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
 };
 
 }
