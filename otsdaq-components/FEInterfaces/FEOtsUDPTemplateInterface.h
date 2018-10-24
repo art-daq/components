@@ -14,19 +14,19 @@ class FEOtsUDPTemplateInterface	: public FEVInterface, public OtsUDPHardware, pu
 {
 
 public:
-	FEOtsUDPTemplateInterface (const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
-	virtual ~FEOtsUDPTemplateInterface(void);
+	FEOtsUDPTemplateInterface 			(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
+	virtual ~FEOtsUDPTemplateInterface	(void);
 
-	void configure (void) override;
-	void halt 	   (void) override;
-	void pause 	   (void) override;
-	void resume    (void) override;
-	void start 	   (std::string runNumber) override;
-	void stop 	   (void) override;
-	bool running   (void) override;
+	void configure 		(void) override;
+	void halt 		 	(void) override;
+	void pause 		 	(void) override;
+	void resume 	 	(void) override;
+	void start 		 	(std::string runNumber) override;
+	void stop 		 	(void) override;
+	bool running 		(void) override;
 
-	virtual int universalRead			(char* address, char* readValue) override;
-	virtual void universalWrite			(char* address, char* writeValue) override;
+	virtual int 	universalRead			(char* address, char* readValue) override;
+	virtual void 	universalWrite			(char* address, char* writeValue) override;
 
 private:
 
