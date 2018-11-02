@@ -1,5 +1,5 @@
-#ifndef _ots_FEOtsUDPBaseInterface_h_
-#define _ots_FEOtsUDPBaseInterface_h_
+#ifndef _ots_FEOtsUDPHardwareBaseInterface_h_
+#define _ots_FEOtsUDPHardwareBaseInterface_h_
 
 #include "otsdaq-core/FECore/FEVInterface.h"
 #include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
@@ -10,12 +10,12 @@
 namespace ots
 {
 
-class FEOtsUDPBaseInterface : public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
+class FEOtsUDPHardwareBaseInterface : public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
 {
 
 public:
-	FEOtsUDPBaseInterface (const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
-	virtual ~FEOtsUDPBaseInterface(void);
+	FEOtsUDPHardwareBaseInterface (const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
+	virtual ~FEOtsUDPHardwareBaseInterface(void);
 
 	void configure (void) override;
 	void halt 	   (void) override;

@@ -1,4 +1,4 @@
-#include "otsdaq-components/FEInterfaces/FEOtsUDPBaseInterface.h"
+#include "otsdaq-components/FEInterfaces/FEOtsUDPHardwareBaseInterface.h"
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
 #include "otsdaq-core/Macros/CoutMacros.h"
 #include "otsdaq-core/Macros/InterfacePluginMacros.h"
@@ -8,10 +8,10 @@
 using namespace ots;
 
 #undef 	__MF_SUBJECT__
-#define __MF_SUBJECT__ "FE-FEOtsUDPBaseInterface"
+#define __MF_SUBJECT__ "FE-FEOtsUDPHardwareBaseInterface"
 
 //========================================================================================================================
-FEOtsUDPBaseInterface::FEOtsUDPBaseInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath)
+FEOtsUDPHardwareBaseInterface::FEOtsUDPHardwareBaseInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath)
 : Socket(
 		theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
 		, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>()
@@ -33,11 +33,11 @@ FEOtsUDPBaseInterface::FEOtsUDPBaseInterface(const std::string& interfaceUID, co
 }
 
 //========================================================================================================================
-FEOtsUDPBaseInterface::~FEOtsUDPBaseInterface(void)
+FEOtsUDPHardwareBaseInterface::~FEOtsUDPHardwareBaseInterface(void)
 {}
 
 //========================================================================================================================
-void FEOtsUDPBaseInterface::configure(void)
+void FEOtsUDPHardwareBaseInterface::configure(void)
 {
 	//__CFG_COUT__ << "Configure" << std::endl;
 
@@ -96,28 +96,28 @@ void FEOtsUDPBaseInterface::configure(void)
 }
 
 //========================================================================================================================
-void FEOtsUDPBaseInterface::halt(void)
+void FEOtsUDPHardwareBaseInterface::halt(void)
 {
 	//	__CFG_COUT__ << "\tHalt" << std::endl;
 	stop();
 }
 
 //========================================================================================================================
-void FEOtsUDPBaseInterface::pause(void)
+void FEOtsUDPHardwareBaseInterface::pause(void)
 {
 	//	__CFG_COUT__ << "\tPause" << std::endl;
 	stop();
 }
 
 //========================================================================================================================
-void FEOtsUDPBaseInterface::resume(void)
+void FEOtsUDPHardwareBaseInterface::resume(void)
 {
 	//	__CFG_COUT__ << "\tResume" << std::endl;
 	start("");
 }
 
 //========================================================================================================================
-void FEOtsUDPBaseInterface::start(std::string )//runNumber)
+void FEOtsUDPHardwareBaseInterface::start(std::string )//runNumber)
 {
 	//	__CFG_COUT__ << "\tStart" << std::endl;
 
@@ -127,7 +127,7 @@ void FEOtsUDPBaseInterface::start(std::string )//runNumber)
 }
 
 //========================================================================================================================
-void FEOtsUDPBaseInterface::stop(void)
+void FEOtsUDPHardwareBaseInterface::stop(void)
 {
 	//	__CFG_COUT__ << "\tStop" << std::endl;
 
@@ -139,7 +139,7 @@ void FEOtsUDPBaseInterface::stop(void)
 //========================================================================================================================
 //NOTE: buffer for address must be at least size universalAddressSize_
 //NOTE: buffer for returnValue must be max UDP size to handle return possibility
-int ots::FEOtsUDPBaseInterface::universalRead(char *address, char *returnValue)
+int ots::FEOtsUDPHardwareBaseInterface::universalRead(char *address, char *returnValue)
 {
 	//	__CFG_COUT__ << "Address size " << universalAddressSize_ << std::endl;
 
@@ -173,7 +173,7 @@ int ots::FEOtsUDPBaseInterface::universalRead(char *address, char *returnValue)
 //========================================================================================================================
 //NOTE: buffer for address must be at least size universalAddressSize_
 //NOTE: buffer for writeValue must be at least size universalDataSize_
-void ots::FEOtsUDPBaseInterface::universalWrite(char* address, char* writeValue)
+void ots::FEOtsUDPHardwareBaseInterface::universalWrite(char* address, char* writeValue)
 {
 	std::string sendBuffer;
 	OtsUDPFirmwareCore::writeAdvanced(sendBuffer,address,writeValue,1 /*size*/);
