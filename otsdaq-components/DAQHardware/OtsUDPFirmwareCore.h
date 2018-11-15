@@ -93,8 +93,9 @@ public:
     void UDPFirmwareSpecialNoOp						(std::string& buffer) { buffer.resize(0); buffer += (char)3; /* special one-byte packet, is ignored at OIE - could be used to keep connection alive */ }
 
     void readUDPFirmwareVersion		  				(std::string& buffer);
-    void ethernetReset		  						(std::string& buffer, bool hard=true, bool soft=true);
-    void ethernetUnreset	  						(std::string& buffer);
+    void softEthernetReset		  				    (std::string& buffer);
+    void hardEthernetReset		  					(std::string& buffer);
+    void clearEthernetReset	  						(std::string& buffer);
 
     void startBurst        							(std::string& buffer);
     void stopBurst         							(std::string& buffer);

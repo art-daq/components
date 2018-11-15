@@ -14,23 +14,28 @@ class FEOtsUDPTemplateInterface	: public FEVInterface, public OtsUDPHardware, pu
 {
 
 public:
-	//FEOtsUDPTemplateInterface     (unsigned int name=0, std::string daqHardwareType="daqHardwareType",	std::string firmwareType="firmwareType", const FEInterfaceConfigurationBase* configuration=0);
-	FEOtsUDPTemplateInterface     (const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
-	virtual ~FEOtsUDPTemplateInterface(void);
+	FEOtsUDPTemplateInterface 			(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
+	virtual ~FEOtsUDPTemplateInterface	(void);
 
-	void configure        	(void) override;
-	void halt             	(void) override;
-	void pause            	(void) override;
-	void resume           	(void) override;
-	void start            	(std::string runNumber) override;
-	void stop             	(void) override;
-	bool running   		  	(void) override;
+	void configure 		(void) override;
+	void halt 		 	(void) override;
+	void pause 		 	(void) override;
+	void resume 	 	(void) override;
+	void start 		 	(std::string runNumber) override;
+	void stop 		 	(void) override;
+	bool running 		(void) override;
 
-	virtual int universalRead	  	(char* address, char* readValue) override;
-	virtual void universalWrite	  	(char* address, char* writeValue) override;
+	virtual int 	universalRead			(char* address, char* readValue) override;
+	virtual void 	universalWrite			(char* address, char* writeValue) override;
 
 private:
 
+
+public: // FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
+	void varTest	(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
+
+public: // FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
+	void varTest2	(frontEndMacroInArgs_t argsIn, frontEndMacroOutArgs_t argsOut);
 };
 
 }

@@ -134,6 +134,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
     	std::copy_n((char *)&data[8*i],sizeof(uint64_t),&buffer[begin + 2 + 8 + 8*i]);
 
 	///////
+    /*
     __SS__ << "\tAdded OtsUDPFirmwareCore::writeAdvanced to Buffer:-";
     for(uint32_t i=begin; i<buffer.size(); i++)
     {
@@ -144,6 +145,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
     ss << " added " << (buffer.size() - begin) << " to " << buffer.size();
     ss << std::endl;
     __COUT__ << "\n" << ss.str();
+    */
 }
 
 //========================================================================================================================
@@ -245,15 +247,15 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
 	std::copy_n(address,sizeof(uint64_t),&buffer[begin + 2]);
 
 	///////
-    __SS__ << "\tAdded OtsUDPFirmwareCore::readAdvanced to Buffer:-";
-    for(uint32_t i=begin; i<buffer.size(); i++)
-    {
-    	if(i==begin+2) ss << ":::";
-    	else if(i==begin+10) ss << ":::";
-    	ss << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
-    }
-    ss << std::endl;
-    __COUT__ << "\n" << ss.str();
+    //__SS__ << "\tAdded OtsUDPFirmwareCore::readAdvanced to Buffer:-";
+    //for(uint32_t i=begin; i<buffer.size(); i++)
+    //{
+    //	if(i==begin+2) ss << ":::";
+    //	else if(i==begin+10) ss << ":::";
+    //	ss << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) buffer[i]) &0xFF) << "-" << std::dec;
+    //}
+    //ss << std::endl;
+    //__COUT__ << "\n" << ss.str();
 }
 
 
@@ -272,14 +274,14 @@ void OtsUDPFirmwareCore::setDataDestination(std::string& buffer,
 		const std::string& ipAddress, const uint16_t port, bool clearBuffer)
 {
 	//put firmware in dynamic mac resolution mode for burst mode
-	__COUT__ << "dynamic mac address: " << std::hex <<
-			uint64_t(UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_RESOLVE_MAC) << std::endl;
+	//__COUT__ << "Dynamic mac address: " << std::hex <<
+	//		uint64_t(UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_RESOLVE_MAC) << std::endl;
 	OtsUDPFirmwareCore::write(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_RESOLVE_MAC /* addr */,
 			1 /* data */, clearBuffer);
 
 	//extract ip address from string
-	__COUT__ << "ipAddress = " << ipAddress << std::endl;
+	//__COUT__ << "IP Address = " << ipAddress << std::endl;
 	uint64_t ip = 0;
 	int ipArr[4];
 	sscanf(ipAddress.c_str(),"%d.%d.%d.%d",
@@ -333,7 +335,7 @@ uint32_t OtsUDPFirmwareCore::createRegisterFromValue
 
 	//for(unsigned int i=0;i<receivedValue.size();++i)
 	//	__COUT__ << std::hex << (int)receivedValue[i] << std::dec << std::endl;
-	__COUT__ << "Register value: 0x" << std::hex << retVal << std::dec << std::endl;
+	//__COUT__ << "Register value: 0x" << std::hex << retVal << std::dec << std::endl;
 	return retVal;
 }
 
@@ -442,14 +444,23 @@ void OtsUDPFirmwareCore::readUDPFirmwareVersion(std::string& buffer)
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareCore::ethernetReset(std::string& buffer, bool hard, bool soft)
+void OtsUDPFirmwareCore::softEthernetReset(std::string& buffer)
 {
 	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */,
-			(hard) | (soft<<1 /*for soft reset*/) /* data */);
+			0x3 /* data */);
 }
+
 //========================================================================================================================
-void OtsUDPFirmwareCore::ethernetUnreset(std::string& buffer)
+void OtsUDPFirmwareCore::hardEthernetReset(std::string& buffer)
+{
+	OtsUDPFirmwareCore::writeAdvanced(buffer,
+			UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */,
+			0x1 /* data */);
+}
+
+//========================================================================================================================
+void OtsUDPFirmwareCore::clearEthernetReset(std::string& buffer)
 {
 	OtsUDPFirmwareCore::writeAdvanced(buffer,
 			UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */,
