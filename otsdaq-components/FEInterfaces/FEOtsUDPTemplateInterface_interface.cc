@@ -46,21 +46,21 @@ FEOtsUDPTemplateInterface::~FEOtsUDPTemplateInterface(void)
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::configure(void)
 {
-	//	unsigned int i = VStateMachine::getIterationIndex();
-	//	unsigned int j = VStateMachine::getSubIterationIndex();
-	//	if(i == 0 && j < 5)
-	//		VStateMachine::indicateSubIterationWork();
-	//	else if(i < 10)
-	//		VStateMachine::indicateIterationWork();
-	
-	
-	__CFG_COUTV__(VStateMachine::getSubIterationIndex());
-	__CFG_COUTV__(VStateMachine::getSubIterationWork());
-	__CFG_COUTV__(VStateMachine::getIterationIndex());
-	__CFG_COUTV__(VStateMachine::getIterationWork());
-	
-	
-	//	return;
+//	unsigned int i = VStateMachine::getIterationIndex();
+//	unsigned int j = VStateMachine::getSubIterationIndex();
+//	if(i == 0 && j < 5)
+//		VStateMachine::indicateSubIterationWork();
+//	else if(i < 10)
+//		VStateMachine::indicateIterationWork();
+//
+//
+//	__CFG_COUTV__(VStateMachine::getSubIterationIndex());
+//	__CFG_COUTV__(VStateMachine::getSubIterationWork());
+//	__CFG_COUTV__(VStateMachine::getIterationIndex());
+//	__CFG_COUTV__(VStateMachine::getIterationWork());
+//
+//
+//	return;
 	
 	__CFG_COUT__ << "configure" << __E__;
 	__CFG_COUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket() << " packets cleared." << __E__;
@@ -150,21 +150,21 @@ void FEOtsUDPTemplateInterface::start(std::string )//runNumber)
 	__CFG_COUT__ << "\tStart" << __E__;
 	
 	
-	//	unsigned int i = VStateMachine::getIterationIndex();
-	//	unsigned int j = VStateMachine::getSubIterationIndex();
-	//	if(i == 0 && j < 5)
-	//		VStateMachine::indicateSubIterationWork();
-	//	else if(i < 10)
-	//		VStateMachine::indicateIterationWork();
-	//
-	//
-	//	__CFG_COUTV__(VStateMachine::getSubIterationIndex());
-	//	__CFG_COUTV__(VStateMachine::getSubIterationWork());
-	//	__CFG_COUTV__(VStateMachine::getIterationIndex());
-	//	__CFG_COUTV__(VStateMachine::getIterationWork());
-	//
-	//
-	//	return;
+//		unsigned int i = VStateMachine::getIterationIndex();
+//		unsigned int j = VStateMachine::getSubIterationIndex();
+//		if(i == 0 && j < 5)
+//			VStateMachine::indicateSubIterationWork();
+//		else if(i < 10)
+//			VStateMachine::indicateIterationWork();
+//
+//
+//		__CFG_COUTV__(VStateMachine::getSubIterationIndex());
+//		__CFG_COUTV__(VStateMachine::getSubIterationWork());
+//		__CFG_COUTV__(VStateMachine::getIterationIndex());
+//		__CFG_COUTV__(VStateMachine::getIterationWork());
+//
+//
+//		return;
 	
 	
 	
