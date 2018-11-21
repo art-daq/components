@@ -1,10 +1,11 @@
 cet_make(LIBRARY_NAME OTSDAQComponentsFEInterfaces
-	EXCLUDE FEOtsUDPTemplateInterface_interface.cc
+	EXCLUDE
+		FEOtsUDPTemplateInterface_interface.cc
 	LIBRARIES
-	DAQHardware
-	FECore
-	WorkLoopManager
-	Configurable
+		DAQHardware
+		FECore
+		WorkLoopManager
+		Configurable
 )
 
 
