@@ -139,7 +139,7 @@ void FEOtsUDPHardwareBaseInterface::stop(void)
 //========================================================================================================================
 //NOTE: buffer for address must be at least size universalAddressSize_
 //NOTE: buffer for returnValue must be max UDP size to handle return possibility
-int ots::FEOtsUDPHardwareBaseInterface::universalRead(char *address, char *returnValue)
+void ots::FEOtsUDPHardwareBaseInterface::universalRead(char *address, char *returnValue)
 {
 	//	__CFG_COUT__ << "Address size " << universalAddressSize_ << std::endl;
 
@@ -152,22 +152,11 @@ int ots::FEOtsUDPHardwareBaseInterface::universalRead(char *address, char *retur
 
 	std::string readBuffer, sendBuffer;
 	OtsUDPFirmwareCore::readAdvanced(sendBuffer,address,1 /*size*/);
-
-	//OtsUDPHardware::read(FSSRFirmware::universalRead(address), readBuffer) < 0;
-	try
-	{
-		OtsUDPHardware::read(sendBuffer, readBuffer); // data reply
-	}
-	catch(std::runtime_error &e)
-	{
-		__CFG_COUT__ << "Caught read error. Typically time out error!" << std::endl;
-		__CFG_COUT_ERR__ << e.what() << std::endl;
-		return -1;
-	}
+	OtsUDPHardware::read(sendBuffer, readBuffer); // data reply
 
 	//__CFG_COUT__ << "Result SIZE: " << readBuffer.size() << std::endl;
 	std::memcpy(returnValue,readBuffer.substr(2).c_str(),universalDataSize_);
-	return 0;
+
 }
 
 //========================================================================================================================

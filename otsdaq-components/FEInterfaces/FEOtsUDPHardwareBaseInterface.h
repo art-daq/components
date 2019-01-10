@@ -25,7 +25,7 @@ public:
 	void stop 	   (void) override;
 	//bool running   (void) override;
 
-	virtual int  universalRead		(char* address, char* readValue) override;
+	virtual void universalRead		(char* address, char* readValue) override;
 	virtual void universalWrite		(char* address, char* writeValue) override;
 
 private:
