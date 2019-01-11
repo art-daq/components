@@ -48,8 +48,7 @@ void FEOtsUDPTemplateInterface::configure(void)
 //	if(i == 0 && j < 5)
 //		VStateMachine::indicateSubIterationWork();
 //	else if(i < 10)
-		VStateMachine::indicateIterationWork();
-		return;
+//		VStateMachine::indicateIterationWork();
 //
 //	__FE_COUTV__(VStateMachine::getSubIterationIndex());
 //	__FE_COUTV__(VStateMachine::getSubIterationWork());
