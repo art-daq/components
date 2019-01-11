@@ -126,8 +126,8 @@ void FEOtsUDPTemplateInterface::configure(void)
 //				__FE_COUTV__(c);
 //			}
 //		}
-//		break;
 //
+//		break;
 //	default:;
 //	}
 //
@@ -282,8 +282,12 @@ bool FEOtsUDPTemplateInterface::running(void)
 			sleep(1);
 		else
 		{
-			throw std::runtime_error("SoftError");
-			break;
+			//			if(1 || getInterfaceUID() == "ExampleInterface1")
+			//			{
+			//				throw __OTS_SOFT_EXCEPTION__("Soft error here");
+			//			}
+			//			else
+				break;
 		}
 	}
 	
