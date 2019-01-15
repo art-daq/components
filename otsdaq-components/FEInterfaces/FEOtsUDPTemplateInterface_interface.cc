@@ -7,9 +7,6 @@
 
 using namespace ots;
 
-#undef 	__MF_SUBJECT__
-#define __MF_SUBJECT__ "FE-FEOtsUDPTemplateInterface"
-
 //========================================================================================================================
 FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath)
 : Socket (
@@ -21,7 +18,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 , OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
 	//registration of FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
-	registerFEMacroFunction("varTest2",//feMacroName 
+	FEVInterface::registerFEMacroFunction("varTest2",//feMacroName
 		static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::varTest2), //feMacroFunction 
 		std::vector<std::string>{"myOtherArg"}, //namesOfInputArgs 
 		std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs 
@@ -29,7 +26,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 	
 	
 	//registration of FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
-	registerFEMacroFunction("varTest",//feMacroName 
+	FEVInterface::registerFEMacroFunction("varTest",//feMacroName
 			static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::varTest), //feMacroFunction 
 			std::vector<std::string>{"myOtherArg"}, //namesOfInputArgs 
 			std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs 
@@ -53,39 +50,114 @@ void FEOtsUDPTemplateInterface::configure(void)
 //	else if(i < 10)
 //		VStateMachine::indicateIterationWork();
 //
+//	__FE_COUTV__(VStateMachine::getSubIterationIndex());
+//	__FE_COUTV__(VStateMachine::getSubIterationWork());
+//	__FE_COUTV__(VStateMachine::getIterationIndex());
+//	__FE_COUTV__(VStateMachine::getIterationWork());
 //
-//	__CFG_COUTV__(VStateMachine::getSubIterationIndex());
-//	__CFG_COUTV__(VStateMachine::getSubIterationWork());
-//	__CFG_COUTV__(VStateMachine::getIterationIndex());
-//	__CFG_COUTV__(VStateMachine::getIterationWork());
+//	__FE_COUTV__(i);
+//	__FE_COUTV__(getInterfaceUID());
+//	switch(i)
+//	{
+//	case 1:
+//		if(getInterfaceUID() == "ExampleInterface0")
+//		{
+//			FEVInterface::sendToFrontEnd("ExampleInterface1","Hello1");
+//			FEVInterface::sendToFrontEnd("ExampleInterface1",4.3f);
+//			FEVInterface::sendToFrontEnd("ExampleInterface1",4);
+//			FEVInterface::sendToFrontEnd("ExampleInterface2","Hello2");
+//			FEVInterface::sendToFrontEnd("ExampleInterface2",4.6f);
+//			FEVInterface::sendToFrontEnd("ExampleInterface2",6);
+//		}
+//		break;
+//	case 2:
+//		if(getInterfaceUID() != "ExampleInterface0")
+//		{
+//			std::string a = FEVInterface::receiveFromFrontEnd("ExampleInterface0");
+//			double b = FEVInterface::receiveFromFrontEnd<double>("ExampleInterface0");
+//			unsigned short c =
+//					FEVInterface::receiveFromFrontEnd<unsigned short>("ExampleInterface0");
+//			__FE_COUTV__(a);
+//			__FE_COUTV__(b);
+//			__FE_COUTV__(c);
+//		}
+//		break;
+//	case 3:
+//		if(getInterfaceUID() == "ExampleInterface0")
+//		{
+//			std::vector<frontEndMacroArg_t> argsIn;
+//			__SET_ARG_IN__("myOtherArg",(unsigned int)5);
+//
+//			std::vector<frontEndMacroArg_t> argsOut;
+//
+//			__FE_COUTV__(StringMacros::vectorToString(argsIn));
+//
+//			FEVInterface::runFrontEndMacro("ExampleInterface2","varTest2",
+//					argsIn,argsOut);
+//
+//			__FE_COUTV__(StringMacros::vectorToString(argsOut));
+//			__FE_COUTV__(FEVInterface::getFEMacroArgument(
+//					argsOut,"outArg1"));
+//
+//			{
+//				std::string a = FEVInterface::getFEMacroArgument(
+//						argsOut,"myArg");
+//				double b = getFEMacroArgumentValue<double>(
+//						argsOut,"outArg1");
+//				unsigned short c = getFEMacroArgumentValue<unsigned short>(
+//						argsOut,"outArg1");
+//				__FE_COUTV__(a);
+//				__FE_COUTV__(b);
+//				__FE_COUTV__(c);
+//			}
+//
+//
+//
+//			FEVInterface::runFrontEndMacro("ExampleInterface1","varTest",
+//					argsIn,argsOut);
+//			__FE_COUTV__(StringMacros::vectorToString(argsOut));
+//
+//			{
+//				std::string a = __GET_ARG_OUT__("myArg",std::string);
+//				double b = __GET_ARG_OUT__("outArg1",double);
+//				unsigned short c = __GET_ARG_OUT__("outArg1",unsigned short);
+//				__FE_COUTV__(a);
+//				__FE_COUTV__(b);
+//				__FE_COUTV__(c);
+//			}
+//		}
+//
+//		break;
+//	default:;
+//	}
 //
 //
 //	return;
 	
-	__CFG_COUT__ << "configure" << __E__;
-	__CFG_COUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket() << " packets cleared." << __E__;
+	__FE_COUT__ << "configure" << __E__;
+	__FE_COUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket() << " packets cleared." << __E__;
 	
 	std::string sendBuffer;
 	std::string recvBuffer;
 	uint64_t 	readQuadWord;
 	
-	__CFG_COUT__ << "Configuration Path Table: " <<
+	__FE_COUT__ << "Configuration Path Table: " <<
 		theXDAQContextConfigTree_.getNode(theConfigurationPath_).getConfigurationName() <<
 		"-v" <<
 		theXDAQContextConfigTree_.getNode(theConfigurationPath_).getConfigurationVersion() <<
 		__E__;
 	
-	__CFG_COUT__ << "Interface name: " <<
+	__FE_COUT__ << "Interface name: " <<
 		theXDAQContextConfigTree_.getNode(theConfigurationPath_) << __E__;
 	
-	__CFG_COUT__ << "Configured Firmware Version: " <<
+	__FE_COUT__ << "Configured Firmware Version: " <<
 		theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("FirmwareVersion").getValue<unsigned int>()
 		<< __E__;
 	
-	__CFG_COUT__ << "Setting Destination IP: " <<
+	__FE_COUT__ << "Setting Destination IP: " <<
 		theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToIPAddress").getValue<std::string>()
 		<< __E__;
-	__CFG_COUT__ << "And Destination Port: " <<
+	__FE_COUT__ << "And Destination Port: " <<
 		theXDAQContextConfigTree_.getNode(theConfigurationPath_).getNode("StreamToPort").getValue<unsigned int>()
 		<< __E__;
 	
@@ -95,7 +167,7 @@ void FEOtsUDPTemplateInterface::configure(void)
 			);
 	OtsUDPHardware::write(sendBuffer);
 	
-	__CFG_COUT__ << "Reading back burst dest MAC/IP/Port: " << __E__;
+	__FE_COUT__ << "Reading back burst dest MAC/IP/Port: " << __E__;
 	
 	OtsUDPFirmwareCore::readDataDestinationMAC(sendBuffer);
 	OtsUDPHardware::read(sendBuffer,readQuadWord);
@@ -114,40 +186,40 @@ void FEOtsUDPTemplateInterface::configure(void)
 	//Run Configure Sequence Commands
 	FEVInterface::runSequenceOfCommands("LinkToConfigureSequence");
 	
-	__CFG_COUT__ << "Done with ots Template configuring." << __E__;
+	__FE_COUT__ << "Done with ots Template configuring." << __E__;
 }
 
 //========================================================================================================================
 //void FEOtsUDPTemplateInterface::configureDetector(const DACStream& theDACStream)
 //{
-//	__CFG_COUT__ << "\tconfigureDetector" << __E__;
+//	__FE_COUT__ << "\tconfigureDetector" << __E__;
 //}
 
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::halt(void)
 {
-	__CFG_COUT__ << "\tHalt" << __E__;
+	__FE_COUT__ << "\tHalt" << __E__;
 	stop();
 }
 
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::pause(void)
 {
-	__CFG_COUT__ << "\tPause" << __E__;
+	__FE_COUT__ << "\tPause" << __E__;
 	stop();
 }
 
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::resume(void)
 {
-	__CFG_COUT__ << "\tResume" << __E__;
+	__FE_COUT__ << "\tResume" << __E__;
 	start("");
 }
 
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::start(std::string )//runNumber)
 {
-	__CFG_COUT__ << "\tStart" << __E__;
+	__FE_COUT__ << "\tStart" << __E__;
 	
 	
 //		unsigned int i = VStateMachine::getIterationIndex();
@@ -158,10 +230,10 @@ void FEOtsUDPTemplateInterface::start(std::string )//runNumber)
 //			VStateMachine::indicateIterationWork();
 //
 //
-//		__CFG_COUTV__(VStateMachine::getSubIterationIndex());
-//		__CFG_COUTV__(VStateMachine::getSubIterationWork());
-//		__CFG_COUTV__(VStateMachine::getIterationIndex());
-//		__CFG_COUTV__(VStateMachine::getIterationWork());
+//		__FE_COUTV__(VStateMachine::getSubIterationIndex());
+//		__FE_COUTV__(VStateMachine::getSubIterationWork());
+//		__FE_COUTV__(VStateMachine::getIterationIndex());
+//		__FE_COUTV__(VStateMachine::getIterationWork());
 //
 //
 //		return;
@@ -179,7 +251,7 @@ void FEOtsUDPTemplateInterface::start(std::string )//runNumber)
 //========================================================================================================================
 void FEOtsUDPTemplateInterface::stop(void)
 {
-	__CFG_COUT__ << "\tStop" << __E__;
+	__FE_COUT__ << "\tStop" << __E__;
 	
 	//Run Stop Sequence Commands
 	
@@ -193,7 +265,7 @@ void FEOtsUDPTemplateInterface::stop(void)
 //========================================================================================================================
 bool FEOtsUDPTemplateInterface::running(void)
 {
-	__CFG_COUT__ << "\tRunning" << __E__;
+	__FE_COUT__ << "\tRunning" << __E__;
 	
 	//__SS__ << "?" << __E__; //test exceptions during running
 	//__SS_THROW__;
@@ -209,7 +281,14 @@ bool FEOtsUDPTemplateInterface::running(void)
 		if(state < 8)
 			sleep(1);
 		else
-			break;
+		{
+			//			if(1 || getInterfaceUID() == "ExampleInterface1")
+			//			{
+			//				throw __OTS_SOFT_EXCEPTION__("Soft error here");
+			//			}
+			//			else
+				break;
+		}
 	}
 	
 	//		//example!
@@ -258,11 +337,11 @@ bool FEOtsUDPTemplateInterface::running(void)
 //========================================================================================================================
 //NOTE: buffer for address must be at least size universalAddressSize_
 //NOTE: buffer for returnValue must be max UDP size to handle return possibility
-int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnValue)
+void ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnValue)
 {
-	__CFG_COUT__ << "address size " << universalAddressSize_ << __E__;
+	__FE_COUT__ << "address size " << universalAddressSize_ << __E__;
 	
-	__CFG_COUT__ << "Request: ";
+	__FE_COUT__ << "Request: ";
 	for(unsigned int i=0;i<universalAddressSize_;++i)
 		printf("%2.2X",(unsigned char)address[i]);
 	std::cout << __E__;
@@ -270,21 +349,10 @@ int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnVal
 	std::string readBuffer, sendBuffer;
 	OtsUDPFirmwareCore::readAdvanced(sendBuffer,address,1 /*size*/);
 	
-	//OtsUDPHardware::read(FSSRFirmware::universalRead(address), readBuffer) < 0;
-	try
-	{
-		OtsUDPHardware::read(sendBuffer, readBuffer); // data reply
-	}
-	catch(std::runtime_error &e)
-	{
-		__CFG_COUT__ << "Caught it! This is when it's getting time out error" << __E__;
-			__CFG_COUT_ERR__ << e.what() << __E__;
-		return -1;
-	}
-	
-	__CFG_COUT__ << "Result SIZE: " << readBuffer.size() << __E__;
+	OtsUDPHardware::read(sendBuffer, readBuffer); // data reply
+
+	__FE_COUT__ << "Result SIZE: " << readBuffer.size() << __E__;
 	std::memcpy(returnValue,readBuffer.substr(2).c_str(),universalDataSize_);
-	return 0;
 } //end universalRead()
 
 //========================================================================================================================
@@ -292,9 +360,9 @@ int ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnVal
 //NOTE: buffer for writeValue must be at least size universalDataSize_
 void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeValue)
 {
-	__CFG_COUT__ << "address size " << universalAddressSize_ << __E__;
-	__CFG_COUT__ << "data size " << universalDataSize_ << __E__;
-	__CFG_COUT__ << "Sending: ";
+	__FE_COUT__ << "address size " << universalAddressSize_ << __E__;
+	__FE_COUT__ << "data size " << universalDataSize_ << __E__;
+	__FE_COUT__ << "Sending: ";
 	for(unsigned int i=0;i<universalAddressSize_;++i)
 		printf("%2.2X",(unsigned char)address[i]);
 	std::cout << __E__;
@@ -313,10 +381,10 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 //	Macro Notes: This is a great test!
 void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 {
-	__CFG_COUT__ << "# of input args = " << argsIn.size() << __E__; 
-	__CFG_COUT__ << "# of output args = " << argsOut.size() << __E__; 
+	__FE_COUT__ << "# of input args = " << argsIn.size() << __E__;
+	__FE_COUT__ << "# of output args = " << argsOut.size() << __E__;
 	for(auto &argIn:argsIn) 
-		__CFG_COUT__ << argIn.first << ": " << argIn.second << __E__; 
+		__FE_COUT__ << argIn.first << ": " << argIn.second << __E__;
 	
 	//macro commands section 
 	{
@@ -347,9 +415,9 @@ void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 		memcpy(data,&macroArgs["myArg"],8); //copy macro data argument to buffer
 		universalWrite(address,data);
 		
-		// command-#4: delay(4000);
-		__CFG_COUT__ << "Sleeping for... " << 4000 << " milliseconds " << __E__;
-		usleep(4000*1000 /* microseconds */);
+		// command-#4: delay(4);
+		__FE_COUT__ << "Sleeping for... " << 4 << " milliseconds " << __E__;
+		usleep(4*1000 /* microseconds */);
 		
 		
 		delete[] address; //free the memory
@@ -357,7 +425,7 @@ void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 	}
 	
 	for(auto &argOut:argsOut) 
-		__CFG_COUT__ << argOut.first << ": " << argOut.second << __E__; 
+		__FE_COUT__ << argOut.first << ": " << argOut.second << __E__;
 	
 } //end varTest()
 
@@ -368,10 +436,10 @@ void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 //	Macro Notes: [Modified 14:28 10/11/2018] This is a great test!
 void FEOtsUDPTemplateInterface::varTest2(__ARGS__)
 {
-	__CFG_COUT__ << "# of input args = " << argsIn.size() << __E__; 
-	__CFG_COUT__ << "# of output args = " << argsOut.size() << __E__; 
+	__FE_COUT__ << "# of input args = " << argsIn.size() << __E__;
+	__FE_COUT__ << "# of output args = " << argsOut.size() << __E__;
 	for(auto &argIn:argsIn) 
-		__CFG_COUT__ << argIn.first << ": " << argIn.second << __E__; 
+		__FE_COUT__ << argIn.first << ": " << argIn.second << __E__;
 	
 	//macro commands section 
 	{
@@ -402,9 +470,9 @@ void FEOtsUDPTemplateInterface::varTest2(__ARGS__)
 		memcpy(data,&macroArgs["myArg"],8); //copy macro data argument to buffer
 		universalWrite(address,data);
 		
-		// command-#4: delay(4000);
-		__CFG_COUT__ << "Sleeping for... " << 4000 << " milliseconds " << __E__;
-		usleep(4000*1000 /* microseconds */);
+		// command-#4: delay(4);
+		__FE_COUT__ << "Sleeping for... " << 4 << " milliseconds " << __E__;
+		usleep(4*1000 /* microseconds */);
 		
 		
 		delete[] address; //free the memory
@@ -412,7 +480,7 @@ void FEOtsUDPTemplateInterface::varTest2(__ARGS__)
 	}
 	
 	for(auto &argOut:argsOut) 
-		__CFG_COUT__ << argOut.first << ": " << argOut.second << __E__; 
+		__FE_COUT__ << argOut.first << ": " << argOut.second << __E__;
 	
 } //end varTest2()
 
