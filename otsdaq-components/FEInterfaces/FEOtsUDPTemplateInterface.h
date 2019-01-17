@@ -1,11 +1,11 @@
 #ifndef _ots_FEOtsUDPTemplateInterface_h_
 #define _ots_FEOtsUDPTemplateInterface_h_
 
-#include "otsdaq-core/FECore/FEVInterface.h"
 #include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
 #include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
 
 #include <string>
+#include "otsdaq-core/FECore/FEVInterface.h"
 
 namespace ots
 {

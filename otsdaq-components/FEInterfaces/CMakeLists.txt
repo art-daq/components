@@ -9,7 +9,7 @@ cet_make(LIBRARY_NAME OTSDAQComponentsFEInterfaces
 )
 
 
-simple_plugin(FEOtsUDPTemplateInterface "interface"
+simple_plugin(FEOtsUDPProducerTemplateInterface "interface"
   DAQHardware
   FECore
   WorkLoopManager
