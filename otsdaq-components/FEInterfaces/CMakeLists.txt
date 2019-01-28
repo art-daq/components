@@ -17,6 +17,15 @@ simple_plugin(FEOtsUDPProducerTemplateInterface "interface"
   ${CETLIB}
   ${CETLIB_EXCEPT}
   )
+  
+simple_plugin(FEOtsUDPTemplateInterface "interface"
+  DAQHardware
+  FECore
+  WorkLoopManager
+  Configurable
+  ${CETLIB}
+  ${CETLIB_EXCEPT}
+  )
 
 install_headers()
 install_source()
