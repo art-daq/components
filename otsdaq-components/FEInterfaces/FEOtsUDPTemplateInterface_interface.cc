@@ -17,20 +17,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 	, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
 , OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
-	//registration of FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
-	FEVInterface::registerFEMacroFunction("varTest2",//feMacroName
-		static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::varTest2), //feMacroFunction 
-		std::vector<std::string>{"myOtherArg"}, //namesOfInputArgs 
-		std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs 
-		1); //requiredUserPermissions
 	
-	
-	//registration of FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
-	FEVInterface::registerFEMacroFunction("varTest",//feMacroName
-			static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::varTest), //feMacroFunction 
-			std::vector<std::string>{"myOtherArg"}, //namesOfInputArgs 
-			std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs 
-			1); //requiredUserPermissions
 	
 	universalAddressSize_ = 8;
 	universalDataSize_ = 8;
@@ -38,6 +25,21 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 	//example self-call of feMacro
 	if(0)
 	{
+		//registration of FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
+		FEVInterface::registerFEMacroFunction("varTest2",//feMacroName
+				static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::varTest2), //feMacroFunction
+				std::vector<std::string>{"myOtherArg"}, //namesOfInputArgs
+				std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs
+				1); //requiredUserPermissions
+
+
+		//registration of FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
+		FEVInterface::registerFEMacroFunction("varTest",//feMacroName
+				static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::varTest), //feMacroFunction
+				std::vector<std::string>{"myOtherArg"}, //namesOfInputArgs
+				std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs
+				1); //requiredUserPermissions
+
 		std::vector<frontEndMacroArg_t> argsIn;
 		__SET_ARG_IN__("myOtherArg",(unsigned int)5);
 

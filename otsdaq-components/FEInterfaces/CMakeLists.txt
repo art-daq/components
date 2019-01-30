@@ -1,12 +1,12 @@
-cet_make(LIBRARY_NAME OTSDAQComponentsFEInterfaces
-	EXCLUDE
-		FEOtsUDPTemplateInterface_interface.cc
-	LIBRARIES
-		DAQHardware
-		FECore
-		WorkLoopManager
-		Configurable
-)
+#cet_make(LIBRARY_NAME OTSDAQComponentsFEInterfaces
+#	EXCLUDE
+#		FEOtsUDPTemplateInterface_interface.cc
+#	LIBRARIES
+#		DAQHardware
+#		FECore
+#		WorkLoopManager
+#		Configurable
+#)
 
 
 simple_plugin(FEOtsUDPProducerTemplateInterface "interface"
