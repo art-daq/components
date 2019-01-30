@@ -34,7 +34,38 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 	
 	universalAddressSize_ = 8;
 	universalDataSize_ = 8;
-}
+
+	//example self-call of feMacro
+	if(0)
+	{
+		std::vector<frontEndMacroArg_t> argsIn;
+		__SET_ARG_IN__("myOtherArg",(unsigned int)5);
+
+		std::vector<frontEndMacroArg_t> argsOut;
+
+		__FE_COUTV__(StringMacros::vectorToString(argsIn));
+
+		runSelfFrontEndMacro("varTest2",
+				argsIn,argsOut);
+
+		__FE_COUTV__(StringMacros::vectorToString(argsOut));
+		__FE_COUTV__(FEVInterface::getFEMacroArgument(
+				argsOut,"outArg1"));
+
+		{
+			std::string a = FEVInterface::getFEMacroArgument(
+					argsOut,"myArg");
+			double b = getFEMacroArgumentValue<double>(
+					argsOut,"outArg1");
+			unsigned short c = getFEMacroArgumentValue<unsigned short>(
+					argsOut,"outArg1");
+			__FE_COUTV__(a);
+			__FE_COUTV__(b);
+			__FE_COUTV__(c);
+		}
+	}
+
+} //end constructor
 
 //========================================================================================================================
 FEOtsUDPTemplateInterface::~FEOtsUDPTemplateInterface(void)
