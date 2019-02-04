@@ -23,7 +23,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfac
 	universalDataSize_ = 8;
 
 	//example self-call of feMacro
-	if(0)
+	if(1)
 	{
 		//registration of FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
 		FEVInterface::registerFEMacroFunction("varTest2",//feMacroName
@@ -474,44 +474,11 @@ void FEOtsUDPTemplateInterface::varTest2(__ARGS__)
 	for(auto &argIn:argsIn) 
 		__FE_COUT__ << argIn.first << ": " << argIn.second << __E__;
 	
-	//macro commands section 
-	{
-		char *address 	= new char[universalAddressSize_]{0};	//create address buffer of interface size and init to all 0
-		char *data 		= new char[universalDataSize_]{0};		//create data buffer of interface size and init to all 0
-		uint64_t macroAddress;		//create macro address buffer (size 8 bytes)
-		uint64_t macroData;			//create macro address buffer (size 8 bytes)
-		std::map<std::string /*arg name*/,uint64_t /*arg val*/> macroArgs; //create map from arg name to 64-bit number
+	__SET_ARG_OUT__("myArg","hello2"); //update output argument result
+	uint64_t macroData = __GET_ARG_IN__("myOtherArg", uint64_t);
+	macroData *= 3;
+	__SET_ARG_OUT__("outArg1",macroData); //update output argument result
 		
-		// command-#0: Read(0x1002 /*address*/,myArg /*data*/);
-		macroAddress = 0x1002; memcpy(address,&macroAddress,8);	//copy macro address to buffer
-		universalRead(address,data);		memcpy(&macroArgs["myArg"],data,8); //copy buffer to argument map
-		__SET_ARG_OUT__("myArg",macroArgs["myArg"]); //update output argument result
-		
-		// command-#1: Read(0x1001 /*address*/,data);
-		macroAddress = 0x1001; memcpy(address,&macroAddress,8);	//copy macro address to buffer
-		universalRead(address,data);		memcpy(&macroArgs["outArg1"],data,8); //copy buffer to argument map
-		__SET_ARG_OUT__("outArg1",macroArgs["outArg1"]); //update output argument result
-		
-		// command-#2: Write(0x1002 /*address*/,myOtherArg /*data*/);
-		macroAddress = 0x1002; memcpy(address,&macroAddress,8);	//copy macro address to buffer
-		macroArgs["myOtherArg"] = __GET_ARG_IN__("myOtherArg", uint64_t); //initialize from input arguments	//get macro data argument
-		memcpy(data,&macroArgs["myOtherArg"],8); //copy macro data argument to buffer
-		universalWrite(address,data);
-		
-		// command-#3: Write(0x1001 /*address*/,myArg /*data*/);
-		macroAddress = 0x1001; memcpy(address,&macroAddress,8);	//copy macro address to buffer	//get macro data argument
-		memcpy(data,&macroArgs["myArg"],8); //copy macro data argument to buffer
-		universalWrite(address,data);
-		
-		// command-#4: delay(4);
-		__FE_COUT__ << "Sleeping for... " << 4 << " milliseconds " << __E__;
-		usleep(4*1000 /* microseconds */);
-		
-		
-		delete[] address; //free the memory
-		delete[] data; //free the memory
-	}
-	
 	for(auto &argOut:argsOut) 
 		__FE_COUT__ << argOut.first << ": " << argOut.second << __E__;
 	
