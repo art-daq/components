@@ -8,24 +8,24 @@
 //
 //#include <string>
 //
-//namespace ots
+// namespace ots
 //{
 //
-//class VIPICFirmware : public FrontEndFirmwareBase/*, public PurdueFirmwareCore*/
+// class VIPICFirmware : public FrontEndFirmwareBase/*, public PurdueFirmwareCore*/
 //{
 //
-//private:
+// private:
 //    uint32_t pixelCSRRegisterValue_;           //CSR
 //    uint32_t pixelDCMRegisterValue_;           //DCM
-//    uint32_t pixelClockRegisterValue_;         //RegisterClock (does not handle the clock, it is the name Matthew uses)
-//    uint32_t pixelTestInjectRegisterValue_;    //TestInject
+//    uint32_t pixelClockRegisterValue_;         //RegisterClock (does not handle the clock, it is the name Matthew
+//    uses) uint32_t pixelTestInjectRegisterValue_;    //TestInject
 //
 //    uint32_t setBuffer_       [PIXELS_SIDE * PIXELS_SIDE / 32]; //S Buffer (one bit per pixel)
 //    uint32_t resetBuffer_     [PIXELS_SIDE * PIXELS_SIDE / 32]; //R Buffer (one bit per pixel)
 //    uint32_t configureBuffer_ [PIXELS_SIDE * PIXELS_SIDE / 2 ]; //D Buffer (12 bits per pixel, extended to 16)
 //
 //
-//public:
+// public:
 //    VIPICFirmware (unsigned int version, std::string type);
 //    virtual ~VIPICFirmware();
 //    int  init();
@@ -52,7 +52,7 @@
 //    void makeMaskBuffer                     (std::string& buffer, unsigned int channel, const ROCStream& rocStream);
 //
 //
-//protected:
+// protected:
 //    FrontEndFirmwareBase* protocolInstance_;
 //    void setTimeStampClockSourceCSR         (std::string clockSource);
 //    void flushBuffersPixelCSR               (void);//FIXME:waiting for M

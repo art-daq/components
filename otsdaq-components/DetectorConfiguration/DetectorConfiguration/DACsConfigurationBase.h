@@ -6,27 +6,23 @@
 #include <map>
 #include <string>
 
-namespace ots
-{
+namespace ots {
 
-class DACsConfigurationBase
-{
+class DACsConfigurationBase {
+ public:
+  DACsConfigurationBase(std::string configurationName, unsigned int rocNameColumn, unsigned int firstDAC,
+                        unsigned int lastDAC);
+  virtual ~DACsConfigurationBase(void);
 
-public:
+  // Getters
+  const ROCDACs& getROCDACs(std::string rocName) const;
 
-    DACsConfigurationBase(std::string configurationName, unsigned int rocNameColumn, unsigned int firstDAC, unsigned int lastDAC);
-    virtual ~DACsConfigurationBase(void);
-
-    //Getters
-    const ROCDACs& getROCDACs(std::string rocName) const;
-
-protected:
-    std::map<std::string, unsigned int> dacNameToDACAddress_;
-    std::map<std::string, ROCDACs>      nameToROCDACsMap_;
-    const unsigned int                  rocNameColumn_;
-    const unsigned int                  firstDAC_;
-    const unsigned int                  lastDAC_;
-
+ protected:
+  std::map<std::string, unsigned int> dacNameToDACAddress_;
+  std::map<std::string, ROCDACs> nameToROCDACsMap_;
+  const unsigned int rocNameColumn_;
+  const unsigned int firstDAC_;
+  const unsigned int lastDAC_;
 };
-}
+}  // namespace ots
 #endif

@@ -3,48 +3,42 @@
 
 #include "otsdaq-core/ConfigurationDataFormats/DACsConfigurationBase.h"
 
-namespace ots
-{
+namespace ots {
 
-class FSSRDACsConfiguration : public DACsConfigurationBase
-{
+class FSSRDACsConfiguration : public DACsConfigurationBase {
+ public:
+  FSSRDACsConfiguration(void);
+  virtual ~FSSRDACsConfiguration(void);
 
-public:
+  // Methods
+  // void init(ConfigurationManager *configManager);
 
-	FSSRDACsConfiguration(void);
-	virtual ~FSSRDACsConfiguration(void);
+  // Getters
 
-	//Methods
-	//void init(ConfigurationManager *configManager);
-
-	//Getters
-
-private:
-	enum
-	{
-		DetectorID,
-		PulserData,
-		PulserControl,
-		IntegratorVbn,
-		ShaperVbp2,
-		ShaperVbp1,
-		BLRestorer,
-		VTn,
-		VTp0,
-		VTp1,
-		VTp2,
-		VTp3,
-		VTp4,
-		VTp5,
-		VTp6,
-		VTp7,
-		ActiveLines,
-		SendData,
-		RejectHits,
-		DigContrReg,
-		AqBCO
-	};
-
+ private:
+  enum {
+    DetectorID,
+    PulserData,
+    PulserControl,
+    IntegratorVbn,
+    ShaperVbp2,
+    ShaperVbp1,
+    BLRestorer,
+    VTn,
+    VTp0,
+    VTp1,
+    VTp2,
+    VTp3,
+    VTp4,
+    VTp5,
+    VTp6,
+    VTp7,
+    ActiveLines,
+    SendData,
+    RejectHits,
+    DigContrReg,
+    AqBCO
+  };
 };
-}
+}  // namespace ots
 #endif
