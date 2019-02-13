@@ -24,11 +24,11 @@ void DACStream::makeStream(const ConfigurationTree& feToDetectorTree)
 	FSSRDACsConfiguration dacsMaker;
 	for(auto& it : feWriterDetectorList)
 	{
-		const ConfigurationTree& detectorConfiguration = it.second.getNode("LinkToDetectorConfiguration");
-		const ConfigurationTree& dacsConfiguration = detectorConfiguration.getNode("LinkToDACsConfiguration");
-		const ConfigurationTree& maskConfiguration = detectorConfiguration.getNode("LinkToMaskConfiguration");
-		__COUT__ << feToDetectorTree << std::endl;
-		__COUT__ << detectorConfiguration << std::endl;
+		const ConfigurationTree& detectorConfiguration = it.second.getNode("LinkToDetectorTable");
+		const ConfigurationTree& dacsConfiguration = detectorConfiguration.getNode("LinkToDACsTable");
+		const ConfigurationTree& maskConfiguration = detectorConfiguration.getNode("LinkToMaskTable");
+		//__COUT__ << feToDetectorTree << std::endl;
+		//__COUT__ << detectorConfiguration << std::endl;
 		//__COUT__ << dacsConfiguration << std::endl;
 		//__COUT__ << dacsConfiguration << std::endl;
 		currentElement = theChannelStreamMap_.insert(std::pair<unsigned int, ROCStream>(it.second.getNode("FEWriterChannel").getValue<unsigned int>(),ROCStream()));

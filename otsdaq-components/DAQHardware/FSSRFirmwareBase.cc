@@ -42,7 +42,7 @@ FSSRFirmwareBase::FSSRFirmwareBase(
 		__SS__ << "Unknown communication firmware type choice: " <<
 				communicationFirmwareType << std::endl;
 		__COUT_ERR__ << ss.str();
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 
@@ -87,7 +87,7 @@ uint32_t FSSRFirmwareBase::createRegisterFromValue (std::string& readBuffer, std
 //========================================================================================================================
 std::string FSSRFirmwareBase::configureClocks(std::string source, double frequency)
 {
-	std::cout << __COUT_HDR_FL__ << "Writing Clock configuration!" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Writing Clock configuration!" << std::endl;
 
 	std::string buffer;
 	//NoNeedNowwrite(buffer, ETHIO_DESTINATION_PORT, 0x0000b798); //  Listen port for ethio stuff
@@ -103,7 +103,7 @@ std::string FSSRFirmwareBase::configureClocks(std::string source, double frequen
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_,false/*clearBuffer*/);
 
 	resetDCM(buffer);
-	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 
 	return buffer;
 }
@@ -111,18 +111,15 @@ std::string FSSRFirmwareBase::configureClocks(std::string source, double frequen
 //========================================================================================================================
 void FSSRFirmwareBase::resetDCM(std::string& buffer)
 {
-	__COUT__ << communicationFirmwareInstance_ << std::endl;
-	resetDCMStripCSR(true);
-	__COUT__ << communicationFirmwareInstance_ << std::endl;
-
+    //31    DCM_RESET
+	resetDCMStripCSR(true);//Set bit 31
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_,false/*clearBuffer*/); //  Set reset to DCM
 
-	__COUT__ << communicationFirmwareInstance_ << std::endl;
-
-	resetDCMStripCSR(false);
+	resetDCMStripCSR(false);//unset bit 31
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_,false/*clearBuffer*/); //  Clear reset to DCM
 
-	communicationFirmwareInstance_->waitClear(buffer, STRIP_CSR, waitDCMResetStripCSR(),false/*clearBuffer*/); //  Wait for DCM to lock
+	//2018-10-24 Lorenzo in OtsUDPFirmware is doing nothing so I am commenting it out
+	//communicationFirmwareInstance_->waitClear(buffer, STRIP_CSR, waitDCMResetStripCSR(),false/*clearBuffer*/); //  Wait for DCM to lock
 }
 
 
@@ -139,17 +136,37 @@ void FSSRFirmwareBase::alignReadOut(std::string& buffer, unsigned int sensor, un
 //========================================================================================================================
 std::string FSSRFirmwareBase::resetDetector(int channel)
 {
-	std::cout << __COUT_HDR_FL__ << "Resetting detector!" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Resetting detector!" << std::endl;
+    //Byte 4-------------------
+    //31    CHIP_RESET
+    //30    CLEAR_FIFO
+    //29    CLEAR_ERRORS
+    //28    LINK_RESET
+    ///////////////////////////
+    //27    DAC_RESET
+    //26 	unused
+    //25    unused
+    //24    unused
+    //Byte 3-------------------
+    //23-16 unused
+    //Byte 2-------------------
+    //15-8  unused
+    //Byte 1-------------------
+    //7-0   CHANNEL_MASK ->Reset signals are sent to all channels with bits set in CHANNEL_MASK field
+
+
 	std::string buffer;
 	if (channel == -1)//reset all channels
 	{
 		//write(buffer,STRIP_RESET,0xd000003f);                  //  Issue reset
 		communicationFirmwareInstance_->write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset // was 0xf000003f
-		communicationFirmwareInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete // was 0xf0000000
+		//2018-10-24 Lorenzo in OtsUDPFirmware is doing nothing so I am commenting it out
+		//communicationFirmwareInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete // was 0xf0000000
 	} else
 	{
 		communicationFirmwareInstance_->write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset
-		communicationFirmwareInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete
+		//2018-10-24 Lorenzo in OtsUDPFirmware is doing nothing so I am commenting it out
+		//communicationFirmwareInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete
 	}
 
 	return buffer;
@@ -159,13 +176,16 @@ std::string FSSRFirmwareBase::resetDetector(int channel)
 std::string FSSRFirmwareBase::enableTrigger(void)
 {
 	std::string buffer;
-	std::cout << __COUT_HDR_FL__ << "Enabling Trigger!!!" << std::endl;
-	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Enabling Trigger!!!" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 
 	//setHaltStripCSR(1);//WARNING THIS IS CLEARED BY THE MASTER BUT IF THERE IS NO MASTER NOTHING WORKS UNLESS THE BIT IS UNSET
-	sendTriggerDataStripCSR(true);
-	sendTriggerNumberStripCSR(true);
-	sendBCOStripCSR(true);
+	sendTriggerDataStripCSR  (false);//STRIP_CSR -> Bit 24 -> SEND_TRIG
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
+	resetTriggerCounterStripCSR(buffer);
+	sendTriggerDataStripCSR  (true);//STRIP_CSR -> Bit 24 -> SEND_TRIG
+	sendTriggerNumberStripCSR(true);//STRIP_CSR -> Bit 25 -> SEND_TRIGNUM
+	sendBCOStripCSR          (true);//STRIP_CSR -> Bit 26 -> SEND_BCO
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
 
 	stripTriggerCSRRegisterValue_ = 0;
@@ -181,18 +201,18 @@ std::string FSSRFirmwareBase::enableTrigger(void)
 
 	//FIXME for IP .36 the number to set is 0x20401000
 
-	if (1 || communicationFirmwareInstance_->getVersion() == 1)
-		communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20401000, false/*clearBuffer*/); // Turn on streaming hits along with BCO data
-	else if (communicationFirmwareInstance_->getVersion() == 2)
-		communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20301000, false/*clearBuffer*/); // Turn on streaming hits along with BCO data
-	else
-	{
-		__SS__ << "what version is this?" << communicationFirmwareInstance_->getVersion() << std::endl;
-		__COUT__ << ss.str();
-		throw std::runtime_error(ss.str());
-	}
-	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
-	std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;
+	//if (1 || communicationFirmwareInstance_->getVersion() == 1)
+		communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20401000, false/*clearBuffer*/);
+	//else if (communicationFirmwareInstance_->getVersion() == 2)
+	//	communicationFirmwareInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20301000, false/*clearBuffer*/);
+	//else
+	//{
+	//	__SS__ << "what version is this?" << communicationFirmwareInstance_->getVersion() << std::endl;
+	//	__COUT__ << ss.str();
+	//	__SS_THROW__;
+	//}
+	//std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;
 
 	return buffer;
 }
@@ -227,12 +247,44 @@ std::string FSSRFirmwareBase::resetBCO(void)
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::string buffer;
 
-	resetTriggerCounterStripCSR(buffer);
+	//resetTriggerCounterStripCSR(buffer);
 	//write(buffer, STRIP_CSR, stripCSRRegisterValue_);//the write is done in the reset
-	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+	//std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 
 	//msg->Write(STRIP_SC_CSR,0x90000b95|(chmask<<16));
-	communicationFirmwareInstance_->write(buffer,STRIP_SC_CSR,0x903f0b95, false/*clearBuffer*/);//  This is the <SCR,set> command with the bit set to sync SHIFT with BCO=0.
+
+    //Byte 4-------------------
+    //31    SC_BUSY
+    //30    RAW
+    //29    BCO_SYNC
+    //28    BCO_ZERO
+    ///////////////////////////
+    //27    unused
+    //26-24 LENGTH
+    //Byte 3-------------------
+    //23-16 CHANNEL_MASK
+    //Byte 2-------------------
+	//15-13 READ_SELECT
+    //12-10 INSTRUCTION
+	//9-5   ADDRESS
+    //Byte 1-------------------
+    //9-5   ADDRESS
+	//4-0   CHIP_ID
+	//0x 9    0     3   f     0   b    9     5
+	//  1001-0000-0011-1111-0000-1011-1001-0101
+	//CHIP_ID      1-0101    -> 21 wild chip id ->all chips will get the command
+	//ADDRESS      11-100    -> 28
+	//INSTRUCTION  010       -> 2
+	//READ_SELECT  000       -> 0
+	//CHANNEL_MASK 0011-1111 -> all Channels
+	//LENGTH       000       -> 0
+    //unused
+	//BCO_SYNC     1
+    //BCO_ZERO     0
+    //RAW          0
+    //SC_BUSY      1
+	//When BCO SYNC is set the transaction is delayed until the internal BCO counter has a value of 240. This allow the AqBCO command to be synchronized
+	communicationFirmwareInstance_->write(buffer, STRIP_SC_CSR, 0x903f0b95, false/*clearBuffer*/);//  This is the <SCR,set> command with the bit set to sync SHIFT with BCO=0.
 
 	//enableBCOStripCSR(true);
 	//communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
@@ -246,26 +298,20 @@ std::string FSSRFirmwareBase::resetBCO(void)
 //========================================================================================================================
 std::string FSSRFirmwareBase::armBCOReset(void)
 {
-	std::cout << __COUT_HDR_FL__ << std::endl;
-	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::string buffer;
-
-	enableBCOStripCSR(true);
+	armBCOResetCSR();
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
-	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
-	std::cout << __COUT_HDR_FL__ << "Done!" << std::endl;
-
 	return buffer;
 }
 
 //========================================================================================================================
 std::string FSSRFirmwareBase::startStream(bool channel0, bool channel1, bool channel2, bool channel3, bool channel4, bool channel5)
 {
-	std::cout << __COUT_HDR_FL__ << "Start Stream!" << std::endl;
-	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue in:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+//	std::cout << __COUT_HDR_FL__ << "Start Stream!" << std::endl;
+//	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue in:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::string buffer;
 
-	std::cout << __COUT_HDR_PL__ << " channel0 " << channel0 << " channel1 " << channel1 << " channel2 " << channel2 << " channel3 " << channel3 << " channel4 " << channel4 << " channel5 " << channel5 << std::endl;
+//	std::cout << __COUT_HDR_PL__ << " channel0 " << channel0 << " channel1 " << channel1 << " channel2 " << channel2 << " channel3 " << channel3 << " channel4 " << channel4 << " channel5 " << channel5 << std::endl;
 
 	enableChannelsStripCSR(channel0, channel1, channel2, channel3, channel4, channel5);
 	//    if (version_ == 1)
@@ -276,8 +322,8 @@ std::string FSSRFirmwareBase::startStream(bool channel0, bool channel1, bool cha
 	enableStreamStripCSR(true); //  Turn on streaming hits along with BCO data // was 0x0f000f30
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
-	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
-	std::cout << __COUT_HDR_PL__ << "Done start Stream!" << std::endl;
+//	std::cout << __COUT_HDR_PL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+//	std::cout << __COUT_HDR_PL__ << "Done start Stream!" << std::endl;
 
 	return buffer;
 }
@@ -286,8 +332,8 @@ std::string FSSRFirmwareBase::startStream(bool channel0, bool channel1, bool cha
 std::string FSSRFirmwareBase::stopStream(void)
 {
 	std::string buffer;
-	enableChannelsStripCSR(false, false, false, false, false, false);
 	enableStreamStripCSR(false);
+	enableChannelsStripCSR(false, false, false, false, false, false);
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 	return buffer;
 }
@@ -454,14 +500,14 @@ void FSSRFirmwareBase::makeDACBuffer(std::string& buffer, unsigned int channel, 
 void FSSRFirmwareBase::makeDACBuffer(std::vector<std::string>& buffer, unsigned int channel, const ROCStream& rocStream)
 {
 
-	std::cout << __COUT_HDR_FL__ << "\tMaking DAC Buffer" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "\tMaking DAC Buffer" << std::endl;
 
 	int limitCount = 0;
 	unsigned int singleVectorCount = 0;
 
 	std::string alternateBuffer;
 
-	std::cout << __COUT_HDR_FL__ << "Channel: " << channel << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Channel: " << channel << std::endl;
 	const ROCDACs& rocDACs = rocStream.getROCDACs();
 	//std::cout << __COUT_HDR_FL__ << "Number of DACs: " << rocDACs.getDACList().size() << std::endl;
 	std::string bufferElement;
@@ -530,7 +576,7 @@ void FSSRFirmwareBase::makeDACBuffer(std::vector<std::string>& buffer, unsigned 
 		//buffer.push_back(bufferElement);
 		//break;
 	}
-	std::cout << __COUT_HDR_FL__ << "\tDone making DAC Buffer" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "\tDone making DAC Buffer" << std::endl;
 
 }
 
@@ -538,7 +584,7 @@ void FSSRFirmwareBase::makeDACBuffer(std::vector<std::string>& buffer, unsigned 
 void FSSRFirmwareBase::makeMaskBuffer(std::string& buffer, unsigned int channel,
 		const ROCStream& rocStream)
 {
-	std::cout << __COUT_HDR_FL__ << "Making mask! " << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Making mask! " << std::endl;
 	makeMaskBuffer(buffer, channel, rocStream, "Kill");
 	//    makeMaskSequence(buffer, channel, rocStream, "Inject");
 }
@@ -548,7 +594,7 @@ void FSSRFirmwareBase::makeMaskBuffer(std::string& buffer, unsigned int channel,
 {
 	int chipId = rocStream.getFEWROCAddress();
 	const std::string& mask = rocStream.getROCMask();
-	std::cout << __COUT_HDR_FL__ << "\tMaking mask! Length = " << mask.length() << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "\tMaking mask! Length = " << mask.length() << std::endl;
 //	std::cout << __COUT_HDR_FL__ << "\tMask length: " << mask.length() << std::endl;
 //	std::cout << __COUT_HDR_FL__ << "\tMask: " << mask << std::endl;
 
@@ -696,7 +742,7 @@ void FSSRFirmwareBase::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
 std::string FSSRFirmwareBase::readCSRRegister()
 {
 	std::string buffer;
-	std::cout << __COUT_HDR_FL__ << "FSSR readCSRRegister" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "FSSR readCSRRegister" << std::endl;
 	communicationFirmwareInstance_->read(buffer,STRIP_CSR);
 	return buffer;
 }
@@ -713,7 +759,7 @@ std::string FSSRFirmwareBase::readSCCSRRegister()
 //========================================================================================================================
 void FSSRFirmwareBase::setFrequencyFromClockState(std::string& buffer, double frequency)
 {
-	std::cout << __COUT_HDR_FL__ << "Setting up clock frequency!!!" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Setting up clock frequency!!!" << std::endl;
 
 	int quotient;
 	int numerator;
@@ -774,10 +820,10 @@ void FSSRFirmwareBase::setFrequencyFromClockState(std::string& buffer, double fr
 
 	//numerator = 2;
 	//denominator = 1;
-	std::cout << __COUT_HDR_FL__ << "Numerator: " << numerator << std::endl;
-	std::cout << __COUT_HDR_FL__ << "Denominator: " << denominator << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Numerator: " << numerator << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Denominator: " << denominator << std::endl;
 	setFrequencyRatio(buffer, numerator, denominator);
-	std::cout << __COUT_HDR_FL__ << "Done with clock frequency setup!!!" << std::endl;
+	//std::cout << __COUT_HDR_FL__ << "Done with clock frequency setup!!!" << std::endl;
 }
 //========================================================================================================================
 bool FSSRFirmwareBase::isClockStateExternal() //returns true if the clock state is External
@@ -825,15 +871,15 @@ void FSSRFirmwareBase::setExternalBCOClockSourceStripCSR(std::string clockSource
 }
 
 //========================================================================================================================
-void FSSRFirmwareBase::setHaltStripCSR(bool set)
-{
-	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) set, 17, 1);
-}
+//void FSSRFirmwareBase::setHaltStripCSR(bool set)
+//{
+//	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) set, 17, 1);
+//}
 
 //========================================================================================================================
-void FSSRFirmwareBase::enableBCOStripCSR(bool enable)
+void FSSRFirmwareBase::armBCOResetCSR(void)
 {
-	BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) enable, 19, 1);
+	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 19, 1);
 }
 
 //========================================================================================================================
@@ -848,9 +894,17 @@ void FSSRFirmwareBase::resetTriggerCounterStripCSR(std::string& buffer)
 	//Ryan's firmware is too fast so I need to make sure he understand the 1!!!!
 	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
 	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
+	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
+	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
+	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
+	BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
 
-	//BitManipulator::insertBits(stripCSRRegisterValue_, 0, 21, 1);
-	//communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
+	BitManipulator::insertBits(stripCSRRegisterValue_, 0, 21, 1);
+	communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_, false/*clearBuffer*/);
 }
 
 //========================================================================================================================

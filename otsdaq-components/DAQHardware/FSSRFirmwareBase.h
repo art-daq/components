@@ -57,7 +57,7 @@ public:
     std::string 			universalRead	  				(char* address);
     std::string 			universalWrite	  				(char* address, char* data);
 
-    //virtual void  		    setDataDestination              (std::string& buffer, const std::string& ip, const uint16_t port);//					{__SS__; throw std::runtime_error(ss.str() + "Illegal call to undefined base class member function"); return;};
+    //virtual void  		    setDataDestination              (std::string& buffer, const std::string& ip, const uint16_t port);//					{__SS__; __THROW__(ss.str() + "Illegal call to undefined base class member function"); return;};
     uint32_t 				createRegisterFromValue 		(std::string& readBuffer, std::string& receivedValue);
 
     //FEW specific methods
@@ -95,13 +95,40 @@ public:
 
     void 					setCSRRegister			(uint32_t total);
 
-    uint32_t stripCSRRegisterValue_;
     //Set values for register STRIP_CSR (Strip Control Register)
-    void 					setPacketSizeStripCSR	(uint32_t size);
-    void 					enableChannelsStripCSR  (bool channel0, bool channel1, bool channel2, bool channel3, bool channel4, bool channel5);
+    //STRIP_CSR = 0xc4000000
+    //Byte 4-------------------
+    //31    DCM_RESET
+    //30    BCO_LOCKED
+    //29    MCCLK_LOCKED
+    //28    unused
+    ///////////////////////////
+    //27    STREAM_ENABLE
+    //26 	SEND_BCO
+    //25    SEND_TRIG_NUM
+    //24    SEND_TRIG
+    //Byte 3-------------------
+    //23    TRIG_ENABLE
+    //22    BCO_CLEAR
+    //21    TRIG_NUM_CLEAR
+    //20    FLUSH
+    ///////////////////////////
+    //19    ARM_BCO_RESET
+    //18-17 unused
+    //16    EXT_BCO
+    //Byte 2-------------------
+    //15-14 IDLE_COUNT
+    //13-8  MODULE_ENABLE
+    //Byte 1-------------------
+    //7-3   PACKET_SIZE
+    //2-0   N_CHANNELS
+
+    uint32_t stripCSRRegisterValue_;
+    void 					setPacketSizeStripCSR	         (uint32_t size);
+    void 					enableChannelsStripCSR           (bool channel0, bool channel1, bool channel2, bool channel3, bool channel4, bool channel5);
     void 					setExternalBCOClockSourceStripCSR(std::string clockSource);
-    void 					setHaltStripCSR                  (bool set);
-    void 					enableBCOStripCSR                (bool enable);
+    //void 					setHaltStripCSR                  (bool set);//2018-10-24 Doesn't exist????
+    void 					armBCOResetCSR                   (void);
 	void 					flushBuffersStripCSR             (void);
 	void 					resetTriggerCounterStripCSR      (std::string& buffer);
 	void 					resetBCOCounterStripCSR          (void);
@@ -111,10 +138,10 @@ public:
 	void 					sendBCOStripCSR                  (bool send);
 	void 					enableStreamStripCSR             (bool enable);
 	void 					resetDCMStripCSR                 (bool clear);
-	uint32_t 				waitDCMResetStripCSR         (void);
-	std::string 			readCSRRegister			  (void);
+	uint32_t 				waitDCMResetStripCSR             (void);
+	std::string 			readCSRRegister			         (void);
 
-	std::string 			readSCCSRRegister   	  (void);
+	std::string 			readSCCSRRegister   	         (void);
 
     uint32_t stripResetRegisterValue_;
     //Set values for register STRIP_RESET (Strip Reset)
@@ -134,7 +161,8 @@ public:
     void 					configureStripTriggerUnbiased		(std::string& buffer);
     void 					configureTriggerInputs				(std::string& buffer);
 
-    uint32_t stripTriggerCSRRegisterValue_;
+    //STRIP_TRIG_CSR = 0xc40000060
+	uint32_t stripTriggerCSRRegisterValue_;
 
 	//Registers setters
 	void 					BCOOffset					(uint32_t offset);

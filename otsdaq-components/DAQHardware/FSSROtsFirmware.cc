@@ -36,7 +36,7 @@ FSSROtsFirmware::FSSROtsFirmware(std::string communicationFirmwareType,
 //	{
 //		__SS__ << "Unknown firmware type choice: " << choice << std::endl;
 //		__COUT_ERR__ << ss.str();
-//		throw std::runtime_error(ss.str());
+//		__SS_THROW__;
 //	}
 //
 //
@@ -152,7 +152,7 @@ std::string FSSROtsFirmware::enableTrigger(void)
 		__SS__ << "what version is this?" <<
 				OtsUDPFirmwareCore::version_ << std::endl;
 		__COUT_ERR__ << "\n" << ss.str();
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 	std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 	std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;

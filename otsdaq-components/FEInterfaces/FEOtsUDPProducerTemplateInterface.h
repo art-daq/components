@@ -1,21 +1,25 @@
-#ifndef _ots_FEOtsUDPTemplateInterface_h_
-#define _ots_FEOtsUDPTemplateInterface_h_
+#ifndef _ots_FEOtsUDPProducerTemplateInterface_h_
+#define _ots_FEOtsUDPProducerTemplateInterface_h_
 
+//#include "otsdaq-core/FECore/FEVInterface.h"
+#include "otsdaq-core/FECore/FEProducerVInterface.h"
 #include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
 #include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
+#include "otsdaq-core/DataManager/DataProducer.h"
 
 #include <string>
-#include "otsdaq-core/FECore/FEVInterface.h"
 
 namespace ots
 {
 
-class FEOtsUDPTemplateInterface	: public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
+//public virtual inheritance only inherits the base class WorkLoop (and others) members once)
+class FEOtsUDPProducerTemplateInterface	: //public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
+public FEProducerVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
 {
 
 public:
-	FEOtsUDPTemplateInterface 			(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
-	virtual ~FEOtsUDPTemplateInterface	(void);
+	FEOtsUDPProducerTemplateInterface 			(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
+	virtual ~FEOtsUDPProducerTemplateInterface	(void);
 
 	void configure 		(void) override;
 	void halt 		 	(void) override;

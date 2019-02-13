@@ -180,7 +180,7 @@ try
 				OtsUDPBoard_.getIPAddress() << ":" << OtsUDPBoard_.getPort() <<
 				". Timeout period of " << timeoutSeconds << " seconds reached without response." << std::endl;
 		__COUT_ERR__ << "\n" << ss.str() << std::endl;
-		throw std::runtime_error(ss.str());
+		__SS_THROW__;
 	}
 
 
@@ -217,7 +217,7 @@ catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
 	__COUT_ERR__ << "\n" << ss.str() << std::endl;
-	throw std::runtime_error(ss.str());
+	__SS_THROW__;
 }
 
 //========================================================================================================================
@@ -256,8 +256,7 @@ throw(std::runtime_error)
 
 //========================================================================================================================
 //return -1 on failure
-void OtsUDPHardware::read(const std::string& sendBuffer, std::string& receiveBuffer,
-		int timeoutSeconds)
+void OtsUDPHardware::read(const std::string& sendBuffer, std::string& receiveBuffer, int timeoutSeconds)
 throw(std::runtime_error)
 try
 {
@@ -267,25 +266,25 @@ try
 			__COUT__ << "Cleared receive socket buffer: " << clearedPackets << " packets cleared." << std::endl;
 	}
 
-	__COUT__ << "sending" << std::endl;
+	__COUT__ << "Sending" << std::endl;
 	TransceiverSocket::send(OtsUDPBoard_, sendBuffer, verbose_);
-	__COUT__ << "receiving" << std::endl;
 
 	if(timeoutSeconds < 0) //use default timeout
 		timeoutSeconds = 5;
 
+	__COUT__ << "Receiving" << std::endl;
 	if(TransceiverSocket::receive(receiveBuffer,timeoutSeconds,0 /*timeoutUSeconds*/,verbose_) < 0)
 	{
-		__SS__ << "Read failed from hardware at IP:Port " <<
-				OtsUDPBoard_.getIPAddress() << ":" << OtsUDPBoard_.getPort() <<
+		__SS__ << "Read failed from hardware at IP : Port " <<
+				OtsUDPBoard_.getIPAddress() << " : " << OtsUDPBoard_.getPort() <<
 				". Timeout period of " << timeoutSeconds << " seconds reached without response." << __E__;
 		__SS_THROW__;
 	}
 
-	__COUT__ << "RECEIVED MESSAGE: ";
-	for(uint32_t i=0; i<receiveBuffer.size(); i++)
-		std::cout << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) receiveBuffer[i]) &0xff) << "-" << std::dec;
-	std::cout << std::endl;
+	//__COUT__ << "Received Message: ";
+	//for(uint32_t i=0; i<receiveBuffer.size(); i++)
+	//	std::cout << std::setfill('0') << std::setw(2) << std::hex << (((int16_t) receiveBuffer[i]) &0xff) << "-" << std::dec;
+	//std::cout << std::endl;
 
 	//Check First Byte: (https://docs.google.com/document/d/1i3Z07n8Jq78NwgUFdjAv2sLGhH4rWjHeYEScAWBzSyw/edit?usp=sharing)
 	//	bits 2:0 = Packet Type (0: Read, 1: First in Burst, 2: Burst Middle, 3: Last in Burst, 4: Read Ack, 5: Write Ack, 6: Burst Start Ack, 7: Burst Stop Ack)
@@ -441,6 +440,7 @@ int OtsUDPHardware::clearReadSocket()
 	catch(...)
 	{
 		//ignore exceptions... assume due to there be nothing to read
+		__COUT__ << "I am crashing while trying to read the socket...strange!" << std::endl;
 	}
 	return cnt;
 }

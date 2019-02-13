@@ -1,4 +1,4 @@
-#include "otsdaq-components/FEInterfaces/FEOtsUDPTemplateInterface.h"
+#include "otsdaq-components/FEInterfaces/FEOtsUDPProducerTemplateInterface.h"
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
 #include "otsdaq-core/Macros/CoutMacros.h"
 #include "otsdaq-core/Macros/InterfacePluginMacros.h"
@@ -8,73 +8,43 @@
 using namespace ots;
 
 //========================================================================================================================
-FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath)
+FEOtsUDPProducerTemplateInterface::FEOtsUDPProducerTemplateInterface(const std::string& interfaceUID,
+		const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath)
 : Socket (
 	theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
 	, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned int>())
-, FEVInterface (interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
+//, WorkLoop (interfaceUID + "-workloop")
+, FEProducerVInterface (interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
+//, DataProducer ("supervisorID","bufferID","processorID",100/*bufferSize*/)
 , OtsUDPHardware (theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfaceIPAddress").getValue<std::string>()
 	, theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("InterfacePort").getValue<unsigned int>())
 , OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("FirmwareVersion").getValue<unsigned int>())
 {
+	//registration of FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
+	FEVInterface::registerFEMacroFunction("varTest2",//feMacroName
+		static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPProducerTemplateInterface::varTest2), //feMacroFunction
+		std::vector<std::string>{"myOtherArg"}, //namesOfInputArgs 
+		std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs 
+		1); //requiredUserPermissions
 	
+	
+	//registration of FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
+	FEVInterface::registerFEMacroFunction("varTest",//feMacroName
+			static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPProducerTemplateInterface::varTest), //feMacroFunction
+			std::vector<std::string>{"myOtherArg"}, //namesOfInputArgs 
+			std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs 
+			1); //requiredUserPermissions
 	
 	universalAddressSize_ = 8;
 	universalDataSize_ = 8;
-
-	//example self-call of feMacro
-	if(1)
-	{
-		//registration of FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
-		FEVInterface::registerFEMacroFunction("varTest2",//feMacroName
-				static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::varTest2), //feMacroFunction
-				std::vector<std::string>{"myOtherArg"}, //namesOfInputArgs
-				std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs
-				1); //requiredUserPermissions
-
-
-		//registration of FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
-		FEVInterface::registerFEMacroFunction("varTest",//feMacroName
-				static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::varTest), //feMacroFunction
-				std::vector<std::string>{"myOtherArg"}, //namesOfInputArgs
-				std::vector<std::string>{"myArg","outArg1"}, //namesOfOutputArgs
-				1); //requiredUserPermissions
-
-		std::vector<frontEndMacroArg_t> argsIn;
-		__SET_ARG_IN__("myOtherArg",(unsigned int)5);
-
-		std::vector<frontEndMacroArg_t> argsOut;
-
-		__FE_COUTV__(StringMacros::vectorToString(argsIn));
-
-		runSelfFrontEndMacro("varTest2",
-				argsIn,argsOut);
-
-		__FE_COUTV__(StringMacros::vectorToString(argsOut));
-		__FE_COUTV__(FEVInterface::getFEMacroArgument(
-				argsOut,"outArg1"));
-
-		{
-			std::string a = FEVInterface::getFEMacroArgument(
-					argsOut,"myArg");
-			double b = getFEMacroArgumentValue<double>(
-					argsOut,"outArg1");
-			unsigned short c = getFEMacroArgumentValue<unsigned short>(
-					argsOut,"outArg1");
-			__FE_COUTV__(a);
-			__FE_COUTV__(b);
-			__FE_COUTV__(c);
-		}
-	}
-
-} //end constructor
+}
 
 //========================================================================================================================
-FEOtsUDPTemplateInterface::~FEOtsUDPTemplateInterface(void)
+FEOtsUDPProducerTemplateInterface::~FEOtsUDPProducerTemplateInterface(void)
 {}
 
 //========================================================================================================================
-void FEOtsUDPTemplateInterface::configure(void)
+void FEOtsUDPProducerTemplateInterface::configure(void)
 {
 //	unsigned int i = VStateMachine::getIterationIndex();
 //	unsigned int j = VStateMachine::getSubIterationIndex();
@@ -223,34 +193,34 @@ void FEOtsUDPTemplateInterface::configure(void)
 }
 
 //========================================================================================================================
-//void FEOtsUDPTemplateInterface::configureDetector(const DACStream& theDACStream)
+//void FEOtsUDPProducerTemplateInterface::configureDetector(const DACStream& theDACStream)
 //{
 //	__FE_COUT__ << "\tconfigureDetector" << __E__;
 //}
 
 //========================================================================================================================
-void FEOtsUDPTemplateInterface::halt(void)
+void FEOtsUDPProducerTemplateInterface::halt(void)
 {
 	__FE_COUT__ << "\tHalt" << __E__;
 	stop();
 }
 
 //========================================================================================================================
-void FEOtsUDPTemplateInterface::pause(void)
+void FEOtsUDPProducerTemplateInterface::pause(void)
 {
 	__FE_COUT__ << "\tPause" << __E__;
 	stop();
 }
 
 //========================================================================================================================
-void FEOtsUDPTemplateInterface::resume(void)
+void FEOtsUDPProducerTemplateInterface::resume(void)
 {
 	__FE_COUT__ << "\tResume" << __E__;
 	start("");
 }
 
 //========================================================================================================================
-void FEOtsUDPTemplateInterface::start(std::string )//runNumber)
+void FEOtsUDPProducerTemplateInterface::start(std::string )//runNumber)
 {
 	__FE_COUT__ << "\tStart" << __E__;
 	
@@ -282,7 +252,7 @@ void FEOtsUDPTemplateInterface::start(std::string )//runNumber)
 }
 
 //========================================================================================================================
-void FEOtsUDPTemplateInterface::stop(void)
+void FEOtsUDPProducerTemplateInterface::stop(void)
 {
 	__FE_COUT__ << "\tStop" << __E__;
 	
@@ -296,7 +266,7 @@ void FEOtsUDPTemplateInterface::stop(void)
 }
 
 //========================================================================================================================
-bool FEOtsUDPTemplateInterface::running(void)
+bool FEOtsUDPProducerTemplateInterface::running(void)
 {
 	__FE_COUT__ << "\tRunning" << __E__;
 	
@@ -322,6 +292,67 @@ bool FEOtsUDPTemplateInterface::running(void)
 			//			else
 				break;
 		}
+
+
+
+		{
+			if(DataProducerBase::attachToEmptySubBuffer(
+					dataP_, headerP_) < 0)
+			{
+				__CFG_COUT__ << "There are no available buffers! Retrying...after waiting 10 milliseconds!" << std::endl;
+				usleep(10000);
+				return true;
+			}
+
+			if(1) // test data buffers
+			{
+				//sleep(1);
+				unsigned long long value = 0xB57321; //this is 8-bytes
+				std::string& buffer = *dataP_;
+				buffer.resize(8); //NOTE: this is inexpensive according to Lorenzo/documentation in C++11 (only increases size once and doesn't decrease size)
+				memcpy((void *)&buffer[0] /*dest*/,(void *)&value /*src*/, 8 /*numOfBytes*/);
+
+				//size() and length() are equivalent
+				__CFG_COUT__ << "Writing to buffer " << buffer.size() << " bytes!" << __E__;
+				__CFG_COUT__ << "Writing to buffer length " << buffer.length() << " bytes!" << __E__;
+
+				__CFG_COUT__ << "Buffer Data: " << BinaryStringMacros::binaryTo8ByteHexString(buffer) << __E__;
+
+				__CFG_COUTV__(DataProcessor::theCircularBuffer_);
+
+				__CFG_COUT__ << __E__;
+
+
+
+
+
+				__CFG_COUT__ << __E__;
+
+
+				DataProducerBase::setWrittenSubBuffer<std::string,std::map<std::string,std::string> >();
+				__CFG_COUT__ << __E__;
+				__CFG_COUTV__(DataProcessor::theCircularBuffer_);
+
+			}
+		}
+		if(0)
+		{
+
+			unsigned long long value = 0xA54321; //this is 8-bytes
+			std::string buffer;
+			buffer.resize(8); //NOTE: this is inexpensive according to Lorenzo/documentation in C++11 (only increases size once and doesn't decrease size)
+			memcpy((void *)&buffer[0] /*dest*/,(void *)&value /*src*/, 8 /*numOfBytes*/);
+
+			//size() and length() are equivalent
+			__FE_COUT__ << "Writing to buffer " << buffer.size() << " bytes!" << __E__;
+			__FE_COUT__ << "Writing to buffer length " << buffer.length() << " bytes!" << __E__;
+
+			__FE_COUT__ << "Buffer Data: " << BinaryStringMacros::binaryTo8ByteHexString(buffer) << __E__;
+
+
+			FEProducerVInterface::copyToNextBuffer(buffer);
+		}
+
 	}
 	
 	//		//example!
@@ -370,11 +401,11 @@ bool FEOtsUDPTemplateInterface::running(void)
 //========================================================================================================================
 //NOTE: buffer for address must be at least size universalAddressSize_
 //NOTE: buffer for returnValue must be max UDP size to handle return possibility
-void ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnValue)
+void ots::FEOtsUDPProducerTemplateInterface::universalRead(char *address, char *returnValue)
 {
 	__FE_COUT__ << "address size " << universalAddressSize_ << __E__;
-
-	__FE_COUT__ << "Universal Read Address: ";
+	
+	__FE_COUT__ << "Request: ";
 	for(unsigned int i=0;i<universalAddressSize_;++i)
 		printf("%2.2X",(unsigned char)address[i]);
 	std::cout << __E__;
@@ -386,28 +417,18 @@ void ots::FEOtsUDPTemplateInterface::universalRead(char *address, char *returnVa
 
 	__FE_COUT__ << "Result SIZE: " << readBuffer.size() << __E__;
 	std::memcpy(returnValue,readBuffer.substr(2).c_str(),universalDataSize_);
-
-	__FE_COUT__ << "Universal Read Data: ";
-	for(unsigned int i=0;i<universalDataSize_;++i)
-		printf("%2.2X",(unsigned char)returnValue[i]);
-	std::cout << __E__;
-
 } //end universalRead()
 
 //========================================================================================================================
 //NOTE: buffer for address must be at least size universalAddressSize_
 //NOTE: buffer for writeValue must be at least size universalDataSize_
-void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeValue)
+void ots::FEOtsUDPProducerTemplateInterface::universalWrite(char* address, char* writeValue)
 {
 	__FE_COUT__ << "address size " << universalAddressSize_ << __E__;
 	__FE_COUT__ << "data size " << universalDataSize_ << __E__;
-	__FE_COUT__ << "Universal Write Address: ";
+	__FE_COUT__ << "Sending: ";
 	for(unsigned int i=0;i<universalAddressSize_;++i)
 		printf("%2.2X",(unsigned char)address[i]);
-	std::cout << __E__;
-	__FE_COUT__ << "Universal Write Data: ";
-	for(unsigned int i=0;i<universalDataSize_;++i)
-		printf("%2.2X",(unsigned char)writeValue[i]);
 	std::cout << __E__;
 	
 	std::string sendBuffer;
@@ -422,7 +443,7 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 //varTest
 //	FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
 //	Macro Notes: This is a great test!
-void FEOtsUDPTemplateInterface::varTest(__ARGS__)
+void FEOtsUDPProducerTemplateInterface::varTest(__ARGS__)
 {
 	__FE_COUT__ << "# of input args = " << argsIn.size() << __E__;
 	__FE_COUT__ << "# of output args = " << argsOut.size() << __E__;
@@ -477,21 +498,54 @@ void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 //varTest2
 //	FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
 //	Macro Notes: [Modified 14:28 10/11/2018] This is a great test!
-void FEOtsUDPTemplateInterface::varTest2(__ARGS__)
+void FEOtsUDPProducerTemplateInterface::varTest2(__ARGS__)
 {
 	__FE_COUT__ << "# of input args = " << argsIn.size() << __E__;
 	__FE_COUT__ << "# of output args = " << argsOut.size() << __E__;
 	for(auto &argIn:argsIn) 
 		__FE_COUT__ << argIn.first << ": " << argIn.second << __E__;
 	
-	__SET_ARG_OUT__("myArg","hello2"); //update output argument result
-	uint64_t macroData = __GET_ARG_IN__("myOtherArg", uint64_t);
-	macroData *= 3;
-	__SET_ARG_OUT__("outArg1",macroData); //update output argument result
+	//macro commands section 
+	{
+		char *address 	= new char[universalAddressSize_]{0};	//create address buffer of interface size and init to all 0
+		char *data 		= new char[universalDataSize_]{0};		//create data buffer of interface size and init to all 0
+		uint64_t macroAddress;		//create macro address buffer (size 8 bytes)
+		uint64_t macroData;			//create macro address buffer (size 8 bytes)
+		std::map<std::string /*arg name*/,uint64_t /*arg val*/> macroArgs; //create map from arg name to 64-bit number
 		
+		// command-#0: Read(0x1002 /*address*/,myArg /*data*/);
+		macroAddress = 0x1002; memcpy(address,&macroAddress,8);	//copy macro address to buffer
+		universalRead(address,data);		memcpy(&macroArgs["myArg"],data,8); //copy buffer to argument map
+		__SET_ARG_OUT__("myArg",macroArgs["myArg"]); //update output argument result
+		
+		// command-#1: Read(0x1001 /*address*/,data);
+		macroAddress = 0x1001; memcpy(address,&macroAddress,8);	//copy macro address to buffer
+		universalRead(address,data);		memcpy(&macroArgs["outArg1"],data,8); //copy buffer to argument map
+		__SET_ARG_OUT__("outArg1",macroArgs["outArg1"]); //update output argument result
+		
+		// command-#2: Write(0x1002 /*address*/,myOtherArg /*data*/);
+		macroAddress = 0x1002; memcpy(address,&macroAddress,8);	//copy macro address to buffer
+		macroArgs["myOtherArg"] = __GET_ARG_IN__("myOtherArg", uint64_t); //initialize from input arguments	//get macro data argument
+		memcpy(data,&macroArgs["myOtherArg"],8); //copy macro data argument to buffer
+		universalWrite(address,data);
+		
+		// command-#3: Write(0x1001 /*address*/,myArg /*data*/);
+		macroAddress = 0x1001; memcpy(address,&macroAddress,8);	//copy macro address to buffer	//get macro data argument
+		memcpy(data,&macroArgs["myArg"],8); //copy macro data argument to buffer
+		universalWrite(address,data);
+		
+		// command-#4: delay(4);
+		__FE_COUT__ << "Sleeping for... " << 4 << " milliseconds " << __E__;
+		usleep(4*1000 /* microseconds */);
+		
+		
+		delete[] address; //free the memory
+		delete[] data; //free the memory
+	}
+	
 	for(auto &argOut:argsOut) 
 		__FE_COUT__ << argOut.first << ": " << argOut.second << __E__;
 	
 } //end varTest2()
 
-DEFINE_OTS_INTERFACE(FEOtsUDPTemplateInterface)
+DEFINE_OTS_INTERFACE(FEOtsUDPProducerTemplateInterface)
