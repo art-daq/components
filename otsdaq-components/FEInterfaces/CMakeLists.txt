@@ -14,8 +14,11 @@ simple_plugin(FEOtsUDPProducerTemplateInterface "interface"
   FECore
   WorkLoopManager
   Configurable
+  DataManager
   ${CETLIB}
   ${CETLIB_EXCEPT}
+  ${XDAQ_XERCES-C}
+  pthread
   )
   
 simple_plugin(FEOtsUDPTemplateInterface "interface"
@@ -25,6 +28,8 @@ simple_plugin(FEOtsUDPTemplateInterface "interface"
   Configurable
   ${CETLIB}
   ${CETLIB_EXCEPT}
+  ${XDAQ_XERCES-C}
+  pthread
   )
 
 install_headers()
