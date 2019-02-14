@@ -7,8 +7,8 @@
 using namespace ots;
 
 //==============================================================================
-FEPurdueNetworkMasterInterfaceConfiguration::FEPurdueNetworkMasterInterfaceConfiguration(void)
-: FEInterfaceConfigurationBase("FEPurdueNetworkMasterInterfaceConfiguration")
+FEPurdueNetworkMasterInterfaceConfiguration::FEPurdueNetworkMasterInterfaceConfiguration (void)
+    : FEInterfaceConfigurationBase ("FEPurdueNetworkMasterInterfaceConfiguration")
 {
 	//////////////////////////////////////////////////////////////////////
 	//WARNING: the names and the order MUST match the ones in the enum  //
@@ -28,15 +28,15 @@ FEPurdueNetworkMasterInterfaceConfiguration::FEPurdueNetworkMasterInterfaceConfi
 	//    </VIEW>
 	//  </CONFIGURATION>
 	//</ROOT>
-
 }
 
 //==============================================================================
-FEPurdueNetworkMasterInterfaceConfiguration::~FEPurdueNetworkMasterInterfaceConfiguration(void)
-{}
+FEPurdueNetworkMasterInterfaceConfiguration::~FEPurdueNetworkMasterInterfaceConfiguration (void)
+{
+}
 
 //==============================================================================
-void FEPurdueNetworkMasterInterfaceConfiguration::init(ConfigurationManager *configManager)
+void FEPurdueNetworkMasterInterfaceConfiguration::init (ConfigurationManager *configManager)
 {
 	/*
     std::string       enumValue1;
@@ -50,51 +50,51 @@ void FEPurdueNetworkMasterInterfaceConfiguration::init(ConfigurationManager *con
 }
 
 //==============================================================================
-bool  FEPurdueNetworkMasterInterfaceConfiguration::getStatus(std::string interfaceID) const
+bool FEPurdueNetworkMasterInterfaceConfiguration::getStatus (std::string interfaceID) const
 {
 	bool tmpStatus;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), Status);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), Status);
 	return tmpStatus;
 }
 
 //==============================================================================
-unsigned int FEPurdueNetworkMasterInterfaceConfiguration::getFirmwareVersion(std::string interfaceID) const
+unsigned int FEPurdueNetworkMasterInterfaceConfiguration::getFirmwareVersion (std::string interfaceID) const
 {
 	unsigned int tmpFirmwareVersion;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpFirmwareVersion, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), FirmwareVersion);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpFirmwareVersion, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), FirmwareVersion);
 	return tmpFirmwareVersion;
 }
 
 //==============================================================================
-std::string FEPurdueNetworkMasterInterfaceConfiguration::getIPAddress(std::string interfaceID) const
+std::string FEPurdueNetworkMasterInterfaceConfiguration::getIPAddress (std::string interfaceID) const
 {
 	std::string tmpIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), IPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), IPAddress);
 	return tmpIPAddress;
 }
 
 //==============================================================================
-unsigned int FEPurdueNetworkMasterInterfaceConfiguration::getPort(std::string interfaceID) const
+unsigned int FEPurdueNetworkMasterInterfaceConfiguration::getPort (std::string interfaceID) const
 {
 	unsigned int tmpPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), Port);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), Port);
 	return tmpPort;
 }
 
 //==============================================================================
-std::string FEPurdueNetworkMasterInterfaceConfiguration::getInterfaceIPAddress(std::string interfaceID) const
+std::string FEPurdueNetworkMasterInterfaceConfiguration::getInterfaceIPAddress (std::string interfaceID) const
 {
 	std::string tmpInterfaceIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpInterfaceIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), InterfaceIPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpInterfaceIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), InterfaceIPAddress);
 	return tmpInterfaceIPAddress;
 }
 
 //==============================================================================
-unsigned int FEPurdueNetworkMasterInterfaceConfiguration::getInterfacePort(std::string interfaceID) const
+unsigned int FEPurdueNetworkMasterInterfaceConfiguration::getInterfacePort (std::string interfaceID) const
 {
 	unsigned int tmpInterfacePort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpInterfacePort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), InterfacePort);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpInterfacePort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), InterfacePort);
 	return tmpInterfacePort;
 }
 
-DEFINE_OTS_CONFIGURATION(FEPurdueNetworkMasterInterfaceConfiguration)
+DEFINE_OTS_CONFIGURATION (FEPurdueNetworkMasterInterfaceConfiguration)

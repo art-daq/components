@@ -5,27 +5,27 @@
 //#include "otsdaq-components/DetectorHardware/FSSRROCDefinitions.h"
 
 #include "otsdaq-components/DAQHardware/FrontEndFirmwareBase.h"
-#include "otsdaq-components/DAQHardware/PurdueFirmwareCore.h"
 #include "otsdaq-components/DAQHardware/OtsUDPFirmwareCore.h"
+#include "otsdaq-components/DAQHardware/PurdueFirmwareCore.h"
 
-#include "otsdaq-core/MessageFacility/MessageFacility.h"
-#include "otsdaq-core/Macros/CoutMacros.h"
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include "otsdaq-core/Macros/CoutMacros.h"
+#include "otsdaq-core/MessageFacility/MessageFacility.h"
 
-#include <iostream>
 #include <cstdlib>
+#include <iostream>
 
 using namespace ots;
 
-
 //========================================================================================================================
-FSSRPurdueFirmware::FSSRPurdueFirmware(std::string communicationFirmwareType,
-		unsigned int communicationFirmwareVersion,
-		unsigned int applicationFirmwareVersion)
-: FSSRFirmwareBase				(communicationFirmwareType,communicationFirmwareVersion,applicationFirmwareVersion)
-{}
+FSSRPurdueFirmware::FSSRPurdueFirmware (std::string  communicationFirmwareType,
+                                        unsigned int communicationFirmwareVersion,
+                                        unsigned int applicationFirmwareVersion)
+    : FSSRFirmwareBase (communicationFirmwareType, communicationFirmwareVersion, applicationFirmwareVersion)
+{
+}
 //	//choose: OtsUDPFirmwareCore or PurdueFirmwareCore
 //	if(communicationFirmwareType == FrontEndFirmwareBase::PURDUE_CORE_FIRMWARE_NAME)
 //		communicationFirmwareInstance_  = new PurdueFirmwareCore(communicationFirmwareVersion);
@@ -47,15 +47,16 @@ FSSRPurdueFirmware::FSSRPurdueFirmware(std::string communicationFirmwareType,
 //}
 
 //========================================================================================================================
-FSSRPurdueFirmware::~FSSRPurdueFirmware(void)
+FSSRPurdueFirmware::~FSSRPurdueFirmware (void)
 {
 	//delete protocolInstance_;
 	//protocolInstance_ = NULL;
 }
 
 //========================================================================================================================
-void FSSRPurdueFirmware::init(void)
-{ }
+void FSSRPurdueFirmware::init (void)
+{
+}
 /*
 //========================================================================================================================
 std::string FSSRPurdueFirmware::configureClocks(std::string source, double frequency)

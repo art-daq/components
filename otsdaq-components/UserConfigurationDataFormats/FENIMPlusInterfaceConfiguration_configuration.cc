@@ -7,8 +7,8 @@
 using namespace ots;
 
 //==============================================================================
-FENIMPlusInterfaceConfiguration::FENIMPlusInterfaceConfiguration(void)
-: FEInterfaceConfigurationBase("FENIMPlusInterfaceConfiguration")
+FENIMPlusInterfaceConfiguration::FENIMPlusInterfaceConfiguration (void)
+    : FEInterfaceConfigurationBase ("FENIMPlusInterfaceConfiguration")
 {
 	//////////////////////////////////////////////////////////////////////
 	//WARNING: the names and the order MUST match the ones in the enum  //
@@ -38,15 +38,15 @@ FENIMPlusInterfaceConfiguration::FENIMPlusInterfaceConfiguration(void)
 	//    </VIEW>
 	//  </CONFIGURATION>
 	//</ROOT>
-
 }
 
 //==============================================================================
-FENIMPlusInterfaceConfiguration::~FENIMPlusInterfaceConfiguration(void)
-{}
+FENIMPlusInterfaceConfiguration::~FENIMPlusInterfaceConfiguration (void)
+{
+}
 
 //==============================================================================
-void FENIMPlusInterfaceConfiguration::init(ConfigurationManager *configManager)
+void FENIMPlusInterfaceConfiguration::init (ConfigurationManager *configManager)
 {
 	/*
     std::string       enumValue1;
@@ -60,115 +60,117 @@ void FENIMPlusInterfaceConfiguration::init(ConfigurationManager *configManager)
 }
 
 //==============================================================================
-bool  FENIMPlusInterfaceConfiguration::getStatus(std::string interfaceID) const
+bool FENIMPlusInterfaceConfiguration::getStatus (std::string interfaceID) const
 {
 	bool tmpStatus;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), Status);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), Status);
 	return tmpStatus;
 }
 
 //==============================================================================
-unsigned int FENIMPlusInterfaceConfiguration::getFirmwareVersion(std::string interfaceID) const
+unsigned int FENIMPlusInterfaceConfiguration::getFirmwareVersion (std::string interfaceID) const
 {
 	unsigned int tmpFirmwareVersion;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpFirmwareVersion, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), FirmwareVersion);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpFirmwareVersion, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), FirmwareVersion);
 	return tmpFirmwareVersion;
 }
 
 //==============================================================================
-std::string FENIMPlusInterfaceConfiguration::getIPAddress(std::string interfaceID) const
+std::string FENIMPlusInterfaceConfiguration::getIPAddress (std::string interfaceID) const
 {
 	std::string tmpIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), IPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), IPAddress);
 	return tmpIPAddress;
 }
 
 //==============================================================================
-unsigned int FENIMPlusInterfaceConfiguration::getPort(std::string interfaceID) const
+unsigned int FENIMPlusInterfaceConfiguration::getPort (std::string interfaceID) const
 {
 	unsigned int tmpPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), Port);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), Port);
 	return tmpPort;
 }
 
 //==============================================================================
-std::string FENIMPlusInterfaceConfiguration::getInterfaceIPAddress(std::string interfaceID) const
+std::string FENIMPlusInterfaceConfiguration::getInterfaceIPAddress (std::string interfaceID) const
 {
 	std::string tmpInterfaceIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpInterfaceIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), InterfaceIPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpInterfaceIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), InterfaceIPAddress);
 	return tmpInterfaceIPAddress;
 }
 
 //==============================================================================
-unsigned int FENIMPlusInterfaceConfiguration::getInterfacePort(std::string interfaceID) const
+unsigned int FENIMPlusInterfaceConfiguration::getInterfacePort (std::string interfaceID) const
 {
 	unsigned int tmpInterfacePort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpInterfacePort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), InterfacePort);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpInterfacePort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), InterfacePort);
 	return tmpInterfacePort;
 }
 
 //==============================================================================
-std::string FENIMPlusInterfaceConfiguration::getStreamingIPAddress(std::string interfaceID) const
+std::string FENIMPlusInterfaceConfiguration::getStreamingIPAddress (std::string interfaceID) const
 {
 	std::string tmpStreamingIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), StreamingIPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), StreamingIPAddress);
 	return tmpStreamingIPAddress;
 }
 
 //==============================================================================
-unsigned int FENIMPlusInterfaceConfiguration::getStreamingPort(std::string interfaceID) const
+unsigned int FENIMPlusInterfaceConfiguration::getStreamingPort (std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), StreamingPort);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), StreamingPort);
 	return tmpStreamingPort;
 }
 
 //==============================================================================
-std::string FENIMPlusInterfaceConfiguration::getClockSelect(std::string interfaceID) const
+std::string FENIMPlusInterfaceConfiguration::getClockSelect (std::string interfaceID) const
 {
 	std::string tmpClockSelect;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpClockSelect, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ClockSelect);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpClockSelect, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ClockSelect);
 	return tmpClockSelect;
 }
 
 //==============================================================================
-double FENIMPlusInterfaceConfiguration::getClockSpeedMHz(std::string interfaceID) const
+double FENIMPlusInterfaceConfiguration::getClockSpeedMHz (std::string interfaceID) const
 {
 	double tmpClockSpeedMHz;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpClockSpeedMHz, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ClockSpeedMHz);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpClockSpeedMHz, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ClockSpeedMHz);
 	return tmpClockSpeedMHz;
 }
 
 //==============================================================================
-bool  FENIMPlusInterfaceConfiguration::getChannelStatus(std::string interfaceID, unsigned int channel) const
+bool FENIMPlusInterfaceConfiguration::getChannelStatus (std::string interfaceID, unsigned int channel) const
 {
 	bool tmpStatus;
-	switch(channel)
+	switch (channel)
 	{
 	case 0:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus0);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus0);
 		break;
 	case 1:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus1);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus1);
 		break;
 	case 2:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus2);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus2);
 		break;
 	case 3:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus3);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus3);
 		break;
 	case 4:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus4);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus4);
 		break;
 	case 5:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus5);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus5);
 		break;
-	default: //There are only 6 channels on OtsUDPHardware board
-		__SS____ << "Configuration Error:\t" << "OtsUDPHardware FER Channel " << std::dec << channel << " does not exist" << std::endl;
-		__COUT_ERR__ << "\n" << ss.str();
+	default:  //There are only 6 channels on OtsUDPHardware board
+		__SS____ << "Configuration Error:\t"
+		         << "OtsUDPHardware FER Channel " << std::dec << channel << " does not exist" << std::endl;
+		__COUT_ERR__ << "\n"
+		             << ss.str ();
 		__SS_THROW__;
 	}
 	return tmpStatus;
 }
 
-DEFINE_OTS_CONFIGURATION(FENIMPlusInterfaceConfiguration)
+DEFINE_OTS_CONFIGURATION (FENIMPlusInterfaceConfiguration)

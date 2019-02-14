@@ -3,17 +3,14 @@
 
 namespace ots
 {
-
 class VROCDefinitions
 {
+  public:
+	VROCDefinitions () { ; }
+	virtual ~VROCDefinitions (void) { ; }
 
-public:
-    VROCDefinitions (){;}
-    virtual ~VROCDefinitions (void){;}
-
-private:
+  private:
 };
-
 }
 
 #endif

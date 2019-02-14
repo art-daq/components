@@ -5,21 +5,18 @@
 
 namespace ots
 {
-
 class FSSRDACsConfiguration : public DACsConfigurationBase
 {
-
-public:
-
-	FSSRDACsConfiguration(void);
-	virtual ~FSSRDACsConfiguration(void);
+  public:
+	FSSRDACsConfiguration (void);
+	virtual ~FSSRDACsConfiguration (void);
 
 	//Methods
 	//void init(ConfigurationManager *configManager);
 
 	//Getters
 
-private:
+  private:
 	enum
 	{
 		DetectorID,
@@ -44,7 +41,6 @@ private:
 		DigContrReg,
 		AqBCO
 	};
-
 };
 }
 #endif

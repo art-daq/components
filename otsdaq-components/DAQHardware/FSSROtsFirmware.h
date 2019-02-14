@@ -9,20 +9,17 @@
 
 namespace ots
 {
-
 class FrontEndFirmwareBase;
 
 class FSSROtsFirmware : public FSSRFirmwareBase
 {
-
-public:
+  public:
 	FSSROtsFirmware (std::string communicationFirmwareType, unsigned int communicationFirmwareVersion = -1, unsigned int applicationFirmwareVersion = -1);
-    virtual ~FSSROtsFirmware(void);
-    virtual void init(void);
+	virtual ~FSSROtsFirmware (void);
+	virtual void init (void);
 
-protected:
-
-/*
+  protected:
+	/*
     //FEW specific methods
     std::string configureClocks(std::string source, double frequency);
     std::string resetDetector  (int channel=-1);
@@ -107,7 +104,6 @@ protected:
 	std::string  resetSlaveBCO(void);
 	*/
 };
-
 }
 
 #endif

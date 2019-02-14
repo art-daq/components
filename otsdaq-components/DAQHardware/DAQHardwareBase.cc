@@ -7,14 +7,15 @@
 
 #include "otsdaq-components/DAQHardware/DAQHardwareBase.h"
 
-namespace ots {
-
-DAQHardwareBase::DAQHardwareBase() {
+namespace ots
+{
+DAQHardwareBase::DAQHardwareBase ()
+{
 	// TODO Auto-generated constructor stub
-
 }
 
-DAQHardwareBase::~DAQHardwareBase() {
+DAQHardwareBase::~DAQHardwareBase ()
+{
 	// TODO Auto-generated destructor stub
 }
 

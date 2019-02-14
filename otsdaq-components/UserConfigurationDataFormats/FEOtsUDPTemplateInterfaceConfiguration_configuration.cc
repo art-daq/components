@@ -7,8 +7,8 @@
 using namespace ots;
 
 //==============================================================================
-FEWROtsUDPTemplateInterfaceConfiguration::FEWROtsUDPTemplateInterfaceConfiguration(void)
-: FEInterfaceConfigurationBase("FEWROtsUDPTemplateInterfaceConfiguration")
+FEWROtsUDPTemplateInterfaceConfiguration::FEWROtsUDPTemplateInterfaceConfiguration (void)
+    : FEInterfaceConfigurationBase ("FEWROtsUDPTemplateInterfaceConfiguration")
 {
 	//////////////////////////////////////////////////////////////////////
 	//WARNING: the names and the order MUST match the ones in the enum  //
@@ -32,15 +32,15 @@ FEWROtsUDPTemplateInterfaceConfiguration::FEWROtsUDPTemplateInterfaceConfigurati
 	//    </VIEW>
 	//  </CONFIGURATION>
 	//</ROOT>
-
 }
 
 //==============================================================================
-FEWROtsUDPTemplateInterfaceConfiguration::~FEWROtsUDPTemplateInterfaceConfiguration(void)
-{}
+FEWROtsUDPTemplateInterfaceConfiguration::~FEWROtsUDPTemplateInterfaceConfiguration (void)
+{
+}
 
 //==============================================================================
-void FEWROtsUDPTemplateInterfaceConfiguration::init(ConfigurationManager *configManager)
+void FEWROtsUDPTemplateInterfaceConfiguration::init (ConfigurationManager *configManager)
 {
 	/*
     std::string       enumValue1;
@@ -54,84 +54,83 @@ void FEWROtsUDPTemplateInterfaceConfiguration::init(ConfigurationManager *config
 }
 
 //==============================================================================
-bool  FEWROtsUDPTemplateInterfaceConfiguration::getStatus(std::string interfaceID) const
+bool FEWROtsUDPTemplateInterfaceConfiguration::getStatus (std::string interfaceID) const
 {
 	bool tmpStatus;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), Status);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), Status);
 	return tmpStatus;
 }
 
 //==============================================================================
-unsigned int FEWROtsUDPTemplateInterfaceConfiguration::getFirmwareVersion(std::string interfaceID) const
+unsigned int FEWROtsUDPTemplateInterfaceConfiguration::getFirmwareVersion (std::string interfaceID) const
 {
 	unsigned int tmpFirmwareVersion;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpFirmwareVersion, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), FirmwareVersion);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpFirmwareVersion, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), FirmwareVersion);
 	return tmpFirmwareVersion;
 }
 
 //==============================================================================
-std::string FEWROtsUDPTemplateInterfaceConfiguration::getIPAddress(std::string interfaceID) const
+std::string FEWROtsUDPTemplateInterfaceConfiguration::getIPAddress (std::string interfaceID) const
 {
 	std::string tmpIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), IPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), IPAddress);
 	return tmpIPAddress;
 }
 
 //==============================================================================
-unsigned int FEWROtsUDPTemplateInterfaceConfiguration::getPort(std::string interfaceID) const
+unsigned int FEWROtsUDPTemplateInterfaceConfiguration::getPort (std::string interfaceID) const
 {
 	unsigned int tmpPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), Port);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), Port);
 	return tmpPort;
 }
 
 //==============================================================================
-std::string FEWROtsUDPTemplateInterfaceConfiguration::getInterfaceIPAddress(std::string interfaceID) const
+std::string FEWROtsUDPTemplateInterfaceConfiguration::getInterfaceIPAddress (std::string interfaceID) const
 {
 	std::string tmpInterfaceIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpInterfaceIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), InterfaceIPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpInterfaceIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), InterfaceIPAddress);
 	return tmpInterfaceIPAddress;
 }
 
 //==============================================================================
-unsigned int FEWROtsUDPTemplateInterfaceConfiguration::getInterfacePort(std::string interfaceID) const
+unsigned int FEWROtsUDPTemplateInterfaceConfiguration::getInterfacePort (std::string interfaceID) const
 {
 	unsigned int tmpInterfacePort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpInterfacePort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), InterfacePort);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpInterfacePort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), InterfacePort);
 	return tmpInterfacePort;
 }
 
 //==============================================================================
-std::string FEWROtsUDPTemplateInterfaceConfiguration::getStreamingIPAddress(std::string interfaceID) const
+std::string FEWROtsUDPTemplateInterfaceConfiguration::getStreamingIPAddress (std::string interfaceID) const
 {
 	std::string tmpStreamingIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), StreamingIPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), StreamingIPAddress);
 	return tmpStreamingIPAddress;
 }
 
 //==============================================================================
-unsigned int FEWROtsUDPTemplateInterfaceConfiguration::getStreamingPort(std::string interfaceID) const
+unsigned int FEWROtsUDPTemplateInterfaceConfiguration::getStreamingPort (std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), StreamingPort);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), StreamingPort);
 	return tmpStreamingPort;
 }
 
 //==============================================================================
-int FEWROtsUDPTemplateInterfaceConfiguration::getNumberOfWords(std::string interfaceID) const
+int FEWROtsUDPTemplateInterfaceConfiguration::getNumberOfWords (std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), NumberOfWords);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), NumberOfWords);
 	return tmpStreamingPort;
 }
 
 //==============================================================================
-unsigned int FEWROtsUDPTemplateInterfaceConfiguration::getDataRate(std::string interfaceID) const
+unsigned int FEWROtsUDPTemplateInterfaceConfiguration::getDataRate (std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), DataRate);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), DataRate);
 	return tmpStreamingPort;
 }
 
-
-DEFINE_OTS_CONFIGURATION(FEWROtsUDPTemplateInterfaceConfiguration)
+DEFINE_OTS_CONFIGURATION (FEWROtsUDPTemplateInterfaceConfiguration)

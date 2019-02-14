@@ -7,8 +7,8 @@
 using namespace ots;
 
 //==============================================================================
-FEOtsUDPLCLS2InterfaceConfiguration::FEOtsUDPLCLS2InterfaceConfiguration(void)
-: FEInterfaceConfigurationBase("FEOtsUDPLCLS2InterfaceConfiguration")
+FEOtsUDPLCLS2InterfaceConfiguration::FEOtsUDPLCLS2InterfaceConfiguration (void)
+    : FEInterfaceConfigurationBase ("FEOtsUDPLCLS2InterfaceConfiguration")
 {
 	//////////////////////////////////////////////////////////////////////
 	//WARNING: the names and the order MUST match the ones in the enum  //
@@ -32,15 +32,15 @@ FEOtsUDPLCLS2InterfaceConfiguration::FEOtsUDPLCLS2InterfaceConfiguration(void)
 	//    </VIEW>
 	//  </CONFIGURATION>
 	//</ROOT>
-
 }
 
 //==============================================================================
-FEOtsUDPLCLS2InterfaceConfiguration::~FEOtsUDPLCLS2InterfaceConfiguration(void)
-{}
+FEOtsUDPLCLS2InterfaceConfiguration::~FEOtsUDPLCLS2InterfaceConfiguration (void)
+{
+}
 
 //==============================================================================
-void FEOtsUDPLCLS2InterfaceConfiguration::init(ConfigurationManager *configManager)
+void FEOtsUDPLCLS2InterfaceConfiguration::init (ConfigurationManager *configManager)
 {
 	/*
     std::string       enumValue1;
@@ -54,84 +54,83 @@ void FEOtsUDPLCLS2InterfaceConfiguration::init(ConfigurationManager *configManag
 }
 
 //==============================================================================
-bool  FEOtsUDPLCLS2InterfaceConfiguration::getStatus(std::string interfaceID) const
+bool FEOtsUDPLCLS2InterfaceConfiguration::getStatus (std::string interfaceID) const
 {
 	bool tmpStatus;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), Status);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), Status);
 	return tmpStatus;
 }
 
 //==============================================================================
-unsigned int FEOtsUDPLCLS2InterfaceConfiguration::getFirmwareVersion(std::string interfaceID) const
+unsigned int FEOtsUDPLCLS2InterfaceConfiguration::getFirmwareVersion (std::string interfaceID) const
 {
 	unsigned int tmpFirmwareVersion;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpFirmwareVersion, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), FirmwareVersion);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpFirmwareVersion, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), FirmwareVersion);
 	return tmpFirmwareVersion;
 }
 
 //==============================================================================
-std::string FEOtsUDPLCLS2InterfaceConfiguration::getIPAddress(std::string interfaceID) const
+std::string FEOtsUDPLCLS2InterfaceConfiguration::getIPAddress (std::string interfaceID) const
 {
 	std::string tmpIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), IPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), IPAddress);
 	return tmpIPAddress;
 }
 
 //==============================================================================
-unsigned int FEOtsUDPLCLS2InterfaceConfiguration::getPort(std::string interfaceID) const
+unsigned int FEOtsUDPLCLS2InterfaceConfiguration::getPort (std::string interfaceID) const
 {
 	unsigned int tmpPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), Port);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), Port);
 	return tmpPort;
 }
 
 //==============================================================================
-std::string FEOtsUDPLCLS2InterfaceConfiguration::getInterfaceIPAddress(std::string interfaceID) const
+std::string FEOtsUDPLCLS2InterfaceConfiguration::getInterfaceIPAddress (std::string interfaceID) const
 {
 	std::string tmpInterfaceIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpInterfaceIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), InterfaceIPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpInterfaceIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), InterfaceIPAddress);
 	return tmpInterfaceIPAddress;
 }
 
 //==============================================================================
-unsigned int FEOtsUDPLCLS2InterfaceConfiguration::getInterfacePort(std::string interfaceID) const
+unsigned int FEOtsUDPLCLS2InterfaceConfiguration::getInterfacePort (std::string interfaceID) const
 {
 	unsigned int tmpInterfacePort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpInterfacePort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), InterfacePort);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpInterfacePort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), InterfacePort);
 	return tmpInterfacePort;
 }
 
 //==============================================================================
-std::string FEOtsUDPLCLS2InterfaceConfiguration::getStreamingIPAddress(std::string interfaceID) const
+std::string FEOtsUDPLCLS2InterfaceConfiguration::getStreamingIPAddress (std::string interfaceID) const
 {
 	std::string tmpStreamingIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), StreamingIPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), StreamingIPAddress);
 	return tmpStreamingIPAddress;
 }
 
 //==============================================================================
-unsigned int FEOtsUDPLCLS2InterfaceConfiguration::getStreamingPort(std::string interfaceID) const
+unsigned int FEOtsUDPLCLS2InterfaceConfiguration::getStreamingPort (std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), StreamingPort);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), StreamingPort);
 	return tmpStreamingPort;
 }
 
 //==============================================================================
-int FEOtsUDPLCLS2InterfaceConfiguration::getNumberOfWords(std::string interfaceID) const
+int FEOtsUDPLCLS2InterfaceConfiguration::getNumberOfWords (std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), NumberOfWords);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), NumberOfWords);
 	return tmpStreamingPort;
 }
 
 //==============================================================================
-unsigned int FEOtsUDPLCLS2InterfaceConfiguration::getDataRate(std::string interfaceID) const
+unsigned int FEOtsUDPLCLS2InterfaceConfiguration::getDataRate (std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), DataRate);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), DataRate);
 	return tmpStreamingPort;
 }
 
-
-DEFINE_OTS_CONFIGURATION(FEOtsUDPLCLS2InterfaceConfiguration)
+DEFINE_OTS_CONFIGURATION (FEOtsUDPLCLS2InterfaceConfiguration)

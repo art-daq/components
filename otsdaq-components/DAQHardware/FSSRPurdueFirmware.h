@@ -9,20 +9,17 @@
 
 namespace ots
 {
-
 class FrontEndFirmwareBase;
 
 class FSSRPurdueFirmware : public FSSRFirmwareBase
 {
+  public:
+	FSSRPurdueFirmware (std::string communicationFirmwareType, unsigned int communicationFirmwareVersion = -1, unsigned int applicationFirmwareVersion = -1);
+	virtual ~FSSRPurdueFirmware (void);
+	virtual void init (void);
 
-public:
-    FSSRPurdueFirmware (std::string communicationFirmwareType, unsigned int communicationFirmwareVersion = -1, unsigned int applicationFirmwareVersion = -1);
-    virtual ~FSSRPurdueFirmware(void);
-    virtual void init(void);
-
-protected:
-
-    /*
+  protected:
+	/*
     //FEW specific methods
     std::string configureClocks(std::string source, double frequency);
     std::string resetDetector  (int channel=-1);
@@ -107,7 +104,6 @@ protected:
 	std::string  resetSlaveBCO(void);
 	*/
 };
-
 }
 
 #endif

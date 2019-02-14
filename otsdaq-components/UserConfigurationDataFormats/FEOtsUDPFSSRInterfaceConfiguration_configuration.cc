@@ -7,8 +7,8 @@
 using namespace ots;
 
 //==============================================================================
-FEOtsUDPFSSRInterfaceConfiguration::FEOtsUDPFSSRInterfaceConfiguration(void)
-: FEInterfaceConfigurationBase("FEOtsUDPFSSRInterfaceConfiguration")
+FEOtsUDPFSSRInterfaceConfiguration::FEOtsUDPFSSRInterfaceConfiguration (void)
+    : FEInterfaceConfigurationBase ("FEOtsUDPFSSRInterfaceConfiguration")
 {
 	//////////////////////////////////////////////////////////////////////
 	//WARNING: the names and the order MUST match the ones in the enum  //
@@ -38,15 +38,15 @@ FEOtsUDPFSSRInterfaceConfiguration::FEOtsUDPFSSRInterfaceConfiguration(void)
 	//    </VIEW>
 	//  </CONFIGURATION>
 	//</ROOT>
-
 }
 
 //==============================================================================
-FEOtsUDPFSSRInterfaceConfiguration::~FEOtsUDPFSSRInterfaceConfiguration(void)
-{}
+FEOtsUDPFSSRInterfaceConfiguration::~FEOtsUDPFSSRInterfaceConfiguration (void)
+{
+}
 
 //==============================================================================
-void FEOtsUDPFSSRInterfaceConfiguration::init(ConfigurationManager *configManager)
+void FEOtsUDPFSSRInterfaceConfiguration::init (ConfigurationManager *configManager)
 {
 	/*
     std::string       enumValue1;
@@ -60,115 +60,117 @@ void FEOtsUDPFSSRInterfaceConfiguration::init(ConfigurationManager *configManage
 }
 
 //==============================================================================
-bool  FEOtsUDPFSSRInterfaceConfiguration::getStatus(std::string interfaceID) const
+bool FEOtsUDPFSSRInterfaceConfiguration::getStatus (std::string interfaceID) const
 {
 	bool tmpStatus;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), Status);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), Status);
 	return tmpStatus;
 }
 
 //==============================================================================
-unsigned int FEOtsUDPFSSRInterfaceConfiguration::getFirmwareVersion(std::string interfaceID) const
+unsigned int FEOtsUDPFSSRInterfaceConfiguration::getFirmwareVersion (std::string interfaceID) const
 {
 	unsigned int tmpFirmwareVersion;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpFirmwareVersion, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), FirmwareVersion);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpFirmwareVersion, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), FirmwareVersion);
 	return tmpFirmwareVersion;
 }
 
 //==============================================================================
-std::string FEOtsUDPFSSRInterfaceConfiguration::getIPAddress(std::string interfaceID) const
+std::string FEOtsUDPFSSRInterfaceConfiguration::getIPAddress (std::string interfaceID) const
 {
 	std::string tmpIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), IPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), IPAddress);
 	return tmpIPAddress;
 }
 
 //==============================================================================
-unsigned int FEOtsUDPFSSRInterfaceConfiguration::getPort(std::string interfaceID) const
+unsigned int FEOtsUDPFSSRInterfaceConfiguration::getPort (std::string interfaceID) const
 {
 	unsigned int tmpPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), Port);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), Port);
 	return tmpPort;
 }
 
 //==============================================================================
-std::string FEOtsUDPFSSRInterfaceConfiguration::getInterfaceIPAddress(std::string interfaceID) const
+std::string FEOtsUDPFSSRInterfaceConfiguration::getInterfaceIPAddress (std::string interfaceID) const
 {
 	std::string tmpInterfaceIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpInterfaceIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), InterfaceIPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpInterfaceIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), InterfaceIPAddress);
 	return tmpInterfaceIPAddress;
 }
 
 //==============================================================================
-unsigned int FEOtsUDPFSSRInterfaceConfiguration::getInterfacePort(std::string interfaceID) const
+unsigned int FEOtsUDPFSSRInterfaceConfiguration::getInterfacePort (std::string interfaceID) const
 {
 	unsigned int tmpInterfacePort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpInterfacePort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), InterfacePort);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpInterfacePort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), InterfacePort);
 	return tmpInterfacePort;
 }
 
 //==============================================================================
-std::string FEOtsUDPFSSRInterfaceConfiguration::getStreamingIPAddress(std::string interfaceID) const
+std::string FEOtsUDPFSSRInterfaceConfiguration::getStreamingIPAddress (std::string interfaceID) const
 {
 	std::string tmpStreamingIPAddress;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingIPAddress, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), StreamingIPAddress);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingIPAddress, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), StreamingIPAddress);
 	return tmpStreamingIPAddress;
 }
 
 //==============================================================================
-unsigned int FEOtsUDPFSSRInterfaceConfiguration::getStreamingPort(std::string interfaceID) const
+unsigned int FEOtsUDPFSSRInterfaceConfiguration::getStreamingPort (std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), StreamingPort);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpStreamingPort, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), StreamingPort);
 	return tmpStreamingPort;
 }
 
 //==============================================================================
-std::string FEOtsUDPFSSRInterfaceConfiguration::getClockSelect(std::string interfaceID) const
+std::string FEOtsUDPFSSRInterfaceConfiguration::getClockSelect (std::string interfaceID) const
 {
 	std::string tmpClockSelect;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpClockSelect, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ClockSelect);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpClockSelect, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ClockSelect);
 	return tmpClockSelect;
 }
 
 //==============================================================================
-double FEOtsUDPFSSRInterfaceConfiguration::getClockSpeedMHz(std::string interfaceID) const
+double FEOtsUDPFSSRInterfaceConfiguration::getClockSpeedMHz (std::string interfaceID) const
 {
 	double tmpClockSpeedMHz;
-	ConfigurationBase::activeConfigurationView_->getValue(tmpClockSpeedMHz, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ClockSpeedMHz);
+	ConfigurationBase::activeConfigurationView_->getValue (tmpClockSpeedMHz, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ClockSpeedMHz);
 	return tmpClockSpeedMHz;
 }
 
 //==============================================================================
-bool  FEOtsUDPFSSRInterfaceConfiguration::getChannelStatus(std::string interfaceID, unsigned int channel) const
+bool FEOtsUDPFSSRInterfaceConfiguration::getChannelStatus (std::string interfaceID, unsigned int channel) const
 {
 	bool tmpStatus;
-	switch(channel)
+	switch (channel)
 	{
 	case 0:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus0);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus0);
 		break;
 	case 1:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus1);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus1);
 		break;
 	case 2:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus2);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus2);
 		break;
 	case 3:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus3);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus3);
 		break;
 	case 4:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus4);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus4);
 		break;
 	case 5:
-		ConfigurationBase::activeConfigurationView_->getValue(tmpStatus, ConfigurationBase::activeConfigurationView_->findRow(InterfaceID,interfaceID), ChannelStatus5);
+		ConfigurationBase::activeConfigurationView_->getValue (tmpStatus, ConfigurationBase::activeConfigurationView_->findRow (InterfaceID, interfaceID), ChannelStatus5);
 		break;
-	default: //There are only 6 channels on OtsUDPHardware board
-		__SS__ << "Configuration Error:\t" << "OtsUDPHardware FER Channel " << std::dec << channel << " does not exist" << std::endl;
-		__COUT_ERR__ << "\n" << ss.str();
+	default:  //There are only 6 channels on OtsUDPHardware board
+		__SS__ << "Configuration Error:\t"
+		       << "OtsUDPHardware FER Channel " << std::dec << channel << " does not exist" << std::endl;
+		__COUT_ERR__ << "\n"
+		             << ss.str ();
 		__SS_THROW__;
 	}
 	return tmpStatus;
 }
 
-DEFINE_OTS_CONFIGURATION(FEOtsUDPFSSRInterfaceConfiguration)
+DEFINE_OTS_CONFIGURATION (FEOtsUDPFSSRInterfaceConfiguration)

@@ -1,11 +1,11 @@
 /*
-#include "otsdaq-demo/FEInterfaces/FEWInterfacesManager.h"
-#include "otsdaq-core/ConfigurationInterface/ConfigurationManager.h"
 #include "otsdaq-core/ConfigurationDataFormats/ConfigurationKey.h"
+#include "otsdaq-core/ConfigurationInterface/ConfigurationManager.h"
+#include "otsdaq-demo/FEInterfaces/FEWInterfacesManager.h"
 
+#include "otsdaq-core/FECore/FEVInterface.h"
 #include "otsdaq-demo/FEInterfaces/FEWOtsGenericInterface.h"
 #include "otsdaq-demo/FEInterfaces/FEWPurdueFSSRInterface.h"
-#include "otsdaq-core/FECore/FEVInterface.h"
 
 #include "otsdaq-core/ConfigurationInterface/ConfigurationInterface.h"
 #include "otsdaq-core/ConfigurationPluginDataFormats/Configurations.h"
@@ -19,7 +19,7 @@
 
 using namespace ots;
 */
-int main()
+int main ()
 {
 	return 1;
 }
