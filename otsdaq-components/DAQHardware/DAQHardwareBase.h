@@ -8,12 +8,15 @@
 #ifndef _ots_DAQHardwareBase_h_
 #define _ots_DAQHardwareBase_h_
 
-namespace ots {
+namespace ots
+{
 
-class DAQHardwareBase {
- public:
-  DAQHardwareBase();
-  virtual ~DAQHardwareBase();
+class DAQHardwareBase
+{
+public:
+	DAQHardwareBase();
+	virtual ~DAQHardwareBase();
+
 };
 
 } /* namespace ots */

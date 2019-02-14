@@ -1,39 +1,43 @@
 #ifndef _ots_FEOtsUDPTemplateInterface_h_
 #define _ots_FEOtsUDPTemplateInterface_h_
 
-#include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
 #include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
+#include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
 
 #include <string>
 #include "otsdaq-core/FECore/FEVInterface.h"
 
-namespace ots {
+namespace ots
+{
 
-class FEOtsUDPTemplateInterface : public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen {
- public:
-  FEOtsUDPTemplateInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree,
-                            const std::string& interfaceConfigurationPath);
-  virtual ~FEOtsUDPTemplateInterface(void);
+class FEOtsUDPTemplateInterface	: public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
+{
 
-  void configure(void) override;
-  void halt(void) override;
-  void pause(void) override;
-  void resume(void) override;
-  void start(std::string runNumber) override;
-  void stop(void) override;
-  bool running(void) override;
+public:
+	FEOtsUDPTemplateInterface 			(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
+	virtual ~FEOtsUDPTemplateInterface	(void);
 
-  virtual void universalRead(char* address, char* readValue) override;
-  virtual void universalWrite(char* address, char* writeValue) override;
+	void configure 		(void) override;
+	void halt 		 	(void) override;
+	void pause 		 	(void) override;
+	void resume 	 	(void) override;
+	void start 		 	(std::string runNumber) override;
+	void stop 		 	(void) override;
+	bool running 		(void) override;
 
- private:
- public:  // FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
-  void varTest(__ARGS__);
+	virtual void 	universalRead			(char* address, char* readValue) override;
+	virtual void 	universalWrite			(char* address, char* writeValue) override;
 
- public:  // FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
-  void varTest2(__ARGS__);
+private:
+
+
+public: // FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
+	void varTest	(__ARGS__);
+
+public: // FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
+	void varTest2	(__ARGS__);
 };
 
-}  // namespace ots
+}
 
 #endif

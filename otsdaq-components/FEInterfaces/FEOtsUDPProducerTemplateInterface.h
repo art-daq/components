@@ -2,44 +2,46 @@
 #define _ots_FEOtsUDPProducerTemplateInterface_h_
 
 //#include "otsdaq-core/FECore/FEVInterface.h"
-#include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
-#include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
-#include "otsdaq-core/DataManager/DataProducer.h"
 #include "otsdaq-core/FECore/FEProducerVInterface.h"
+#include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
+#include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
+#include "otsdaq-core/DataManager/DataProducer.h"
 
 #include <string>
 
-namespace ots {
+namespace ots
+{
 
-// public virtual inheritance only inherits the base class WorkLoop (and others) members once)
-class FEOtsUDPProducerTemplateInterface :  // public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
-                                           public FEProducerVInterface,
-                                           public OtsUDPHardware,
-                                           public OtsUDPFirmwareDataGen {
- public:
-  FEOtsUDPProducerTemplateInterface(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree,
-                                    const std::string& interfaceConfigurationPath);
-  virtual ~FEOtsUDPProducerTemplateInterface(void);
+//public virtual inheritance only inherits the base class WorkLoop (and others) members once)
+class FEOtsUDPProducerTemplateInterface	: //public FEVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
+public FEProducerVInterface, public OtsUDPHardware, public OtsUDPFirmwareDataGen
+{
 
-  void configure(void) override;
-  void halt(void) override;
-  void pause(void) override;
-  void resume(void) override;
-  void start(std::string runNumber) override;
-  void stop(void) override;
-  bool running(void) override;
+public:
+	FEOtsUDPProducerTemplateInterface 			(const std::string& interfaceUID, const ConfigurationTree& theXDAQContextConfigTree, const std::string& interfaceConfigurationPath);
+	virtual ~FEOtsUDPProducerTemplateInterface	(void);
 
-  virtual void universalRead(char* address, char* readValue) override;
-  virtual void universalWrite(char* address, char* writeValue) override;
+	void configure 		(void) override;
+	void halt 		 	(void) override;
+	void pause 		 	(void) override;
+	void resume 	 	(void) override;
+	void start 		 	(std::string runNumber) override;
+	void stop 		 	(void) override;
+	bool running 		(void) override;
 
- private:
- public:  // FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
-  void varTest(__ARGS__);
+	virtual void 	universalRead			(char* address, char* readValue) override;
+	virtual void 	universalWrite			(char* address, char* writeValue) override;
 
- public:  // FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
-  void varTest2(__ARGS__);
+private:
+
+
+public: // FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
+	void varTest	(__ARGS__);
+
+public: // FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
+	void varTest2	(__ARGS__);
 };
 
-}  // namespace ots
+}
 
 #endif

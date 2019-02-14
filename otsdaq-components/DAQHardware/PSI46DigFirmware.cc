@@ -10,11 +10,11 @@
 //#include <iostream>
 //#include <cstdlib>
 //
-// using namespace ots;
+//using namespace ots;
 //
 //
 ////========================================================================================================================
-// PSI46DigFirmware::PSI46DigFirmware(unsigned int version, std::string type) :
+//PSI46DigFirmware::PSI46DigFirmware(unsigned int version, std::string type) :
 //        FrontEndFirmwareBase(version),
 //        stripCSRRegisterValue_(0)
 //{
@@ -25,20 +25,20 @@
 //}
 //
 ////========================================================================================================================
-// PSI46DigFirmware::~PSI46DigFirmware(void)
+//PSI46DigFirmware::~PSI46DigFirmware(void)
 //{
 //	delete protocolInstance_;
 //	protocolInstance_= NULL;
 //}
 //
 ////========================================================================================================================
-// int PSI46DigFirmware::init(void)
+//int PSI46DigFirmware::init(void)
 //{
 //    return 0;
 //}
 //
 ////========================================================================================================================
-// std::string PSI46DigFirmware::configureClocks(std::string source, double frequency)
+//std::string PSI46DigFirmware::configureClocks(std::string source, double frequency)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Writing Clock configuration!" << std::endl;
 //
@@ -47,8 +47,7 @@
 //
 //    setPacketSizeStripCSR(6);
 //    setExternalBCOClockSourceStripCSR(source); //(source)
-//    protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Reset CSR - reset trigger counter,
-//    external 27 MHz clock
+//    protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Reset CSR - reset trigger counter, external 27 MHz clock
 //
 //    resetDCMStripCSR(true);
 //    protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_); //  Set reset to DCM
@@ -71,14 +70,13 @@
 //    protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 //
 //    protocolInstance_->waitClear(buffer, STRIP_CSR, waitDCMResetStripCSR()); //  Wait for DCM to lock
-//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec <<
-//    std::endl;
+//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 //
 //    return buffer;
 //}
 //
 ////========================================================================================================================
-// std::string PSI46DigFirmware::resetDetector(int channel)
+//std::string PSI46DigFirmware::resetDetector(int channel)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Resetting detector!" << std::endl;
 //    std::string buffer;
@@ -86,8 +84,7 @@
 //    {
 //        //protocolInstance_->write(buffer,STRIP_RESET,0xd000003f);                  //  Issue reset
 //        protocolInstance_->write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset // was 0xf000003f
-//        protocolInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete // was
-//        0xf0000000
+//        protocolInstance_->waitClear(buffer, STRIP_RESET, 0xf0000000); //  Wait for reset to complete // was 0xf0000000
 //    } else
 //    {
 //        protocolInstance_->write(buffer, STRIP_RESET, 0xf000003f); //  Issue reset
@@ -98,25 +95,24 @@
 //}
 //
 ////========================================================================================================================
-// std::string PSI46DigFirmware::enableTrigger(void)
+//std::string PSI46DigFirmware::enableTrigger(void)
 //{
 //    std::string buffer;
 //    std::cout << __COUT_HDR_FL__ << "Enabling Trigger!!!" << std::endl;
-//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec <<
-//    std::endl;
+//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 //
-//    setHaltStripCSR(1);//WARNING THIS IS CLEARED BY THE MASTER BUT IF THERE IS NO MASTER NOTHING WORKS UNLESS THE BIT
-//    IS UNSET
-//    //setHaltStripCSR(0);//WARNING THIS IS CLEARED BY THE MASTER BUT IF THERE IS NO MASTER NOTHING WORKS UNLESS THE
-//    BIT IS UNSET sendTriggerDataStripCSR(true); sendTriggerNumberStripCSR(true); sendBCOStripCSR(true);
+//    setHaltStripCSR(1);//WARNING THIS IS CLEARED BY THE MASTER BUT IF THERE IS NO MASTER NOTHING WORKS UNLESS THE BIT IS UNSET
+//    //setHaltStripCSR(0);//WARNING THIS IS CLEARED BY THE MASTER BUT IF THERE IS NO MASTER NOTHING WORKS UNLESS THE BIT IS UNSET
+//    sendTriggerDataStripCSR(true);
+//    sendTriggerNumberStripCSR(true);
+//    sendBCOStripCSR(true);
 //    protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 //
 //    stripTriggerCSRRegisterValue_ = 0;
 //    BCOOffset(4);
 //    protocolInstance_->write(buffer, STRIP_TRIG_CSR, stripTriggerCSRRegisterValue_); //  BCO offset // was 0x00000004
 //
-//    //  write(buffer,STRIP_TRIG_INPUT_0,0x1f060040);  //  PSI46Dig GOTHIT trigger input - timed in for the 27 MHz
-//    external clock
+//    //  write(buffer,STRIP_TRIG_INPUT_0,0x1f060040);  //  PSI46Dig GOTHIT trigger input - timed in for the 27 MHz external clock
 //    //  write(buffer,STRIP_TRIG_INPUT_3,0x3f874040);  //  Unbiased trigger input + external trigger
 //
 //    configureStripTriggerUnbiased(buffer);
@@ -126,57 +122,51 @@
 //    //FIXME for IP .36 the number to set is 0x20401000
 //
 //    if (version_ == 1)
-//        protocolInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20401000); // Turn on streaming hits along with BCO
-//        data
+//        protocolInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20401000); // Turn on streaming hits along with BCO data
 //    else if (version_ == 2)
-//        protocolInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20301000); // Turn on streaming hits along with BCO
-//        data
+//        protocolInstance_->write(buffer, STRIP_TRIG_INPUT_3, 0x20301000); // Turn on streaming hits along with BCO data
 //    else
 //    {
 //    	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "what version is this?" << version_ << std::endl;
 //	assert(0);
 //    }
-//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec <<
-//    std::endl; std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;
 //
 //    return buffer;
 //}
 //
 ////========================================================================================================================
-// std::string PSI46DigFirmware::resetBCO(void)
+//std::string PSI46DigFirmware::resetBCO(void)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Reset BCO!!!" << std::endl;
-//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec <<
-//    std::endl; std::string buffer;
+//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+//    std::string buffer;
 //
 //    resetTriggerCounterStripCSR(buffer);
 //    //write(buffer, STRIP_CSR, stripCSRRegisterValue_);//the write is done in the reset
-//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec <<
-//    std::endl;
+//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
 //
 //    //msg->Write(STRIP_SC_CSR,0x90000b95|(chmask<<16));
-//    //write(buffer,STRIP_SC_CSR,0x900f0b95);//  This is the <SCR,set> command with the bit set to sync SHIFT with
-//    BCO=0.
+//    //write(buffer,STRIP_SC_CSR,0x900f0b95);//  This is the <SCR,set> command with the bit set to sync SHIFT with BCO=0.
 //
 //
 //    enableBCOStripCSR(true);
 //    protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
-//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec <<
-//    std::endl; std::cout << __COUT_HDR_FL__ << "Done reset BCO!!!" << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "Done reset BCO!!!" << std::endl;
 //
 //    return buffer;
 //}
 //
 ////========================================================================================================================
-// std::string PSI46DigFirmware::startStream(bool channel0, bool channel1, bool channel2, bool channel3, bool channel4,
-// bool channel5)
+//std::string PSI46DigFirmware::startStream(bool channel0, bool channel1, bool channel2, bool channel3, bool channel4, bool channel5)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Start Stream!" << std::endl;
-//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in:" << std::hex << stripCSRRegisterValue_ << std::dec <<
-//    std::endl; std::string buffer;
+//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+//    std::string buffer;
 //
-//    std::cout << __COUT_HDR_FL__ << " channel0 " << channel0 << " channel1 " << channel1 << " channel2 " << channel2
-//    << " channel3 " << channel3 << " channel4 " << channel4 << " channel5 " << channel5 << std::endl;
+//    std::cout << __COUT_HDR_FL__ << " channel0 " << channel0 << " channel1 " << channel1 << " channel2 " << channel2 << " channel3 " << channel3 << " channel4 " << channel4 << " channel5 " << channel5 << std::endl;
 //
 //    enableChannelsStripCSR(channel0, channel1, channel2, channel3, channel4, channel5);
 //    //    if (version_ == 1)
@@ -187,14 +177,14 @@
 //    enableStreamStripCSR(true); //  Turn on streaming hits along with BCO data // was 0x0f000f30
 //    protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 //
-//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec <<
-//    std::endl; std::cout << __COUT_HDR_FL__ << "Done start Stream!" << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_ << std::dec << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "Done start Stream!" << std::endl;
 //
 //    return buffer;
 //}
 //
 ////========================================================================================================================
-// std::string PSI46DigFirmware::stopStream(void)
+//std::string PSI46DigFirmware::stopStream(void)
 //{
 //    std::string buffer;
 //    enableChannelsStripCSR(false, false, false, false, false, false);
@@ -204,7 +194,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::makeDACSequence(FirmwareSequence<uint64_t>& sequence,
+//void PSI46DigFirmware::makeDACSequence(FirmwareSequence<uint64_t>& sequence,
 //                                     unsigned int channel, const ROCStream& rocStream)
 //{
 //    const ROCDACs& rocDACs = rocStream.getROCDACs();
@@ -233,7 +223,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::makeDACSequence(FirmwareSequence<uint32_t>& sequence,
+//void PSI46DigFirmware::makeDACSequence(FirmwareSequence<uint32_t>& sequence,
 //                                     unsigned int channel, const ROCStream& rocStream)
 //{
 //    const ROCDACs& rocDACs = rocStream.getROCDACs();
@@ -242,8 +232,8 @@
 //    {
 //        /*RYAN
 //         //if(it->first != "SendData" && it->first != "RejectHits") continue;
-//         uint64_t data = PSI46DigROCDefinitions::makeDACWriteCommand(rocStream.getFEWROCAddress(), it->first,
-//         it->second.second); sequence.pushBack(ChannelFIFOAddress[channel], data);
+//         uint64_t data = PSI46DigROCDefinitions::makeDACWriteCommand(rocStream.getFEWROCAddress(), it->first, it->second.second);
+//         sequence.pushBack(ChannelFIFOAddress[channel], data);
 //         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0x48,56,8));
 //         //set WRITE
 //         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)1,60,1));
@@ -268,7 +258,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::makeDACBuffer(std::string& buffer,
+//void PSI46DigFirmware::makeDACBuffer(std::string& buffer,
 //                                   unsigned int channel, const ROCStream& rocStream)
 //{
 //    std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel << std::endl;
@@ -284,8 +274,7 @@
 //            protocolInstance_->write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
 //            registerHeader = PSI46DigROCDefinitions::makeDACWriteHeader(
 //                                 rocStream.getFEWROCAddress(), it->first);
-//            //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " <<
-//            it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
+//            //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
 //            //Insert channel
 //            BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
 //        }
@@ -311,8 +300,7 @@
 //                << it->second.second << std::endl;
 //
 //        }
-//        //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " <<
-//        it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
+//        //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
 //        protocolInstance_->write(bufferElement, STRIP_SC_CSR, registerHeader);
 //        protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 //
@@ -323,8 +311,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware:: makeDACBuffer(std::vector<std::string>& buffer, unsigned int channel, const ROCStream&
-// rocStream)
+//void PSI46DigFirmware:: makeDACBuffer(std::vector<std::string>& buffer, unsigned int channel, const ROCStream& rocStream)
 //{
 //
 //    std::cout << __COUT_HDR_FL__ << "\tMaking DAC Buffer" << std::endl;
@@ -336,9 +323,9 @@
 //
 //    std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel << std::endl;
 //    const ROCDACs& rocDACs = rocStream.getROCDACs();
-//    //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Number of DACs: " << rocDACs.getDACList().size() <<
-//    std::endl; std::string bufferElement; for (DACList::const_iterator it = rocDACs.getDACList().begin(); it !=
-//    rocDACs.getDACList().end(); it++)
+//    //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Number of DACs: " << rocDACs.getDACList().size() << std::endl;
+//    std::string bufferElement;
+//    for (DACList::const_iterator it = rocDACs.getDACList().begin(); it != rocDACs.getDACList().end(); it++)
 //    {
 //        protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 //        uint32_t registerHeader = 0;
@@ -348,8 +335,7 @@
 //            protocolInstance_->write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
 //            registerHeader = PSI46DigROCDefinitions::makeDACWriteHeader(
 //                                 rocStream.getFEWROCAddress(), it->first);
-//            std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " <<
-//            it->second.second << std::hex << " -> Data: " << registerHeader << std::dec << std::endl;
+//            std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << std::hex << " -> Data: " << registerHeader << std::dec << std::endl;
 //            //Insert channel
 //            BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
 //        }
@@ -375,8 +361,7 @@
 //                << it->second.second << std::endl;
 //
 //        }
-//        //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " <<
-//        it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
+//        //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
 //        protocolInstance_->write(bufferElement, STRIP_SC_CSR, registerHeader);
 //        protocolInstance_->waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 //
@@ -404,7 +389,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel,
+//void PSI46DigFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel,
 //                                    const ROCStream& rocStream)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Making mask! " << std::endl;
@@ -413,8 +398,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream, const
-// std::string& registerName)
+//void PSI46DigFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream, const std::string& registerName)
 //{
 //    std::cout << __COUT_HDR_FL__ << "\tMaking mask! " << std::endl;
 //    int chipId = rocStream.getFEWROCAddress();
@@ -430,15 +414,13 @@
 //        //std::cout << __COUT_HDR_FL__ << "---------------------" << d << "-------------------" << std::endl;
 //        for (unsigned int m = 0; m < 8 * 4; m++)
 //        { //m goes from 0 to 31, since each byte has 8 bits, there are 32 bits
-//            val = mask[(8 * 4 * d) + m]; //assigns to val the value of the corresponding bit. 0-31, 32-63, 64-95,
-//            96-127. it goes through each of the 128 bits
+//            val = mask[(8 * 4 * d) + m]; //assigns to val the value of the corresponding bit. 0-31, 32-63, 64-95, 96-127. it goes through each of the 128 bits
 //            //std::cout << __COUT_HDR_FL__ << "---------------------" << j++ << std::endl;
 //            //std::cout << __COUT_HDR_FL__ << "data[" << d << "] before: " << hex << data[d] << dec << std::endl;
 //            data[d] |= (unsigned int) atoi(&val) << (8 * 4 - 1 - m);
 //            //std::cout << __COUT_HDR_FL__ << "(unsigned int) atoi(&val): " << (unsigned int) atoi(&val) << std::endl;
 //            //std::cout << __COUT_HDR_FL__ << "data[" << d << "] after: " << hex << data[d] << dec << std::endl;
-//            //std::cout << __COUT_HDR_FL__ << hex << "D: " << data[d] << " Val: " << (unsigned int)atoi(&val) << "
-//            index: " << dec << (8*4-1-m) << " bit: " << mask[(8*4*d)+m] << dec << std::endl;
+//            //std::cout << __COUT_HDR_FL__ << hex << "D: " << data[d] << " Val: " << (unsigned int)atoi(&val) << " index: " << dec << (8*4-1-m) << " bit: " << mask[(8*4*d)+m] << dec << std::endl;
 //        }
 //        //
 //    }
@@ -464,7 +446,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
+//void PSI46DigFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
 //                                      unsigned int channel, const ROCStream& rocStream)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Making mask! " << std::endl;
@@ -473,7 +455,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
+//void PSI46DigFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
 //                                      unsigned int channel, const ROCStream& rocStream)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Making mask! " << std::endl;
@@ -482,7 +464,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
+//void PSI46DigFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
 //                                      unsigned int channel, const ROCStream& rocStream,
 //                                      const std::string& registerName)
 //{
@@ -532,9 +514,9 @@
 //    for (unsigned int s = 0; s < stringData.length(); s++)
 //        for (int b = 8 - 1; b >= 0 && (s * 8 + 8 - b < 13 + 128); b--)
 //        {
-//            //std::cout << __COUT_HDR_FL__ << "S: " << s << " val: " << std::stringData.data()[s] << " b: " << b << "
-//            bit: " << ((stringData.data()[s]>>b)&1) << std::endl; data = 0x40 | (((stringData.data()[s] >> b) & 1) <<
-//            5); BitManipulator::insertBits(uInt64Data, (uint64_t) data, 16, 8);
+//            //std::cout << __COUT_HDR_FL__ << "S: " << s << " val: " << std::stringData.data()[s] << " b: " << b << " bit: " << ((stringData.data()[s]>>b)&1) << std::endl;
+//            data = 0x40 | (((stringData.data()[s] >> b) & 1) << 5);
+//            BitManipulator::insertBits(uInt64Data, (uint64_t) data, 16, 8);
 //            sequence.pushBack(ChannelFIFOAddress[channel], uInt64Data);
 //            data |= 0x80;
 //            BitManipulator::insertBits(uInt64Data, (uint64_t) data, 16, 8);
@@ -558,13 +540,13 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
+//void PSI46DigFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
 //                                      unsigned int channel, const ROCStream& rocStream,
 //                                      const std::string& registerName)
 //{}
 //
 ////========================================================================================================================
-// std::string PSI46DigFirmware::readCSRRegister()
+//std::string PSI46DigFirmware::readCSRRegister()
 //{
 //    std::string buffer;
 //    read(buffer,STRIP_CSR);
@@ -572,7 +554,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::setFrequencyFromClockState(std::string& buffer, double frequency)
+//void PSI46DigFirmware::setFrequencyFromClockState(std::string& buffer, double frequency)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Setting up clock frequency!!!" << std::endl;
 //
@@ -638,7 +620,7 @@
 //    std::cout << __COUT_HDR_FL__ << "Done with clock frequency setup!!!" << std::endl;
 //}
 ////========================================================================================================================
-// bool PSI46DigFirmware::isClockStateExternal() //returns true if the clock state is External
+//bool PSI46DigFirmware::isClockStateExternal() //returns true if the clock state is External
 //{
 //    if (BitManipulator::readBits(stripCSRRegisterValue_, 16, 1) == 1)
 //        return true;
@@ -647,13 +629,13 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::setCSRRegister(uint32_t total)
+//void PSI46DigFirmware::setCSRRegister(uint32_t total)
 //{
 //    stripCSRRegisterValue_ = total;
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::setPacketSizeStripCSR(uint32_t size)
+//void PSI46DigFirmware::setPacketSizeStripCSR(uint32_t size)
 //{
 //    if (size > 31)
 //        std::cout << __COUT_HDR_FL__
@@ -664,7 +646,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::enableChannelsStripCSR(bool channel0, bool channel1,
+//void PSI46DigFirmware::enableChannelsStripCSR(bool channel0, bool channel1,
 //        bool channel2, bool channel3, bool channel4, bool channel5)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, ((uint32_t) channel0)
@@ -674,7 +656,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::setExternalBCOClockSourceStripCSR(std::string clockSource)
+//void PSI46DigFirmware::setExternalBCOClockSourceStripCSR(std::string clockSource)
 //{
 //    if (clockSource == "External")
 //        BitManipulator::insertBits(stripCSRRegisterValue_, 1, 16, 1);
@@ -683,25 +665,25 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::setHaltStripCSR(bool set)
+//void PSI46DigFirmware::setHaltStripCSR(bool set)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) set, 17, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::enableBCOStripCSR(bool enable)
+//void PSI46DigFirmware::enableBCOStripCSR(bool enable)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) enable, 19, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::flushBuffersStripCSR(void)
+//void PSI46DigFirmware::flushBuffersStripCSR(void)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, 1, 20, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::resetTriggerCounterStripCSR(std::string& buffer)
+//void PSI46DigFirmware::resetTriggerCounterStripCSR(std::string& buffer)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
 //    protocolInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
@@ -711,49 +693,49 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::resetBCOCounterStripCSR(void)
+//void PSI46DigFirmware::resetBCOCounterStripCSR(void)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, 1, 22, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::enableTriggerStripCSR(bool enable)
+//void PSI46DigFirmware::enableTriggerStripCSR(bool enable)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) enable, 23, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::sendTriggerDataStripCSR(bool send)
+//void PSI46DigFirmware::sendTriggerDataStripCSR(bool send)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) send, 24, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::sendTriggerNumberStripCSR(bool send)
+//void PSI46DigFirmware::sendTriggerNumberStripCSR(bool send)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) send, 25, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::sendBCOStripCSR(bool send)
+//void PSI46DigFirmware::sendBCOStripCSR(bool send)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) send, 26, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::enableStreamStripCSR(bool enable)
+//void PSI46DigFirmware::enableStreamStripCSR(bool enable)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) enable, 27, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::resetDCMStripCSR(bool clear)
+//void PSI46DigFirmware::resetDCMStripCSR(bool clear)
 //{
 //    BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) clear, 31, 1);
 //}
 //
 ////========================================================================================================================
-// uint32_t PSI46DigFirmware::waitDCMResetStripCSR(void)
+//uint32_t PSI46DigFirmware::waitDCMResetStripCSR(void)
 //{
 //    uint32_t bitToCheck = 0;
 //    BitManipulator::insertBits(bitToCheck, 1, 31, 2);
@@ -761,13 +743,13 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::resetDAC(void)
+//void PSI46DigFirmware::resetDAC(void)
 //{
 //    BitManipulator::insertBits(stripResetRegisterValue_, 1, 27, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::resetLink(bool channel0, bool channel1, bool channel2,
+//void PSI46DigFirmware::resetLink(bool channel0, bool channel1, bool channel2,
 //                               bool channel3, bool channel4, bool channel5)
 //{
 //    stripResetRegisterValue_ = 0;
@@ -790,7 +772,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::clearErrors(bool channel0, bool channel1, bool channel2,
+//void PSI46DigFirmware::clearErrors(bool channel0, bool channel1, bool channel2,
 //                                 bool channel3, bool channel4, bool channel5)
 //{
 //    stripResetRegisterValue_ = 0;
@@ -803,7 +785,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::clearFIFO(bool channel0, bool channel1, bool channel2,
+//void PSI46DigFirmware::clearFIFO(bool channel0, bool channel1, bool channel2,
 //                               bool channel3, bool channel4, bool channel5)
 //{
 //    stripResetRegisterValue_ = 0;
@@ -816,7 +798,7 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::resetChip(bool channel0, bool channel1, bool channel2,
+//void PSI46DigFirmware::resetChip(bool channel0, bool channel1, bool channel2,
 //                               bool channel3, bool channel4, bool channel5)
 //{
 //    stripResetRegisterValue_ = 0;
@@ -829,44 +811,42 @@
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::setFrequencyRatio(std::string& buffer, int numerator, int denominator)
+//void PSI46DigFirmware::setFrequencyRatio(std::string& buffer, int numerator, int denominator)
 //{
-//    //The device need to load numerator minus one and denominator minus one, with an internal address of 0x50 and 052
-//    respectively protocolInstance_->write(buffer, STRIP_BCO_DCM, 0x80500000 + (numerator - 1)); //  Set BCOCLK
-//    numerator // was 0x80500003 protocolInstance_->waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to
-//    finish // was 0x80000000
+//    //The device need to load numerator minus one and denominator minus one, with an internal address of 0x50 and 052 respectively
+//    protocolInstance_->write(buffer, STRIP_BCO_DCM, 0x80500000 + (numerator - 1)); //  Set BCOCLK numerator // was 0x80500003
+//    protocolInstance_->waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish // was 0x80000000
 //
-//    protocolInstance_->write(buffer, STRIP_BCO_DCM, 0x80520000 + (denominator - 1)); //  Set BCOCLK denominator // was
-//    0x80520001 protocolInstance_->waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish - BCO
-//    frequency should be 13.513 MHz // was 0x80000000
+//    protocolInstance_->write(buffer, STRIP_BCO_DCM, 0x80520000 + (denominator - 1)); //  Set BCOCLK denominator // was 0x80520001
+//    protocolInstance_->waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish - BCO frequency should be 13.513 MHz // was 0x80000000
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::BCOOffset(uint32_t offset)
+//void PSI46DigFirmware::BCOOffset(uint32_t offset)
 //{
 //    BitManipulator::insertBits(stripTriggerCSRRegisterValue_, offset, 0, 4);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::selectSpyFIFO(uint32_t input)
+//void PSI46DigFirmware::selectSpyFIFO(uint32_t input)
 //{
 //    BitManipulator::insertBits(stripTriggerCSRRegisterValue_, input, 4, 3);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::halt(bool halt)
+//void PSI46DigFirmware::halt(bool halt)
 //{
 //    BitManipulator::insertBits(stripTriggerCSRRegisterValue_, (uint32_t) halt, 7, 1);
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::configureStripTriggerUnbiased(std::string& buffer)
+//void PSI46DigFirmware::configureStripTriggerUnbiased(std::string& buffer)
 //{
 //    protocolInstance_->write(buffer, STRIP_TRIG_UNBIASED, 0x002805c); //  Configure unbiased trigger
 //}
 //
 ////========================================================================================================================
-// void PSI46DigFirmware::configureTriggerInputs(std::string& buffer)
+//void PSI46DigFirmware::configureTriggerInputs(std::string& buffer)
 //{
 //    protocolInstance_->write(buffer, STRIP_TRIG_INPUT_0, 0x3f440000); //  PSI46Dig GOTHIT trigger input channel 0,1
 //    protocolInstance_->write(buffer, STRIP_TRIG_INPUT_1, 0x3f440000); //  PSI46Dig GOTHIT trigger input channel 2,3
@@ -1081,20 +1061,21 @@
 ////{
 ////    std::string buffer;
 ////    std::cout << __COUT_HDR_FL__ << "Enabling Trigger!!!" << std::endl;
-////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << hex << stripCSRRegisterValue_ << dec <<
-///std::endl;
+////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << hex << stripCSRRegisterValue_ << dec << std::endl;
 ////
-////    setHaltStripCSR(1);//WARNING THIS IS CLEARED BY THE MASTER BUT IF THERE IS NO MASTER NOTHING WORKS UNLESS THE
-///BIT IS UNSET /    //setHaltStripCSR(0);//WARNING THIS IS CLEARED BY THE MASTER BUT IF THERE IS NO MASTER NOTHING
-///WORKS UNLESS THE BIT IS UNSET /    sendTriggerDataStripCSR(true); /    sendTriggerNumberStripCSR(true); /
-///sendBCOStripCSR(true); /    write(buffer, STRIP_CSR, stripCSRRegisterValue_);
+////    setHaltStripCSR(1);//WARNING THIS IS CLEARED BY THE MASTER BUT IF THERE IS NO MASTER NOTHING WORKS UNLESS THE BIT IS UNSET
+////    //setHaltStripCSR(0);//WARNING THIS IS CLEARED BY THE MASTER BUT IF THERE IS NO MASTER NOTHING WORKS UNLESS THE BIT IS UNSET
+////    sendTriggerDataStripCSR(true);
+////    sendTriggerNumberStripCSR(true);
+////    sendBCOStripCSR(true);
+////    write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 ////
 ////    stripTriggerCSRRegisterValue_ = 0;
 ////    BCOOffset(4);
 ////    write(buffer, STRIP_TRIG_CSR, stripTriggerCSRRegisterValue_); //  BCO offset // was 0x00000004
 ////
-////    //  write(buffer,STRIP_TRIG_INPUT_0,0x1f060040);  //  PSI46Dig GOTHIT trigger input - timed in for the 27 MHz
-///external clock /    //  write(buffer,STRIP_TRIG_INPUT_3,0x3f874040);  //  Unbiased trigger input + external trigger
+////    //  write(buffer,STRIP_TRIG_INPUT_0,0x1f060040);  //  PSI46Dig GOTHIT trigger input - timed in for the 27 MHz external clock
+////    //  write(buffer,STRIP_TRIG_INPUT_3,0x3f874040);  //  Unbiased trigger input + external trigger
 ////
 ////    configureStripTriggerUnbiased(buffer);
 ////
@@ -1111,8 +1092,8 @@
 ////    	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "what version is this?" << version_ << std::endl;
 ////	assert(0);
 ////    }
-////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << hex << stripCSRRegisterValue_ << dec <<
-///std::endl; /    std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;
+////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << hex << stripCSRRegisterValue_ << dec << std::endl;
+////    std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;
 ////
 ////    return buffer;
 ////}
@@ -1124,47 +1105,44 @@
 ////    std::string buffer;
 ////    struct sockaddr_in socketAddress;
 ////    inet_pton(AF_INET, ip.c_str(), &(socketAddress.sin_addr));
-////    //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "ADDRESS: " << hex <<
-///ntohl(socketAddress.sin_addr.s_addr) << dec << std::endl; /    write(buffer, DATA_DESTINATION_IP,
-///ntohl(socketAddress.sin_addr.s_addr)); //  Set data destination IP 192.168.133.1 /    //std::cout << __COUT_HDR_FL__
-///<< __PRETTY_FUNCTION__ << "PORT: " << hex << 0xbeef0000+port << dec << std::endl; /    write(buffer,
-///DATA_SOURCE_DESTINATION_PORT, 0xbeef0000 + port); //  Set data destination port /    return buffer;
+////    //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "ADDRESS: " << hex << ntohl(socketAddress.sin_addr.s_addr) << dec << std::endl;
+////    write(buffer, DATA_DESTINATION_IP, ntohl(socketAddress.sin_addr.s_addr)); //  Set data destination IP 192.168.133.1
+////    //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "PORT: " << hex << 0xbeef0000+port << dec << std::endl;
+////    write(buffer, DATA_SOURCE_DESTINATION_PORT, 0xbeef0000 + port); //  Set data destination port
+////    return buffer;
 ////}
 ////
 //////========================================================================================================================
 ////std::string PSI46DigFirmware::resetBCO(void)
 ////{
 ////    std::cout << __COUT_HDR_FL__ << "Reset BCO!!!" << std::endl;
-////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << hex << stripCSRRegisterValue_ << dec <<
-///std::endl; /    std::string buffer;
+////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in :" << hex << stripCSRRegisterValue_ << dec << std::endl;
+////    std::string buffer;
 ////
 ////    resetTriggerCounterStripCSR(buffer);
 ////    //write(buffer, STRIP_CSR, stripCSRRegisterValue_);//the write is done in the reset
 ////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue :" << hex << stripCSRRegisterValue_ << dec << std::endl;
 ////
 ////    //msg->Write(STRIP_SC_CSR,0x90000b95|(chmask<<16));
-////    //write(buffer,STRIP_SC_CSR,0x900f0b95);//  This is the <SCR,set> command with the bit set to sync SHIFT with
-///BCO=0.
+////    //write(buffer,STRIP_SC_CSR,0x900f0b95);//  This is the <SCR,set> command with the bit set to sync SHIFT with BCO=0.
 ////
 ////
 ////    enableBCOStripCSR(true);
 ////    write(buffer, STRIP_CSR, stripCSRRegisterValue_);
-////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << hex << stripCSRRegisterValue_ << dec <<
-///std::endl; /    std::cout << __COUT_HDR_FL__ << "Done reset BCO!!!" << std::endl;
+////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << hex << stripCSRRegisterValue_ << dec << std::endl;
+////    std::cout << __COUT_HDR_FL__ << "Done reset BCO!!!" << std::endl;
 ////
 ////    return buffer;
 ////}
 ////
 //////========================================================================================================================
-////std::string PSI46DigFirmware::startStream(bool channel0, bool channel1, bool channel2, bool channel3, bool channel4,
-///bool channel5)
+////std::string PSI46DigFirmware::startStream(bool channel0, bool channel1, bool channel2, bool channel3, bool channel4, bool channel5)
 ////{
 ////    std::cout << __COUT_HDR_FL__ << "Start Stream!" << std::endl;
-////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in:" << hex << stripCSRRegisterValue_ << dec <<
-///std::endl; /    std::string buffer;
+////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue in:" << hex << stripCSRRegisterValue_ << dec << std::endl;
+////    std::string buffer;
 ////
-////    std::cout << __COUT_HDR_FL__ << " channel0 " << channel0 << " channel1 " << channel1 << " channel2 " << channel2
-///<< " channel3 " << channel3 << " channel4 " << channel4 << " channel5 " << channel5 << std::endl;
+////    std::cout << __COUT_HDR_FL__ << " channel0 " << channel0 << " channel1 " << channel1 << " channel2 " << channel2 << " channel3 " << channel3 << " channel4 " << channel4 << " channel5 " << channel5 << std::endl;
 ////
 ////    enableChannelsStripCSR(channel0, channel1, channel2, channel3, channel4, channel5);
 ////    //    if (version_ == 1)
@@ -1175,8 +1153,8 @@
 ////    enableStreamStripCSR(true); //  Turn on streaming hits along with BCO data // was 0x0f000f30
 ////    write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 ////
-////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << hex << stripCSRRegisterValue_ << dec <<
-///std::endl; /    std::cout << __COUT_HDR_FL__ << "Done start Stream!" << std::endl;
+////    std::cout << __COUT_HDR_FL__ << "stripCSRRegisterValue out:" << hex << stripCSRRegisterValue_ << dec << std::endl;
+////    std::cout << __COUT_HDR_FL__ << "Done start Stream!" << std::endl;
 ////
 ////    return buffer;
 ////}
@@ -1230,14 +1208,17 @@
 ////    {
 ////        /*RYAN
 ////         //if(it->first != "SendData" && it->first != "RejectHits") continue;
-////         uint64_t data = PSI46DigROCDefinitions::makeDACWriteCommand(rocStream.getFEWROCAddress(), it->first,
-///it->second.second); /         sequence.pushBack(ChannelFIFOAddress[channel], data); /
-///sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0x48,56,8)); /         //set
-///WRITE /         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)1,60,1)); /
-/////clr WRITE /         sequence.pushBack(ChannelFIFOAddress[channel],
-///BitManipulator::insertBits(data,(uint32_t)0,60,1)); /         //clr TALK /
-///sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0,62,1)); /
-///sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0x40,56,8)); /         */
+////         uint64_t data = PSI46DigROCDefinitions::makeDACWriteCommand(rocStream.getFEWROCAddress(), it->first, it->second.second);
+////         sequence.pushBack(ChannelFIFOAddress[channel], data);
+////         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0x48,56,8));
+////         //set WRITE
+////         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)1,60,1));
+////         //clr WRITE
+////         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0,60,1));
+////         //clr TALK
+////         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0,62,1));
+////         sequence.pushBack(ChannelFIFOAddress[channel], BitManipulator::insertBits(data,(uint32_t)0x40,56,8));
+////         */
 ////
 ////        //if(it->first != "SendData" && it->first != "RejectHits") continue;
 ////        uint32_t data = PSI46DigROCDefinitions::makeDACWriteHeader(
@@ -1263,11 +1244,11 @@
 ////		write(buffer, ChannelFIFOAddress[channel], it->second.second);
 ////		uint32_t registerHeader = PSI46DigROCDefinitions::makeDACWriteHeader(
 ////				rocStream.getFEWROCAddress(), it->first);
-////		//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel << " Register: " <<
-///it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl; /
-/////Insert channel /		BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1); /
-///std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel << " Register: " /
-///<< it->first << " value: " << it->second.second << hex
+////		//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel << " Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
+////		//Insert channel
+////		BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
+////		std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel << " Register: "
+////				<< it->first << " value: " << it->second.second << hex
 ////				<< " -> Data: " << registerHeader << dec << std::endl;
 ////		write(buffer, STRIP_SC_CSR, registerHeader);
 ////		waitClear(buffer, STRIP_SC_CSR, 0x80000000);
@@ -1293,99 +1274,9 @@
 ////            write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
 ////            registerHeader = PSI46DigROCDefinitions::makeDACWriteHeader(
 ////                                 rocStream.getFEWROCAddress(), it->first);
-////            //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " <<
-///it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl; /            //Insert channel /
-///BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1); /        } /        else /        { /            if
-///(it->second.second == 1 || it->second.second == 2) /            { /                registerHeader =
-///PSI46DigROCDefinitions::makeDACSetHeader( /                                     rocStream.getFEWROCAddress(),
-///it->first); /                //Insert channel /                BitManipulator::insertBits(registerHeader, 1, 16 +
-///channel, 1); /            } /            else if (it->second.second == 0 || it->second.second == 5) /            { /
-///registerHeader = PSI46DigROCDefinitions::makeDACResetHeader( /
-///rocStream.getFEWROCAddress(), it->first); /                //Insert channel /
-///BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1); /            } /            else /
-///std::cout << __COUT_HDR_FL__ << "Register value for : " << it->first /                << " doesn't have a value I
-///expect -> value = " /                << it->second.second << std::endl;
-////
-////        }
-////        //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " <<
-///it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl; /        write(bufferElement,
-///STRIP_SC_CSR, registerHeader); /        waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
-////
-////        //buffer.push_back(bufferElement);
-////        buffer += bufferElement;
-////        //break;
-////    }
-////}
-////
-//////========================================================================================================================
-/////*
-//// * //Clifford... Replaced with other... SEE FOLLOWING FUNCTION BELOW
-////void PSI46DigFirmware::makeDACBuffer(std::vector<std::string>& buffer,
-////		unsigned int channel, const ROCStream& rocStream) {
-////	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel << std::endl;
-////	const ROCDACs& rocDACs = rocStream.getROCDACs();
-////	for (DACList::const_iterator it = rocDACs.getDACList().begin(); it != rocDACs.getDACList().end(); it++) {
-////	std::string bufferElement;
-////		waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
-////		uint32_t registerHeader = 0;
-////		//FIXME This must go in the PSI46DigROCDefinitions stuff
-////		if (it->first != "RejectHits" && it->first != "SendData") {
-////			write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
-////			registerHeader = PSI46DigROCDefinitions::makeDACWriteHeader(
-////					rocStream.getFEWROCAddress(), it->first);
-////			//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " <<
-///it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl; /			//Insert channel
-////			BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
-////		} else {
-////			if (it->second.second == 1 || it->second.second == 2) {
-////				registerHeader = PSI46DigROCDefinitions::makeDACSetHeader(
-////						rocStream.getFEWROCAddress(), it->first);
-////				//Insert channel
-////				BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
-////			} else if (it->second.second == 0 || it->second.second == 5) {
-////				registerHeader = PSI46DigROCDefinitions::makeDACResetHeader(
-////						rocStream.getFEWROCAddress(), it->first);
-////				//Insert channel
-////				BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
-////			} else
-////				std::cout << __COUT_HDR_FL__ << "Register value for : " << it->first
-////						<< " doesn't have a value I expect -> value = "
-////						<< it->second.second << std::endl;
-////
-////		}
-////		//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " <<
-///it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl; /		write(bufferElement,
-///STRIP_SC_CSR, registerHeader); /		waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
-////
-////		buffer.push_back(bufferElement);
-////		//break;
-////	}
-////}
-////*/
-////
-//////========================================================================================================================
-////void PSI46DigFirmware:: makeDACBuffer(std::vector<std::string>& buffer, unsigned int channel, const ROCStream&
-///rocStream)
-////{
-////
-////    std::cout << __COUT_HDR_FL__ << "\tMaking DAC Buffer" << std::endl;
-////
-////    int limitCount = 0;
-////    unsigned int singleVectorCount = 0;
-////
-////    std::string alternateBuffer;
-////
-////    std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel << std::endl;
-////    const ROCDACs& rocDACs = rocStream.getROCDACs();
-////    //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Number of DACs: " << rocDACs.getDACList().size() <<
-///std::endl; /    std::string bufferElement; /    for (DACList::const_iterator it = rocDACs.getDACList().begin(); it !=
-///rocDACs.getDACList().end(); it++) /    { /        waitClear(bufferElement, STRIP_SC_CSR, 0x80000000); /
-///uint32_t registerHeader = 0; /        //FIXME This must go in the PSI46DigROCDefinitions stuff /        if (it->first
-///!= "RejectHits" && it->first != "SendData") /        { /            write(bufferElement, ChannelFIFOAddress[channel],
-///it->second.second); /            registerHeader = PSI46DigROCDefinitions::makeDACWriteHeader( /
-///rocStream.getFEWROCAddress(), it->first); /            std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ <<
-///"Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec <<
-///std::endl; /            //Insert channel /            BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
+////            //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
+////            //Insert channel
+////            BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
 ////        }
 ////        else
 ////        {
@@ -1409,9 +1300,116 @@
 ////                << it->second.second << std::endl;
 ////
 ////        }
-////        //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " <<
-///it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl; /        write(bufferElement,
-///STRIP_SC_CSR, registerHeader); /        waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+////        //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
+////        write(bufferElement, STRIP_SC_CSR, registerHeader);
+////        waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+////
+////        //buffer.push_back(bufferElement);
+////        buffer += bufferElement;
+////        //break;
+////    }
+////}
+////
+//////========================================================================================================================
+/////*
+//// * //Clifford... Replaced with other... SEE FOLLOWING FUNCTION BELOW
+////void PSI46DigFirmware::makeDACBuffer(std::vector<std::string>& buffer,
+////		unsigned int channel, const ROCStream& rocStream) {
+////	std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel << std::endl;
+////	const ROCDACs& rocDACs = rocStream.getROCDACs();
+////	for (DACList::const_iterator it = rocDACs.getDACList().begin(); it != rocDACs.getDACList().end(); it++) {
+////	std::string bufferElement;
+////		waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+////		uint32_t registerHeader = 0;
+////		//FIXME This must go in the PSI46DigROCDefinitions stuff
+////		if (it->first != "RejectHits" && it->first != "SendData") {
+////			write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
+////			registerHeader = PSI46DigROCDefinitions::makeDACWriteHeader(
+////					rocStream.getFEWROCAddress(), it->first);
+////			//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
+////			//Insert channel
+////			BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
+////		} else {
+////			if (it->second.second == 1 || it->second.second == 2) {
+////				registerHeader = PSI46DigROCDefinitions::makeDACSetHeader(
+////						rocStream.getFEWROCAddress(), it->first);
+////				//Insert channel
+////				BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
+////			} else if (it->second.second == 0 || it->second.second == 5) {
+////				registerHeader = PSI46DigROCDefinitions::makeDACResetHeader(
+////						rocStream.getFEWROCAddress(), it->first);
+////				//Insert channel
+////				BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
+////			} else
+////				std::cout << __COUT_HDR_FL__ << "Register value for : " << it->first
+////						<< " doesn't have a value I expect -> value = "
+////						<< it->second.second << std::endl;
+////
+////		}
+////		//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
+////		write(bufferElement, STRIP_SC_CSR, registerHeader);
+////		waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+////
+////		buffer.push_back(bufferElement);
+////		//break;
+////	}
+////}
+////*/
+////
+//////========================================================================================================================
+////void PSI46DigFirmware:: makeDACBuffer(std::vector<std::string>& buffer, unsigned int channel, const ROCStream& rocStream)
+////{
+////
+////    std::cout << __COUT_HDR_FL__ << "\tMaking DAC Buffer" << std::endl;
+////
+////    int limitCount = 0;
+////    unsigned int singleVectorCount = 0;
+////
+////    std::string alternateBuffer;
+////
+////    std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel << std::endl;
+////    const ROCDACs& rocDACs = rocStream.getROCDACs();
+////    //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Number of DACs: " << rocDACs.getDACList().size() << std::endl;
+////    std::string bufferElement;
+////    for (DACList::const_iterator it = rocDACs.getDACList().begin(); it != rocDACs.getDACList().end(); it++)
+////    {
+////        waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
+////        uint32_t registerHeader = 0;
+////        //FIXME This must go in the PSI46DigROCDefinitions stuff
+////        if (it->first != "RejectHits" && it->first != "SendData")
+////        {
+////            write(bufferElement, ChannelFIFOAddress[channel], it->second.second);
+////            registerHeader = PSI46DigROCDefinitions::makeDACWriteHeader(
+////                                 rocStream.getFEWROCAddress(), it->first);
+////            std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
+////            //Insert channel
+////            BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
+////        }
+////        else
+////        {
+////            if (it->second.second == 1 || it->second.second == 2)
+////            {
+////                registerHeader = PSI46DigROCDefinitions::makeDACSetHeader(
+////                                     rocStream.getFEWROCAddress(), it->first);
+////                //Insert channel
+////                BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
+////            }
+////            else if (it->second.second == 0 || it->second.second == 5)
+////            {
+////                registerHeader = PSI46DigROCDefinitions::makeDACResetHeader(
+////                                     rocStream.getFEWROCAddress(), it->first);
+////                //Insert channel
+////                BitManipulator::insertBits(registerHeader, 1, 16 + channel, 1);
+////            }
+////            else
+////                std::cout << __COUT_HDR_FL__ << "Register value for : " << it->first
+////                << " doesn't have a value I expect -> value = "
+////                << it->second.second << std::endl;
+////
+////        }
+////        //std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Register: " << it->first << " value: " << it->second.second << hex << " -> Data: " << registerHeader << dec << std::endl;
+////        write(bufferElement, STRIP_SC_CSR, registerHeader);
+////        waitClear(bufferElement, STRIP_SC_CSR, 0x80000000);
 ////
 ////        //alternateBuffer += bufferElement;
 ////        limitCount++;
@@ -1446,8 +1444,7 @@
 ////}
 ////
 //////========================================================================================================================
-////void PSI46DigFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream, const
-///std::string& registerName)
+////void PSI46DigFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream, const std::string& registerName)
 ////{
 ////    std::cout << __COUT_HDR_FL__ << "\tMaking mask! " << std::endl;
 ////    int chipId = rocStream.getFEWROCAddress();
@@ -1463,14 +1460,16 @@
 ////        //std::cout << __COUT_HDR_FL__ << "---------------------" << d << "-------------------" << std::endl;
 ////        for (unsigned int m = 0; m < 8 * 4; m++)
 ////        { //m goes from 0 to 31, since each byte has 8 bits, there are 32 bits
-////            val = mask[(8 * 4 * d) + m]; //assigns to val the value of the corresponding bit. 0-31, 32-63, 64-95,
-///96-127. it goes through each of the 128 bits /            //std::cout << __COUT_HDR_FL__ << "---------------------"
-///<< j++ << std::endl; /            //std::cout << __COUT_HDR_FL__ << "data[" << d << "] before: " << hex << data[d] <<
-///dec << std::endl; /            data[d] |= (unsigned int) atoi(&val) << (8 * 4 - 1 - m); /            //std::cout <<
-///__COUT_HDR_FL__ << "(unsigned int) atoi(&val): " << (unsigned int) atoi(&val) << std::endl; /            //std::cout
-///<< __COUT_HDR_FL__ << "data[" << d << "] after: " << hex << data[d] << dec << std::endl; /            //std::cout <<
-///__COUT_HDR_FL__ << hex << "D: " << data[d] << " Val: " << (unsigned int)atoi(&val) << " index: " << dec << (8*4-1-m)
-///<< " bit: " << mask[(8*4*d)+m] << dec << std::endl; /        } /        // /    }
+////            val = mask[(8 * 4 * d) + m]; //assigns to val the value of the corresponding bit. 0-31, 32-63, 64-95, 96-127. it goes through each of the 128 bits
+////            //std::cout << __COUT_HDR_FL__ << "---------------------" << j++ << std::endl;
+////            //std::cout << __COUT_HDR_FL__ << "data[" << d << "] before: " << hex << data[d] << dec << std::endl;
+////            data[d] |= (unsigned int) atoi(&val) << (8 * 4 - 1 - m);
+////            //std::cout << __COUT_HDR_FL__ << "(unsigned int) atoi(&val): " << (unsigned int) atoi(&val) << std::endl;
+////            //std::cout << __COUT_HDR_FL__ << "data[" << d << "] after: " << hex << data[d] << dec << std::endl;
+////            //std::cout << __COUT_HDR_FL__ << hex << "D: " << data[d] << " Val: " << (unsigned int)atoi(&val) << " index: " << dec << (8*4-1-m) << " bit: " << mask[(8*4*d)+m] << dec << std::endl;
+////        }
+////        //
+////    }
 ////
 ////    int i, ierr;
 ////    unsigned int w;
@@ -1561,12 +1560,14 @@
 ////    for (unsigned int s = 0; s < std::stringData.length(); s++)
 ////        for (int b = 8 - 1; b >= 0 && (s * 8 + 8 - b < 13 + 128); b--)
 ////        {
-////            //std::cout << __COUT_HDR_FL__ << "S: " << s << " val: " << std::stringData.data()[s] << " b: " << b <<
-///" bit: " << ((stringData.data()[s]>>b)&1) << std::endl; /            data = 0x40 | (((stringData.data()[s] >> b) & 1)
-///<< 5); /            BitManipulator::insertBits(uInt64Data, (uint64_t) data, 16, 8); /
-///sequence.pushBack(ChannelFIFOAddress[channel], uInt64Data); /            data |= 0x80; /
-///BitManipulator::insertBits(uInt64Data, (uint64_t) data, 16, 8); /
-///sequence.pushBack(ChannelFIFOAddress[channel], uInt64Data); /        }
+////            //std::cout << __COUT_HDR_FL__ << "S: " << s << " val: " << std::stringData.data()[s] << " b: " << b << " bit: " << ((stringData.data()[s]>>b)&1) << std::endl;
+////            data = 0x40 | (((stringData.data()[s] >> b) & 1) << 5);
+////            BitManipulator::insertBits(uInt64Data, (uint64_t) data, 16, 8);
+////            sequence.pushBack(ChannelFIFOAddress[channel], uInt64Data);
+////            data |= 0x80;
+////            BitManipulator::insertBits(uInt64Data, (uint64_t) data, 16, 8);
+////            sequence.pushBack(ChannelFIFOAddress[channel], uInt64Data);
+////        }
 ////
 ////    //reset Shift Control
 ////    BitManipulator::insertBits(uInt64Data, 0x0, 16, 8);
@@ -1616,8 +1617,7 @@
 ////}
 ////
 //////========================================================================================================================
-////unsigned int PSI46DigFirmware::waitSet(std::string& buffer, unsigned int address, unsigned int data, unsigned int
-///timeout)
+////unsigned int PSI46DigFirmware::waitSet(std::string& buffer, unsigned int address, unsigned int data, unsigned int timeout)
 ////{
 ////    unsigned int begin = buffer.length();
 ////    unsigned int numberOfBufferedCommands = getNumberOfBufferedCommands(buffer);
@@ -1646,8 +1646,7 @@
 ////}
 ////
 //////========================================================================================================================
-////unsigned int PSI46DigFirmware::waitClear(std::string& buffer, unsigned int address, unsigned int data, unsigned int
-///timeout)
+////unsigned int PSI46DigFirmware::waitClear(std::string& buffer, unsigned int address, unsigned int data, unsigned int timeout)
 ////{
 ////    unsigned int begin = buffer.length();
 ////    unsigned int numberOfBufferedCommands = getNumberOfBufferedCommands(buffer);
@@ -1749,54 +1748,79 @@
 ////            {
 ////                if (sentBuffer[position + skipBuffer] != acknowledgment[position + skipAcknow])
 ////                {
-////                    std::cout << __COUT_HDR_FL__ << "ERROR - Sent " << position + skipBuffer << "th: " << hex <<
-///(unsigned int)sentBuffer[position + skipBuffer] << dec /                    << " different from Received " <<
-///position + skipAcknow << "th:" /                    << hex << (unsigned int)acknowledgment[position + skipAcknow] <<
-///dec << std::endl; /                    std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl; /
-///reSendBuffer.clear(); /                    for (unsigned int i = skipBuffer; i < (skipBuffer + 4 +
-///sentBuffer[skipBuffer + 3]); i++) /                    { /                        reSendBuffer+= sentBuffer[i]; /
-///} /                    return reSendBuffer; /                } /            }
+////                    std::cout << __COUT_HDR_FL__ << "ERROR - Sent " << position + skipBuffer << "th: " << hex << (unsigned int)sentBuffer[position + skipBuffer] << dec
+////                    << " different from Received " << position + skipAcknow << "th:"
+////                    << hex << (unsigned int)acknowledgment[position + skipAcknow] << dec << std::endl;
+////                    std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl;
+////                    reSendBuffer.clear();
+////                    for (unsigned int i = skipBuffer; i < (skipBuffer + 4 + sentBuffer[skipBuffer + 3]); i++)
+////                    {
+////                        reSendBuffer+= sentBuffer[i];
+////                    }
+////                    return reSendBuffer;
+////                }
+////            }
 ////
 ////            if (position == 1)
 ////            {
 ////                if ( (sentBuffer[position + skipBuffer]) != (acknowledgment[position + skipAcknow] & 0xf) )
 ////                {
-////                    std::cout << __COUT_HDR_FL__ << "ERROR - Sent " << position + skipBuffer << "th: " << hex <<
-///(unsigned int)sentBuffer[position + skipBuffer] << dec /                    << " different from Received " <<
-///position + skipAcknow << "th:" /                    << hex << (unsigned int)acknowledgment[position + skipAcknow] <<
-///dec << std::endl; /                    std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl; /
-///reSendBuffer.clear(); /                    for (unsigned int i = skipBuffer; i < (skipBuffer + 4 +
-///sentBuffer[skipBuffer + 3]); i++) /                    { /                        reSendBuffer+= sentBuffer[i]; /
-///} /                    return reSendBuffer; /                } /            }
+////                    std::cout << __COUT_HDR_FL__ << "ERROR - Sent " << position + skipBuffer << "th: " << hex << (unsigned int)sentBuffer[position + skipBuffer] << dec
+////                    << " different from Received " << position + skipAcknow << "th:"
+////                    << hex << (unsigned int)acknowledgment[position + skipAcknow] << dec << std::endl;
+////                    std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl;
+////                    reSendBuffer.clear();
+////                    for (unsigned int i = skipBuffer; i < (skipBuffer + 4 + sentBuffer[skipBuffer + 3]); i++)
+////                    {
+////                        reSendBuffer+= sentBuffer[i];
+////                    }
+////                    return reSendBuffer;
+////                }
+////            }
 ////
 ////            if (position == 2)
 ////            {
 ////                if ( (sentBuffer[position + skipBuffer] != 0) || (acknowledgment[position + skipAcknow] != 0) )
 ////                {
-////                    std::cout << __COUT_HDR_FL__ << "ERROR - Sent " << position + skipBuffer << "th: " << hex <<
-///(unsigned int)sentBuffer[position + skipBuffer] << dec /                    << " different from Received " <<
-///position + skipAcknow << "th:" /                    << hex << (unsigned int)acknowledgment[position + skipAcknow] <<
-///dec << std::endl; /                    std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl; /
-///reSendBuffer.clear(); /                    for (unsigned int i = skipBuffer; i < (skipBuffer + 4 +
-///sentBuffer[skipBuffer + 3]); i++) /                    { /                        reSendBuffer+= sentBuffer[i]; /
-///} /                    return reSendBuffer; /                } /            }
+////                    std::cout << __COUT_HDR_FL__ << "ERROR - Sent " << position + skipBuffer << "th: " << hex << (unsigned int)sentBuffer[position + skipBuffer] << dec
+////                    << " different from Received " << position + skipAcknow << "th:"
+////                    << hex << (unsigned int)acknowledgment[position + skipAcknow] << dec << std::endl;
+////                    std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl;
+////                    reSendBuffer.clear();
+////                    for (unsigned int i = skipBuffer; i < (skipBuffer + 4 + sentBuffer[skipBuffer + 3]); i++)
+////                    {
+////                        reSendBuffer+= sentBuffer[i];
+////                    }
+////                    return reSendBuffer;
+////                }
+////            }
 ////
 ////            if ( position == 3)
 ////            {
 ////                remainBufferCommands = sentBuffer[position + skipBuffer]; //4th bit tells us how many bits are left
 ////                remainAcknowCommands = acknowledgment[position + skipAcknow];
 ////
-////                if ( ((remainBufferCommands == 12) && (remainAcknowCommands == 4)) || ((remainBufferCommands == 8)
-///&& (remainAcknowCommands == 0)) ) /                { /                    skipBuffer += (4 + remainBufferCommands);
-/////go to the beginning of next buffer /                    skipAcknow += (4 + remainAcknowCommands); /
-///} /                else /                { /                    std::cout << __COUT_HDR_FL__ << "ERROR - Sent " <<
-///position + skipBuffer << "th: " << hex << (unsigned int)sentBuffer[position + skipBuffer] << dec /
-///<< " not compatible with Received " << position + skipAcknow << "th:" /                    << hex << (unsigned
-///int)acknowledgment[position + skipAcknow] << dec << std::endl; /                    std::cout << __COUT_HDR_FL__ <<
-///"Position: " << position << std::endl; /                    reSendBuffer.clear(); /                    for (unsigned
-///int i = skipBuffer; i < (skipBuffer + 4 + sentBuffer[skipBuffer + 3]); i++) /                    { /
-///reSendBuffer+= sentBuffer[i]; /                    } /                    return reSendBuffer; /                } /
-///} /        } /    }
+////                if ( ((remainBufferCommands == 12) && (remainAcknowCommands == 4)) || ((remainBufferCommands == 8) && (remainAcknowCommands == 0)) )
+////                {
+////                    skipBuffer += (4 + remainBufferCommands); //go to the beginning of next buffer
+////                    skipAcknow += (4 + remainAcknowCommands);
+////                }
+////                else
+////                {
+////                    std::cout << __COUT_HDR_FL__ << "ERROR - Sent " << position + skipBuffer << "th: " << hex << (unsigned int)sentBuffer[position + skipBuffer] << dec
+////                    << " not compatible with Received " << position + skipAcknow << "th:"
+////                    << hex << (unsigned int)acknowledgment[position + skipAcknow] << dec << std::endl;
+////                    std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl;
+////                    reSendBuffer.clear();
+////                    for (unsigned int i = skipBuffer; i < (skipBuffer + 4 + sentBuffer[skipBuffer + 3]); i++)
+////                    {
+////                        reSendBuffer+= sentBuffer[i];
+////                    }
+////                    return reSendBuffer;
+////                }
+////            }
+////        }
+////    }
 ////
 ////    reSendBuffer.clear();
 ////    std::cout << __COUT_HDR_FL__ << "Done... Works!!!" << std::endl;
@@ -1812,37 +1836,50 @@
 ////        {
 ////            if (readBuffer[position] != receivedValue[position])
 ////            {
-////                std::cout << __COUT_HDR_FL__ << "ERROR - Read " << position << "th: " << hex << (unsigned
-///int)readBuffer[position] << dec /                << " different from Received " << position << "th:" /
-///<< hex << (unsigned int)receivedValue[position] << dec << std::endl; /                std::cout << __COUT_HDR_FL__ <<
-///"Position: " << position << std::endl; /                return 0; /            } /        }
+////                std::cout << __COUT_HDR_FL__ << "ERROR - Read " << position << "th: " << hex << (unsigned int)readBuffer[position] << dec
+////                << " different from Received " << position << "th:"
+////                << hex << (unsigned int)receivedValue[position] << dec << std::endl;
+////                std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl;
+////                return 0;
+////            }
+////        }
 ////
 ////        if (position == 1)
 ////        {
 ////            if ( (readBuffer[position] != (receivedValue[position] & 0xf)) )
 ////            {
-////                std::cout << __COUT_HDR_FL__ << "ERROR - Read " << position << "th: " << hex << (unsigned
-///int)readBuffer[position] << dec /                << " different from Received " << position << "th:" /
-///<< hex << (unsigned int)receivedValue[position] << dec << std::endl; /                std::cout << __COUT_HDR_FL__ <<
-///"Position: " << position << std::endl; /                return 0; /            } /        }
+////                std::cout << __COUT_HDR_FL__ << "ERROR - Read " << position << "th: " << hex << (unsigned int)readBuffer[position] << dec
+////                << " different from Received " << position << "th:"
+////                << hex << (unsigned int)receivedValue[position] << dec << std::endl;
+////                std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl;
+////                return 0;
+////            }
+////        }
 ////
 ////        if (position == 2)
 ////        {
 ////            if ( (readBuffer[position] != 0) || (receivedValue[position] != 0) )
 ////            {
-////                std::cout << __COUT_HDR_FL__ << "ERROR - Sent " << position << "th: " << hex << (unsigned
-///int)readBuffer[position] << dec /                << " different from Received " << position << "th:" /
-///<< hex << (unsigned int)receivedValue[position] << dec << std::endl; /                std::cout << __COUT_HDR_FL__ <<
-///"Position: " << position << std::endl; /                return 0; /            } /        }
+////                std::cout << __COUT_HDR_FL__ << "ERROR - Sent " << position << "th: " << hex << (unsigned int)readBuffer[position] << dec
+////                << " different from Received " << position << "th:"
+////                << hex << (unsigned int)receivedValue[position] << dec << std::endl;
+////                std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl;
+////                return 0;
+////            }
+////        }
 ////
 ////        if ( position == 3)
 ////        {
 ////            if ( (readBuffer[position] != 4) || (receivedValue[position] != 8)  )
 ////            {
-////                std::cout << __COUT_HDR_FL__ << "ERROR - Read " << position << "th: " << hex << (unsigned
-///int)readBuffer[position] << dec /                << " not compatible with Received " << position << "th:" /
-///<< hex << (unsigned int)receivedValue[position] << dec << std::endl; /                std::cout << __COUT_HDR_FL__ <<
-///"Position: " << position << std::endl; /                return 0; /            } /        } /    }
+////                std::cout << __COUT_HDR_FL__ << "ERROR - Read " << position << "th: " << hex << (unsigned int)readBuffer[position] << dec
+////                << " not compatible with Received " << position << "th:"
+////                << hex << (unsigned int)receivedValue[position] << dec << std::endl;
+////                std::cout << __COUT_HDR_FL__ << "Position: " << position << std::endl;
+////                return 0;
+////            }
+////        }
+////    }
 ////
 ////    uint32_t registerValue;
 ////
@@ -2116,13 +2153,12 @@
 //////========================================================================================================================
 ////void PSI46DigFirmware::setFrequencyRatio(string& buffer, int numerator, int denominator)
 ////{
-////    //The device need to load numerator minus one and denominator minus one, with an internal address of 0x50 and
-///052 respectively /    write(buffer, STRIP_BCO_DCM, 0x80500000 + (numerator - 1)); //  Set BCOCLK numerator // was
-///0x80500003 /    waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish // was 0x80000000
+////    //The device need to load numerator minus one and denominator minus one, with an internal address of 0x50 and 052 respectively
+////    write(buffer, STRIP_BCO_DCM, 0x80500000 + (numerator - 1)); //  Set BCOCLK numerator // was 0x80500003
+////    waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish // was 0x80000000
 ////
 ////    write(buffer, STRIP_BCO_DCM, 0x80520000 + (denominator - 1)); //  Set BCOCLK denominator // was 0x80520001
-////    waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish - BCO frequency should be 13.513 MHz
-///// was 0x80000000
+////    waitClear(buffer, STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish - BCO frequency should be 13.513 MHz // was 0x80000000
 ////}
 ////
 //////========================================================================================================================

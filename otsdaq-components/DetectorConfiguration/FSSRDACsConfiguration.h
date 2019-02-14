@@ -3,18 +3,23 @@
 
 #include "otsdaq-components/DetectorConfiguration/ROCDACs.h"
 
-namespace ots {
+namespace ots
+{
 class ConfigurationTree;
 
-class FSSRDACsConfiguration {
- public:
-  FSSRDACsConfiguration(void);
-  virtual ~FSSRDACsConfiguration(void);
+class FSSRDACsConfiguration
+{
 
-  const ROCDACs getROCDACs(const ConfigurationTree& dacsConfiguration);
+public:
 
- private:
-  std::map<std::string, unsigned int> dacNameToDACAddress_;
+    FSSRDACsConfiguration(void);
+    virtual ~FSSRDACsConfiguration(void);
+
+    const ROCDACs getROCDACs(const ConfigurationTree& dacsConfiguration);
+
+
+private:
+    std::map<std::string, unsigned int> dacNameToDACAddress_;
 };
-}  // namespace ots
+}
 #endif

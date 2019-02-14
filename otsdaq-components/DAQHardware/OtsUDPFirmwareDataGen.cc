@@ -1,7 +1,7 @@
 #include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
 
-#include "otsdaq-core/Macros/CoutMacros.h"
 #include "otsdaq-core/MessageFacility/MessageFacility.h"
+#include "otsdaq-core/Macros/CoutMacros.h"
 
 //#include "otsdaq-components/DAQHardware/FSSRFirmwareDefinitions.h"
 //#include "otsdaq-core/BitManipulator/BitManipulator.h"
@@ -14,25 +14,49 @@
 //#include <string.h>
 //#include "otsdaq-components/UserConfigurationDataFormats/FEOtsUDPFSSRInterfaceConfiguration.h"
 
+
 using namespace ots;
 
-//========================================================================================================================
-OtsUDPFirmwareDataGen::OtsUDPFirmwareDataGen(unsigned int version) : OtsUDPFirmwareCore(version) {}
 
 //========================================================================================================================
-OtsUDPFirmwareDataGen::~OtsUDPFirmwareDataGen(void) {}
+OtsUDPFirmwareDataGen::OtsUDPFirmwareDataGen (unsigned int version)
+: OtsUDPFirmwareCore(version)
+{}
 
 //========================================================================================================================
-void OtsUDPFirmwareDataGen::init(void) {}
+OtsUDPFirmwareDataGen::~OtsUDPFirmwareDataGen(void)
+{}
 
 //========================================================================================================================
-void OtsUDPFirmwareDataGen::setNumberOfBurstWords(std::string& buffer, uint64_t numberOfWords) {
-  __COUT__ << std::endl;
-  OtsUDPFirmwareCore::writeAdvanced(buffer, 0x1001, numberOfWords);
+void OtsUDPFirmwareDataGen::init(void)
+{}
+
+//========================================================================================================================
+void OtsUDPFirmwareDataGen::setNumberOfBurstWords(std::string& buffer, uint64_t numberOfWords)
+{
+	__COUT__ << std::endl;
+	OtsUDPFirmwareCore::writeAdvanced(buffer, 0x1001, numberOfWords);
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareDataGen::setBurstWordsRate(std::string& buffer, uint64_t interval) {
-  __COUT__ << std::endl;
-  OtsUDPFirmwareCore::writeAdvanced(buffer, 0x1002, interval);
+void OtsUDPFirmwareDataGen::setBurstWordsRate(std::string& buffer, uint64_t interval)
+{
+	__COUT__ << std::endl;
+	OtsUDPFirmwareCore::writeAdvanced(buffer, 0x1002,interval);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

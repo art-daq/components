@@ -10,7 +10,7 @@
 //#include <iostream>
 //#include <cstdlib>
 //
-// using namespace ots;
+//using namespace ots;
 //
 //
 //// Updated from Jones' mails at 10 September 2014factor
@@ -66,7 +66,7 @@
 //
 //
 ////========================================================================================================================
-// VIPICFirmware::VIPICFirmware(unsigned int version, std::string type) :
+//VIPICFirmware::VIPICFirmware(unsigned int version, std::string type) :
 //		FrontEndFirmwareBase(version),
 //        pixelCSRRegisterValue_(0)
 //{
@@ -78,28 +78,27 @@
 //}
 //
 ////========================================================================================================================
-// VIPICFirmware::~VIPICFirmware()
+//VIPICFirmware::~VIPICFirmware()
 //{
 //	delete protocolInstance_;
 //	protocolInstance_= NULL;
 //}
 //
 ////========================================================================================================================
-// int VIPICFirmware::init()
+//int VIPICFirmware::init()
 //{
 //    return 0;
 //}
 //
 ////========================================================================================================================
-// std::string VIPICFirmware::configureClocks(std::string source, double frequency)
+//std::string VIPICFirmware::configureClocks(std::string source, double frequency)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Writing Clock configuration!" << std::endl;
 //
 //    std::string buffer;
 //
 //    setTimeStampClockSource(source);
-//    protocolInstance_->write(buffer, VIPIC_CSR, pixelCSRRegisterValue_); //  Reset CSR - reset trigger counter,
-//    external 27 MHz clock
+//    protocolInstance_->write(buffer, VIPIC_CSR, pixelCSRRegisterValue_); //  Reset CSR - reset trigger counter, external 27 MHz clock
 //
 //    resetDCMCSR(true);
 //    protocolInstance_->write(buffer, VIPIC_CSR, pixelCSRRegisterValue_); //  Set reset to DCM
@@ -111,14 +110,13 @@
 //
 //    protocolInstance_->waitSet(buffer, VIPIC_CSR,  1 << 30); //  Wait for DCM to lock
 //
-//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue :" << std::hex << pixelCSRRegisterValue_ << std::dec <<
-//    std::endl;
+//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue :" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
 //
 //    return buffer;
 //}
 //
 ////========================================================================================================================
-// std::string VIPICFirmware::resetBCO(void)
+//std::string VIPICFirmware::resetBCO(void)
 //{
 //    std::string buffer;
 //
@@ -130,13 +128,12 @@
 //
 //    protocolInstance_->waitSet(buffer, VIPIC_CSR, 1 << 30); //  Wait for DCM to lock
 //
-//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue :" << std::hex << pixelCSRRegisterValue_ << std::dec <<
-//    std::endl;
+//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue :" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
 //
 //    return buffer;
 //}
 ////========================================================================================================================
-// std::string VIPICFirmware::resetDetector(int reset)
+//std::string VIPICFirmware::resetDetector(int reset)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Resetting detector!" << std::endl;
 //    std::string buffer;
@@ -151,24 +148,23 @@
 //}
 //
 ////========================================================================================================================
-// std::string VIPICFirmware::enableTrigger(bool enable)
+//std::string VIPICFirmware::enableTrigger(bool enable)
 //{
 //    std::string buffer;
 //    std::cout << __COUT_HDR_FL__ << "Enabling Trigger!!!" << std::endl;
-//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue in :" << std::hex << pixelCSRRegisterValue_ << std::dec <<
-//    std::endl;
+//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue in :" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
 //
 //    enableTriggerDataStreamPixelCSR(enable);
 //    protocolInstance_->write(buffer, VIPIC_CSR, pixelCSRRegisterValue_);
 //
-//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue out:" << std::hex << pixelCSRRegisterValue_ << std::dec <<
-//    std::endl; std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue out:" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "Done enabling Trigger!!!" << std::endl;
 //
 //    return buffer;
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::setTimeStampClockSource(std::string clockSource)
+//void VIPICFirmware::setTimeStampClockSource(std::string clockSource)
 //{
 //    if (clockSource == "External")
 //        setTimeStampClockSourcePixelCSR(true);
@@ -177,54 +173,52 @@
 //    else
 //    {
 //        std::cout << __COUT_HDR_FL__ << "Configuration Error:\t" << std::endl;
-//        std::cout << __COUT_HDR_FL__ << clockSource << " is not a valid clock source (Internal/External values allowed
-//        only)"<< std::endl; assert(0);
+//        std::cout << __COUT_HDR_FL__ << clockSource << " is not a valid clock source (Internal/External values allowed only)"<< std::endl;
+//        assert(0);
 //    }
 //}
 //
 ////========================================================================================================================
-// std::string VIPICFirmware::resetTimeStamp()
+//std::string VIPICFirmware::resetTimeStamp()
 //{
 //    std::cout << __COUT_HDR_FL__ << "Reset Time Stamp!!!" << std::endl;
-//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue in :" << std::hex << pixelCSRRegisterValue_ << std::dec <<
-//    std::endl; std::string buffer;
+//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue in :" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
+//    std::string buffer;
 //
 //    ////    resetTriggerCounterPixelCSR(buffer);
 //    //    write(buffer, PIXEL_CSR, pixelCSRRegisterValue_);
-//    //    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue :" << std::hex << pixelCSRRegisterValue_ << std::dec
-//    << std::endl;
+//    //    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue :" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
 //    //
 //    //    // enableTimeStampPixelCSR(true);
 //    //    write(buffer, PIXEL_CSR, pixelCSRRegisterValue_);
-//    //    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue out:" << std::hex << pixelCSRRegisterValue_ <<
-//    std::dec << std::endl;
+//    //    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue out:" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
 //    //    std::cout << __COUT_HDR_FL__ << "Done reset Time Stamp!!!" << std::endl;
 //
 //    return buffer;
 //}
 //
 ////========================================================================================================================
-// std::string VIPICFirmware::startStream()
+//std::string VIPICFirmware::startStream()
 //{
 //    std::cout << __COUT_HDR_FL__ << "Start Stream!" << std::endl;
-//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue in:" << std::hex << pixelCSRRegisterValue_ << std::dec <<
-//    std::endl; std::string buffer;
+//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue in:" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
+//    std::string buffer;
 //
 //    enableStreamPixelCSR(true);
 //    protocolInstance_->write(buffer, VIPIC_CSR, pixelCSRRegisterValue_);
 //
-//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue out:" << std::hex << pixelCSRRegisterValue_ << std::dec <<
-//    std::endl; std::cout << __COUT_HDR_FL__ << "Done start Stream!" << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue out:" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "Done start Stream!" << std::endl;
 //
 //    return buffer;
 //}
 //
 ////========================================================================================================================
-// std::string VIPICFirmware::setUp()
+//std::string VIPICFirmware::setUp()
 //{
 //    std::cout << __COUT_HDR_FL__ << "Start Stream!" << std::endl;
-//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue in:" << std::hex << pixelCSRRegisterValue_ << std::dec <<
-//    std::endl; std::string buffer;
+//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue in:" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
+//    std::string buffer;
 //
 //    setPacketSizePixelCSR(6);
 //    prepareResetTimeStampCSR();
@@ -234,14 +228,14 @@
 //
 //    protocolInstance_->write(buffer, VIPIC_CSR, pixelCSRRegisterValue_);
 //
-//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue out:" << std::hex << pixelCSRRegisterValue_ << std::dec <<
-//    std::endl; std::cout << __COUT_HDR_FL__ << "Done start Stream!" << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "pixelCSRRegisterValue out:" << std::hex << pixelCSRRegisterValue_ << std::dec << std::endl;
+//    std::cout << __COUT_HDR_FL__ << "Done start Stream!" << std::endl;
 //
 //    return buffer;
 //}
 //
 ////========================================================================================================================
-// std::string VIPICFirmware::stopStream()
+//std::string VIPICFirmware::stopStream()
 //{
 //    std::string buffer;
 //    enableTriggerDataStreamPixelCSR(false);
@@ -251,7 +245,7 @@
 //
 //
 ////========================================================================================================================
-// void VIPICFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream)
+//void VIPICFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, const ROCStream& rocStream)
 //{
 //    std::cout << __COUT_HDR_FL__ << "\tMaking mask! " << std::endl;
 //    std::string mask = rocStream.getROCMask();
@@ -314,7 +308,7 @@
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::setFrequencyFromClockState(std::string& buffer, double frequency)
+//void VIPICFirmware::setFrequencyFromClockState(std::string& buffer, double frequency)
 //{
 //    std::cout << __COUT_HDR_FL__ << "Setting up clock frequency!!!" << std::endl;
 //
@@ -357,8 +351,7 @@
 //        }
 //        //The GCD has been found
 //
-//        if (gcd == 1) //if there's no GCD bigger than one, just divide by 2 to find the nearest approssimation with
-//        less bits
+//        if (gcd == 1) //if there's no GCD bigger than one, just divide by 2 to find the nearest approssimation with less bits
 //        {
 //            numerator /= 2;
 //            denominator /= 2;
@@ -379,28 +372,27 @@
 //}
 //
 ////========================================================================================================================
-// bool VIPICFirmware::isClockStateExternal()
+//bool VIPICFirmware::isClockStateExternal()
 //{
 //    return isClockStateExternalCSR();
 //}
 //
 ////========================================================================================================================
-// bool VIPICFirmware::isClockLocked()
+//bool VIPICFirmware::isClockLocked()
 //{
 //    return isClockLockedCSR();
 //}
 //
 //
 ////========================================================================================================================
-// void VIPICFirmware::setFrequencyRatio(std::string& buffer, int numerator, int denominator)
+//void VIPICFirmware::setFrequencyRatio(std::string& buffer, int numerator, int denominator)
 //{
-//    //The device need to load numerator minus one and denominator minus one, with an internal address of 0x50 and 0x52
-//    respectively protocolInstance_->write(buffer, VIPIC_DCM_DATA, 0x80500000 + (numerator - 1)); //  Set Time StampCLK
-//    numerator protocolInstance_->waitClear(buffer, VIPIC_DCM_DATA, 0xf0000000); //  Wait DCM write to finish
+//    //The device need to load numerator minus one and denominator minus one, with an internal address of 0x50 and 0x52 respectively
+//    protocolInstance_->write(buffer, VIPIC_DCM_DATA, 0x80500000 + (numerator - 1)); //  Set Time StampCLK numerator
+//    protocolInstance_->waitClear(buffer, VIPIC_DCM_DATA, 0xf0000000); //  Wait DCM write to finish
 //
-//    protocolInstance_->write(buffer, VIPIC_DCM_DATA, 0x80520000 + (denominator - 1)); //  Set Time StampCLK
-//    denominator protocolInstance_->waitClear(buffer, VIPIC_DCM_DATA, 0xf0000000); //  Wait DCM write to finish - Time
-//    Stamp frequency should be 13.513 MHz
+//    protocolInstance_->write(buffer, VIPIC_DCM_DATA, 0x80520000 + (denominator - 1)); //  Set Time StampCLK denominator
+//    protocolInstance_->waitClear(buffer, VIPIC_DCM_DATA, 0xf0000000); //  Wait DCM write to finish - Time Stamp frequency should be 13.513 MHz
 //}
 //
 ///*
@@ -408,25 +400,25 @@
 // */
 //
 ////========================================================================================================================
-// void VIPICFirmware::resetPixelCSRRegisterValue()
+//void VIPICFirmware::resetPixelCSRRegisterValue()
 //{
 //    pixelCSRRegisterValue_ = 0;
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::resetPixelDCMRegisterValue()
+//void VIPICFirmware::resetPixelDCMRegisterValue()
 //{
 //    pixelDCMRegisterValue_ = 0;
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::resetPixelClockRegisterValue()
+//void VIPICFirmware::resetPixelClockRegisterValue()
 //{
 //    pixelClockRegisterValue_ = 0;
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::resetPixelTestInjectRegisterValue()
+//void VIPICFirmware::resetPixelTestInjectRegisterValue()
 //{
 //    pixelTestInjectRegisterValue_ = 0;
 //}
@@ -438,19 +430,20 @@
 ////CSR
 //
 ////========================================================================================================================
-// void VIPICFirmware::setPacketSizePixelCSR(uint32_t size)
+//void VIPICFirmware::setPacketSizePixelCSR(uint32_t size)
 //{
 //    //Bit 7..3 . . . . Specifies packet size
 //    if (size > 31)
 //    {
-//        std::cout << __COUT_HDR_FL__ << "ERROR: Maximum packet size is 31 while here you are trying to set " <<
-//        std::endl; std::cout << __COUT_HDR_FL__ << size << " packets!" << std::endl; assert(0);
+//        std::cout << __COUT_HDR_FL__ << "ERROR: Maximum packet size is 31 while here you are trying to set " << std::endl;
+//        std::cout << __COUT_HDR_FL__ << size << " packets!" << std::endl;
+//        assert(0);
 //    }
 //    BitManipulator::insertBits(pixelCSRRegisterValue_, size, 3, 5);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::issueClearFIFOCSR(int delay)
+//void VIPICFirmware::issueClearFIFOCSR(int delay)
 //{
 //    //FIXME: Waiting for specfication from Matthew
 //    //Bit 9..8 . . . . Specifies delay before flushing partially filled packets
@@ -465,21 +458,21 @@
 //}
 //
 ////========================================================================================================================
-// bool VIPICFirmware::isClockStateExternalCSR() //returns true if the clock state is External
+//bool VIPICFirmware::isClockStateExternalCSR() //returns true if the clock state is External
 //{
 //    //Bit 16 . . . . . Selects external reference clock
 //    return BitManipulator::readBits(pixelCSRRegisterValue_, 16, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::setTimeStampClockSourcePixelCSR(bool externalClockSource)
+//void VIPICFirmware::setTimeStampClockSourcePixelCSR(bool externalClockSource)
 //{
 //    //Bit 16 . . . . . Selects external reference clock
 //    BitManipulator::insertBits(pixelCSRRegisterValue_, externalClockSource, 16, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::prepareResetTimeStampCSR()
+//void VIPICFirmware::prepareResetTimeStampCSR()
 //{
 //    //Prepares the logic to the global timestamp reset issued from the Master
 //    //Bit 19 . . . . . Arm TS reset logic
@@ -487,20 +480,20 @@
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::enableTimeStampCounterPixelCSR(bool enable)
+//void VIPICFirmware::enableTimeStampCounterPixelCSR(bool enable)
 //{
 //    //Bit 20 . . . . . Enables sending of TS counter on network stream
 //    BitManipulator::insertBits(pixelCSRRegisterValue_, (uint32_t) enable, 20, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::clearTriggerCounterPixelCSR()
+//void VIPICFirmware::clearTriggerCounterPixelCSR()
 //{
 //    //Bit 21 . . . . . Clears the trigger counter
 //    BitManipulator::insertBits(pixelCSRRegisterValue_, 1, 21, 1);
 //}
 ////========================================================================================================================
-// void VIPICFirmware::immediateResetTimeStampCSR()
+//void VIPICFirmware::immediateResetTimeStampCSR()
 //{
 //    //Resets the timestamp counter locally
 //    //Bit 22 . . . . . TS counter reset
@@ -508,35 +501,35 @@
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::enableStreamPixelCSR(bool enable)
+//void VIPICFirmware::enableStreamPixelCSR(bool enable)
 //{
 //    //Bit 23 . . . . . Enables the network stream interface
 //    BitManipulator::insertBits(pixelCSRRegisterValue_, (uint32_t) enable, 23, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::enableTriggerDataStreamPixelCSR(bool enable)
+//void VIPICFirmware::enableTriggerDataStreamPixelCSR(bool enable)
 //{
 //    //Bit 24 . . . . . Enables sending trigger data on network stream
 //    BitManipulator::insertBits(pixelCSRRegisterValue_, (uint32_t) enable, 24, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::resetNetworkPixelCSR(bool reset)
+//void VIPICFirmware::resetNetworkPixelCSR(bool reset)
 //{
 //    //Bit 28 . . . . . Resets the network stream interface (not self clearing)
 //    BitManipulator::insertBits(pixelCSRRegisterValue_, (uint32_t) reset, 28, 1);
 //}
 //
 ////========================================================================================================================
-// bool VIPICFirmware::isClockLockedCSR() //returns true if the clock is correctly locked
+//bool VIPICFirmware::isClockLockedCSR() //returns true if the clock is correctly locked
 //{
 //    //Bit 30 . . . . . DCM lock status (read only)
 //    return BitManipulator::readBits(pixelCSRRegisterValue_, 30, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::resetDCMCSR(bool reset)
+//void VIPICFirmware::resetDCMCSR(bool reset)
 //{
 //    //It should be called with 1, then a write must issued and then it must be called with 0
 //    //Bit 31 . . . . . Resets the DCM components (not self clearing)
@@ -546,21 +539,21 @@
 ////"Clock" Register
 //
 ////========================================================================================================================
-// void VIPICFirmware::waitTimeStampToReadCLK(uint8_t delay)
+//void VIPICFirmware::waitTimeStampToReadCLK(uint8_t delay)
 //{
 //    //Bit  7..0 . . . readout period in TS_clk cycles (delay)
 //    BitManipulator::insertBits(pixelClockRegisterValue_, delay, 0, 8);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::setReadsPerCycleCLK(uint8_t readsPerCycle)
+//void VIPICFirmware::setReadsPerCycleCLK(uint8_t readsPerCycle)
 //{
 //    //Bit 15..8 . . . Number of reads in a readout cycle.
 //    BitManipulator::insertBits(pixelClockRegisterValue_, readsPerCycle, 8, 8);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::setWaitingPerCycleCLK(uint8_t delay)
+//void VIPICFirmware::setWaitingPerCycleCLK(uint8_t delay)
 //{
 //    //Bit 19..16  . . Number of Serial_clk cycles (minus one) between readout
 //    //Suggested value is 3
@@ -568,21 +561,21 @@
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::assertCleanEndCLK(bool clean)
+//void VIPICFirmware::assertCleanEndCLK(bool clean)
 //{
 //    //Bit 20 - assert clean at the end of the read cycle
 //    BitManipulator::insertBits(pixelClockRegisterValue_, clean, 20, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::assertTimeStampEndCLK(bool timestamp)
+//void VIPICFirmware::assertTimeStampEndCLK(bool timestamp)
 //{
 //    //Bit 21 - send TS_clk signals
 //    BitManipulator::insertBits(pixelClockRegisterValue_, timestamp, 21, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::shiftBufferSetCLK(bool shift)
+//void VIPICFirmware::shiftBufferSetCLK(bool shift)
 //{
 //    //Bit 24  . . . . Write 1 to invoke the state machine that shifts the S
 //    //It loads the S buffer to the chip
@@ -591,7 +584,7 @@
 //
 //
 ////========================================================================================================================
-// void VIPICFirmware::shiftBufferResetCLK(bool shift)
+//void VIPICFirmware::shiftBufferResetCLK(bool shift)
 //{
 //    //Bit 25  . . . . Write 1 to invoke the state machine that shifts the R
 //    //It loads the R buffer to the chip
@@ -600,7 +593,7 @@
 //
 //
 ////========================================================================================================================
-// void VIPICFirmware::shiftBufferConfigurationCLK(bool shift)
+//void VIPICFirmware::shiftBufferConfigurationCLK(bool shift)
 //{
 //    //Bit 26  . . . . Write 1 to invoke the state machine that shifts the D
 //    //It loads the D buffer to the chip
@@ -608,14 +601,14 @@
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::assertLoadCLK(bool load)
+//void VIPICFirmware::assertLoadCLK(bool load)
 //{
 //    //Bit 27  . . . . Asserts the load signal for one serial_clk cycle.
 //    BitManipulator::insertBits(pixelClockRegisterValue_, load, 27, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::assertRestartCLK(bool restart)
+//void VIPICFirmware::assertRestartCLK(bool restart)
 //{
 //    //Bit 29  . . . . Asserts the restart signal for one serial_clk cycle.
 //    BitManipulator::insertBits(pixelClockRegisterValue_, restart, 29, 1);
@@ -623,14 +616,14 @@
 //
 //
 ////========================================================================================================================
-// void VIPICFirmware::stepTimeStampCLK(bool shift)
+//void VIPICFirmware::stepTimeStampCLK(bool shift)
 //{
 //    //Bit 30  . . . . Send one ts_clk pulse
 //    BitManipulator::insertBits(pixelClockRegisterValue_, shift, 30, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::stepReadCycleCLK(bool shift)
+//void VIPICFirmware::stepReadCycleCLK(bool shift)
 //{
 //    //Bit 31  . . . . Sends one ready cycle
 //    BitManipulator::insertBits(pixelClockRegisterValue_, shift, 31, 1);
@@ -644,7 +637,7 @@
 // */
 //
 ////========================================================================================================================
-// int VIPICFirmware::pixelIndex(int column, int row)
+//int VIPICFirmware::pixelIndex(int column, int row)
 //{
 //    //Returns the index of the selected pixel
 //    //FIXME: It is still to be decided if the sorting is forward or reverse
@@ -654,7 +647,7 @@
 //}
 //
 ////========================================================================================================================
-// int VIPICFirmware::pixelColumn(int index)
+//int VIPICFirmware::pixelColumn(int index)
 //{
 //    //Returns the column coordinate of the selected pixel
 //    //FIXME: It is still to be decided if the sorting is forward or reverse
@@ -663,7 +656,7 @@
 //}
 //
 ////========================================================================================================================
-// int VIPICFirmware::pixelRow(int index)
+//int VIPICFirmware::pixelRow(int index)
 //{
 //    //Returns the row coordinate of the selected pixel
 //    //FIXME: It is still to be decided if the sorting is forward or reverse
@@ -672,49 +665,49 @@
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::maskSetPixel(int index, bool force)
+//void VIPICFirmware::maskSetPixel(int index, bool force)
 //{
 //    //Forces a pixel to read without hit
 //    BitManipulator::insertBits(setBuffer_[index / 32], force, index % 32, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::maskOffPixel(int index, bool kill)
+//void VIPICFirmware::maskOffPixel(int index, bool kill)
 //{
 //    //Masks a pixel
 //    BitManipulator::insertBits(resetBuffer_[index / 32], kill, index % 32, 1);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::configurePixel(int index, uint16_t configure)
+//void VIPICFirmware::configurePixel(int index, uint16_t configure)
 //{
 //    //Configures a pixel
 //    BitManipulator::insertBits(configureBuffer_[index / 2], configure, 16 * (index % 2), 12);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::maskSetPixel(int column, int row, bool force)
+//void VIPICFirmware::maskSetPixel(int column, int row, bool force)
 //{
 //    //Forces a pixel to read without hit
 //    maskSetPixel(pixelIndex(column, row), force);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::maskOffPixel(int column, int row, bool kill)
+//void VIPICFirmware::maskOffPixel(int column, int row, bool kill)
 //{
 //    //Masks a pixel
 //    maskOffPixel(pixelIndex(column, row), kill);
 //}
 //
 ////========================================================================================================================
-// void VIPICFirmware::configurePixel(int column, int row, uint16_t configure)
+//void VIPICFirmware::configurePixel(int column, int row, uint16_t configure)
 //{
 //    //Configures a pixel
 //    configurePixel(pixelIndex(column, row), configure);
 //}
 //
 ////========================================================================================================================
-// bool VIPICFirmware::getSetMaskPixel(int column, int row)
+//bool VIPICFirmware::getSetMaskPixel(int column, int row)
 //{
 //    //Must be used after the load of the buffer from the device to seek for errors in the chain
 //    int index = pixelIndex(column, row);
@@ -722,7 +715,7 @@
 //}
 //
 ////========================================================================================================================
-// bool VIPICFirmware::getResetMaskPixel(int column, int row)
+//bool VIPICFirmware::getResetMaskPixel(int column, int row)
 //{
 //    //Must be used after the load of the buffer from the device to seek for errors in the chain
 //    int index = pixelIndex(column, row);
@@ -730,7 +723,7 @@
 //}
 //
 ////========================================================================================================================
-// bool VIPICFirmware::getConfigurationPixel(int column, int row)
+//bool VIPICFirmware::getConfigurationPixel(int column, int row)
 //{
 //    //Must be used after the load of the buffer from the device to seek for errors in the chain
 //    int index = pixelIndex(column, row);
