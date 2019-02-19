@@ -6,8 +6,8 @@ namespace ots
 class VROCDefinitions
 {
   public:
-	VROCDefinitions () { ; }
-	virtual ~VROCDefinitions (void) { ; }
+	VROCDefinitions() { ; }
+	virtual ~VROCDefinitions(void) { ; }
 
   private:
 };

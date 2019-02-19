@@ -12,36 +12,34 @@
 //#include <iostream>
 //#include <algorithm>
 //#include <string.h>
-//#include "otsdaq-components/UserConfigurationDataFormats/FEOtsUDPFSSRInterfaceConfiguration.h"
+//#include
+//"otsdaq-components/UserConfigurationDataFormats/FEOtsUDPFSSRInterfaceConfiguration.h"
 
 using namespace ots;
 
 //========================================================================================================================
-OtsUDPFirmwareDataGen::OtsUDPFirmwareDataGen (unsigned int version)
-    : OtsUDPFirmwareCore (version)
+OtsUDPFirmwareDataGen::OtsUDPFirmwareDataGen(unsigned int version)
+    : OtsUDPFirmwareCore(version)
 {
 }
 
 //========================================================================================================================
-OtsUDPFirmwareDataGen::~OtsUDPFirmwareDataGen (void)
-{
-}
+OtsUDPFirmwareDataGen::~OtsUDPFirmwareDataGen(void) {}
 
 //========================================================================================================================
-void OtsUDPFirmwareDataGen::init (void)
-{
-}
+void OtsUDPFirmwareDataGen::init(void) {}
 
 //========================================================================================================================
-void OtsUDPFirmwareDataGen::setNumberOfBurstWords (std::string& buffer, uint64_t numberOfWords)
+void OtsUDPFirmwareDataGen::setNumberOfBurstWords(std::string& buffer,
+                                                  uint64_t     numberOfWords)
 {
 	__COUT__ << std::endl;
-	OtsUDPFirmwareCore::writeAdvanced (buffer, 0x1001, numberOfWords);
+	OtsUDPFirmwareCore::writeAdvanced(buffer, 0x1001, numberOfWords);
 }
 
 //========================================================================================================================
-void OtsUDPFirmwareDataGen::setBurstWordsRate (std::string& buffer, uint64_t interval)
+void OtsUDPFirmwareDataGen::setBurstWordsRate(std::string& buffer, uint64_t interval)
 {
 	__COUT__ << std::endl;
-	OtsUDPFirmwareCore::writeAdvanced (buffer, 0x1002, interval);
+	OtsUDPFirmwareCore::writeAdvanced(buffer, 0x1002, interval);
 }

@@ -9,12 +9,12 @@
 
 namespace ots
 {
-DAQHardwareBase::DAQHardwareBase ()
+DAQHardwareBase::DAQHardwareBase()
 {
 	// TODO Auto-generated constructor stub
 }
 
-DAQHardwareBase::~DAQHardwareBase ()
+DAQHardwareBase::~DAQHardwareBase()
 {
 	// TODO Auto-generated destructor stub
 }

@@ -10,10 +10,10 @@ class ConfigurationTree;
 class FSSRDACsConfiguration
 {
   public:
-	FSSRDACsConfiguration (void);
-	virtual ~FSSRDACsConfiguration (void);
+	FSSRDACsConfiguration(void);
+	virtual ~FSSRDACsConfiguration(void);
 
-	const ROCDACs getROCDACs (const ConfigurationTree& dacsConfiguration);
+	const ROCDACs getROCDACs(const ConfigurationTree& dacsConfiguration);
 
   private:
 	std::map<std::string, unsigned int> dacNameToDACAddress_;

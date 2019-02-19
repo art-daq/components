@@ -1,4 +1,4 @@
-#cet_make(LIBRARY_NAME UserConfigurationDataFormats
+#cet_make(LIBRARY_NAME UserTableCore
 #		 LIBRARIES
 #         FECore
 #         ${CETLIB}
@@ -9,37 +9,37 @@
 
 
 simple_plugin(FEWROtsUDPFSSRInterfaceConfiguration "configuration"
-  ConfigurationDataFormats  
+  TableCore  
   ConfigurationInterface
   ${CETLIB}
   )
     
 simple_plugin(FEWROtsUDPTemplateInterfaceConfiguration "configuration"
-  ConfigurationDataFormats  
+  TableCore  
   ConfigurationInterface
   ${CETLIB}
   )
   
 simple_plugin(FEWRNIMPlusInterfaceConfiguration "configuration"
-  ConfigurationDataFormats 
+  TableCore 
   ConfigurationInterface 
   ${CETLIB}
   )
     
 simple_plugin(FEWRPurdueFSSRInterfaceConfiguration "configuration"
-  ConfigurationDataFormats 
+  TableCore 
   ConfigurationInterface 
   ${CETLIB}
   )
     
 simple_plugin(FEPurdueNetworkMasterInterfaceConfiguration "configuration"
-  ConfigurationDataFormats  
+  TableCore  
   ConfigurationInterface
   ${CETLIB}
   )
 
 simple_plugin(FSSRDACsConfiguration "configuration"
-  ConfigurationDataFormats  
+  TableCore  
   ConfigurationInterface
   ${CETLIB}
   )

@@ -1,20 +1,20 @@
 #ifndef _ots_FSSRDACsConfiguration_h_
 #define _ots_FSSRDACsConfiguration_h_
 
-#include "otsdaq-core/ConfigurationDataFormats/DACsConfigurationBase.h"
+#include "otsdaq-core/ConfigurationDataFormats/DACsTableBase.h"
 
 namespace ots
 {
-class FSSRDACsConfiguration : public DACsConfigurationBase
+class FSSRDACsConfiguration : public DACsTableBase
 {
   public:
-	FSSRDACsConfiguration (void);
-	virtual ~FSSRDACsConfiguration (void);
+	FSSRDACsConfiguration(void);
+	virtual ~FSSRDACsConfiguration(void);
 
-	//Methods
-	//void init(ConfigurationManager *configManager);
+	// Methods
+	// void init(ConfigurationManager *configManager);
 
-	//Getters
+	// Getters
 
   private:
 	enum
