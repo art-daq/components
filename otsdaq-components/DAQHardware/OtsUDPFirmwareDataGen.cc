@@ -13,7 +13,7 @@
 //#include <algorithm>
 //#include <string.h>
 //#include
-//"otsdaq-components/UserConfigurationDataFormats/FEOtsUDPFSSRInterfaceConfiguration.h"
+//"otsdaq-components/UserConfigurationDataFormats/FEOtsUDPFSSRInterfaceTable.h"
 
 using namespace ots;
 

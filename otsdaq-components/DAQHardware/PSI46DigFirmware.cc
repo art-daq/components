@@ -1052,7 +1052,7 @@
 ////#include "otsdaq/DetectorHardware/PSI46DigROCDefinitions.h"
 ////#include "otsdaq-core/MessageFacility/MessageFacility.h"
 //#include "otsdaq-core/Macros/CoutMacros.h"
-////#include "otsdaq-core/ConfigurationDataFormats/OtsUDPFEWConfiguration.h"
+////#include "otsdaq-core/ConfigurationDataFormats/OtsUDPFEWTable.h"
 ////
 ////#include <sys/socket.h>
 ////#include <netinet/in.h>
