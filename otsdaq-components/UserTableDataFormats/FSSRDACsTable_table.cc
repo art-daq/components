@@ -1,6 +1,6 @@
-#include "otsdaq-components/UserTableDataFormats/FSSRDACsConfiguration.h"
 #include <iostream>
 #include "../../../otsdaq/otsdaq-core/Macros/TablePluginMacros.h"
+#include "otsdaq-components/UserTableDataFormats/FSSRDACsConfiguration.h"
 
 using namespace ots;
 

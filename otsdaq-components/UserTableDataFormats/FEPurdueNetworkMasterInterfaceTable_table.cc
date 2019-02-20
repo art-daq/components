@@ -1,13 +1,12 @@
-#include "otsdaq-components/UserTableDataFormats/FEPurdueNetworkMasterInterfaceTable.h"
-#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 #include <iostream>
 #include "../../../otsdaq/otsdaq-core/Macros/TablePluginMacros.h"
+#include "otsdaq-components/UserTableDataFormats/FEPurdueNetworkMasterInterfaceTable.h"
+#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 
 using namespace ots;
 
 //==============================================================================
-FEPurdueNetworkMasterInterfaceTable::FEPurdueNetworkMasterInterfaceTable(
-    void)
+FEPurdueNetworkMasterInterfaceTable::FEPurdueNetworkMasterInterfaceTable(void)
     : FEInterfaceTableBase("FEPurdueNetworkMasterInterfaceTable")
 {
 	//////////////////////////////////////////////////////////////////////
@@ -35,14 +34,10 @@ FEPurdueNetworkMasterInterfaceTable::FEPurdueNetworkMasterInterfaceTable(
 }
 
 //==============================================================================
-FEPurdueNetworkMasterInterfaceTable::~FEPurdueNetworkMasterInterfaceTable(
-    void)
-{
-}
+FEPurdueNetworkMasterInterfaceTable::~FEPurdueNetworkMasterInterfaceTable(void) {}
 
 //==============================================================================
-void FEPurdueNetworkMasterInterfaceTable::init(
-    ConfigurationManager* configManager)
+void FEPurdueNetworkMasterInterfaceTable::init(ConfigurationManager* configManager)
 {
 	/*
 	std::string       enumValue1;
@@ -92,8 +87,7 @@ std::string FEPurdueNetworkMasterInterfaceTable::getIPAddress(
 }
 
 //==============================================================================
-unsigned int FEPurdueNetworkMasterInterfaceTable::getPort(
-    std::string interfaceID) const
+unsigned int FEPurdueNetworkMasterInterfaceTable::getPort(std::string interfaceID) const
 {
 	unsigned int tmpPort;
 	TableBase::activeTableView_->getValue(

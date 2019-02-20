@@ -133,21 +133,21 @@
 ////    std::string enableTrigger  (void);
 ////
 ////    void makeDACSequence 				(FirmwareSequence<uint64_t>& sequence,
-///unsigned  int  channel, const ROCStream& rocStream); /    void makeMaskSequence
+/// unsigned  int  channel, const ROCStream& rocStream); /    void makeMaskSequence
 ///(FirmwareSequence<uint64_t>& sequence, unsigned int channel, const ROCStream&
 /// rocStream);
 ////    void makeDACSequence 				(FirmwareSequence<uint32_t>& sequence,
-///unsigned  int  channel, const ROCStream& rocStream); /    void makeDACBuffer
+/// unsigned  int  channel, const ROCStream& rocStream); /    void makeDACBuffer
 /// (std::string& buffer,  unsigned int channel, const ROCStream& rocStream); /    void
 /// makeDACBuffer
 /// (std::vector<std::string>& buffer, unsigned int channel, const  ROCStream& rocStream);
 ////    void makeMaskSequence				(FirmwareSequence<uint32_t>& sequence,
-///unsigned  int  channel, const ROCStream& rocStream); /    void makeMaskBuffer
-/// (std::string&  buffer, unsigned int channel, const ROCStream& rocStream); /  std::string
-/// compareSendAndReceive	(const std::string& sentBuffer, std::string&  acknowledgment);
-/// /    uint32_t createRegisterFromValue	(std::string& readBuffer,  std::string&
-/// receivedValue); /    void setFrequencyFromClockState		(std::string&  buffer,
-/// double inputedFrequency); /    bool isClockStateExternal			();
+/// unsigned  int  channel, const ROCStream& rocStream); /    void makeMaskBuffer
+/// (std::string&  buffer, unsigned int channel, const ROCStream& rocStream); /
+/// std::string compareSendAndReceive	(const std::string& sentBuffer, std::string&
+/// acknowledgment); /    uint32_t createRegisterFromValue	(std::string& readBuffer,
+/// std::string& receivedValue); /    void setFrequencyFromClockState		(std::string&
+/// buffer, double inputedFrequency); /    bool isClockStateExternal			();
 ////
 ////    //FER specific methods
 ////    std::string setDataDestination(std::string ip, unsigned int port);

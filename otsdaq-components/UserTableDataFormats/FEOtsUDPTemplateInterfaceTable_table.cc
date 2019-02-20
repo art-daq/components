@@ -1,5 +1,5 @@
-#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 #include <iostream>
+#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 
 #include "../../../otsdaq/otsdaq-core/Macros/TablePluginMacros.h"
 #include "otsdaq-components/UserTableDataFormats/FEOtsUDPTemplateInterfaceTable.h"
@@ -42,9 +42,7 @@ FEWROtsUDPTemplateInterfaceTable::FEWROtsUDPTemplateInterfaceTable(void)
 }
 
 //==============================================================================
-FEWROtsUDPTemplateInterfaceTable::~FEWROtsUDPTemplateInterfaceTable(void)
-{
-}
+FEWROtsUDPTemplateInterfaceTable::~FEWROtsUDPTemplateInterfaceTable(void) {}
 
 //==============================================================================
 void FEWROtsUDPTemplateInterfaceTable::init(ConfigurationManager* configManager)
@@ -85,8 +83,7 @@ unsigned int FEWROtsUDPTemplateInterfaceTable::getFirmwareVersion(
 }
 
 //==============================================================================
-std::string FEWROtsUDPTemplateInterfaceTable::getIPAddress(
-    std::string interfaceID) const
+std::string FEWROtsUDPTemplateInterfaceTable::getIPAddress(std::string interfaceID) const
 {
 	std::string tmpIPAddress;
 	TableBase::activeTableView_->getValue(
@@ -97,8 +94,7 @@ std::string FEWROtsUDPTemplateInterfaceTable::getIPAddress(
 }
 
 //==============================================================================
-unsigned int FEWROtsUDPTemplateInterfaceTable::getPort(
-    std::string interfaceID) const
+unsigned int FEWROtsUDPTemplateInterfaceTable::getPort(std::string interfaceID) const
 {
 	unsigned int tmpPort;
 	TableBase::activeTableView_->getValue(
@@ -155,8 +151,7 @@ unsigned int FEWROtsUDPTemplateInterfaceTable::getStreamingPort(
 }
 
 //==============================================================================
-int FEWROtsUDPTemplateInterfaceTable::getNumberOfWords(
-    std::string interfaceID) const
+int FEWROtsUDPTemplateInterfaceTable::getNumberOfWords(std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
 	TableBase::activeTableView_->getValue(
@@ -167,8 +162,7 @@ int FEWROtsUDPTemplateInterfaceTable::getNumberOfWords(
 }
 
 //==============================================================================
-unsigned int FEWROtsUDPTemplateInterfaceTable::getDataRate(
-    std::string interfaceID) const
+unsigned int FEWROtsUDPTemplateInterfaceTable::getDataRate(std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
 	TableBase::activeTableView_->getValue(

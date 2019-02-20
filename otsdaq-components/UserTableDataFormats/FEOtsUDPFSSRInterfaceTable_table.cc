@@ -1,5 +1,5 @@
-#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 #include <iostream>
+#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 
 #include "../../../otsdaq/otsdaq-core/Macros/TablePluginMacros.h"
 #include "otsdaq-components/UserTableDataFormats/FEOtsUDPFSSRInterfaceTable.h"
@@ -80,8 +80,7 @@ bool FEOtsUDPFSSRInterfaceTable::getStatus(std::string interfaceID) const
 }
 
 //==============================================================================
-unsigned int FEOtsUDPFSSRInterfaceTable::getFirmwareVersion(
-    std::string interfaceID) const
+unsigned int FEOtsUDPFSSRInterfaceTable::getFirmwareVersion(std::string interfaceID) const
 {
 	unsigned int tmpFirmwareVersion;
 	TableBase::activeTableView_->getValue(
@@ -92,8 +91,7 @@ unsigned int FEOtsUDPFSSRInterfaceTable::getFirmwareVersion(
 }
 
 //==============================================================================
-std::string FEOtsUDPFSSRInterfaceTable::getIPAddress(
-    std::string interfaceID) const
+std::string FEOtsUDPFSSRInterfaceTable::getIPAddress(std::string interfaceID) const
 {
 	std::string tmpIPAddress;
 	TableBase::activeTableView_->getValue(
@@ -125,8 +123,7 @@ std::string FEOtsUDPFSSRInterfaceTable::getInterfaceIPAddress(
 }
 
 //==============================================================================
-unsigned int FEOtsUDPFSSRInterfaceTable::getInterfacePort(
-    std::string interfaceID) const
+unsigned int FEOtsUDPFSSRInterfaceTable::getInterfacePort(std::string interfaceID) const
 {
 	unsigned int tmpInterfacePort;
 	TableBase::activeTableView_->getValue(
@@ -149,8 +146,7 @@ std::string FEOtsUDPFSSRInterfaceTable::getStreamingIPAddress(
 }
 
 //==============================================================================
-unsigned int FEOtsUDPFSSRInterfaceTable::getStreamingPort(
-    std::string interfaceID) const
+unsigned int FEOtsUDPFSSRInterfaceTable::getStreamingPort(std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
 	TableBase::activeTableView_->getValue(
@@ -161,8 +157,7 @@ unsigned int FEOtsUDPFSSRInterfaceTable::getStreamingPort(
 }
 
 //==============================================================================
-std::string FEOtsUDPFSSRInterfaceTable::getClockSelect(
-    std::string interfaceID) const
+std::string FEOtsUDPFSSRInterfaceTable::getClockSelect(std::string interfaceID) const
 {
 	std::string tmpClockSelect;
 	TableBase::activeTableView_->getValue(
@@ -185,7 +180,7 @@ double FEOtsUDPFSSRInterfaceTable::getClockSpeedMHz(std::string interfaceID) con
 
 //==============================================================================
 bool FEOtsUDPFSSRInterfaceTable::getChannelStatus(std::string  interfaceID,
-                                                          unsigned int channel) const
+                                                  unsigned int channel) const
 {
 	bool tmpStatus;
 	switch(channel)

@@ -1,7 +1,7 @@
-#include "otsdaq-components/UserTableDataFormats/FENIMPlusInterfaceTable.h"
-#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 #include <iostream>
 #include "../../../otsdaq/otsdaq-core/Macros/TablePluginMacros.h"
+#include "otsdaq-components/UserTableDataFormats/FENIMPlusInterfaceTable.h"
+#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 
 using namespace ots;
 
@@ -79,8 +79,7 @@ bool FENIMPlusInterfaceTable::getStatus(std::string interfaceID) const
 }
 
 //==============================================================================
-unsigned int FENIMPlusInterfaceTable::getFirmwareVersion(
-    std::string interfaceID) const
+unsigned int FENIMPlusInterfaceTable::getFirmwareVersion(std::string interfaceID) const
 {
 	unsigned int tmpFirmwareVersion;
 	TableBase::activeTableView_->getValue(
@@ -111,8 +110,7 @@ unsigned int FENIMPlusInterfaceTable::getPort(std::string interfaceID) const
 }
 
 //==============================================================================
-std::string FENIMPlusInterfaceTable::getInterfaceIPAddress(
-    std::string interfaceID) const
+std::string FENIMPlusInterfaceTable::getInterfaceIPAddress(std::string interfaceID) const
 {
 	std::string tmpInterfaceIPAddress;
 	TableBase::activeTableView_->getValue(
@@ -123,8 +121,7 @@ std::string FENIMPlusInterfaceTable::getInterfaceIPAddress(
 }
 
 //==============================================================================
-unsigned int FENIMPlusInterfaceTable::getInterfacePort(
-    std::string interfaceID) const
+unsigned int FENIMPlusInterfaceTable::getInterfacePort(std::string interfaceID) const
 {
 	unsigned int tmpInterfacePort;
 	TableBase::activeTableView_->getValue(
@@ -135,8 +132,7 @@ unsigned int FENIMPlusInterfaceTable::getInterfacePort(
 }
 
 //==============================================================================
-std::string FENIMPlusInterfaceTable::getStreamingIPAddress(
-    std::string interfaceID) const
+std::string FENIMPlusInterfaceTable::getStreamingIPAddress(std::string interfaceID) const
 {
 	std::string tmpStreamingIPAddress;
 	TableBase::activeTableView_->getValue(
@@ -147,8 +143,7 @@ std::string FENIMPlusInterfaceTable::getStreamingIPAddress(
 }
 
 //==============================================================================
-unsigned int FENIMPlusInterfaceTable::getStreamingPort(
-    std::string interfaceID) const
+unsigned int FENIMPlusInterfaceTable::getStreamingPort(std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
 	TableBase::activeTableView_->getValue(
@@ -182,7 +177,7 @@ double FENIMPlusInterfaceTable::getClockSpeedMHz(std::string interfaceID) const
 
 //==============================================================================
 bool FENIMPlusInterfaceTable::getChannelStatus(std::string  interfaceID,
-                                                       unsigned int channel) const
+                                               unsigned int channel) const
 {
 	bool tmpStatus;
 	switch(channel)

@@ -121,8 +121,8 @@ class FrontEndFirmwareBase
 		return 0;
 	};
 	// virtual std::string  compareSendAndReceive       (const std::string& sentBuffer,
-	// std::string& acknowledgment)						{__SS__; __THROW__(ss.str() + "Illegal
-	// call to undefined base class member function"); return "";};
+	// std::string& acknowledgment)						{__SS__; __THROW__(ss.str() +
+	// "Illegal call to undefined base class member function"); return "";};
 	virtual uint32_t createRegisterFromValue(std::string& readBuffer,
 	                                         std::string& receivedValue)
 	{

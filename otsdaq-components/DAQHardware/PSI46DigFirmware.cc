@@ -1331,7 +1331,8 @@
 ////		write(buffer, ChannelFIFOAddress[channel], it->second.second);
 ////		uint32_t registerHeader = PSI46DigROCDefinitions::makeDACWriteHeader(
 ////				rocStream.getFEWROCAddress(), it->first);
-////		//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " << channel
+////		//std::cout << __COUT_HDR_FL__ << __PRETTY_FUNCTION__ << "Channel: " <<
+///channel
 ///<< "  Register: " << it->first << " value: " << it->second.second << hex << " -> Data:
 ///" <<
 /// registerHeader << dec << std::endl; /		//Insert channel /

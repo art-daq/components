@@ -1,5 +1,5 @@
-#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 #include <iostream>
+#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 
 #include "../../../otsdaq/otsdaq-core/Macros/TablePluginMacros.h"
 #include "otsdaq-components/UserTableDataFormats/FEOtsUDPLCLS2InterfaceTable.h"
@@ -83,8 +83,7 @@ unsigned int FEOtsUDPLCLS2InterfaceTable::getFirmwareVersion(
 }
 
 //==============================================================================
-std::string FEOtsUDPLCLS2InterfaceTable::getIPAddress(
-    std::string interfaceID) const
+std::string FEOtsUDPLCLS2InterfaceTable::getIPAddress(std::string interfaceID) const
 {
 	std::string tmpIPAddress;
 	TableBase::activeTableView_->getValue(
@@ -116,8 +115,7 @@ std::string FEOtsUDPLCLS2InterfaceTable::getInterfaceIPAddress(
 }
 
 //==============================================================================
-unsigned int FEOtsUDPLCLS2InterfaceTable::getInterfacePort(
-    std::string interfaceID) const
+unsigned int FEOtsUDPLCLS2InterfaceTable::getInterfacePort(std::string interfaceID) const
 {
 	unsigned int tmpInterfacePort;
 	TableBase::activeTableView_->getValue(
@@ -140,8 +138,7 @@ std::string FEOtsUDPLCLS2InterfaceTable::getStreamingIPAddress(
 }
 
 //==============================================================================
-unsigned int FEOtsUDPLCLS2InterfaceTable::getStreamingPort(
-    std::string interfaceID) const
+unsigned int FEOtsUDPLCLS2InterfaceTable::getStreamingPort(std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
 	TableBase::activeTableView_->getValue(
@@ -163,8 +160,7 @@ int FEOtsUDPLCLS2InterfaceTable::getNumberOfWords(std::string interfaceID) const
 }
 
 //==============================================================================
-unsigned int FEOtsUDPLCLS2InterfaceTable::getDataRate(
-    std::string interfaceID) const
+unsigned int FEOtsUDPLCLS2InterfaceTable::getDataRate(std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
 	TableBase::activeTableView_->getValue(

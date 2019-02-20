@@ -1,5 +1,5 @@
-#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 #include <iostream>
+#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 
 #include "../../../otsdaq/otsdaq-core/Macros/TablePluginMacros.h"
 #include "otsdaq-components/UserTableDataFormats/FEPurdueFSSRInterfaceTable.h"
@@ -70,8 +70,7 @@ bool FEPurdueFSSRInterfaceTable::getStatus(std::string interfaceID) const
 }
 
 //==============================================================================
-unsigned int FEPurdueFSSRInterfaceTable::getFirmwareVersion(
-    std::string interfaceID) const
+unsigned int FEPurdueFSSRInterfaceTable::getFirmwareVersion(std::string interfaceID) const
 {
 	unsigned int tmpFirmwareVersion;
 	TableBase::activeTableView_->getValue(
@@ -82,8 +81,7 @@ unsigned int FEPurdueFSSRInterfaceTable::getFirmwareVersion(
 }
 
 //==============================================================================
-std::string FEPurdueFSSRInterfaceTable::getIPAddress(
-    std::string interfaceID) const
+std::string FEPurdueFSSRInterfaceTable::getIPAddress(std::string interfaceID) const
 {
 	std::string tmpIPAddress;
 	TableBase::activeTableView_->getValue(
@@ -115,8 +113,7 @@ std::string FEPurdueFSSRInterfaceTable::getInterfaceIPAddress(
 }
 
 //==============================================================================
-unsigned int FEPurdueFSSRInterfaceTable::getInterfacePort(
-    std::string interfaceID) const
+unsigned int FEPurdueFSSRInterfaceTable::getInterfacePort(std::string interfaceID) const
 {
 	unsigned int tmpInterfacePort;
 	TableBase::activeTableView_->getValue(
@@ -139,8 +136,7 @@ std::string FEPurdueFSSRInterfaceTable::getStreamingIPAddress(
 }
 
 //==============================================================================
-unsigned int FEPurdueFSSRInterfaceTable::getStreamingPort(
-    std::string interfaceID) const
+unsigned int FEPurdueFSSRInterfaceTable::getStreamingPort(std::string interfaceID) const
 {
 	unsigned int tmpStreamingPort;
 	TableBase::activeTableView_->getValue(
@@ -151,8 +147,7 @@ unsigned int FEPurdueFSSRInterfaceTable::getStreamingPort(
 }
 
 //==============================================================================
-std::string FEPurdueFSSRInterfaceTable::getClockSelect(
-    std::string interfaceID) const
+std::string FEPurdueFSSRInterfaceTable::getClockSelect(std::string interfaceID) const
 {
 	std::string tmpClockSelect;
 	TableBase::activeTableView_->getValue(
@@ -175,7 +170,7 @@ double FEPurdueFSSRInterfaceTable::getClockSpeedMHz(std::string interfaceID) con
 
 //==============================================================================
 bool FEPurdueFSSRInterfaceTable::getChannelStatus(std::string  interfaceID,
-                                                          unsigned int channel) const
+                                                  unsigned int channel) const
 {
 	bool tmpStatus;
 	switch(channel)
