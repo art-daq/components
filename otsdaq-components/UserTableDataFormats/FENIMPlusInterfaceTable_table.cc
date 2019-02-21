@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../../../otsdaq/otsdaq-core/Macros/TablePluginMacros.h"
+#include "otsdaq-core/Macros/TablePluginMacros.h"
 #include "otsdaq-components/UserTableDataFormats/FENIMPlusInterfaceTable.h"
 #include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
 
