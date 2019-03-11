@@ -1,4 +1,4 @@
-add_subdirectory(ControlsInterfacePlugins)
+add_subdirectory(SlowControlsInterfacePlugins)
 add_subdirectory(DAQHardware)
 add_subdirectory(DataProcessorPlugins)
 add_subdirectory(DetectorConfiguration)

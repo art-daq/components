@@ -18,7 +18,7 @@
 #include_directories($ENV{EPICS_BASE}/include/compiler/gcc)
 #include_directories($ENV{EPICS_BASE}/include/lib/linux-x86_64)
 #include_directories($ENV{XERCES_C_INC})
-#simple_plugin(EpicsInterface "monitor"	
+#simple_plugin(EpicsInterface "controls"	
 #	 ${EPICS_CA}
 #	 ${EPICS_COM}
 #	 ${XDAQ_BASIC_LIB_LIST}	 
@@ -26,8 +26,8 @@
 #	 $ENV{XERCES_C_LIB}/libxerces-c.so
 #  )
 
-simple_plugin(ControlsOtsInterface "controls"	
-    ControlsCore   
+simple_plugin(OtsSlowControlsInterface "controls"	
+    SlowControlsCore   
   )
 
 install_headers()
