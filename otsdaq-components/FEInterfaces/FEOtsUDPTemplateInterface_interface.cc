@@ -390,9 +390,9 @@ void ots::FEOtsUDPTemplateInterface::universalRead(char* address, char* returnVa
 {
 	__FE_COUT__ << "address size " << universalAddressSize_ << __E__;
 
-	__FE_COUT__ << "Universal Read Address: ";
+	__FE_COUT__ << "Universal Read Address: 0x";
 	for(unsigned int i = 0; i < universalAddressSize_; ++i)
-		printf("%2.2X", (unsigned char)address[i]);
+		printf("%2.2X", (unsigned char)address[universalAddressSize_-1-i]);
 	std::cout << __E__;
 
 	std::string readBuffer, sendBuffer;
@@ -403,9 +403,9 @@ void ots::FEOtsUDPTemplateInterface::universalRead(char* address, char* returnVa
 	__FE_COUT__ << "Result SIZE: " << readBuffer.size() << __E__;
 	std::memcpy(returnValue, readBuffer.substr(2).c_str(), universalDataSize_);
 
-	__FE_COUT__ << "Universal Read Data: ";
+	__FE_COUT__ << "Universal Read Data: 0x";
 	for(unsigned int i = 0; i < universalDataSize_; ++i)
-		printf("%2.2X", (unsigned char)returnValue[i]);
+		printf("%2.2X", (unsigned char)returnValue[universalDataSize_-1-i]);
 	std::cout << __E__;
 
 }  // end universalRead()
@@ -417,13 +417,13 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 {
 	__FE_COUT__ << "address size " << universalAddressSize_ << __E__;
 	__FE_COUT__ << "data size " << universalDataSize_ << __E__;
-	__FE_COUT__ << "Universal Write Address: ";
+	__FE_COUT__ << "Universal Write Address: 0x";
 	for(unsigned int i = 0; i < universalAddressSize_; ++i)
-		printf("%2.2X", (unsigned char)address[i]);
+		printf("%2.2X", (unsigned char)address[universalAddressSize_-1-i]);
 	std::cout << __E__;
-	__FE_COUT__ << "Universal Write Data: ";
+	__FE_COUT__ << "Universal Write Data: 0x";
 	for(unsigned int i = 0; i < universalDataSize_; ++i)
-		printf("%2.2X", (unsigned char)writeValue[i]);
+		printf("%2.2X", (unsigned char)writeValue[universalDataSize_-1-i]);
 	std::cout << __E__;
 
 	std::string sendBuffer;
