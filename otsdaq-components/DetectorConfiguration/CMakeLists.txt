@@ -1,6 +1,6 @@
 cet_make(LIBRARY_NAME DetectorConfiguration
 		 LIBRARIES
-		 ConfigurationDataFormats
+		 TableCore
 		 ConfigurationInterface
 		 Macros
 )

@@ -1,7 +1,8 @@
+add_subdirectory(SlowControlsInterfacePlugins)
 add_subdirectory(DAQHardware)
 add_subdirectory(DataProcessorPlugins)
 add_subdirectory(DetectorConfiguration)
 add_subdirectory(DetectorHardware)
 add_subdirectory(FEInterfaces)
-#add_subdirectory(UserConfigurationDataFormats)
+#add_subdirectory(UserTableCore)
 

@@ -5,7 +5,7 @@ cet_make_exec(InterfaceTestMain
 		ConfigurationInterface
 		#DAQHardware
 		FEInterfaces
-		#ConfigurationDataFormats
+		#TableCore
         #WorkLoopManager
         #SupervisorConfigurations
         #CgiDataUtilities

@@ -1,25 +1,22 @@
 #ifndef _ots_FSSRDACsConfiguration_h_
 #define _ots_FSSRDACsConfiguration_h_
 
-#include "otsdaq-core/ConfigurationDataFormats/DACsConfigurationBase.h"
+#include "otsdaq-core/TableDataFormats/DACsTableBase.h"
 
 namespace ots
 {
-
-class FSSRDACsConfiguration : public DACsConfigurationBase
+class FSSRDACsConfiguration : public DACsTableBase
 {
-
-public:
-
+  public:
 	FSSRDACsConfiguration(void);
 	virtual ~FSSRDACsConfiguration(void);
 
-	//Methods
-	//void init(ConfigurationManager *configManager);
+	// Methods
+	// void init(ConfigurationManager *configManager);
 
-	//Getters
+	// Getters
 
-private:
+  private:
 	enum
 	{
 		DetectorID,
@@ -44,7 +41,6 @@ private:
 		DigContrReg,
 		AqBCO
 	};
-
 };
 }
 #endif

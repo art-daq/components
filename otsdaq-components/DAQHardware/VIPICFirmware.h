@@ -8,24 +8,26 @@
 //
 //#include <string>
 //
-//namespace ots
+// namespace ots
 //{
 //
-//class VIPICFirmware : public FrontEndFirmwareBase/*, public PurdueFirmwareCore*/
+// class VIPICFirmware : public FrontEndFirmwareBase/*, public PurdueFirmwareCore*/
 //{
 //
-//private:
+// private:
 //    uint32_t pixelCSRRegisterValue_;           //CSR
 //    uint32_t pixelDCMRegisterValue_;           //DCM
-//    uint32_t pixelClockRegisterValue_;         //RegisterClock (does not handle the clock, it is the name Matthew uses)
-//    uint32_t pixelTestInjectRegisterValue_;    //TestInject
+//    uint32_t pixelClockRegisterValue_;         //RegisterClock (does not handle the
+//    clock, it is the name Matthew uses) uint32_t pixelTestInjectRegisterValue_;
+//    //TestInject
 //
-//    uint32_t setBuffer_       [PIXELS_SIDE * PIXELS_SIDE / 32]; //S Buffer (one bit per pixel)
-//    uint32_t resetBuffer_     [PIXELS_SIDE * PIXELS_SIDE / 32]; //R Buffer (one bit per pixel)
-//    uint32_t configureBuffer_ [PIXELS_SIDE * PIXELS_SIDE / 2 ]; //D Buffer (12 bits per pixel, extended to 16)
+//    uint32_t setBuffer_       [PIXELS_SIDE * PIXELS_SIDE / 32]; //S Buffer (one bit per
+//    pixel) uint32_t resetBuffer_     [PIXELS_SIDE * PIXELS_SIDE / 32]; //R Buffer (one
+//    bit per pixel) uint32_t configureBuffer_ [PIXELS_SIDE * PIXELS_SIDE / 2 ]; //D
+//    Buffer (12 bits per pixel, extended to 16)
 //
 //
-//public:
+// public:
 //    VIPICFirmware (unsigned int version, std::string type);
 //    virtual ~VIPICFirmware();
 //    int  init();
@@ -38,9 +40,9 @@
 //    std::string resetDetector               (int reset);
 //    std::string resetBCO                    (void);
 //
-//    void setFrequencyFromClockState         (std::string& buffer, double inputedFrequency);
-//    bool isClockStateExternal               (void);
-//    bool isClockLocked                      (void);
+//    void setFrequencyFromClockState         (std::string& buffer, double
+//    inputedFrequency); bool isClockStateExternal               (void); bool
+//    isClockLocked                      (void);
 //
 //    std::string resetTriggerCounter         (void);
 //    std::string stopStream                  (void);
@@ -49,10 +51,11 @@
 //
 //    std::string prepareResetTimeStamp       (void);
 //
-//    void makeMaskBuffer                     (std::string& buffer, unsigned int channel, const ROCStream& rocStream);
+//    void makeMaskBuffer                     (std::string& buffer, unsigned int channel,
+//    const ROCStream& rocStream);
 //
 //
-//protected:
+// protected:
 //    FrontEndFirmwareBase* protocolInstance_;
 //    void setTimeStampClockSourceCSR         (std::string clockSource);
 //    void flushBuffersPixelCSR               (void);//FIXME:waiting for M
@@ -72,7 +75,8 @@
 //
 //    //Set values for register PIXEL_DCM (Pixel Clock Manager)
 //    void setTimeStampClockSource            (std::string clockSource);
-//    void setFrequencyRatio                  (std::string& buffer, int numerator, int denominator);
+//    void setFrequencyRatio                  (std::string& buffer, int numerator, int
+//    denominator);
 //
 //    //Reset local register values
 //    void resetPixelCSRRegisterValue         (void);
