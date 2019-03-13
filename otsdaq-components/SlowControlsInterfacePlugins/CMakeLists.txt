@@ -28,6 +28,9 @@
 
 simple_plugin(OtsSlowControlsInterface "controls"	
     SlowControlsCore   
+	Configurable
+	TableCore
+	ConfigurationInterface
   )
 
 install_headers()
