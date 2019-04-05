@@ -27,7 +27,7 @@
 #  )
 
 simple_plugin(OtsSlowControlsInterface "controls"	
-    SlowControlsCore   
+    	SlowControlsCore   
 	Configurable
 	TableCore
 	ConfigurationInterface
