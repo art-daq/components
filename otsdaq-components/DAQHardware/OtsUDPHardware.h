@@ -17,31 +17,30 @@ class OtsUDPHardware : public TransceiverSocket, public FrontEndHardwareBase
 	               bool         verbose = false);
 	virtual ~OtsUDPHardware(void);
 
-	virtual void write(const std::string& sendBuffer) throw(std::runtime_error);
-	virtual void write(const std::vector<std::string>& sendBuffers) throw(
-	    std::runtime_error);
+	virtual void write(const std::string& sendBuffer);
+	virtual void write(const std::vector<std::string>& sendBuffers);
 	virtual void writeAndAcknowledge(const std::string& sendBuffer,
-	                                 int timeoutSeconds = -1) throw(std::runtime_error);
+	                                 int timeoutSeconds = -1);
 	virtual void writeAndAcknowledge(const std::vector<std::string>& sendBuffers,
-	                                 int timeoutSeconds = -1) throw(std::runtime_error);
+	                                 int timeoutSeconds = -1);
 	virtual void read(const std::string& sendBuffer,
 	                  std::string&       receiveBuffer,
-	                  int                timeoutSeconds = -1) throw(std::runtime_error);
+	                  int                timeoutSeconds = -1);
 	virtual void read(const std::vector<std::string>& sendBuffers,
 	                  std::vector<std::string>&       receiveBuffers,
-	                  int timeoutSeconds = -1) throw(std::runtime_error);
+	                  int timeoutSeconds = -1);
 
-	virtual int flushRead() throw(std::runtime_error) { return clearReadSocket(); }
+	virtual int flushRead() { return clearReadSocket(); }
 
 	void read(const std::string& sendBuffer,
 	          uint64_t&          receiveQuadWord,
-	          int                timeoutSeconds = -1) throw(std::runtime_error);
+	          int                timeoutSeconds = -1);
 	void read(const std::string&     sendBuffer,
 	          std::vector<uint64_t>& receiveQuadWords,
-	          int                    timeoutSeconds = -1) throw(std::runtime_error);
+	          int                    timeoutSeconds = -1);
 	void read(const std::vector<std::string>&      sendBuffers,
 	          std::vector<std::vector<uint64_t> >& receiveQuadWordsVector,
-	          int timeoutSeconds = -1) throw(std::runtime_error);
+	          int timeoutSeconds = -1);
 	int  clearReadSocket();
 	//
 	//    virtual int write(uint64_t address, const std::string& value){return 0;}
