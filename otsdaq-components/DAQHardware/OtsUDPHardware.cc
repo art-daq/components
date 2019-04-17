@@ -56,7 +56,7 @@ OtsUDPHardware::OtsUDPHardware(std::string  hostIPAddress,
 OtsUDPHardware::~OtsUDPHardware(void) {}
 
 //========================================================================================================================
-void OtsUDPHardware::write(const std::string& sendBuffer)  try
+void OtsUDPHardware::write(const std::string& sendBuffer) throw(std::runtime_error) try
 {
 	//	char msg[100];
 	//	sprintf(msg,"_%d",getPort());
@@ -100,7 +100,8 @@ catch(...)
 }
 
 //========================================================================================================================
-void OtsUDPHardware::write(const std::vector<std::string>& sendBuffer) 
+void OtsUDPHardware::write(const std::vector<std::string>& sendBuffer) throw(
+    std::runtime_error)
 {
 	for(const auto& it : sendBuffer)
 	{
@@ -133,7 +134,7 @@ void OtsUDPHardware::write(const std::vector<std::string>& sendBuffer)
 
 //========================================================================================================================
 void OtsUDPHardware::writeAndAcknowledge(const std::string& buffer,
-                                         int timeoutSeconds)  try
+                                         int timeoutSeconds) throw(std::runtime_error) try
 {
 	//	char msg[100];
 	//	sprintf(msg,"_%d",getPort());
@@ -217,7 +218,7 @@ catch(...)
 
 //========================================================================================================================
 void OtsUDPHardware::writeAndAcknowledge(const std::vector<std::string>& buffer,
-                                         int timeoutSeconds) 
+                                         int timeoutSeconds) throw(std::runtime_error)
 {
 	for(const auto& it : buffer)
 	{
@@ -252,7 +253,7 @@ void OtsUDPHardware::writeAndAcknowledge(const std::vector<std::string>& buffer,
 // return -1 on failure
 void OtsUDPHardware::read(const std::string& sendBuffer,
                           std::string&       receiveBuffer,
-                          int                timeoutSeconds)  try
+                          int                timeoutSeconds) throw(std::runtime_error) try
 {
 	{  // clear packets so that read matches!
 		int clearedPackets = OtsUDPHardware::clearReadSocket();
@@ -312,7 +313,7 @@ catch(...)
 //========================================================================================================================
 void OtsUDPHardware::read(const std::vector<std::string>& sendBuffers,
                           std::vector<std::string>&       receiveBuffers,
-                          int timeoutSeconds) 
+                          int timeoutSeconds) throw(std::runtime_error)
 {
 	receiveBuffers.resize(sendBuffers.size());
 	auto receiveBufferIterator = receiveBuffers.begin();
@@ -323,7 +324,7 @@ void OtsUDPHardware::read(const std::vector<std::string>& sendBuffers,
 //========================================================================================================================
 void OtsUDPHardware::read(const std::string& sendBuffer,
                           uint64_t&          receiveQuadWord,
-                          int                timeoutSeconds) 
+                          int                timeoutSeconds) throw(std::runtime_error)
 {
 	std::string receiveBuffer;
 	read(sendBuffer, receiveBuffer);
@@ -350,7 +351,7 @@ void OtsUDPHardware::read(const std::string& sendBuffer,
 //========================================================================================================================
 void OtsUDPHardware::read(const std::string&     sendBuffer,
                           std::vector<uint64_t>& receiveQuadWords,
-                          int                    timeoutSeconds) 
+                          int                    timeoutSeconds) throw(std::runtime_error)
 {
 	receiveQuadWords.resize(0);  // clear
 
@@ -380,7 +381,7 @@ void OtsUDPHardware::read(const std::string&     sendBuffer,
 //========================================================================================================================
 void OtsUDPHardware::read(const std::vector<std::string>&      sendBuffers,
                           std::vector<std::vector<uint64_t> >& receiveQuadWordsVector,
-                          int timeoutSeconds) 
+                          int timeoutSeconds) throw(std::runtime_error)
 {
 	receiveQuadWordsVector.resize(
 	    sendBuffers.size());  // create a return vector for each send buffer
