@@ -294,8 +294,8 @@ std::string FSSRFirmwareBase::enableTrigger(void)
 std::string FSSRFirmwareBase::resetBCO(void)
 {
 	__COUT__ << "Reset BCO!!!" << std::endl;
-	__COUT__ << "stripCSRRegisterValue in :" << std::hex
-	          << stripCSRRegisterValue_ << std::dec << std::endl;
+	__COUT__ << "stripCSRRegisterValue in :" << std::hex << stripCSRRegisterValue_
+	         << std::dec << std::endl;
 	std::string buffer;
 
 	// resetTriggerCounterStripCSR(buffer);
@@ -347,8 +347,8 @@ std::string FSSRFirmwareBase::resetBCO(void)
 	// enableBCOStripCSR(true);
 	// communicationFirmwareInstance_->write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 
-	__COUT__ << "stripCSRRegisterValue out:" << std::hex
-	          << stripCSRRegisterValue_ << std::dec << std::endl;
+	__COUT__ << "stripCSRRegisterValue out:" << std::hex << stripCSRRegisterValue_
+	         << std::dec << std::endl;
 	__COUT__ << "Done reset BCO!!!" << std::endl;
 
 	return buffer;
@@ -474,9 +474,8 @@ void FSSRFirmwareBase::makeDACSequence(FirmwareSequence<uint32_t>& sequence,
 		// Insert channel
 		BitManipulator::insertBits(data, 1, 16 + channel, 1);
 		sequence.pushBack(ChannelFIFOAddress[channel], it->second.second);
-		__COUT__ << "Register: " << it->first
-		          << " value: " << it->second.second << std::hex << " -> Data: " << data
-		          << std::dec << std::endl;
+		__COUT__ << "Register: " << it->first << " value: " << it->second.second
+		         << std::hex << " -> Data: " << data << std::dec << std::endl;
 		sequence.pushBack(STRIP_SC_CSR, data);
 	}
 }
@@ -571,8 +570,8 @@ void FSSRFirmwareBase::makeDACBuffer(std::string&     buffer,
 			}
 			else
 				__COUT__ << "Register value for : " << it->first
-				          << " doesn't have a value I expect -> value = "
-				          << it->second.second << std::endl;
+				         << " doesn't have a value I expect -> value = "
+				         << it->second.second << std::endl;
 		}
 
 		// __COUT__ << "Register: " << it->first << " value: " <<
@@ -653,8 +652,8 @@ void FSSRFirmwareBase::makeDACBuffer(std::vector<std::string>& buffer,
 			}
 			else
 				__COUT__ << "Register value for : " << it.first
-				          << " doesn't have a value I expect -> value = "
-				          << it.second.second << std::endl;
+				         << " doesn't have a value I expect -> value = "
+				         << it.second.second << std::endl;
 		}
 		// __COUT__ << "Register: " << it.first << " value: " <<
 		// it.second.second << std::hex << " -> Data: " << registerHeader << std::dec <<
@@ -671,8 +670,7 @@ void FSSRFirmwareBase::makeDACBuffer(std::vector<std::string>& buffer,
 
 		if(limitCount == STIB_DAC_WRITE_MAX)
 		{
-			__COUT__ << "\tBuffer length:" << bufferElement.size()
-			          << std::endl;
+			__COUT__ << "\tBuffer length:" << bufferElement.size() << std::endl;
 			buffer.push_back(bufferElement);
 			limitCount = 0;
 			bufferElement.clear();
@@ -977,9 +975,8 @@ void FSSRFirmwareBase::setCSRRegister(uint32_t total) { stripCSRRegisterValue_ =
 void FSSRFirmwareBase::setPacketSizeStripCSR(uint32_t size)
 {
 	if(size > 31)
-		__COUT__
-		          << "ERROR: Maximum packet size is 31 while here you are trying to set "
-		          << size << " packets!" << std::endl;
+		__COUT__ << "ERROR: Maximum packet size is 31 while here you are trying to set "
+		         << size << " packets!" << std::endl;
 	BitManipulator::insertBits(stripCSRRegisterValue_, size, 3, 5);
 	// write(buffer,STRIP_CSR, stripSCRRegisterValue_);
 }

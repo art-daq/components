@@ -7,8 +7,8 @@ OtsSlowControlsInterface::OtsSlowControlsInterface(
     const std::string&       interfaceUID,
     const ConfigurationTree& theXDAQContextConfigTree,
     const std::string&       controlsConfigurationPath)
-	//TODO -- listen on a socket for data
-	//	or read from disk
+    // TODO -- listen on a socket for data
+    //	or read from disk
     //  :Socket            (
     //  theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostIPAddress").getValue<std::string>()
     // ,theXDAQContextConfigTree.getNode(interfaceConfigurationPath).getNode("HostPort").getValue<unsigned
