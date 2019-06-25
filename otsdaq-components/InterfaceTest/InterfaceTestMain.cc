@@ -8,7 +8,7 @@
 #include "otsdaq-demo/FEInterfaces/FEWPurdueFSSRInterface.h"
 
 #include "otsdaq-core/ConfigurationInterface/ConfigurationInterface.h"
-#include "otsdaq-core/TablePluginDataFormats/Configurations.h"
+#include "otsdaq-core/TablePlugins/Configurations.h"
 //#include "otsdaq-core/ConfigurationDataFormats/FrontEndTable.h"
 #include "otsdaq-core/ConfigurationDataFormats/FEWOtsUDPHardwareTable.h"
 

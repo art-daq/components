@@ -1,7 +1,7 @@
 #include <iostream>
 #include "otsdaq-components/UserTableDataFormats/FENIMPlusInterfaceTable.h"
 #include "otsdaq-core/Macros/TablePluginMacros.h"
-#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
+#include "otsdaq-core/TablePlugins/DataManagerTable.h"
 
 using namespace ots;
 

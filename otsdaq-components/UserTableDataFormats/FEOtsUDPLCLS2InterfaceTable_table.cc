@@ -1,5 +1,5 @@
 #include <iostream>
-#include "otsdaq-core/TablePluginDataFormats/DataManagerTable.h"
+#include "otsdaq-core/TablePlugins/DataManagerTable.h"
 
 #include "otsdaq-components/UserTableDataFormats/FEOtsUDPLCLS2InterfaceTable.h"
 #include "otsdaq-core/Macros/TablePluginMacros.h"
