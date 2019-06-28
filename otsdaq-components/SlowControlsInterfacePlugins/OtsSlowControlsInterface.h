@@ -12,7 +12,8 @@ using namespace ots;
 class OtsSlowControlsInterface : public SlowControlsVInterface
 {
   public:
-	OtsSlowControlsInterface(const std::string&       interfaceUID,
+	OtsSlowControlsInterface(const std::string&       pluginType,
+				 const std::string&       interfaceUID,
 	                         const ConfigurationTree& theXDAQContextConfigTree,
 	                         const std::string&       controlsConfigurationPath);
 	~OtsSlowControlsInterface();

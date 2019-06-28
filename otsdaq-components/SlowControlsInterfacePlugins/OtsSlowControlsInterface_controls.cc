@@ -4,6 +4,7 @@
 using namespace ots;
 
 OtsSlowControlsInterface::OtsSlowControlsInterface(
+    const std::string&        pluginType,
     const std::string&       interfaceUID,
     const ConfigurationTree& theXDAQContextConfigTree,
     const std::string&       controlsConfigurationPath)
@@ -15,7 +16,7 @@ OtsSlowControlsInterface::OtsSlowControlsInterface(
     // int>())
     // ,
     : SlowControlsVInterface(
-          interfaceUID, theXDAQContextConfigTree, controlsConfigurationPath)
+          pluginType, interfaceUID, theXDAQContextConfigTree, controlsConfigurationPath)
 {
 }
 
