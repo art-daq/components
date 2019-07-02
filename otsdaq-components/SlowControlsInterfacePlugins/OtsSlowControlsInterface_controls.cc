@@ -4,7 +4,7 @@
 using namespace ots;
 
 OtsSlowControlsInterface::OtsSlowControlsInterface(
-    const std::string&        pluginType,
+    const std::string&       pluginType,
     const std::string&       interfaceUID,
     const ConfigurationTree& theXDAQContextConfigTree,
     const std::string&       controlsConfigurationPath)
