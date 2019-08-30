@@ -7,6 +7,8 @@
 #include <iostream>
 #include <string>
 
+#include <tracemf.h>
+
 namespace ots
 {
 class ROCStream
