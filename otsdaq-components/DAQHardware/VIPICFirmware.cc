@@ -1,9 +1,9 @@
 //#include "otsdaq-components/DAQHardware/VIPICFirmware.h"
 //#include "otsdaq-components/DAQHardware/VIPICFirmwareDefinitions.h"
-//#include "otsdaq-core/BitManipulator/BitManipulator.h"
+//#include "otsdaq/BitManipulator/BitManipulator.h"
 //#include "otsdaq-components/DetectorHardware/VIPICROCDefinitions.h"
-//#include "otsdaq-core/MessageFacility/MessageFacility.h"
-//#include "otsdaq-core/Macros/CoutMacros.h"
+//#include "otsdaq/MessageFacility/MessageFacility.h"
+//#include "otsdaq/Macros/CoutMacros.h"
 //#include <sys/socket.h>
 //#include <netinet/in.h>
 //#include <arpa/inet.h>

@@ -1,9 +1,9 @@
 #include <iostream>
 #include <set>
 #include "otsdaq-components/FEInterfaces/FEOtsUDPProducerTemplateInterface.h"
-#include "otsdaq-core/Macros/CoutMacros.h"
-#include "otsdaq-core/Macros/InterfacePluginMacros.h"
-#include "otsdaq-core/MessageFacility/MessageFacility.h"
+#include "otsdaq/Macros/CoutMacros.h"
+#include "otsdaq/Macros/InterfacePluginMacros.h"
+#include "otsdaq/MessageFacility/MessageFacility.h"
 
 using namespace ots;
 

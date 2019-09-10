@@ -1,5 +1,5 @@
 #include "otsdaq-components/SlowControlsInterfacePlugins/OtsSlowControlsInterface.h"
-#include "otsdaq-core/Macros/SlowControlsPluginMacros.h"
+#include "otsdaq/Macros/SlowControlsPluginMacros.h"
 
 using namespace ots;
 

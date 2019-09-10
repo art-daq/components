@@ -1,11 +1,11 @@
 #ifndef _ots_FEOtsUDPProducerTemplateInterface_h_
 #define _ots_FEOtsUDPProducerTemplateInterface_h_
 
-//#include "otsdaq-core/FECore/FEVInterface.h"
+//#include "otsdaq/FECore/FEVInterface.h"
 #include "otsdaq-components/DAQHardware/OtsUDPFirmwareDataGen.h"
 #include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
-#include "otsdaq-core/DataManager/DataProducer.h"
-#include "otsdaq-core/FECore/FEProducerVInterface.h"
+#include "otsdaq/DataManager/DataProducer.h"
+#include "otsdaq/FECore/FEProducerVInterface.h"
 
 #include <string>
 

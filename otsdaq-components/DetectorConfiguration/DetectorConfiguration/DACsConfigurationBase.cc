@@ -1,4 +1,4 @@
-#include "otsdaq-core/ConfigurationDataFormats/DACsTableBase.h"
+#include "otsdaq/ConfigurationDataFormats/DACsTableBase.h"
 
 #include <iostream>
 

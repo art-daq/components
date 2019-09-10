@@ -1,9 +1,9 @@
 #include "OtsUDPFirmwareCore.h"
 
-#include "otsdaq-core/Macros/CoutMacros.h"
-#include "otsdaq-core/MessageFacility/MessageFacility.h"
+#include "otsdaq/Macros/CoutMacros.h"
+#include "otsdaq/MessageFacility/MessageFacility.h"
 
-//#include "otsdaq-core/BitManipulator/BitManipulator.h"
+//#include "otsdaq/BitManipulator/BitManipulator.h"
 //#include "otsdaq-components/DAQHardware/FirmwareBaseDefinitions.h"
 
 #include <arpa/inet.h>

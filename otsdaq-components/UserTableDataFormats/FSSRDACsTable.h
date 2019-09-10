@@ -1,7 +1,7 @@
 #ifndef _ots_FSSRDACsConfiguration_h_
 #define _ots_FSSRDACsConfiguration_h_
 
-#include "otsdaq-core/TableDataFormats/DACsTableBase.h"
+#include "otsdaq/TableDataFormats/DACsTableBase.h"
 
 namespace ots
 {

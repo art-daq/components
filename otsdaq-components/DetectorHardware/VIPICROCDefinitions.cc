@@ -6,12 +6,12 @@
  */
 
 #include "otsdaq-components/DetectorHardware/VIPICROCDefinitions.h"
-#include "otsdaq-core/BitManipulator/BitManipulator.h"
-//#include "otsdaq-core/MessageFacility/MessageFacility.h"
+#include "otsdaq/BitManipulator/BitManipulator.h"
+//#include "otsdaq/MessageFacility/MessageFacility.h"
 #include <cassert>
 #include <cstdlib>
 #include <iostream>
-#include "otsdaq-core/Macros/CoutMacros.h"
+#include "otsdaq/Macros/CoutMacros.h"
 
 using namespace ots;
 

@@ -1,9 +1,9 @@
 //#include "otsdaq-components/DAQHardware/PSI46DigFirmware.h"
 //#include "otsdaq-components/DAQHardware/PSI46DigFirmwareDefinitions.h"
-//#include "otsdaq-core/BitManipulator/BitManipulator.h"
+//#include "otsdaq/BitManipulator/BitManipulator.h"
 //#include "otsdaq-components/DetectorHardware/PSI46DigROCDefinitions.h"
-//#include "otsdaq-core/MessageFacility/MessageFacility.h"
-//#include "otsdaq-core/Macros/CoutMacros.h"
+//#include "otsdaq/MessageFacility/MessageFacility.h"
+//#include "otsdaq/Macros/CoutMacros.h"
 //#include <sys/socket.h>
 //#include <netinet/in.h>
 //#include <arpa/inet.h>
@@ -1048,11 +1048,11 @@
 //
 ////#include "otsdaq/DAQHardware/PSI46DigFirmware.h"
 ////#include "otsdaq/DAQHardware/PSI46DigFirmwareDefinitions.h"
-////#include "otsdaq-core/BitManipulator/BitManipulator.h"
+////#include "otsdaq/BitManipulator/BitManipulator.h"
 ////#include "otsdaq/DetectorHardware/PSI46DigROCDefinitions.h"
-////#include "otsdaq-core/MessageFacility/MessageFacility.h"
-//#include "otsdaq-core/Macros/CoutMacros.h"
-////#include "otsdaq-core/ConfigurationDataFormats/OtsUDPFEWTable.h"
+////#include "otsdaq/MessageFacility/MessageFacility.h"
+//#include "otsdaq/Macros/CoutMacros.h"
+////#include "otsdaq/ConfigurationDataFormats/OtsUDPFEWTable.h"
 ////
 ////#include <sys/socket.h>
 ////#include <netinet/in.h>

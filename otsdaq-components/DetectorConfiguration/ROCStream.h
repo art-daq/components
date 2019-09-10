@@ -2,7 +2,7 @@
 #define _ots_ROCStream_h_
 
 #include "otsdaq-components/DetectorConfiguration/ROCDACs.h"
-#include "otsdaq-core/Macros/CoutMacros.h"
+#include "otsdaq/Macros/CoutMacros.h"
 
 #include <iostream>
 #include <string>

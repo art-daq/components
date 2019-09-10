@@ -2,7 +2,7 @@
 #define _ots_OtsUDPHardware_h_
 
 #include "otsdaq-components/DAQHardware/FrontEndHardwareBase.h"
-#include "otsdaq-core/NetworkUtilities/TransceiverSocket.h"
+#include "otsdaq/NetworkUtilities/TransceiverSocket.h"
 
 namespace ots
 {
