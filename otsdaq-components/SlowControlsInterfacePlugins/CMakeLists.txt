@@ -31,6 +31,7 @@ simple_plugin(OtsSlowControlsInterface "controls"
 	Configurable
 	TableCore
 	ConfigurationInterface
+	${MF_MESSAGELOGGER}
   )
 
 install_headers()

@@ -3,6 +3,7 @@ cet_make(LIBRARY_NAME DetectorConfiguration
 		 TableCore
 		 ConfigurationInterface
 		 Macros
+		 ${MF_MESSAGELOGGER}
 )
 
 install_headers()
