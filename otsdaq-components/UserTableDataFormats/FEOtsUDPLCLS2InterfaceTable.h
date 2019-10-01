@@ -2,7 +2,7 @@
 #define _ots_FEOtsUDPLCLS2InterfaceTable_h_
 
 #include <string>
-#include "otsdaq-core/TableDataFormats/FEInterfaceTableBase.h"
+#include "otsdaq/TableDataFormats/FEInterfaceTableBase.h"
 
 namespace ots
 {

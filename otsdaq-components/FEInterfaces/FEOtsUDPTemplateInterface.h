@@ -5,7 +5,7 @@
 #include "otsdaq-components/DAQHardware/OtsUDPHardware.h"
 
 #include <string>
-#include "otsdaq-core/FECore/FEVInterface.h"
+#include "otsdaq/FECore/FEVInterface.h"
 
 namespace ots
 {

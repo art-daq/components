@@ -1,9 +1,9 @@
 #include <iostream>
 #include <set>
 #include "otsdaq-components/FEInterfaces/FEOtsUDPProducerTemplateInterface.h"
-#include "otsdaq-core/Macros/CoutMacros.h"
-#include "otsdaq-core/Macros/InterfacePluginMacros.h"
-#include "otsdaq-core/MessageFacility/MessageFacility.h"
+#include "otsdaq/Macros/CoutMacros.h"
+#include "otsdaq/Macros/InterfacePluginMacros.h"
+#include "otsdaq/MessageFacility/MessageFacility.h"
 
 using namespace ots;
 
@@ -344,7 +344,7 @@ bool FEOtsUDPProducerTemplateInterface::running(void)
 				             << " bytes!" << __E__;
 
 				__CFG_COUT__ << "Buffer Data: "
-				             << BinaryStringMacros::binaryTo8ByteHexString(buffer)
+				             << BinaryStringMacros::binaryNumberToHexString(buffer)
 				             << __E__;
 
 				__CFG_COUTV__(DataProcessor::theCircularBuffer_);
@@ -375,7 +375,7 @@ bool FEOtsUDPProducerTemplateInterface::running(void)
 			            << __E__;
 
 			__FE_COUT__ << "Buffer Data: "
-			            << BinaryStringMacros::binaryTo8ByteHexString(buffer) << __E__;
+			            << BinaryStringMacros::binaryNumberToHexString(buffer) << __E__;
 
 			FEProducerVInterface::copyToNextBuffer(buffer);
 		}

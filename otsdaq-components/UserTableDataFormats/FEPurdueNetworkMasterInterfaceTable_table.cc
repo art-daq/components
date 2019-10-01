@@ -1,7 +1,7 @@
 #include <iostream>
 #include "otsdaq-components/UserTableDataFormats/FEPurdueNetworkMasterInterfaceTable.h"
-#include "otsdaq-core/Macros/TablePluginMacros.h"
-#include "otsdaq-core/TablePlugins/DataManagerTable.h"
+#include "otsdaq/Macros/TablePluginMacros.h"
+#include "otsdaq/TablePlugins/DataManagerTable.h"
 
 using namespace ots;
 

@@ -1,5 +1,5 @@
 #include "otsdaq-components/DetectorConfiguration/FSSRDACsConfiguration.h"
-#include "otsdaq-core/ConfigurationInterface/ConfigurationTree.h"
+#include "otsdaq/ConfigurationInterface/ConfigurationTree.h"
 
 #include <iostream>
 

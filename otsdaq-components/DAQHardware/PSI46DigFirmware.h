@@ -111,8 +111,8 @@
 ////#define _ots_PSI46DigFirmware_h
 ////
 ////#include "otsdaq/DAQHardware/FirmwareBase.h"
-//////#include "otsdaq-core/DataTypes/DataTypes.h"
-//////#include "otsdaq-core/ConfigurationInterface/ROCStream.h"
+//////#include "otsdaq/DataTypes/DataTypes.h"
+//////#include "otsdaq/ConfigurationInterface/ROCStream.h"
 ////
 ////#include <string>
 //////#include <vector>

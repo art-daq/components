@@ -5,9 +5,9 @@
 #include <cstdlib>
 #include <iostream>
 #include "otsdaq-components/DAQHardware/FirmwareBaseDefinitions.h"
-#include "otsdaq-core/BitManipulator/BitManipulator.h"
-#include "otsdaq-core/Macros/CoutMacros.h"
-#include "otsdaq-core/MessageFacility/MessageFacility.h"
+#include "otsdaq/BitManipulator/BitManipulator.h"
+#include "otsdaq/Macros/CoutMacros.h"
+#include "otsdaq/MessageFacility/MessageFacility.h"
 
 using namespace ots;
 

@@ -1,9 +1,10 @@
 #include "otsdaq-components/SlowControlsInterfacePlugins/OtsSlowControlsInterface.h"
-#include "otsdaq-core/Macros/SlowControlsPluginMacros.h"
+#include "otsdaq/Macros/SlowControlsPluginMacros.h"
 
 using namespace ots;
 
 OtsSlowControlsInterface::OtsSlowControlsInterface(
+    const std::string&       pluginType,
     const std::string&       interfaceUID,
     const ConfigurationTree& theXDAQContextConfigTree,
     const std::string&       controlsConfigurationPath)
@@ -15,7 +16,7 @@ OtsSlowControlsInterface::OtsSlowControlsInterface(
     // int>())
     // ,
     : SlowControlsVInterface(
-          interfaceUID, theXDAQContextConfigTree, controlsConfigurationPath)
+          pluginType, interfaceUID, theXDAQContextConfigTree, controlsConfigurationPath)
 {
 }
 

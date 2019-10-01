@@ -8,7 +8,7 @@
 #ifndef _ots_FrontEndHardwareBase_h_
 #define _ots_FrontEndHardwareBase_h_
 
-#include "otsdaq-core/Macros/CoutMacros.h"
+#include "otsdaq/Macros/CoutMacros.h"
 
 #include <stdexcept> /*for std::runtime_error*/
 #include <string>

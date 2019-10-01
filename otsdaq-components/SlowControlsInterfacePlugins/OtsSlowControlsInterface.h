@@ -4,15 +4,16 @@
 #include <array>
 #include <string>
 
-#include "otsdaq-core/NetworkUtilities/ReceiverSocket.h"  // Make sure this is always first because <sys/types.h> (defined in Socket.h) must be first
-#include "otsdaq-core/SlowControlsCore/SlowControlsVInterface.h"
+#include "otsdaq/NetworkUtilities/ReceiverSocket.h"  // Make sure this is always first because <sys/types.h> (defined in Socket.h) must be first
+#include "otsdaq/SlowControlsCore/SlowControlsVInterface.h"
 using namespace ots;
 //{
 
 class OtsSlowControlsInterface : public SlowControlsVInterface
 {
   public:
-	OtsSlowControlsInterface(const std::string&       interfaceUID,
+	OtsSlowControlsInterface(const std::string&       pluginType,
+	                         const std::string&       interfaceUID,
 	                         const ConfigurationTree& theXDAQContextConfigTree,
 	                         const std::string&       controlsConfigurationPath);
 	~OtsSlowControlsInterface();

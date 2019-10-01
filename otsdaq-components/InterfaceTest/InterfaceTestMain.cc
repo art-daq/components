@@ -1,16 +1,16 @@
 /*
-#include "otsdaq-core/ConfigurationDataFormats/ConfigurationKey.h"
-#include "otsdaq-core/ConfigurationInterface/ConfigurationManager.h"
+#include "otsdaq/ConfigurationDataFormats/ConfigurationKey.h"
+#include "otsdaq/ConfigurationInterface/ConfigurationManager.h"
 #include "otsdaq-demo/FEInterfaces/FEWInterfacesManager.h"
 
-#include "otsdaq-core/FECore/FEVInterface.h"
+#include "otsdaq/FECore/FEVInterface.h"
 #include "otsdaq-demo/FEInterfaces/FEWOtsGenericInterface.h"
 #include "otsdaq-demo/FEInterfaces/FEWPurdueFSSRInterface.h"
 
-#include "otsdaq-core/ConfigurationInterface/ConfigurationInterface.h"
-#include "otsdaq-core/TablePlugins/Configurations.h"
-//#include "otsdaq-core/ConfigurationDataFormats/FrontEndTable.h"
-#include "otsdaq-core/ConfigurationDataFormats/FEWOtsUDPHardwareTable.h"
+#include "otsdaq/ConfigurationInterface/ConfigurationInterface.h"
+#include "otsdaq/TablePlugins/Configurations.h"
+//#include "otsdaq/ConfigurationDataFormats/FrontEndTable.h"
+#include "otsdaq/ConfigurationDataFormats/FEWOtsUDPHardwareTable.h"
 
 #include <iostream>
 

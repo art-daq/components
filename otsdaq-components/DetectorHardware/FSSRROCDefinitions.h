@@ -2,11 +2,11 @@
 #define _ots_FSSRROCDEfinitions_h_
 
 #include "otsdaq-components/DetectorHardware/VROCDefinitions.h"
-//#include "otsdaq-core/BitManipulator/BitManipulator.h"
+//#include "otsdaq/BitManipulator/BitManipulator.h"
 //#include "otsdaq/DAQHardware/FSSRFirmwareDefinitions.h"
 //#include "otsdaq/DAQHardware/FSSRFirmware.h"
-//#include "otsdaq-core/DataTypes/DataTypes.h"
-//#include "otsdaq-core/ConfigurationInterface/ROCStream.h"
+//#include "otsdaq/DataTypes/DataTypes.h"
+//#include "otsdaq/ConfigurationInterface/ROCStream.h"
 
 #include <stdint.h>
 #include <string>
