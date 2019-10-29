@@ -44,6 +44,11 @@ std::array<std::string, 4> OtsSlowControlsInterface::getCurrentValue(std::string
 	return {"a", "b", "c", "d"};
 }
 
+std::array<std::array<std::string, 5>, 10> OtsSlowControlsInterface::getPVHistory(std::string Name)
+{
+  return {};
+}
+
 std::array<std::string, 9> OtsSlowControlsInterface::getSettings(std::string Name)
 {
 	return {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
