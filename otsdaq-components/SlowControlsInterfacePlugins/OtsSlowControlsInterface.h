@@ -21,13 +21,15 @@ class OtsSlowControlsInterface : public SlowControlsVInterface
 	void initialize();
 	void destroy();
 
-	std::string                getList(std::string format);
-	void                       subscribe(std::string Name);
-	void                       subscribeJSON(std::string List);
-	void                       unsubscribe(std::string Name);
-	std::array<std::string, 4> getCurrentValue(std::string Name);
-	std::vector<std::vector<std::string>> getPVHistory(std::string Name);
-	std::array<std::string, 9> getSettings(std::string Name);
+
+	std::string                                getList(std::string format);
+	void                                       subscribe(std::string Name);
+	void                                       subscribeJSON(std::string List);
+	void                                       unsubscribe(std::string Name);
+	std::array<std::string, 4>                 getCurrentValue(std::string Name);
+	std::vector<std::vector<std::string>> 	   getPVHistory(std::string Name);
+	std::array<std::string, 9>                 getSettings(std::string Name);
+
 };
 
 //}
