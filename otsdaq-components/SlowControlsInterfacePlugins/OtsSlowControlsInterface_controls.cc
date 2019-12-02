@@ -26,6 +26,11 @@ void OtsSlowControlsInterface::initialize() {}
 
 void OtsSlowControlsInterface::destroy() {}
 
+std::vector<std::string> OtsSlowControlsInterface::getPVList()
+{
+	return {};
+}
+
 std::string OtsSlowControlsInterface::getList(std::string format)
 {
 	//__COUT__ <<
