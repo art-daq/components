@@ -26,7 +26,7 @@ void OtsSlowControlsInterface::initialize() {}
 
 void OtsSlowControlsInterface::destroy() {}
 
-std::vector<std::string> OtsSlowControlsInterface::getPVList()
+std::vector<std::string> OtsSlowControlsInterface::getChannelList()
 {
 	return {};
 }
@@ -50,7 +50,7 @@ std::array<std::string, 4> OtsSlowControlsInterface::getCurrentValue(std::string
 }
 
 
-std::vector<std::vector<std::string>> OtsSlowControlsInterface::getPVHistory(std::string Name)
+std::vector<std::vector<std::string>> OtsSlowControlsInterface::getChannelHistory(std::string Name)
 {
 	return {};
 }
