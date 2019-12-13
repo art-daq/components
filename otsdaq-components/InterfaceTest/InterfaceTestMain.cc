@@ -1,11 +1,11 @@
 /*
+#include "otsdaq-demo/FEInterfaces/FEWInterfacesManager.h"
 #include "otsdaq/ConfigurationDataFormats/ConfigurationKey.h"
 #include "otsdaq/ConfigurationInterface/ConfigurationManager.h"
-#include "otsdaq-demo/FEInterfaces/FEWInterfacesManager.h"
 
-#include "otsdaq/FECore/FEVInterface.h"
 #include "otsdaq-demo/FEInterfaces/FEWOtsGenericInterface.h"
 #include "otsdaq-demo/FEInterfaces/FEWPurdueFSSRInterface.h"
+#include "otsdaq/FECore/FEVInterface.h"
 
 #include "otsdaq/ConfigurationInterface/ConfigurationInterface.h"
 #include "otsdaq/TablePlugins/Configurations.h"
