@@ -11,19 +11,19 @@
 
 using namespace ots;
 
-//========================================================================================================================
+//==============================================================================
 PurdueFirmwareCore::PurdueFirmwareCore(unsigned int version)
     : FrontEndFirmwareBase(version)
 {
 }
 
-//========================================================================================================================
+//==============================================================================
 PurdueFirmwareCore::~PurdueFirmwareCore(void) {}
 
-//========================================================================================================================
+//==============================================================================
 void PurdueFirmwareCore::init(void) {}
 
-//========================================================================================================================
+//==============================================================================
 void PurdueFirmwareCore::setDataDestination(std::string&       buffer,
                                             const std::string& ipAddress,
                                             const uint16_t     port,
@@ -35,7 +35,7 @@ void PurdueFirmwareCore::setDataDestination(std::string&       buffer,
 		buffer.resize(0);
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string PurdueFirmwareCore::read(char* address)
 {
 	std::string buffer;
@@ -43,7 +43,7 @@ std::string PurdueFirmwareCore::read(char* address)
 	return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string PurdueFirmwareCore::write(char* address, char* data)
 {
 	std::string buffer;
@@ -51,7 +51,7 @@ std::string PurdueFirmwareCore::write(char* address, char* data)
 	return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 void PurdueFirmwareCore::write(std::string& buffer,
                                uint32_t     address,
                                uint32_t     data,
@@ -83,7 +83,7 @@ void PurdueFirmwareCore::write(std::string& buffer,
 	// return (unsigned int) buffer[begin] + 1;
 }
 
-//========================================================================================================================
+//==============================================================================
 void PurdueFirmwareCore::waitSet(std::string& buffer,
                                  uint32_t     address,
                                  uint32_t     data,
@@ -119,7 +119,7 @@ void PurdueFirmwareCore::waitSet(std::string& buffer,
 	// return (unsigned int) buffer[begin] + 1;
 }
 
-//========================================================================================================================
+//==============================================================================
 void PurdueFirmwareCore::waitClear(std::string& buffer,
                                    uint32_t     address,
                                    uint32_t     data,
@@ -155,7 +155,7 @@ void PurdueFirmwareCore::waitClear(std::string& buffer,
 	// return (unsigned int) buffer[begin] + 1;
 }
 
-//========================================================================================================================
+//==============================================================================
 void PurdueFirmwareCore::read(std::string& buffer, uint32_t address, bool clearBuffer)
 {
 	if(clearBuffer)
@@ -179,7 +179,7 @@ void PurdueFirmwareCore::read(std::string& buffer, uint32_t address, bool clearB
 	// return (unsigned int) buffer[begin] + 1;
 }
 
-//========================================================================================================================
+//==============================================================================
 unsigned int PurdueFirmwareCore::getNumberOfBufferedCommands(std::string& buffer)
 {
 	if(buffer.length() == 0)
@@ -194,7 +194,7 @@ unsigned int PurdueFirmwareCore::getNumberOfBufferedCommands(std::string& buffer
 	return commandNumber;
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string PurdueFirmwareCore::compareSendAndReceive(const std::string& sentBuffer,
                                                       std::string&       acknowledgment)
 {
@@ -338,7 +338,7 @@ std::string PurdueFirmwareCore::compareSendAndReceive(const std::string& sentBuf
 	return reSendBuffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint32_t PurdueFirmwareCore::createRegisterFromValue(std::string& readBuffer,
                                                      std::string& receivedValue)
 {

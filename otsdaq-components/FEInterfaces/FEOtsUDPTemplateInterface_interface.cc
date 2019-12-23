@@ -7,7 +7,7 @@
 
 using namespace ots;
 
-//========================================================================================================================
+//==============================================================================
 FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(
     const std::string&       interfaceUID,
     const ConfigurationTree& theXDAQContextConfigTree,
@@ -80,10 +80,10 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(
 
 }  // end constructor
 
-//========================================================================================================================
+//==============================================================================
 FEOtsUDPTemplateInterface::~FEOtsUDPTemplateInterface(void) {}
 
-//========================================================================================================================
+//==============================================================================
 void FEOtsUDPTemplateInterface::configure(void)
 {
 	//	unsigned int i = VStateMachine::getIterationIndex();
@@ -242,34 +242,34 @@ void FEOtsUDPTemplateInterface::configure(void)
 	__FE_COUT__ << "Done with ots Template configuring." << __E__;
 }
 
-//========================================================================================================================
+//==============================================================================
 // void FEOtsUDPTemplateInterface::configureDetector(const DACStream& theDACStream)
 //{
 //	__FE_COUT__ << "\tconfigureDetector" << __E__;
 //}
 
-//========================================================================================================================
+//==============================================================================
 void FEOtsUDPTemplateInterface::halt(void)
 {
 	__FE_COUT__ << "\tHalt" << __E__;
 	stop();
 }
 
-//========================================================================================================================
+//==============================================================================
 void FEOtsUDPTemplateInterface::pause(void)
 {
 	__FE_COUT__ << "\tPause" << __E__;
 	stop();
 }
 
-//========================================================================================================================
+//==============================================================================
 void FEOtsUDPTemplateInterface::resume(void)
 {
 	__FE_COUT__ << "\tResume" << __E__;
 	start("");
 }
 
-//========================================================================================================================
+//==============================================================================
 void FEOtsUDPTemplateInterface::start(std::string)  // runNumber)
 {
 	__FE_COUT__ << "\tStart" << __E__;
@@ -298,7 +298,7 @@ void FEOtsUDPTemplateInterface::start(std::string)  // runNumber)
 	OtsUDPHardware::write(sendBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FEOtsUDPTemplateInterface::stop(void)
 {
 	__FE_COUT__ << "\tStop" << __E__;
@@ -312,7 +312,7 @@ void FEOtsUDPTemplateInterface::stop(void)
 	OtsUDPHardware::write(sendBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 bool FEOtsUDPTemplateInterface::running(void)
 {
 	__FE_COUT__ << "\tRunning" << __E__;
@@ -383,7 +383,7 @@ bool FEOtsUDPTemplateInterface::running(void)
 	return false;
 }
 
-//========================================================================================================================
+//==============================================================================
 // NOTE: buffer for address must be at least size universalAddressSize_
 // NOTE: buffer for returnValue must be max UDP size to handle return possibility
 void ots::FEOtsUDPTemplateInterface::universalRead(char* address, char* returnValue)
@@ -410,7 +410,7 @@ void ots::FEOtsUDPTemplateInterface::universalRead(char* address, char* returnVa
 
 }  // end universalRead()
 
-//========================================================================================================================
+//==============================================================================
 // NOTE: buffer for address must be at least size universalAddressSize_
 // NOTE: buffer for writeValue must be at least size universalDataSize_
 void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeValue)
@@ -431,7 +431,7 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 	OtsUDPHardware::write(sendBuffer);  // data request
 }  // end universalWrite()
 
-//========================================================================================================================
+//==============================================================================
 // varTest
 //	FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin' using MacroMaker.
 //	Macro Notes: This is a great test!
@@ -498,7 +498,7 @@ void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 
 }  // end varTest()
 
-//========================================================================================================================
+//==============================================================================
 // varTest2
 //	FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin' using MacroMaker.
 //	Macro Notes: [Modified 14:28 10/11/2018] This is a great test!

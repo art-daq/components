@@ -15,13 +15,13 @@
 
 using namespace ots;
 
-//========================================================================================================================
+//==============================================================================
 FSSRROCDefinitions::FSSRROCDefinitions() { ; }
 
-//========================================================================================================================
+//==============================================================================
 FSSRROCDefinitions::~FSSRROCDefinitions(void) {}
 
-//========================================================================================================================
+//==============================================================================
 unsigned int FSSRROCDefinitions::getDACRegisterAddress(const std::string& registerName)
 {
 	if(registerName == "PulserData")
@@ -77,34 +77,34 @@ unsigned int FSSRROCDefinitions::getDACRegisterAddress(const std::string& regist
 	return 0;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::makeDACWriteHeader(int                chipId,
                                                 const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, write);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::makeDACSetHeader(int chipId, const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, set);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::makeDACResetHeader(int                chipId,
                                                 const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, reset);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::makeDACReadHeader(int                chipId,
                                                const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, read);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::makeDACHeader(int                chipId,
                                            const std::string& registerName,
                                            unsigned int       instruction)
@@ -144,7 +144,7 @@ uint64_t FSSRROCDefinitions::makeDACHeader(int                chipId,
 	return command;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::makeDACWriteCommand(int                chipId,
                                                  const std::string& registerName,
                                                  unsigned int       valueToWrite)
@@ -169,14 +169,14 @@ uint64_t FSSRROCDefinitions::makeDACWriteCommand(int                chipId,
 	return command;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::makeDACReadCommand(int                chipId,
                                                 const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, read);
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string FSSRROCDefinitions::makeMaskWriteCommand(int                chipId,
                                                      const std::string& registerName,
                                                      std::string        valueToWrite)
@@ -216,32 +216,32 @@ std::string FSSRROCDefinitions::makeMaskWriteCommand(int                chipId,
 	return command;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::makeMaskReadCommand(int                chipId,
                                                  const std::string& registerName)
 {
 	return 0;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::setSendData(int chipId)
 {
 	return makeDACWriteCommand(chipId, "SendData", 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::resetSendData(int chipId)
 {
 	return makeDACWriteCommand(chipId, "SendData", 0);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::setRejectHits(int chipId)
 {
 	return makeDACWriteCommand(chipId, "RejectHits", 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t FSSRROCDefinitions::resetRejectHits(int chipId)
 {
 	return makeDACWriteCommand(chipId, "RejectHits", 0);

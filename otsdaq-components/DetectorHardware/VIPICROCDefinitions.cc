@@ -15,13 +15,13 @@
 
 using namespace ots;
 
-//========================================================================================================================
+//==============================================================================
 VIPICROCDefinitions::VIPICROCDefinitions() {}
 
-//========================================================================================================================
+//==============================================================================
 VIPICROCDefinitions::~VIPICROCDefinitions(void) {}
 
-//========================================================================================================================
+//==============================================================================
 unsigned int VIPICROCDefinitions::getDACRegisterAddress(const std::string& registerName)
 {
 	if(registerName == "PulserData")
@@ -77,35 +77,35 @@ unsigned int VIPICROCDefinitions::getDACRegisterAddress(const std::string& regis
 	return 0;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::makeDACWriteHeader(int                chipId,
                                                  const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, write);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::makeDACSetHeader(int                chipId,
                                                const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, set);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::makeDACResetHeader(int                chipId,
                                                  const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, reset);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::makeDACReadHeader(int                chipId,
                                                 const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, read);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::makeDACHeader(int                chipId,
                                             const std::string& registerName,
                                             unsigned int       instruction)
@@ -145,7 +145,7 @@ uint64_t VIPICROCDefinitions::makeDACHeader(int                chipId,
 	return command;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::makeDACWriteCommand(int                chipId,
                                                   const std::string& registerName,
                                                   unsigned int       valueToWrite)
@@ -170,14 +170,14 @@ uint64_t VIPICROCDefinitions::makeDACWriteCommand(int                chipId,
 	return command;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::makeDACReadCommand(int                chipId,
                                                  const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, read);
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string VIPICROCDefinitions::makeMaskWriteCommand(int                chipId,
                                                       const std::string& registerName,
                                                       std::string        valueToWrite)
@@ -217,32 +217,32 @@ std::string VIPICROCDefinitions::makeMaskWriteCommand(int                chipId,
 	return command;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::makeMaskReadCommand(int                chipId,
                                                   const std::string& registerName)
 {
 	return 0;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::setSendData(int chipId)
 {
 	return makeDACWriteCommand(chipId, "SendData", 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::resetSendData(int chipId)
 {
 	return makeDACWriteCommand(chipId, "SendData", 0);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::setRejectHits(int chipId)
 {
 	return makeDACWriteCommand(chipId, "RejectHits", 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t VIPICROCDefinitions::resetRejectHits(int chipId)
 {
 	return makeDACWriteCommand(chipId, "RejectHits", 0);

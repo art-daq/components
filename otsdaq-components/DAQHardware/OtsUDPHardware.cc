@@ -6,7 +6,7 @@
 
 using namespace ots;
 
-//========================================================================================================================
+//==============================================================================
 // This one is often (e.g. FENIMPlusInterface) called by FEs inheriting OtsUDPHardware
 OtsUDPHardware::OtsUDPHardware(std::string  boardIPAddress,
                                unsigned int boardPort,
@@ -27,7 +27,7 @@ OtsUDPHardware::OtsUDPHardware(std::string  boardIPAddress,
 	//	__COUT__ << fn << std::endl;
 }
 
-//========================================================================================================================
+//==============================================================================
 OtsUDPHardware::OtsUDPHardware(std::string  hostIPAddress,
                                unsigned int hostPort,
                                std::string  OtsUDPHardwareIPAddress,
@@ -52,10 +52,10 @@ OtsUDPHardware::OtsUDPHardware(std::string  hostIPAddress,
 	//	__COUT__ << fn << std::endl;
 }
 
-//========================================================================================================================
+//==============================================================================
 OtsUDPHardware::~OtsUDPHardware(void) {}
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPHardware::write(const std::string& sendBuffer) try
 {
 	//	char msg[100];
@@ -99,7 +99,7 @@ catch(...)
 	__SS_THROW__;
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPHardware::write(const std::vector<std::string>& sendBuffer)
 {
 	for(const auto& it : sendBuffer)
@@ -131,7 +131,7 @@ void OtsUDPHardware::write(const std::vector<std::string>& sendBuffer)
 	}
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPHardware::writeAndAcknowledge(const std::string& buffer,
                                          int                timeoutSeconds) try
 {
@@ -215,7 +215,7 @@ catch(...)
 	__SS_THROW__;
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPHardware::writeAndAcknowledge(const std::vector<std::string>& buffer,
                                          int                             timeoutSeconds)
 {
@@ -248,7 +248,7 @@ void OtsUDPHardware::writeAndAcknowledge(const std::vector<std::string>& buffer,
 	}
 }
 
-//========================================================================================================================
+//==============================================================================
 // return -1 on failure
 void OtsUDPHardware::read(const std::string& sendBuffer,
                           std::string&       receiveBuffer,
@@ -309,7 +309,7 @@ catch(...)
 	__SS_THROW__;
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPHardware::read(const std::vector<std::string>& sendBuffers,
                           std::vector<std::string>&       receiveBuffers,
                           int                             timeoutSeconds)
@@ -320,7 +320,7 @@ void OtsUDPHardware::read(const std::vector<std::string>& sendBuffers,
 		read(sendBuffer, *(receiveBufferIterator++));
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPHardware::read(const std::string& sendBuffer,
                           uint64_t&          receiveQuadWord,
                           int                timeoutSeconds)
@@ -347,7 +347,7 @@ void OtsUDPHardware::read(const std::string& sendBuffer,
 	//			receiveQuadWord << std::dec << std::endl;
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPHardware::read(const std::string&     sendBuffer,
                           std::vector<uint64_t>& receiveQuadWords,
                           int                    timeoutSeconds)
@@ -377,7 +377,7 @@ void OtsUDPHardware::read(const std::string&     sendBuffer,
 	}
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPHardware::read(const std::vector<std::string>&      sendBuffers,
                           std::vector<std::vector<uint64_t> >& receiveQuadWordsVector,
                           int                                  timeoutSeconds)
@@ -414,7 +414,7 @@ void OtsUDPHardware::read(const std::vector<std::string>&      sendBuffers,
 	}
 }
 
-//========================================================================================================================
+//==============================================================================
 // clearReadSocket
 //
 //	flushes read socket.

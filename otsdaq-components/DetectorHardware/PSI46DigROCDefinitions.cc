@@ -15,13 +15,13 @@
 
 using namespace ots;
 
-//========================================================================================================================
+//==============================================================================
 PSI46DigROCDefinitions::PSI46DigROCDefinitions() {}
 
-//========================================================================================================================
+//==============================================================================
 PSI46DigROCDefinitions::~PSI46DigROCDefinitions(void) {}
 
-//========================================================================================================================
+//==============================================================================
 unsigned int PSI46DigROCDefinitions::getDACRegisterAddress(
     const std::string& registerName)
 {
@@ -78,35 +78,35 @@ unsigned int PSI46DigROCDefinitions::getDACRegisterAddress(
 	return 0;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::makeDACWriteHeader(int                chipId,
                                                     const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, write);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::makeDACSetHeader(int                chipId,
                                                   const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, set);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::makeDACResetHeader(int                chipId,
                                                     const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, reset);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::makeDACReadHeader(int                chipId,
                                                    const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, read);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::makeDACHeader(int                chipId,
                                                const std::string& registerName,
                                                unsigned int       instruction)
@@ -146,7 +146,7 @@ uint64_t PSI46DigROCDefinitions::makeDACHeader(int                chipId,
 	return command;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::makeDACWriteCommand(int                chipId,
                                                      const std::string& registerName,
                                                      unsigned int       valueToWrite)
@@ -171,14 +171,14 @@ uint64_t PSI46DigROCDefinitions::makeDACWriteCommand(int                chipId,
 	return command;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::makeDACReadCommand(int                chipId,
                                                     const std::string& registerName)
 {
 	return makeDACHeader(chipId, registerName, read);
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string PSI46DigROCDefinitions::makeMaskWriteCommand(int                chipId,
                                                          const std::string& registerName,
                                                          std::string        valueToWrite)
@@ -218,32 +218,32 @@ std::string PSI46DigROCDefinitions::makeMaskWriteCommand(int                chip
 	return command;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::makeMaskReadCommand(int                chipId,
                                                      const std::string& registerName)
 {
 	return 0;
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::setSendData(int chipId)
 {
 	return makeDACWriteCommand(chipId, "SendData", 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::resetSendData(int chipId)
 {
 	return makeDACWriteCommand(chipId, "SendData", 0);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::setRejectHits(int chipId)
 {
 	return makeDACWriteCommand(chipId, "RejectHits", 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint64_t PSI46DigROCDefinitions::resetRejectHits(int chipId)
 {
 	return makeDACWriteCommand(chipId, "RejectHits", 0);

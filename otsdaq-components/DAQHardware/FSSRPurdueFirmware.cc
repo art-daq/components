@@ -19,7 +19,7 @@
 
 using namespace ots;
 
-//========================================================================================================================
+//==============================================================================
 FSSRPurdueFirmware::FSSRPurdueFirmware(std::string  communicationFirmwareType,
                                        unsigned int communicationFirmwareVersion,
                                        unsigned int applicationFirmwareVersion)
@@ -50,17 +50,17 @@ FSSRPurdueFirmware::FSSRPurdueFirmware(std::string  communicationFirmwareType,
 //	//now we can call write/read etc with protocol->write, protocol->read, etc
 //}
 
-//========================================================================================================================
+//==============================================================================
 FSSRPurdueFirmware::~FSSRPurdueFirmware(void)
 {
 	// delete protocolInstance_;
 	// protocolInstance_ = NULL;
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::init(void) {}
 /*
-//========================================================================================================================
+//==============================================================================
 std::string FSSRPurdueFirmware::configureClocks(std::string source, double frequency)
 {
     std::cout << __COUT_HDR_FL__ << "Writing Clock configuration!" << std::endl;
@@ -105,7 +105,7 @@ waitDCMResetStripCSR()); //  Wait for DCM to lock std::cout << __COUT_HDR_FL__ <
     return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string FSSRPurdueFirmware::resetDetector(int channel)
 {
     std::cout << __COUT_HDR_FL__ << "Resetting detector!" << std::endl;
@@ -126,7 +126,7 @@ STRIP_RESET, 0xf0000000); //  Wait for reset to complete
     return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string FSSRPurdueFirmware::enableTrigger(void)
 {
     std::string buffer;
@@ -176,46 +176,46 @@ enabling Trigger!!!" << std::endl;
     return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::readBurstDestinationIP(std::string& buffer)
 {
     OtsUDPFirmwareCore::read(buffer, (uint64_t)0x0000000100000006);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::readBurstDestinationMAC(std::string& buffer)
 {
     OtsUDPFirmwareCore::read(buffer, (uint64_t)0x0000000100000007);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::readBurstDestinationPort(std::string& buffer)
 {
     OtsUDPFirmwareCore::read(buffer, (uint64_t)0x0000000100000008);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::writeBurstDestinationIP(std::string& buffer, const uint64_t
 value)
 {
     OtsUDPFirmwareCore::write(buffer, (uint64_t)0x0000000100000006, value);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::writeBurstDestinationMAC(std::string& buffer, const uint64_t
 value)
 {
     OtsUDPFirmwareCore::write(buffer, (uint64_t)0x0000000100000007, value);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::writeBurstDestinationPort(std::string& buffer, const uint64_t
 value)
 {
     OtsUDPFirmwareCore::write(buffer, 0x0000000100000008, value);
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string FSSRPurdueFirmware::resetBCO(void)
 {
     std::cout << __COUT_HDR_FL__ << "Reset BCO!!!" << std::endl;
@@ -241,7 +241,7 @@ reset BCO!!!" << std::endl;
     return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string FSSRPurdueFirmware::startStream(bool channel0, bool channel1, bool channel2,
 bool channel3, bool channel4, bool channel5)
 {
@@ -269,7 +269,7 @@ start Stream!" << std::endl;
     return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string FSSRPurdueFirmware::stopStream(void)
 {
     std::string buffer;
@@ -279,7 +279,7 @@ std::string FSSRPurdueFirmware::stopStream(void)
     return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::makeDACSequence(FirmwareSequence<uint64_t>& sequence,
         unsigned int channel, const ROCStream& rocStream)
 {
@@ -308,7 +308,7 @@ void FSSRPurdueFirmware::makeDACSequence(FirmwareSequence<uint64_t>& sequence,
     }
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::makeDACSequence(FirmwareSequence<uint32_t>& sequence,
         unsigned int channel, const ROCStream& rocStream)
 {
@@ -351,7 +351,7 @@ BitManipulator::insertBits(data,(uint32_t)0x40,56,8));
     }
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::makeDACBuffer(std::string& buffer,
         unsigned int channel, const ROCStream& rocStream)
 {
@@ -409,7 +409,7 @@ STRIP_SC_CSR, 0x80000000);
     }
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware:: makeDACBuffer(std::vector<std::string>& buffer, unsigned int
 channel, const ROCStream& rocStream)
 {
@@ -493,7 +493,7 @@ packet
 
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel,
         const ROCStream& rocStream)
 {
@@ -502,7 +502,7 @@ void FSSRPurdueFirmware::makeMaskBuffer(std::string& buffer, unsigned int channe
     //    makeMaskSequence(buffer, channel, rocStream, "Inject");
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::makeMaskBuffer(std::string& buffer, unsigned int channel, const
 ROCStream& rocStream, const std::string& registerName)
 {
@@ -559,7 +559,7 @@ STRIP_SC_CSR, 0x80000000);
 STRIP_SC_CSR, 0x80000000);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
         unsigned int channel, const ROCStream& rocStream)
 {
@@ -568,7 +568,7 @@ void FSSRPurdueFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
     //    makeMaskSequence(sequence, channel, rocStream, "Inject");
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
         unsigned int channel, const ROCStream& rocStream)
 {
@@ -577,7 +577,7 @@ void FSSRPurdueFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
     //    makeMaskSequence(channel,rocStream,sequence,"Inject");
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::makeMaskSequence(FirmwareSequence<uint64_t>& sequence,
         unsigned int channel, const ROCStream& rocStream,
         const std::string& registerName)
@@ -655,13 +655,13 @@ std::endl; data = 0x40 | (((stringData.data()[s] >> b) & 1) << 5);
 
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::makeMaskSequence(FirmwareSequence<uint32_t>& sequence,
         unsigned int channel, const ROCStream& rocStream,
         const std::string& registerName)
 {}
 
-//========================================================================================================================
+//==============================================================================
 std::string FSSRPurdueFirmware::readCSRRegister()
 {
     std::string buffer;
@@ -669,7 +669,7 @@ std::string FSSRPurdueFirmware::readCSRRegister()
     return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::setFrequencyFromClockState(std::string& buffer, double frequency)
 {
     std::cout << __COUT_HDR_FL__ << "Setting up clock frequency!!!" << std::endl;
@@ -737,7 +737,7 @@ approssimation with less bits
     setFrequencyRatio(buffer, numerator, denominator);
     std::cout << __COUT_HDR_FL__ << "Done with clock frequency setup!!!" << std::endl;
 }
-//========================================================================================================================
+//==============================================================================
 bool FSSRPurdueFirmware::isClockStateExternal() //returns true if the clock state is
 External
 {
@@ -747,19 +747,19 @@ External
         return false;
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::setCSRRegister(uint32_t total)
 {
     stripCSRRegisterValue_ = total;
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::writeCSRRegister(std::string& buffer)
 {
     OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::setPacketSizeStripCSR(uint32_t size)
 {
     if (size > 31)
@@ -770,7 +770,7 @@ void FSSRPurdueFirmware::setPacketSizeStripCSR(uint32_t size)
     //write(buffer,STRIP_CSR, stripSCRRegisterValue_);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::enableChannelsStripCSR(bool channel0, bool channel1,
         bool channel2, bool channel3, bool channel4, bool channel5)
 {
@@ -780,7 +780,7 @@ void FSSRPurdueFirmware::enableChannelsStripCSR(bool channel0, bool channel1,
             + ((uint32_t) channel5 << 5), 8, 6);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::setExternalBCOClockSourceStripCSR(std::string clockSource)
 {
     if (clockSource == "External")
@@ -789,25 +789,25 @@ void FSSRPurdueFirmware::setExternalBCOClockSourceStripCSR(std::string clockSour
         BitManipulator::insertBits(stripCSRRegisterValue_, 0, 16, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::setHaltStripCSR(bool set)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) set, 17, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::enableBCOStripCSR(bool enable)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) enable, 19, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::flushBuffersStripCSR(void)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, 1, 20, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::resetTriggerCounterStripCSR(std::string& buffer)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, 1, 21, 1);
@@ -817,49 +817,49 @@ void FSSRPurdueFirmware::resetTriggerCounterStripCSR(std::string& buffer)
     OtsUDPFirmwareCore::write(buffer, STRIP_CSR, stripCSRRegisterValue_);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::resetBCOCounterStripCSR(void)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, 1, 22, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::enableTriggerStripCSR(bool enable)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) enable, 23, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::sendTriggerDataStripCSR(bool send)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) send, 24, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::sendTriggerNumberStripCSR(bool send)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) send, 25, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::sendBCOStripCSR(bool send)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) send, 26, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::enableStreamStripCSR(bool enable)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) enable, 27, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::resetDCMStripCSR(bool clear)
 {
     BitManipulator::insertBits(stripCSRRegisterValue_, (uint32_t) clear, 31, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 uint32_t FSSRPurdueFirmware::waitDCMResetStripCSR(void)
 {
     uint32_t bitToCheck = 0;
@@ -867,13 +867,13 @@ uint32_t FSSRPurdueFirmware::waitDCMResetStripCSR(void)
     return bitToCheck;
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::resetDAC(void)
 {
     BitManipulator::insertBits(stripResetRegisterValue_, 1, 27, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::resetLink(bool channel0, bool channel1, bool channel2,
         bool channel3, bool channel4, bool channel5)
 {
@@ -896,7 +896,7 @@ void FSSRPurdueFirmware::resetLink(bool channel0, bool channel1, bool channel2,
 
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::clearErrors(bool channel0, bool channel1, bool channel2,
         bool channel3, bool channel4, bool channel5)
 {
@@ -909,7 +909,7 @@ void FSSRPurdueFirmware::clearErrors(bool channel0, bool channel1, bool channel2
     BitManipulator::insertBits(stripResetRegisterValue_, 1, 29, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::clearFIFO(bool channel0, bool channel1, bool channel2,
         bool channel3, bool channel4, bool channel5)
 {
@@ -922,7 +922,7 @@ void FSSRPurdueFirmware::clearFIFO(bool channel0, bool channel1, bool channel2,
     BitManipulator::insertBits(stripResetRegisterValue_, 1, 30, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::resetChip(bool channel0, bool channel1, bool channel2,
         bool channel3, bool channel4, bool channel5)
 {
@@ -935,7 +935,7 @@ void FSSRPurdueFirmware::resetChip(bool channel0, bool channel1, bool channel2,
     BitManipulator::insertBits(stripResetRegisterValue_, 1, 31, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::setFrequencyRatio(std::string& buffer, int numerator, int
 denominator)
 {
@@ -952,32 +952,32 @@ STRIP_BCO_DCM, 0xf0000000); //  Wait DCM write to finish - BCO frequency should 
 MHz // was 0x80000000
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::BCOOffset(uint32_t offset)
 {
     BitManipulator::insertBits(stripTriggerCSRRegisterValue_, offset, 0, 4);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::selectSpyFIFO(uint32_t input)
 {
     BitManipulator::insertBits(stripTriggerCSRRegisterValue_, input, 4, 3);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::halt(bool halt)
 {
     BitManipulator::insertBits(stripTriggerCSRRegisterValue_, (uint32_t) halt, 7, 1);
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::configureStripTriggerUnbiased(std::string& buffer)
 {
     OtsUDPFirmwareCore::write(buffer, STRIP_TRIG_UNBIASED, 0x002805c); //  Configure
 unbiased trigger
 }
 
-//========================================================================================================================
+//==============================================================================
 void FSSRPurdueFirmware::configureTriggerInputs(std::string& buffer)
 {
     OtsUDPFirmwareCore::write(buffer, STRIP_TRIG_INPUT_0, 0x3f440000); //  FSSR GOTHIT
@@ -986,7 +986,7 @@ trigger input channel 0,1 OtsUDPFirmwareCore::write(buffer, STRIP_TRIG_INPUT_1,
 STRIP_TRIG_INPUT_2, 0x0); //  FSSR GOTHIT trigger input channel 4,5
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string FSSRPurdueFirmware::resetSlaveBCO(void)
 {
     std::string buffer;
@@ -994,74 +994,74 @@ std::string FSSRPurdueFirmware::resetSlaveBCO(void)
     return buffer;
 }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::chipID(uint32_t size)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, size, 0, 5);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::addressSlowControls(uint32_t size)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, size, 5, 5);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::instructionSlowControls(uint32_t size)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, size, 10, 3);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::channelreadSelect(uint32_t size)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, size, 13, 3);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::channelMask(uint32_t size)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, size, 16, 8);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::bitsLength(uint32_t length)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, length, 26, 3);
  }
 
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::syncFallingBCO(bool sync)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, (uint32_t)sync, 28, 1);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::syncRisingBCO(bool sync)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, (uint32_t)sync, 29, 1);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::setRaw(bool set)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, (uint32_t)set, 30, 1);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::initSlowControls(bool init)
  {
  BitManipulator::insertBits(stripSCRegisterValue_, (uint32_t)init, 31, 1);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::resetCount(bool reset)
  {
  BitManipulator::insertBits(stripAnalysisCSRRegisterValue_, (uint32_t)reset, 30, 1);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::setBCO_0(uint32_t void FSSRPurdueFirmware::BCOOffset(uint32_t
 offset)
  {
@@ -1071,31 +1071,31 @@ offset)
  BitManipulator::insertBits(trigInputRegisterValue_, input, 0, 8);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::setBCO_1(uint32_t input)
  {
  BitManipulator::insertBits(trigInputRegisterValue_, input, 8, 8);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::trimFracBCO_0(uint32_t input)
  {
  BitManipulator::insertBits(trigInputRegisterValue_, input, 16, 4);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::trimFracBCO_1(uint32_t input)
  {
  BitManipulator::insertBits(trigInputRegisterValue_, input, 20, 4);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::enable_0(bool enable)
  {
  BitManipulator::insertBits(trigInputRegisterValue_, (uint32_t)enable, 28, 1);
  }
 
- //========================================================================================================================
+ //==============================================================================
  void FSSRPurdueFirmware::enable_1(bool enable)
  {
  BitManipulator::insertBits(trigInputRegisterValue_, (uint32_t)enable, 29, 1);
