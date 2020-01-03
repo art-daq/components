@@ -32,7 +32,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(
 	universalAddressSize_ = 8;
 	universalDataSize_    = 8;
 
-	// example self-call of feMacro
+	// example self-call of FE-macros
 	if(1)
 	{
 		// registration of FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin'
@@ -76,7 +76,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(
 			__FE_COUTV__(b);
 			__FE_COUTV__(c);
 		}
-	}
+	} //end example of calling own FE-macros
 
 }  // end constructor
 
@@ -86,12 +86,18 @@ FEOtsUDPTemplateInterface::~FEOtsUDPTemplateInterface(void) {}
 //==============================================================================
 void FEOtsUDPTemplateInterface::configure(void)
 {
-	//	unsigned int i = VStateMachine::getIterationIndex();
-	//	unsigned int j = VStateMachine::getSubIterationIndex();
-	//	if(i == 0 && j < 5)
-	//		VStateMachine::indicateSubIterationWork();
-	//	else if(i < 10)
-	//		VStateMachine::indicateIterationWork();
+	unsigned int i = VStateMachine::getIterationIndex();
+	unsigned int j = VStateMachine::getSubIterationIndex();
+	if(i == 0 && j < 5)
+	{
+		VStateMachine::indicateSubIterationWork();
+		sleep(3);
+	}
+	else if(i < 10)
+	{
+		VStateMachine::indicateIterationWork();
+		sleep(1);
+	}
 	//
 	//	__FE_COUTV__(VStateMachine::getSubIterationIndex());
 	//	__FE_COUTV__(VStateMachine::getSubIterationWork());
@@ -240,7 +246,7 @@ void FEOtsUDPTemplateInterface::configure(void)
 	FEVInterface::runSequenceOfCommands("LinkToConfigureSequence");
 
 	__FE_COUT__ << "Done with ots Template configuring." << __E__;
-}
+} //end configure()
 
 //==============================================================================
 // void FEOtsUDPTemplateInterface::configureDetector(const DACStream& theDACStream)
@@ -331,11 +337,11 @@ bool FEOtsUDPTemplateInterface::running(void)
 			sleep(1);
 		else
 		{
-			//			if(1 || getInterfaceUID() == "ExampleInterface1")
-			//			{
-			//				throw __OTS_SOFT_EXCEPTION__("Soft error here");
-			//			}
-			//			else
+						if(1 || getInterfaceUID() == "ExampleInterface1")
+						{
+							throw __OTS_SOFT_EXCEPTION__("Soft error here");
+						}
+						else
 			break;
 		}
 	}
