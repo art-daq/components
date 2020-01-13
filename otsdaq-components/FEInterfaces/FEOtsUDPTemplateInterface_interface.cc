@@ -88,16 +88,16 @@ void FEOtsUDPTemplateInterface::configure(void)
 {
 	unsigned int i = VStateMachine::getIterationIndex();
 	unsigned int j = VStateMachine::getSubIterationIndex();
-	if(i == 0 && j < 5)
-	{
-		VStateMachine::indicateSubIterationWork();
-		sleep(3);
-	}
-	else if(i < 10)
-	{
-		VStateMachine::indicateIterationWork();
-		sleep(1);
-	}
+	//	if(i == 0 && j < 5)
+	//	{
+	//		VStateMachine::indicateSubIterationWork();
+	//		sleep(3);
+	//	}
+	//	else if(i < 10)
+	//	{
+	//		VStateMachine::indicateIterationWork();
+	//		sleep(1);
+	//	}
 	//
 	//	__FE_COUTV__(VStateMachine::getSubIterationIndex());
 	//	__FE_COUTV__(VStateMachine::getSubIterationWork());
@@ -337,11 +337,12 @@ bool FEOtsUDPTemplateInterface::running(void)
 			sleep(1);
 		else
 		{
-						if(1 || getInterfaceUID() == "ExampleInterface1")
-						{
-							throw __OTS_SOFT_EXCEPTION__("Soft error here");
-						}
-						else
+//						if(1 || getInterfaceUID() == "ExampleInterface1")
+//						{
+//							__FE_SS__ << "Soft Error Here" << __E__;
+//							throw __OTS_SOFT_EXCEPTION__(ss.str());
+//						}
+//						else
 			break;
 		}
 	}
