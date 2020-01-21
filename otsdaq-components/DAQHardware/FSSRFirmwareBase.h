@@ -142,6 +142,7 @@ public:
 	std::string 			readCSRRegister			         (void);
 
 	std::string 			readSCCSRRegister   	         (void);
+	std::string 			readTrimCSRRegister              (void);
 
     uint32_t stripResetRegisterValue_;
     //Set values for register STRIP_RESET (Strip Reset)

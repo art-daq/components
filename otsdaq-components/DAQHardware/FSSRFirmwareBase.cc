@@ -131,7 +131,19 @@ void FSSRFirmwareBase::alignReadOut(std::string& buffer, unsigned int sensor, un
 	//28 up/down (-> here we always move up)
 	//31 must be set 1
 	//It shifts the readout every time is called by few picosends (likely) if bit 31 is set
-	communicationFirmwareInstance_->write(buffer, STRIP_TRIM_CSR, (0x9<<28)+((chip&0xf)<<3)+(sensor&0x7)); //  MCLKB edge for channel 5 // was 0x00002000
+
+	//communicationFirmwareInstance_->write(buffer, STRIP_TRIM_CSR, (0x9<<28)+((chip&0xf)<<3)+(sensor&0x7)); //  MCLKB edge for channel 5 // was 0x00002000
+	//communicationFirmwareInstance_->write(buffer, STRIP_TRIM_CSR, 0x3e0); //  MCLKB edge for channel 5 // was 0x00002000
+	__COUT__ << "ALIGNING READOUT!!!!!" << std::endl;
+	__COUT__ << "ALIGNING READOUT!!!!!" << std::endl;
+	__COUT__ << "ALIGNING READOUT!!!!!" << std::endl;
+	__COUT__ << "ALIGNING READOUT!!!!!" << std::endl;
+	__COUT__ << "ALIGNING READOUT!!!!!" << std::endl;
+	__COUT__ << "ALIGNING READOUT!!!!!" << std::endl;
+	__COUT__ << "ALIGNING READOUT!!!!!" << std::endl;
+	__COUT__ << "ALIGNING READOUT!!!!!" << std::endl;
+	__COUT__ << "ALIGNING READOUT!!!!!" << std::endl;
+	communicationFirmwareInstance_->write(buffer, STRIP_TRIM_CSR, 0xffffffff); //  MCLKB edge for channel 5 // was 0x00002000
 }
 //========================================================================================================================
 std::string FSSRFirmwareBase::resetDetector(int channel)
@@ -751,8 +763,17 @@ std::string FSSRFirmwareBase::readCSRRegister()
 std::string FSSRFirmwareBase::readSCCSRRegister()
 {
 	std::string buffer;
-	std::cout << __COUT_HDR_FL__ << "FSSR readCSRRegister" << std::endl;
+	std::cout << __COUT_HDR_FL__ << "FSSR readSCCSRRegister" << std::endl;
 	communicationFirmwareInstance_->read(buffer,STRIP_SC_CSR);
+	return buffer;
+}
+
+//========================================================================================================================
+std::string FSSRFirmwareBase::readTrimCSRRegister(void)
+{
+	std::string buffer;
+	std::cout << __COUT_HDR_FL__ << "FSSR readTrimCSRRegister" << std::endl;
+	communicationFirmwareInstance_->read(buffer,STRIP_TRIM_CSR);
 	return buffer;
 }
 
