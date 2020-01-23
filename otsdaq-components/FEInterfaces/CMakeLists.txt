@@ -14,8 +14,13 @@ simple_plugin(FEOtsUDPProducerTemplateInterface "interface"
   FECore
   WorkLoopManager
   Configurable
+  DataManager
+  ${MF_MESSAGELOGGER}
   ${CETLIB}
   ${CETLIB_EXCEPT}
+  ${XDAQ_XERCES-C}
+${Boost_SYSTEM_LIBRARY}
+  pthread
   )
   
 simple_plugin(FEOtsUDPTemplateInterface "interface"
@@ -25,6 +30,10 @@ simple_plugin(FEOtsUDPTemplateInterface "interface"
   Configurable
   ${CETLIB}
   ${CETLIB_EXCEPT}
+  ${XDAQ_XERCES-C}
+  ${MF_MESSAGELOGGER}
+${Boost_SYSTEM_LIBRARY}
+  pthread
   )
 
 install_headers()

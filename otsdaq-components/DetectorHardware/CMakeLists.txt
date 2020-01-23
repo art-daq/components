@@ -1,7 +1,7 @@
 cet_make(LIBRARY_NAME DetectorHardware
 		 LIBRARIES
 		 BitManipulator
-		 #MessageFacility
+		 ${MF_MESSAGELOGGER}
 )
 
 install_headers()

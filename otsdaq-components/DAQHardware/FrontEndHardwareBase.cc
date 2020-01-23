@@ -7,15 +7,15 @@
 //
 //#include "otsdaq-components/DAQHardware/FrontEndHardwareBase.h"
 //
-//namespace ots
+// namespace ots
 //{
 //
-//FrontEndHardwareBase::FrontEndHardwareBase()
+// FrontEndHardwareBase::FrontEndHardwareBase()
 //{
 //	// TODO Auto-generated constructor stub
 //}
 //
-//FrontEndHardwareBase::~FrontEndHardwareBase()
+// FrontEndHardwareBase::~FrontEndHardwareBase()
 //{
 //	// TODO Auto-generated destructor stub
 //}

@@ -10,13 +10,11 @@
 
 namespace ots
 {
-
 class DAQHardwareBase
 {
-public:
+  public:
 	DAQHardwareBase();
 	virtual ~DAQHardwareBase();
-
 };
 
 } /* namespace ots */
