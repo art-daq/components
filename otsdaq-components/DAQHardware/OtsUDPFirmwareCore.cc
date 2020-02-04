@@ -1,4 +1,4 @@
-#include "OtsUDPFirmwareCore.h"
+#include "otsdaq-components/DAQHardware/OtsUDPFirmwareCore.h"
 
 #include "otsdaq/Macros/CoutMacros.h"
 #include "otsdaq/MessageFacility/MessageFacility.h"

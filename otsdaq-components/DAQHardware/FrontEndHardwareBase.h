@@ -72,15 +72,9 @@ class FrontEndHardwareBase
 		return 0;
 	}
 
-	static const std::string PURDUE_HARDWARE_NAME;
-	static const std::string OTS_HARDWARE_NAME;
-
   protected:
 	unsigned int version_;
 };
-
-const std::string FrontEndHardwareBase::PURDUE_HARDWARE_NAME = "PurdueHardware";
-const std::string FrontEndHardwareBase::OTS_HARDWARE_NAME    = "OtsUDPHardware";
 
 }  // namespace ots
 
