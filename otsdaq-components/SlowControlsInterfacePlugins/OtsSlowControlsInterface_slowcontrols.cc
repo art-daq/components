@@ -28,31 +28,32 @@ void OtsSlowControlsInterface::destroy() {}
 
 std::vector<std::string> OtsSlowControlsInterface::getChannelList() { return {}; }
 
-std::string OtsSlowControlsInterface::getList(std::string format)
+std::string OtsSlowControlsInterface::getList(const std::string& format)
 {
 	//__COUT__ <<
 	// theXDAQContextConfigTree.getNode(controlsConfigurationPath).getValue <<
 	// std::endl;
 	return (std::string) "list";
 }
-void OtsSlowControlsInterface::subscribe(std::string Name) {}
+void OtsSlowControlsInterface::subscribe(const std::string& Name) {}
 
-void OtsSlowControlsInterface::subscribeJSON(std::string List) {}
+void OtsSlowControlsInterface::subscribeJSON(const std::string& List) {}
 
-void OtsSlowControlsInterface::unsubscribe(std::string Name) {}
+void OtsSlowControlsInterface::unsubscribe(const std::string& Name) {}
 
-std::array<std::string, 4> OtsSlowControlsInterface::getCurrentValue(std::string Name)
+std::array<std::string, 4> OtsSlowControlsInterface::getCurrentValue(
+    const std::string& Name)
 {
 	return {"a", "b", "c", "d"};
 }
 
 std::vector<std::vector<std::string>> OtsSlowControlsInterface::getChannelHistory(
-    std::string Name)
+    const std::string& Name)
 {
 	return {};
 }
 
-std::array<std::string, 9> OtsSlowControlsInterface::getSettings(std::string Name)
+std::array<std::string, 9> OtsSlowControlsInterface::getSettings(const std::string& Name)
 {
 	return {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
 }

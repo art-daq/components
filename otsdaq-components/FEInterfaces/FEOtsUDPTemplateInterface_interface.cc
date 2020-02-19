@@ -29,13 +29,15 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(
                                 .getNode("FirmwareVersion")
                                 .getValue<unsigned int>())
 {
-	//registration of FEMacro 'test' generated, Jan-20-2020 09:41:49, by 'admin' using MacroMaker.
-	FEVInterface::registerFEMacroFunction("test",//feMacroName 
-		static_cast<FEVInterface::frontEndMacroFunction_t>(&FEOtsUDPTemplateInterface::test), //feMacroFunction 
-		std::vector<std::string>{}, //namesOfInputArgs 
-		std::vector<std::string>{"outArg1"}, //namesOfOutputArgs 
-		1); //requiredUserPermissions 
-
+	// registration of FEMacro 'test' generated, Jan-20-2020 09:41:49, by 'admin' using
+	// MacroMaker.
+	FEVInterface::registerFEMacroFunction(
+	    "test",  // feMacroName
+	    static_cast<FEVInterface::frontEndMacroFunction_t>(
+	        &FEOtsUDPTemplateInterface::test),  // feMacroFunction
+	    std::vector<std::string>{},             // namesOfInputArgs
+	    std::vector<std::string>{"outArg1"},    // namesOfOutputArgs
+	    1);                                     // requiredUserPermissions
 
 	universalAddressSize_ = 8;
 	universalDataSize_    = 8;
@@ -84,7 +86,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(
 			__FE_COUTV__(b);
 			__FE_COUTV__(c);
 		}
-	} //end example of calling own FE-macros
+	}  // end example of calling own FE-macros
 
 }  // end constructor
 
@@ -254,7 +256,7 @@ void FEOtsUDPTemplateInterface::configure(void)
 	FEVInterface::runSequenceOfCommands("LinkToConfigureSequence");
 
 	__FE_COUT__ << "Done with ots Template configuring." << __E__;
-} //end configure()
+}  // end configure()
 
 //==============================================================================
 // void FEOtsUDPTemplateInterface::configureDetector(const DACStream& theDACStream)
@@ -345,12 +347,12 @@ bool FEOtsUDPTemplateInterface::running(void)
 			sleep(1);
 		else
 		{
-//						if(1 || getInterfaceUID() == "ExampleInterface1")
-//						{
-//							__FE_SS__ << "Soft Error Here" << __E__;
-//							throw __OTS_SOFT_EXCEPTION__(ss.str());
-//						}
-//						else
+			//						if(1 || getInterfaceUID() == "ExampleInterface1")
+			//						{
+			//							__FE_SS__ << "Soft Error Here" << __E__;
+			//							throw __OTS_SOFT_EXCEPTION__(ss.str());
+			//						}
+			//						else
 			break;
 		}
 	}
@@ -534,43 +536,50 @@ void FEOtsUDPTemplateInterface::varTest2(__ARGS__)
 
 }  // end varTest2()
 
-
 //========================================================================================================================
-//test
+// test
 //	FEMacro 'test' generated, Jan-20-2020 09:41:49, by 'admin' using MacroMaker.
 //	Macro Notes: Testing notes
 void FEOtsUDPTemplateInterface::test(__ARGS__)
 {
-	__CFG_COUT__ << "# of input args = " << argsIn.size() << __E__; 
-	__CFG_COUT__ << "# of output args = " << argsOut.size() << __E__; 
-	for(auto &argIn:argsIn) 
-		__CFG_COUT__ << argIn.first << ": " << argIn.second << __E__; 
+	__CFG_COUT__ << "# of input args = " << argsIn.size() << __E__;
+	__CFG_COUT__ << "# of output args = " << argsOut.size() << __E__;
+	for(auto& argIn : argsIn)
+		__CFG_COUT__ << argIn.first << ": " << argIn.second << __E__;
 
-	//macro commands section 
+	// macro commands section
 	{
-		char *address 	= new char[universalAddressSize_]{0};	//create address buffer of interface size and init to all 0
-		char *data 		= new char[universalDataSize_]{0};		//create data buffer of interface size and init to all 0
-		uint64_t macroAddress;		//create macro address buffer (size 8 bytes)
-		uint64_t macroData;			//create macro address buffer (size 8 bytes)
-		std::map<std::string /*arg name*/,uint64_t /*arg val*/> macroArgs; //create map from arg name to 64-bit number
+		char* address = new char[universalAddressSize_]{
+		    0};  //create address buffer of interface size and init to all 0
+		char* data = new char[universalDataSize_]{
+		    0};                 //create data buffer of interface size and init to all 0
+		uint64_t macroAddress;  // create macro address buffer (size 8 bytes)
+		uint64_t macroData;     // create macro address buffer (size 8 bytes)
+		std::map<std::string /*arg name*/, uint64_t /*arg val*/>
+		    macroArgs;  // create map from arg name to 64-bit number
 
 		// command-#0: Write(0x4 /*address*/,0x2 /*data*/);
-		macroAddress = 0x4; memcpy(address,&macroAddress,8);	//copy macro address to buffer
-		macroData = 0x2; memcpy(data,&macroData,8);	//copy macro data to buffer
-		universalWrite(address,data);
+		macroAddress = 0x4;
+		memcpy(address, &macroAddress, 8);  // copy macro address to buffer
+		macroData = 0x2;
+		memcpy(data, &macroData, 8);  // copy macro data to buffer
+		universalWrite(address, data);
 
 		// command-#1: Read(0x4 /*address*/,data);
-		macroAddress = 0x4; memcpy(address,&macroAddress,8);	//copy macro address to buffer
-		universalRead(address,data);		memcpy(&macroArgs["outArg1"],data,8); //copy buffer to argument map
-		__SET_ARG_OUT__("outArg1",macroArgs["outArg1"]); //update output argument result
+		macroAddress = 0x4;
+		memcpy(address, &macroAddress, 8);  // copy macro address to buffer
+		universalRead(address, data);
+		memcpy(&macroArgs["outArg1"], data, 8);            // copy buffer to argument map
+		__SET_ARG_OUT__("outArg1", macroArgs["outArg1"]);  // update output argument
+		                                                   // result
 
-		delete[] address; //free the memory
-		delete[] data; //free the memory
+		delete[] address;  // free the memory
+		delete[] data;     // free the memory
 	}
 
-	for(auto &argOut:argsOut) 
-		__CFG_COUT__ << argOut.first << ": " << argOut.second << __E__; 
+	for(auto& argOut : argsOut)
+		__CFG_COUT__ << argOut.first << ": " << argOut.second << __E__;
 
-} //end test()
+}  // end test()
 
 DEFINE_OTS_INTERFACE(FEOtsUDPTemplateInterface)
