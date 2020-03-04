@@ -84,7 +84,7 @@ include(CetTest)
 add_subdirectory(otsdaq-components)
 
 # doxygen
-add_subdirectory(doc)
+#add_subdirectory(doc)
 
 # UPS Config
 add_subdirectory(ups)
