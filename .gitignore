@@ -3,3 +3,6 @@
 bin
 obj
 *.vcxproj*
+*.tmp
+*.bk
+*.tmp
