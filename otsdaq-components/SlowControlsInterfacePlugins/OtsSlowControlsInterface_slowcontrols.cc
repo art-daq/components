@@ -53,6 +53,18 @@ std::vector<std::vector<std::string>> OtsSlowControlsInterface::getChannelHistor
 	return {};
 }
 
+std::vector<std::vector<std::string>> OtsSlowControlsInterface::getLastAlarms(
+    const std::string& Name)
+{
+	return {};
+}
+
+std::vector<std::vector<std::string>> OtsSlowControlsInterface::getAlarmsLog(
+    const std::string& Name)
+{
+	return {};
+}
+
 std::array<std::string, 9> OtsSlowControlsInterface::getSettings(const std::string& Name)
 {
 	return {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
