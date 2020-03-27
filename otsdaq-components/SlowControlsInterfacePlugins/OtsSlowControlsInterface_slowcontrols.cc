@@ -70,4 +70,10 @@ std::array<std::string, 9> OtsSlowControlsInterface::getSettings(const std::stri
 	return {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
 }
 
+std::vector<std::vector<std::string>> OtsSlowControlsInterface::checkAlarmNotifications(
+    void)
+{
+	return {};
+}
+
 DEFINE_OTS_SLOW_CONTROLS(OtsSlowControlsInterface)
