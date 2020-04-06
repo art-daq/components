@@ -84,7 +84,9 @@ include(CetTest)
 add_subdirectory(otsdaq-components)
 
 # doxygen
-add_subdirectory(doc)
+if( $ENV{OTS_DOXY} MATCHES "DOIT" )
+	add_subdirectory(doc)
+endif()
 
 # UPS Config
 add_subdirectory(ups)

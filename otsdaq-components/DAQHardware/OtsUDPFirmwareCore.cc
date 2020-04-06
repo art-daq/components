@@ -1,4 +1,4 @@
-#include "OtsUDPFirmwareCore.h"
+#include "otsdaq-components/DAQHardware/OtsUDPFirmwareCore.h"
 
 #include "otsdaq/Macros/CoutMacros.h"
 #include "otsdaq/MessageFacility/MessageFacility.h"
@@ -46,19 +46,19 @@ using namespace ots;
 
 const uint8_t OtsUDPFirmwareCore::FIFO_ADDRESS_CMD_TYPE = (1 << 3);
 
-//========================================================================================================================
+//==============================================================================
 OtsUDPFirmwareCore::OtsUDPFirmwareCore(unsigned int version)
     : FrontEndFirmwareBase(version)
 {
 }
 
-//========================================================================================================================
+//==============================================================================
 OtsUDPFirmwareCore::~OtsUDPFirmwareCore(void) {}
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::init(void) {}
 
-//========================================================================================================================
+//==============================================================================
 std::string OtsUDPFirmwareCore::write(char* address, char* data)
 {
 	std::string buffer;
@@ -66,7 +66,7 @@ std::string OtsUDPFirmwareCore::write(char* address, char* data)
 	return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::write(std::string& buffer,
                                char*        address,
                                char*        data,
@@ -75,7 +75,7 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
 	writeAdvanced(buffer, address, data, 1 /*size*/, 0 /*options*/, clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::write(std::string& buffer,
                                uint32_t     address,
                                uint32_t     data,
@@ -84,7 +84,7 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
 	writeAdvanced(buffer, address, data, 0 /*options*/, clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::write(std::string& buffer,
                                uint64_t     address,
                                uint64_t     data,
@@ -93,7 +93,7 @@ void OtsUDPFirmwareCore::write(std::string& buffer,
 	writeAdvanced(buffer, address, data, 0 /*options*/, clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 // OtsUDPFirmwareCore::writeAdvanced
 //	size is in units of quad-words (8-Bytes)
 void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
@@ -148,7 +148,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string& buffer,
 	*/
 }
 
-//========================================================================================================================
+//==============================================================================
 // OtsUDPFirmwareCore::writeAdvanced
 // 	Note: size is required, to remove ambiguity when calling
 // OtsUDPFirmwareCore::writeAdvanced with data=0
@@ -163,7 +163,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string&    buffe
 	    buffer, (char*)&address, data, size, commandTypeOptions, clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string&    buffer,
                                                            const uint64_t& address,
                                                            const uint64_t& data,
@@ -178,7 +178,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(std::string&    buffe
 	                                  clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(
     std::string&                 buffer,
     const uint64_t&              address,
@@ -194,7 +194,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::writeAdvanced(
 	                                  clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 std::string OtsUDPFirmwareCore::read(char* address)
 {
 	__COUT__ << "OTS pointer based read!! " << std::endl;
@@ -203,25 +203,25 @@ std::string OtsUDPFirmwareCore::read(char* address)
 	return buffer;
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::read(std::string& buffer, char* address, bool clearBuffer)
 {
 	readAdvanced(buffer, address, 1 /*size*/, 0 /*options*/, clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::read(std::string& buffer, uint64_t address, bool clearBuffer)
 {
 	readAdvanced(buffer, address, 1 /*size*/, 0 /*options*/, clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::read(std::string& buffer, uint32_t address, bool clearBuffer)
 {
 	readAdvanced(buffer, address, 1 /*size*/, 0 /*options*/, clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
                                                           char*        address,
                                                           uint8_t      size,
@@ -269,7 +269,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::readAdvanced(std::string& buffer,
 	//__COUT__ << "\n" << ss.str();
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::OtsUDPFirmwareCore::readAdvanced(std::string&    buffer,
                                                           const uint64_t& address,
                                                           uint8_t         size,
@@ -280,7 +280,7 @@ void OtsUDPFirmwareCore::OtsUDPFirmwareCore::readAdvanced(std::string&    buffer
 	    buffer, (char*)&address, size, commandTypeOptions, clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::setDataDestination(std::string&       buffer,
                                             const std::string& ipAddress,
                                             const uint16_t     port,
@@ -306,7 +306,7 @@ void OtsUDPFirmwareCore::setDataDestination(std::string&       buffer,
 	writeDataDestinationPort(buffer, port, false /*clearBuffer*/);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::setControlDestination(std::string&       buffer,
                                                const std::string& ipAddress,
                                                const uint16_t     port)
@@ -327,7 +327,7 @@ void OtsUDPFirmwareCore::setControlDestination(std::string&       buffer,
 	writeControlDestinationPort(buffer, port);
 }
 
-//========================================================================================================================
+//==============================================================================
 // return data lower 32 bits
 uint32_t OtsUDPFirmwareCore::createRegisterFromValue(std::string& readBuffer,
                                                      std::string& receivedValue)
@@ -340,7 +340,7 @@ uint32_t OtsUDPFirmwareCore::createRegisterFromValue(std::string& readBuffer,
 	return retVal;
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::writeDataDestinationIP(std::string&   buffer,
                                                 const uint64_t value,
                                                 bool           clearBuffer)
@@ -353,7 +353,7 @@ void OtsUDPFirmwareCore::writeDataDestinationIP(std::string&   buffer,
 	    clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::writeDataDestinationMAC(std::string&   buffer,
                                                  const uint64_t value,
                                                  bool           clearBuffer)
@@ -366,7 +366,7 @@ void OtsUDPFirmwareCore::writeDataDestinationMAC(std::string&   buffer,
 	    clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::writeDataDestinationPort(std::string&   buffer,
                                                   const uint64_t value,
                                                   bool           clearBuffer)
@@ -379,28 +379,28 @@ void OtsUDPFirmwareCore::writeDataDestinationPort(std::string&   buffer,
 	    clearBuffer);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::readDataDestinationIP(std::string& buffer)
 {
 	OtsUDPFirmwareCore::readAdvanced(
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_DEST_IP /* addr */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::readDataDestinationMAC(std::string& buffer)
 {
 	OtsUDPFirmwareCore::readAdvanced(
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_DEST_MAC /* addr */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::readDataDestinationPort(std::string& buffer)
 {
 	OtsUDPFirmwareCore::readAdvanced(
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_DATA_DEST_PORT /* addr */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::writeControlDestinationIP(std::string&   buffer,
                                                    const uint64_t value)
 {
@@ -408,7 +408,7 @@ void OtsUDPFirmwareCore::writeControlDestinationIP(std::string&   buffer,
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_IP /* addr */, value /* data */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::writeControlDestinationMAC(std::string&   buffer,
                                                     const uint64_t value)
 {
@@ -416,7 +416,7 @@ void OtsUDPFirmwareCore::writeControlDestinationMAC(std::string&   buffer,
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_MAC /* addr */, value /* data */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::writeControlDestinationPort(std::string&   buffer,
                                                      const uint64_t value)
 {
@@ -426,56 +426,56 @@ void OtsUDPFirmwareCore::writeControlDestinationPort(std::string&   buffer,
 	    value /* data */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::readControlDestinationIP(std::string& buffer)
 {
 	OtsUDPFirmwareCore::readAdvanced(
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_IP /* addr */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::readControlDestinationMAC(std::string& buffer)
 {
 	OtsUDPFirmwareCore::readAdvanced(
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_MAC /* addr */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::readControlDestinationPort(std::string& buffer)
 {
 	OtsUDPFirmwareCore::readAdvanced(
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_CTRL_DEST_PORT /* addr */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::readUDPFirmwareVersion(std::string& buffer)
 {
 	OtsUDPFirmwareCore::readAdvanced(
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_VERSION /* addr */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::softEthernetReset(std::string& buffer)
 {
 	OtsUDPFirmwareCore::writeAdvanced(
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */, 0x3 /* data */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::hardEthernetReset(std::string& buffer)
 {
 	OtsUDPFirmwareCore::writeAdvanced(
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */, 0x1 /* data */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::clearEthernetReset(std::string& buffer)
 {
 	OtsUDPFirmwareCore::writeAdvanced(
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_SELF_RESET /* addr */, 0 /* data */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::startBurst(std::string& buffer)
 {
 	__COUT__ << std::endl;
@@ -483,7 +483,7 @@ void OtsUDPFirmwareCore::startBurst(std::string& buffer)
 	    buffer, UDP_CORE_BLOCK_ADDRESS | ADDR_BURST_MODE /* addr */, 1 /* data */);
 }
 
-//========================================================================================================================
+//==============================================================================
 void OtsUDPFirmwareCore::stopBurst(std::string& buffer)
 {
 	__COUT__ << std::endl;

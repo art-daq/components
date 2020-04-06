@@ -1,9 +1,9 @@
 cet_make(LIBRARY_NAME DAQHardware
 		 LIBRARIES
 		 BitManipulator
-		 DetectorHardware
+		 #		 DetectorHardware
 		 NetworkUtilities
-		 DetectorConfiguration
+		 #	DetectorConfiguration
 )
 
 

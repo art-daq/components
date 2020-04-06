@@ -1,7 +1,7 @@
 #ifndef _ots_OtsUDPFirmwareCore_h_
 #define _ots_OtsUDPFirmwareCore_h_
 
-//#include "otsdaq-components/DAQHardware/FirmwareSequence.h"
+//#include "otsdaq-fermilabtestbeam/DAQHardware/FirmwareSequence.h"
 #include "otsdaq-components/DAQHardware/FrontEndFirmwareBase.h"
 
 #include <string>
