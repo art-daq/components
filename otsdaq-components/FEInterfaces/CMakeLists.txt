@@ -15,6 +15,9 @@ simple_plugin(FEOtsUDPProducerTemplateInterface "interface"
   WorkLoopManager
   Configurable
   DataManager
+  ConfigurationInterface
+  TableCore
+  Macros
   ${MF_MESSAGELOGGER}
   ${CETLIB}
   ${CETLIB_EXCEPT}
@@ -28,6 +31,9 @@ simple_plugin(FEOtsUDPTemplateInterface "interface"
   FECore
   WorkLoopManager
   Configurable
+  ConfigurationInterface
+  TableCore
+  Macros
   ${CETLIB}
   ${CETLIB_EXCEPT}
   ${XDAQ_XERCES-C}

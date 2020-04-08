@@ -44,11 +44,11 @@ class OtsUDPFirmwareCore : public FrontEndFirmwareBase
 	                          uint64_t     address,
 	                          uint64_t     data,
 	                          bool         clearBuffer = true);
-	virtual void        waitClear(std::string& buffer,
-	                              uint32_t     address,
-	                              uint32_t     data,
-	                              uint32_t     timeout     = 255,
-	                              bool         clearBuffer = true)
+	virtual void        waitClear(std::string& /*buffer*/,
+	                              uint32_t     /*address*/,
+	                              uint32_t     /*data*/,
+	                              uint32_t     /*timeout*/     = 255,
+	                              bool         /*clearBuffer*/ = true)
 	{
 	}
 
