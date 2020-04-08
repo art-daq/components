@@ -329,7 +329,7 @@ void OtsUDPFirmwareCore::setControlDestination(std::string&       buffer,
 
 //==============================================================================
 // return data lower 32 bits
-uint32_t OtsUDPFirmwareCore::createRegisterFromValue(std::string& readBuffer,
+uint32_t OtsUDPFirmwareCore::createRegisterFromValue(std::string& /*readBuffer*/,
                                                      std::string& receivedValue)
 {
 	uint32_t retVal = *((uint32_t*)(&receivedValue[2]));

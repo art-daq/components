@@ -4,6 +4,7 @@ cet_make(LIBRARY_NAME DAQHardware
 		 #		 DetectorHardware
 		 NetworkUtilities
 		 #	DetectorConfiguration
+		 ${MF_MESSAGELOGGER}
 )
 
 

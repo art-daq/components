@@ -217,7 +217,7 @@ catch(...)
 
 //==============================================================================
 void OtsUDPHardware::writeAndAcknowledge(const std::vector<std::string>& buffer,
-                                         int                             timeoutSeconds)
+                                         int                             /*timeoutSeconds*/)
 {
 	for(const auto& it : buffer)
 	{
@@ -312,7 +312,7 @@ catch(...)
 //==============================================================================
 void OtsUDPHardware::read(const std::vector<std::string>& sendBuffers,
                           std::vector<std::string>&       receiveBuffers,
-                          int                             timeoutSeconds)
+                          int                             /*timeoutSeconds*/)
 {
 	receiveBuffers.resize(sendBuffers.size());
 	auto receiveBufferIterator = receiveBuffers.begin();
@@ -323,7 +323,7 @@ void OtsUDPHardware::read(const std::vector<std::string>& sendBuffers,
 //==============================================================================
 void OtsUDPHardware::read(const std::string& sendBuffer,
                           uint64_t&          receiveQuadWord,
-                          int                timeoutSeconds)
+                          int                /*timeoutSeconds*/)
 {
 	std::string receiveBuffer;
 	read(sendBuffer, receiveBuffer);
@@ -350,7 +350,7 @@ void OtsUDPHardware::read(const std::string& sendBuffer,
 //==============================================================================
 void OtsUDPHardware::read(const std::string&     sendBuffer,
                           std::vector<uint64_t>& receiveQuadWords,
-                          int                    timeoutSeconds)
+                          int                    /*timeoutSeconds*/)
 {
 	receiveQuadWords.resize(0);  // clear
 
@@ -380,7 +380,7 @@ void OtsUDPHardware::read(const std::string&     sendBuffer,
 //==============================================================================
 void OtsUDPHardware::read(const std::vector<std::string>&      sendBuffers,
                           std::vector<std::vector<uint64_t> >& receiveQuadWordsVector,
-                          int                                  timeoutSeconds)
+                          int                                  /*timeoutSeconds*/)
 {
 	receiveQuadWordsVector.resize(
 	    sendBuffers.size());  // create a return vector for each send buffer

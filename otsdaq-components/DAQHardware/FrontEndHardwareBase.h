@@ -27,38 +27,38 @@ class FrontEndHardwareBase
 	// obvious  that the wrong thing is happening if these are called because exceptions
 	// are thrown!
 
-	virtual void write(const std::string& sendBuffer)
+	virtual void write(const std::string& /*sendBuffer*/)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 	}
-	virtual void write(const std::vector<std::string>& sendBuffers)
+	virtual void write(const std::vector<std::string>& /*sendBuffers*/)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 	}
-	virtual void writeAndAcknowledge(const std::string& sendBuffer,
-	                                 int                timeoutSeconds = -1)
+	virtual void writeAndAcknowledge(const std::string& /*sendBuffer*/,
+	                                 int                /*timeoutSeconds*/ = -1)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 	}
-	virtual void writeAndAcknowledge(const std::vector<std::string>& sendBuffers,
-	                                 int                             timeoutSeconds = -1)
+	virtual void writeAndAcknowledge(const std::vector<std::string>& /*sendBuffers*/,
+	                                 int                             /*timeoutSeconds*/ = -1)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 	}
-	virtual void read(const std::string& sendBuffer,
-	                  std::string&       receiveBuffer,
-	                  int                timeoutSeconds = -1)
+	virtual void read(const std::string& /*sendBuffer*/,
+	                  std::string&       /*receiveBuffer*/,
+	                  int                /*timeoutSeconds*/ = -1)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 	}
-	virtual void read(const std::vector<std::string>& sendBuffers,
-	                  std::vector<std::string>&       receiveBuffers,
-	                  int                             timeoutSeconds = -1)
+	virtual void read(const std::vector<std::string>& /*sendBuffers*/,
+	                  std::vector<std::string>&       /*receiveBuffers*/,
+	                  int                             /*timeoutSeconds*/ = -1)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
