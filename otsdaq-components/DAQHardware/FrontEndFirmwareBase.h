@@ -19,102 +19,102 @@ class FrontEndFirmwareBase
 	virtual ~FrontEndFirmwareBase(void) { ; }
 	virtual void init(void) { ; }
 
-	const unsigned int getVersion() { return version_; }
+	unsigned int getVersion() { return version_; }
 
 	// These should never be called directly if used correctly, but
 	// not all classes will implement every function (so no pure virtuals). Should be
 	// obvious  that the wrong thing is happening if these are called because exceptions
 	// are thrown!
 
-	virtual std::string read(char* address)
+	virtual std::string read(char* /*address*/)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return "";
 	};
-	virtual void read(std::string& buffer, char* address, bool clearBuffer = true)
+	virtual void read(std::string& /*buffer*/, char* /*address*/, bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
-	virtual void read(std::string& buffer, uint64_t address, bool clearBuffer = true)
+	virtual void read(std::string& /*buffer*/, uint64_t /*address*/, bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
-	virtual void read(std::string& buffer, uint32_t address, bool clearBuffer = true)
+	virtual void read(std::string& /*buffer*/, uint32_t /*address*/, bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
 
-	virtual std::string write(char* address, char* data)
+	virtual std::string write(char* /*address*/, char* /*data*/)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return "";
 	};
-	virtual void write(std::string& buffer,
-	                   char*        address,
-	                   char*        data,
-	                   bool         clearBuffer = true)
+	virtual void write(std::string& /*buffer*/,
+	                   char*        /*address*/,
+	                   char*        /*data*/,
+	                   bool         /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
 
-	virtual void setDataDestination(std::string&       buffer,
-	                                const std::string& ip,
-	                                const uint16_t     port,
-	                                bool               clearBuffer = true)
+	virtual void setDataDestination(std::string&       /*buffer*/,
+	                                const std::string& /*ip*/,
+	                                const uint16_t     /*port*/,
+	                                bool               /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
-	virtual void write(std::string& buffer,
-	                   uint64_t     address,
-	                   uint64_t     data,
-	                   bool         clearBuffer = true)
+	virtual void write(std::string& /*buffer*/,
+	                   uint64_t     /*address*/,
+	                   uint64_t     /*data*/,
+	                   bool         /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
-	virtual void write(std::string& buffer,
-	                   uint32_t     address,
-	                   uint32_t     data,
-	                   bool         clearBuffer = true)
+	virtual void write(std::string& /*buffer*/,
+	                   uint32_t     /*address*/,
+	                   uint32_t     /*data*/,
+	                   bool         /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
-	virtual void waitSet(std::string& buffer,
-	                     uint32_t     address,
-	                     uint32_t     data,
-	                     uint32_t     timeout     = 255,
-	                     bool         clearBuffer = true)
+	virtual void waitSet(std::string& /*buffer*/,
+	                     uint32_t     /*address*/,
+	                     uint32_t     /*data*/,
+	                     uint32_t     /*timeout*/     = 255,
+	                     bool         /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
-	virtual void waitClear(std::string& buffer,
-	                       uint32_t     address,
-	                       uint32_t     data,
-	                       uint32_t     timeout     = 255,
-	                       bool         clearBuffer = true)
+	virtual void waitClear(std::string& /*buffer*/,
+	                       uint32_t     /*address*/,
+	                       uint32_t     /*data*/,
+	                       uint32_t     /*timeout*/     = 255,
+	                       bool         /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
-	virtual unsigned int getNumberOfBufferedCommands(std::string& buffer)
+	virtual unsigned int getNumberOfBufferedCommands(std::string& /*buffer*/)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
@@ -123,8 +123,8 @@ class FrontEndFirmwareBase
 	// virtual std::string  compareSendAndReceive       (const std::string& sentBuffer,
 	// std::string& acknowledgment)						{__SS__; __THROW__(ss.str() +
 	// "Illegal call to undefined base class member function"); return "";};
-	virtual uint32_t createRegisterFromValue(std::string& readBuffer,
-	                                         std::string& receivedValue)
+	virtual uint32_t createRegisterFromValue(std::string& /*readBuffer*/,
+	                                         std::string& /*receivedValue*/)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
