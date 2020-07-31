@@ -1,6 +1,3 @@
-
-
-
 # The parent line must be the first non-comment line in the file
 # This line defines the product name and version
 parent otsdaq_components	v2_05_03_indev
@@ -29,8 +26,6 @@ end_product_list
 # -nq- here means there is no qualifier
 # a "-" here means the dependent product is not required by the parent and will not be setup
 qualifier    	   otsdaq	 otsdaq_utilities	 notes
-
-
 e19:s96:prof       e19:s96:prof  e19:s96:prof            -std=c++17
 e19:s96:prof		e19:s96:prof		e19:s96:prof		-std=c++17		
 e19:s96:debug      e19:s96:debug e19:s96:debug           -std=c++17
@@ -43,18 +38,6 @@ c7:s96:debug      c7:s96:debug c7:s96:debug           -std=c++17
 c7:s96:py2:prof       c7:s96:py2:prof  c7:s96:py2:prof            -std=c++17
 c7:s96:py2:debug      c7:s96:py2:debug c7:s96:py2:debug           -std=c++17
 
-
-e19:s94:prof       e19:s94:prof  e19:s94:prof            -std=c++17
-e19:s94:prof		e19:s94:prof		e19:s94:prof		-std=c++17		
-e19:s94:debug      e19:s94:debug e19:s94:debug           -std=c++17
-e19:s94:py2:prof       e19:s94:py2:prof  e19:s94:py2:prof            -std=c++17
-e19:s94:py2:debug      e19:s94:py2:debug e19:s94:py2:debug           -std=c++17
-
-e19:s89:prof       e19:s89:prof  e19:s89:prof            -std=c++17
-e19:s89:debug      e19:s89:debug e19:s89:debug           -std=c++17
-e17:s89:prof       e17:s89:prof  e17:s89:prof            -std=c++17
-e17:s89:debug      e17:s89:debug e17:s89:debug           -std=c++17
-
 e19:s87:prof       e19:s87:prof  e19:s87:prof            -std=c++17
 e19:s87:debug      e19:s87:debug e19:s87:debug           -std=c++17
 e17:s87:prof       e17:s87:prof  e17:s87:prof            -std=c++17
@@ -62,12 +45,6 @@ e17:s87:debug      e17:s87:debug e17:s87:debug           -std=c++17
 
 e17:s85:prof       e17:s85:prof  e17:s85:prof            -std=c++17
 e17:s85:debug      e17:s85:debug e17:s85:debug           -std=c++17
-
-e19:s83:prof       e19:s83:prof  e19:s83:prof            -std=c++17
-e19:s83:debug      e19:s83:debug e19:s83:debug           -std=c++17
-e17:s83:prof       e17:s83:prof  e17:s83:prof            -std=c++17
-e17:s83:debug      e17:s83:debug e17:s83:debug           -std=c++17
-
 end_qualifier_list
 
 # Preserve tabs and formatting in emacs and vi / vim:
