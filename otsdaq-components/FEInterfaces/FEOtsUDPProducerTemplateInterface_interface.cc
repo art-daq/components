@@ -310,7 +310,7 @@ bool FEOtsUDPProducerTemplateInterface::running(void)
 		{
 			//			if(1 || getInterfaceUID() == "ExampleInterface1")
 			//			{
-			//				throw __OTS_SOFT_EXCEPTION__("Soft error here");
+			//				throw __OTS_PAUSE_EXCEPTION__("Soft error here");
 			//			}
 			//			else
 			break;

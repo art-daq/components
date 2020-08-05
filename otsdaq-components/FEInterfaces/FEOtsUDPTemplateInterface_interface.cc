@@ -350,7 +350,7 @@ bool FEOtsUDPTemplateInterface::running(void)
 			//						if(1 || getInterfaceUID() == "ExampleInterface1")
 			//						{
 			//							__FE_SS__ << "Soft Error Here" << __E__;
-			//							throw __OTS_SOFT_EXCEPTION__(ss.str());
+			//							throw __OTS_PAUSE_EXCEPTION__(ss.str());
 			//						}
 			//						else
 			break;
