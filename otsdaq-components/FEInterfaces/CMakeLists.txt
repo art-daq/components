@@ -10,14 +10,14 @@
 
 
 simple_plugin(FEOtsUDPProducerTemplateInterface "interface"
-  DAQHardware
-  FECore
-  WorkLoopManager
-  Configurable
-  DataManager
-  ConfigurationInterface
-  TableCore
-  Macros
+  otsdaq_components::DAQHardware
+  otsdaq::FECore
+  otsdaq::WorkLoopManager
+  otsdaq::Configurable
+  otsdaq::DataManager
+  otsdaq::ConfigurationInterface
+  otsdaq::TableCore
+  otsdaq::Macros
   ${MF_MESSAGELOGGER}
   ${CETLIB}
   ${CETLIB_EXCEPT}
@@ -27,13 +27,13 @@ ${Boost_SYSTEM_LIBRARY}
   )
   
 simple_plugin(FEOtsUDPTemplateInterface "interface"
-  DAQHardware
-  FECore
-  WorkLoopManager
-  Configurable
-  ConfigurationInterface
-  TableCore
-  Macros
+  otsdaq_components::DAQHardware
+  otsdaq::FECore
+  otsdaq::WorkLoopManager
+  otsdaq::Configurable
+  otsdaq::ConfigurationInterface
+  otsdaq::TableCore
+  otsdaq::Macros
   ${CETLIB}
   ${CETLIB_EXCEPT}
   ${XDAQ_XERCES-C}

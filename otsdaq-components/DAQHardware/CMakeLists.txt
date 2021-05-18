@@ -1,10 +1,8 @@
 cet_make(LIBRARY_NAME DAQHardware
 		 LIBRARIES
-		 BitManipulator
-		 #		 DetectorHardware
-		 NetworkUtilities
-		 #	DetectorConfiguration
-		 ${MF_MESSAGELOGGER}
+		 otsdaq::BitManipulator
+		 otsdaq::NetworkUtilities
+		 MF_MessageLogger
 )
 
 
