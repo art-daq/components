@@ -65,22 +65,20 @@ find_ups_boost( v1_50_0 filesystem
                         program_options
                         unit_test_framework
  )
-
  
  # XDAQ Extra setup
-link_directories($ENV{ARTDAQ_DATABASE_LIB})
  include_directories($ENV{XDAQ_INC}/linux)
+link_directories($ENV{XDAQ_LIB})
+link_directories($ENV{ARTDAQ_DATABASE_LIB})
  set(XDAQ_BASIC_LIB_LIST 
-   $ENV{XDAQ_LIB}/libxcept.so
-   $ENV{XDAQ_LIB}/libxoap.so
-   $ENV{XDAQ_LIB}/libxdaq.so
-   $ENV{XDAQ_LIB}/libtoolbox.so
-   $ENV{XDAQ_LIB}/libxerces-c.so
+   xcept
+   xoap
+   xdaq
+   toolbox
+   xerces-c
    cgicc
  )
- set(XDAQ_XERCES-C $ENV{XDAQ_LIB}/libxerces-c.so)
-
-##find_package(MPI QUIET)
+ set(XDAQ_XERCES-C xerces-c)
 
 # macros for art_dictionary and simple_plugin
 #include(ArtDictionary)
