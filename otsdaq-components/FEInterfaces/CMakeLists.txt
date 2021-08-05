@@ -18,9 +18,9 @@ simple_plugin(FEOtsUDPProducerTemplateInterface "interface"
   otsdaq::ConfigurationInterface
   otsdaq::TableCore
   otsdaq::Macros
-  ${MF_MESSAGELOGGER}
-  ${CETLIB}
-  ${CETLIB_EXCEPT}
+  MF_MessageLogger
+  cetlib
+  cetlib_except
   ${XDAQ_XERCES-C}
 ${Boost_SYSTEM_LIBRARY}
   pthread
@@ -34,10 +34,10 @@ simple_plugin(FEOtsUDPTemplateInterface "interface"
   otsdaq::ConfigurationInterface
   otsdaq::TableCore
   otsdaq::Macros
-  ${CETLIB}
-  ${CETLIB_EXCEPT}
+  cetlib
+  cetlib_except
   ${XDAQ_XERCES-C}
-  ${MF_MESSAGELOGGER}
+  MF_MessageLogger
 ${Boost_SYSTEM_LIBRARY}
   pthread
   )

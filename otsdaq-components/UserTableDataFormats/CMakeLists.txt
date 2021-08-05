@@ -1,7 +1,7 @@
 #cet_make(LIBRARY_NAME UserTableCore
 #		 LIBRARIES
 #         FECore
-#         ${CETLIB}
+#         cetlib
 #)
 
 #install_headers()
@@ -11,36 +11,36 @@
 simple_plugin(FEWROtsUDPFSSRInterfaceTable "table"
   TableCore  
   ConfigurationInterface
-  ${CETLIB}
+  cetlib
   )
     
 simple_plugin(FEWROtsUDPTemplateInterfaceTable "table"
   TableCore  
   ConfigurationInterface
-  ${CETLIB}
+  cetlib
   )
   
 simple_plugin(FEWRNIMPlusInterfaceTable "table"
   TableCore 
   ConfigurationInterface 
-  ${CETLIB}
+  cetlib
   )
     
 simple_plugin(FEWRPurdueFSSRInterfaceTable "table"
   TableCore 
   ConfigurationInterface 
-  ${CETLIB}
+  cetlib
   )
     
 simple_plugin(FEPurdueNetworkMasterInterfaceTable "table"
   TableCore  
   ConfigurationInterface
-  ${CETLIB}
+  cetlib
   )
 
 simple_plugin(FSSRDACsConfiguration "table"
   TableCore  
   ConfigurationInterface
-  ${CETLIB}
+  cetlib
   )
    

@@ -3,7 +3,7 @@
 #	OTRootUtilities
 #	DataManager
 #	RootUtilities
-#	${CETLIB}
+#	cetlib
 #  )
 
 install_headers()
