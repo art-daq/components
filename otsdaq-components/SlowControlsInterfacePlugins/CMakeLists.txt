@@ -1,5 +1,5 @@
 
-simple_plugin(OtsSlowControlsInterface "slowcontrols"	
+basic_plugin(OtsSlowControlsInterface "slowcontrols"	
     otsdaq::SlowControlsCore   
 	otsdaq::Configurable
 	otsdaq::TableCore

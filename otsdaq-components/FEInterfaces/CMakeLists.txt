@@ -9,7 +9,7 @@
 #)
 
 
-simple_plugin(FEOtsUDPProducerTemplateInterface "interface"
+basic_plugin(FEOtsUDPProducerTemplateInterface "interface"
   otsdaq_components::DAQHardware
   otsdaq::FECore
   otsdaq::WorkLoopManager
@@ -26,7 +26,7 @@ ${Boost_SYSTEM_LIBRARY}
   pthread
   )
   
-simple_plugin(FEOtsUDPTemplateInterface "interface"
+basic_plugin(FEOtsUDPTemplateInterface "interface"
   otsdaq_components::DAQHardware
   otsdaq::FECore
   otsdaq::WorkLoopManager
