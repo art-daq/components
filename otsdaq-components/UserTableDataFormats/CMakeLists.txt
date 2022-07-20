@@ -7,40 +7,18 @@
 #install_headers()
 #install_source()
 
-
-simple_plugin(FEWROtsUDPFSSRInterfaceTable "table"
-  TableCore  
-  ConfigurationInterface
-  cetlib
-  )
+include(otsdaq::table)
+cet_build_plugin(FENIMPlusInterfaceTable otsdaq::table  )
     
-simple_plugin(FEWROtsUDPTemplateInterfaceTable "table"
-  TableCore  
-  ConfigurationInterface
-  cetlib
-  )
+cet_build_plugin(FEOtsUDPFSSRInterfaceTable otsdaq::table)
+    
+cet_build_plugin(FEOtsUDPLCLS2InterfaceTable otsdaq::table)
+
+cet_build_plugin(FEOtsUDPTemplateInterfaceTable otsdaq::table  )
   
-simple_plugin(FEWRNIMPlusInterfaceTable "table"
-  TableCore 
-  ConfigurationInterface 
-  cetlib
-  )
+cet_build_plugin(FEPurdueFSSRInterfaceTable otsdaq::table  )
     
-simple_plugin(FEWRPurdueFSSRInterfaceTable "table"
-  TableCore 
-  ConfigurationInterface 
-  cetlib
-  )
-    
-simple_plugin(FEPurdueNetworkMasterInterfaceTable "table"
-  TableCore  
-  ConfigurationInterface
-  cetlib
-  )
+cet_build_plugin(FEPurdueNetworkMasterInterfaceTable otsdaq::table  )
 
-simple_plugin(FSSRDACsConfiguration "table"
-  TableCore  
-  ConfigurationInterface
-  cetlib
-  )
+cet_build_plugin(FSSRDACsTable otsdaq::table  )
    

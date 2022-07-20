@@ -1,46 +1,10 @@
-#cet_make(LIBRARY_NAME OTSDAQComponentsFEInterfaces
-#	EXCLUDE
-#		FEOtsUDPTemplateInterface_interface.cc
-#	LIBRARIES
-#		DAQHardware
-#		FECore
-#		WorkLoopManager
-#		Configurable
-#)
+include(otsdaq::FEInterface)
 
-
-basic_plugin(FEOtsUDPProducerTemplateInterface "interface"
-  otsdaq_components::DAQHardware
-  otsdaq::FECore
-  otsdaq::WorkLoopManager
-  otsdaq::Configurable
-  otsdaq::DataManager
-  otsdaq::ConfigurationInterface
-  otsdaq::TableCore
-  otsdaq::Macros
-  MF_MessageLogger
-  cetlib
-  cetlib_except
-  ${XDAQ_XERCES-C}
-${Boost_SYSTEM_LIBRARY}
-  pthread
-  )
+cet_make_library(LIBRARY_NAME FEOtsUDPProducerTemplateInterface SOURCE FEOtsUDPProducerTemplateInterfaceImpl.cc LIBRARIES PUBLIC otsdaq_components::DAQHardware otsdaq::FECore)
+cet_build_plugin(FEOtsUDPProducerTemplateInterface otsdaq::FEInterface LIBRARIES REG otsdaq_components::FEOtsUDPProducerTemplateInterface)
   
-basic_plugin(FEOtsUDPTemplateInterface "interface"
-  otsdaq_components::DAQHardware
-  otsdaq::FECore
-  otsdaq::WorkLoopManager
-  otsdaq::Configurable
-  otsdaq::ConfigurationInterface
-  otsdaq::TableCore
-  otsdaq::Macros
-  cetlib
-  cetlib_except
-  ${XDAQ_XERCES-C}
-  MF_MessageLogger
-${Boost_SYSTEM_LIBRARY}
-  pthread
-  )
+cet_make_library(LIBRARY_NAME FEOtsUDPTemplateInterface SOURCE FEOtsUDPTemplateInterfaceImpl.cc LIBRARIES PUBLIC otsdaq_components::DAQHardware otsdaq::FECore)
+cet_build_plugin(FEOtsUDPTemplateInterface otsdaq::FEInterface LIBRARIES REG  otsdaq_components::FEOtsUDPTemplateInterface  )
 
 install_headers()
 install_source()

@@ -1,7 +1,8 @@
 
-cet_make_exec(InterfaceTestMain
+cet_make_exec(NAME InterfaceTestMain
+SOURCE InterfaceTestMain.cc
   LIBRARIES
-		ConfigurationInterface
+		otsdaq::ConfigurationInterface
 
 
 )

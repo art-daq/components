@@ -1,11 +1,6 @@
 
-basic_plugin(OtsSlowControlsInterface "slowcontrols"	
-    otsdaq::SlowControlsCore   
-	otsdaq::Configurable
-	otsdaq::TableCore
-	otsdaq::ConfigurationInterface
-	MF_MessageLogger
+include(otsdaq::slowControls)
+cet_build_plugin(OtsSlowControlsInterface otsdaq::slowControls	LIBRARIES REG
   )
-
 install_headers()
 install_source()

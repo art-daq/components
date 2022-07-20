@@ -2,5 +2,5 @@ add_subdirectory(SlowControlsInterfacePlugins)
 add_subdirectory(DataProcessorPlugins)
 add_subdirectory(FEInterfaces)
 add_subdirectory(DAQHardware)
-#add_subdirectory(UserTableCore)
-
+#add_subdirectory(UserTableDataFormats)
+add_subdirectory(InterfaceTest)

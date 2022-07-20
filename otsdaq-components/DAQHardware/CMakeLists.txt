@@ -1,8 +1,11 @@
-cet_make(LIBRARY_NAME DAQHardware
-		 LIBRARIES
-		 otsdaq::BitManipulator
+cet_make_library(LIBRARY_NAME DAQHardware
+SOURCE DAQHardwareBase.cc OtsUDPFirmwareCore.cc OtsUDPFirmwareDataGen.cc OtsUDPHardware.cc
+		 LIBRARIES 
+		 PUBLIC
+		 otsdaq::MessageFacility
 		 otsdaq::NetworkUtilities
-		 MF_MessageLogger
+		 PRIVATE
+		 otsdaq::BitManipulator
 )
 
 
