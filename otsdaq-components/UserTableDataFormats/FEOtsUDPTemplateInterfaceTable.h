@@ -44,5 +44,5 @@ class FEWROtsUDPTemplateInterfaceTable : public FEInterfaceTableBase
 		DataRate,
 	};
 };
-}
+}  // namespace ots
 #endif

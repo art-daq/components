@@ -50,5 +50,5 @@ class FENIMPlusInterfaceTable : public FEInterfaceTableBase
 		ChannelStatus5
 	};
 };
-}
+}  // namespace ots
 #endif

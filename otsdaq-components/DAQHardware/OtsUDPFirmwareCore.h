@@ -45,10 +45,10 @@ class OtsUDPFirmwareCore : public FrontEndFirmwareBase
 	                          uint64_t     data,
 	                          bool         clearBuffer = true);
 	virtual void        waitClear(std::string& /*buffer*/,
-	                              uint32_t     /*address*/,
-	                              uint32_t     /*data*/,
-	                              uint32_t     /*timeout*/     = 255,
-	                              bool         /*clearBuffer*/ = true)
+	                              uint32_t /*address*/,
+	                              uint32_t /*data*/,
+	                              uint32_t /*timeout*/ = 255,
+	                              bool /*clearBuffer*/ = true)
 	{
 	}
 
@@ -168,6 +168,6 @@ class OtsUDPFirmwareCore : public FrontEndFirmwareBase
 	// command type options that can be OR'd
 	static const uint8_t FIFO_ADDRESS_CMD_TYPE;
 };
-}
+}  // namespace ots
 
 #endif

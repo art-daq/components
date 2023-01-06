@@ -55,6 +55,6 @@ class OtsUDPHardware : public TransceiverSocket, public FrontEndHardwareBase
 	std::string acknowledgment_;
 	bool        verbose_;
 };
-}
+}  // namespace ots
 
 #endif
