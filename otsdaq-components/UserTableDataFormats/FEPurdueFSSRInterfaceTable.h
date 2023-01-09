@@ -50,5 +50,5 @@ class FEPurdueFSSRInterfaceTable : public FEInterfaceTableBase
 		ChannelStatus5
 	};
 };
-}
+}  // namespace ots
 #endif

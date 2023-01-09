@@ -44,5 +44,5 @@ class FEOtsUDPLCLS2InterfaceTable : public FEInterfaceTableBase
 		DataRate,
 	};
 };
-}
+}  // namespace ots
 #endif

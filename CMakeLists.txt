@@ -17,16 +17,25 @@ project(otsdaq_components VERSION 2.06.08)
 include(CetCMakeEnv)
 cet_cmake_env()
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL Clang AND
+     CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 14.0.0)
+  # Clang 14 has a bug in which it complains about destructors of template classes
+  # e.g. ArtdaqInput<T>::~ArtdaqInput(), when it is expecting the destructor name to
+  # match what is on the left-hand side of the ::. This is a violation, however, of
+  # the C++20 standard. https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/p1787r6.html
+  set(DT_FLAG -Wno-dtor-name)
+else()
+  set(DT_FLAG)
+endif()
+
 cet_set_compiler_flags(
  DIAGS 
  VIGILANT
  WERROR
  NO_UNDEFINED
- EXTRA_FLAGS -pedantic -D_LIBCPP_ENABLE_CXX17_REMOVED_FEATURES=1
+ EXTRA_FLAGS -pedantic -D_LIBCPP_ENABLE_CXX17_REMOVED_FEATURES=1 ${DT_FLAG}
  )
  
-cet_remove_compiler_flags(-std=c++98)
-
 find_package(otsdaq 2.06.06 REQUIRED EXPORT)
  
  # XDAQ Extra setup

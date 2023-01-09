@@ -35,5 +35,5 @@ class FEPurdueNetworkMasterInterfaceTable : public FEInterfaceTableBase
 		InterfacePort
 	};
 };
-}
+}  // namespace ots
 #endif

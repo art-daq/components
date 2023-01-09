@@ -38,27 +38,27 @@ class FrontEndHardwareBase
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 	}
 	virtual void writeAndAcknowledge(const std::string& /*sendBuffer*/,
-	                                 int                /*timeoutSeconds*/ = -1)
+	                                 int /*timeoutSeconds*/ = -1)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 	}
 	virtual void writeAndAcknowledge(const std::vector<std::string>& /*sendBuffers*/,
-	                                 int                             /*timeoutSeconds*/ = -1)
+	                                 int /*timeoutSeconds*/ = -1)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 	}
 	virtual void read(const std::string& /*sendBuffer*/,
-	                  std::string&       /*receiveBuffer*/,
-	                  int                /*timeoutSeconds*/ = -1)
+	                  std::string& /*receiveBuffer*/,
+	                  int /*timeoutSeconds*/ = -1)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 	}
 	virtual void read(const std::vector<std::string>& /*sendBuffers*/,
-	                  std::vector<std::string>&       /*receiveBuffers*/,
-	                  int                             /*timeoutSeconds*/ = -1)
+	                  std::vector<std::string>& /*receiveBuffers*/,
+	                  int /*timeoutSeconds*/ = -1)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");

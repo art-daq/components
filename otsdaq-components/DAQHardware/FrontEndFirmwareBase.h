@@ -32,19 +32,25 @@ class FrontEndFirmwareBase
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return "";
 	};
-	virtual void read(std::string& /*buffer*/, char* /*address*/, bool /*clearBuffer*/ = true)
+	virtual void read(std::string& /*buffer*/,
+	                  char* /*address*/,
+	                  bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
-	virtual void read(std::string& /*buffer*/, uint64_t /*address*/, bool /*clearBuffer*/ = true)
+	virtual void read(std::string& /*buffer*/,
+	                  uint64_t /*address*/,
+	                  bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
-	virtual void read(std::string& /*buffer*/, uint32_t /*address*/, bool /*clearBuffer*/ = true)
+	virtual void read(std::string& /*buffer*/,
+	                  uint32_t /*address*/,
+	                  bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
@@ -58,57 +64,57 @@ class FrontEndFirmwareBase
 		return "";
 	};
 	virtual void write(std::string& /*buffer*/,
-	                   char*        /*address*/,
-	                   char*        /*data*/,
-	                   bool         /*clearBuffer*/ = true)
+	                   char* /*address*/,
+	                   char* /*data*/,
+	                   bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
 
-	virtual void setDataDestination(std::string&       /*buffer*/,
+	virtual void setDataDestination(std::string& /*buffer*/,
 	                                const std::string& /*ip*/,
-	                                const uint16_t     /*port*/,
-	                                bool               /*clearBuffer*/ = true)
+	                                const uint16_t /*port*/,
+	                                bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
 	virtual void write(std::string& /*buffer*/,
-	                   uint64_t     /*address*/,
-	                   uint64_t     /*data*/,
-	                   bool         /*clearBuffer*/ = true)
+	                   uint64_t /*address*/,
+	                   uint64_t /*data*/,
+	                   bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
 	virtual void write(std::string& /*buffer*/,
-	                   uint32_t     /*address*/,
-	                   uint32_t     /*data*/,
-	                   bool         /*clearBuffer*/ = true)
+	                   uint32_t /*address*/,
+	                   uint32_t /*data*/,
+	                   bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
 	virtual void waitSet(std::string& /*buffer*/,
-	                     uint32_t     /*address*/,
-	                     uint32_t     /*data*/,
-	                     uint32_t     /*timeout*/     = 255,
-	                     bool         /*clearBuffer*/ = true)
+	                     uint32_t /*address*/,
+	                     uint32_t /*data*/,
+	                     uint32_t /*timeout*/ = 255,
+	                     bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
 		return;
 	};
 	virtual void waitClear(std::string& /*buffer*/,
-	                       uint32_t     /*address*/,
-	                       uint32_t     /*data*/,
-	                       uint32_t     /*timeout*/     = 255,
-	                       bool         /*clearBuffer*/ = true)
+	                       uint32_t /*address*/,
+	                       uint32_t /*data*/,
+	                       uint32_t /*timeout*/ = 255,
+	                       bool /*clearBuffer*/ = true)
 	{
 		__SS__;
 		__THROW__(ss.str() + "Illegal call to undefined base class member function");
@@ -182,6 +188,6 @@ class FrontEndFirmwareBase
 
 	const unsigned int version_;
 };
-}
+}  // namespace ots
 
 #endif

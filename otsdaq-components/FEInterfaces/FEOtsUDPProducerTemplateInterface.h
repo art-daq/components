@@ -45,6 +45,6 @@ class FEOtsUDPProducerTemplateInterface
 	       // MacroMaker.
 	void varTest2(__ARGS__);
 };
-}
+}  // namespace ots
 
 #endif
