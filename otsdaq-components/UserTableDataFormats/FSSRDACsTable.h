@@ -42,5 +42,5 @@ class FSSRDACsConfiguration : public DACsTableBase
 		AqBCO
 	};
 };
-}
+}  // namespace ots
 #endif

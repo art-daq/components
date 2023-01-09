@@ -26,6 +26,6 @@ class OtsUDPFirmwareDataGen : public OtsUDPFirmwareCore
 	void setNumberOfBurstWords(std::string& buffer, uint64_t numberOfWords);
 	void setBurstWordsRate(std::string& buffer, uint64_t interval);
 };
-}
+}  // namespace ots
 
 #endif

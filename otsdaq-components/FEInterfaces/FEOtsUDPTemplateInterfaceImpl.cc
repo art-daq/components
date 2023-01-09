@@ -8,61 +8,61 @@ using namespace ots;
 
 //==============================================================================
 FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(
-	const std::string& interfaceUID,
-	const ConfigurationTree& theXDAQContextConfigTree,
-	const std::string& interfaceConfigurationPath)
-	: Socket(theXDAQContextConfigTree.getNode(interfaceConfigurationPath)
-		.getNode("HostIPAddress")
-		.getValue<std::string>(),
-		theXDAQContextConfigTree.getNode(interfaceConfigurationPath)
-		.getNode("HostPort")
-		.getValue<unsigned int>())
-	, FEVInterface(interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
-	, OtsUDPHardware(theXDAQContextConfigTree.getNode(interfaceConfigurationPath)
-		.getNode("InterfaceIPAddress")
-		.getValue<std::string>(),
-		theXDAQContextConfigTree.getNode(interfaceConfigurationPath)
-		.getNode("InterfacePort")
-		.getValue<unsigned int>())
-	, OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath)
-		.getNode("FirmwareVersion")
-		.getValue<unsigned int>())
+    const std::string&       interfaceUID,
+    const ConfigurationTree& theXDAQContextConfigTree,
+    const std::string&       interfaceConfigurationPath)
+    : Socket(theXDAQContextConfigTree.getNode(interfaceConfigurationPath)
+                 .getNode("HostIPAddress")
+                 .getValue<std::string>(),
+             theXDAQContextConfigTree.getNode(interfaceConfigurationPath)
+                 .getNode("HostPort")
+                 .getValue<unsigned int>())
+    , FEVInterface(interfaceUID, theXDAQContextConfigTree, interfaceConfigurationPath)
+    , OtsUDPHardware(theXDAQContextConfigTree.getNode(interfaceConfigurationPath)
+                         .getNode("InterfaceIPAddress")
+                         .getValue<std::string>(),
+                     theXDAQContextConfigTree.getNode(interfaceConfigurationPath)
+                         .getNode("InterfacePort")
+                         .getValue<unsigned int>())
+    , OtsUDPFirmwareDataGen(theXDAQContextConfigTree.getNode(interfaceConfigurationPath)
+                                .getNode("FirmwareVersion")
+                                .getValue<unsigned int>())
 {
 	// registration of FEMacro 'test' generated, Jan-20-2020 09:41:49, by 'admin' using
 	// MacroMaker.
 	FEVInterface::registerFEMacroFunction(
-		"test",  // feMacroName
-		static_cast<FEVInterface::frontEndMacroFunction_t>(
-			&FEOtsUDPTemplateInterface::test),  // feMacroFunction
-		std::vector<std::string>{},             // namesOfInputArgs
-		std::vector<std::string>{"outArg1"},    // namesOfOutputArgs
-		1);                                     // requiredUserPermissions
+	    "test",  // feMacroName
+	    static_cast<FEVInterface::frontEndMacroFunction_t>(
+	        &FEOtsUDPTemplateInterface::test),  // feMacroFunction
+	    std::vector<std::string>{},             // namesOfInputArgs
+	    std::vector<std::string>{"outArg1"},    // namesOfOutputArgs
+	    1);                                     // requiredUserPermissions
 
 	universalAddressSize_ = 8;
-	universalDataSize_ = 8;
+	universalDataSize_    = 8;
 
 	// example self-call of FE-macros
-	if (1)
+	if(1)
 	{
 		// registration of FEMacro 'varTest2' generated, Oct-11-2018 02:28:57, by 'admin'
 		// using MacroMaker.
 		FEVInterface::registerFEMacroFunction(
-			"varTest2",  // feMacroName
-			static_cast<FEVInterface::frontEndMacroFunction_t>(
-				&FEOtsUDPTemplateInterface::varTest2),     // feMacroFunction
-			std::vector<std::string>{"myOtherArg"},        // namesOfInputArgs
-			std::vector<std::string>{"myArg", "outArg1"},  // namesOfOutputArgs
-			1);                                            // requiredUserPermissions
+		    "varTest2",  // feMacroName
+		    static_cast<FEVInterface::frontEndMacroFunction_t>(
+		        &FEOtsUDPTemplateInterface::varTest2),     // feMacroFunction
+		    std::vector<std::string>{"myOtherArg"},        // namesOfInputArgs
+		    std::vector<std::string>{"myArg", "outArg1"},  // namesOfOutputArgs
+		    1);                                            // requiredUserPermissions
 
 		// registration of FEMacro 'varTest' generated, Oct-11-2018 11:36:28, by 'admin'
 		// using MacroMaker.
 		FEVInterface::registerFEMacroFunction(
-			"varTest",  // feMacroName
-			static_cast<FEVInterface::frontEndMacroFunction_t>(
-				&FEOtsUDPTemplateInterface::varTest),      // feMacroFunction
-			std::vector<std::string>{"myOtherArg"},        // namesOfInputArgs
-			std::vector<std::string>{"myArg", "outArg1"},  // namesOfOutputArgs
-			1);                                            // requiredUserPermissions
+		    "varTest",  // feMacroName
+		    static_cast<FEVInterface::frontEndMacroFunction_t>(
+		        &FEOtsUDPTemplateInterface::varTest),      // feMacroFunction
+		    std::vector<std::string>{"myOtherArg"},        // namesOfInputArgs
+		    std::vector<std::string>{"myArg", "outArg1"},  // namesOfOutputArgs
+		    1);                                            // requiredUserPermissions
 
 		std::vector<frontEndMacroArg_t> argsIn;
 		__SET_ARG_IN__("myOtherArg", (unsigned int)5);
@@ -80,7 +80,7 @@ FEOtsUDPTemplateInterface::FEOtsUDPTemplateInterface(
 			std::string    a = FEVInterface::getFEMacroArgument(argsOut, "myArg");
 			double         b = getFEMacroArgumentValue<double>(argsOut, "outArg1");
 			unsigned short c =
-				getFEMacroArgumentValue<unsigned short>(argsOut, "outArg1");
+			    getFEMacroArgumentValue<unsigned short>(argsOut, "outArg1");
 			__FE_COUTV__(a);
 			__FE_COUTV__(b);
 			__FE_COUTV__(c);
@@ -95,8 +95,8 @@ FEOtsUDPTemplateInterface::~FEOtsUDPTemplateInterface(void) {}
 //==============================================================================
 void FEOtsUDPTemplateInterface::configure(void)
 {
-	//unsigned int i = VStateMachine::getIterationIndex();
-	//unsigned int j = VStateMachine::getSubIterationIndex();
+	// unsigned int i = VStateMachine::getIterationIndex();
+	// unsigned int j = VStateMachine::getSubIterationIndex();
 	//	if(i == 0 && j < 5)
 	//	{
 	//		VStateMachine::indicateSubIterationWork();
@@ -135,7 +135,7 @@ void FEOtsUDPTemplateInterface::configure(void)
 	//			double b = FEVInterface::receiveFromFrontEnd<double>("ExampleInterface0");
 	//			unsigned short c =
 	//					FEVInterface::receiveFromFrontEnd<unsigned
-	// short>("ExampleInterface0");
+	//  short>("ExampleInterface0");
 	//			__FE_COUTV__(a);
 	//			__FE_COUTV__(b);
 	//			__FE_COUTV__(c);
@@ -195,46 +195,46 @@ void FEOtsUDPTemplateInterface::configure(void)
 
 	__FE_COUT__ << "configure" << __E__;
 	__FE_COUT__ << "Clearing receive socket buffer: " << OtsUDPHardware::clearReadSocket()
-		<< " packets cleared." << __E__;
+	            << " packets cleared." << __E__;
 
 	std::string sendBuffer;
 	std::string recvBuffer;
 	uint64_t    readQuadWord;
 
 	__FE_COUT__
-		<< "Configuration Path Table: "
-		<< theXDAQContextConfigTree_.getNode(theConfigurationPath_).getTableName() << "-v"
-		<< theXDAQContextConfigTree_.getNode(theConfigurationPath_).getTableVersion()
-		<< __E__;
+	    << "Configuration Path Table: "
+	    << theXDAQContextConfigTree_.getNode(theConfigurationPath_).getTableName() << "-v"
+	    << theXDAQContextConfigTree_.getNode(theConfigurationPath_).getTableVersion()
+	    << __E__;
 
 	__FE_COUT__ << "Interface name: "
-		<< theXDAQContextConfigTree_.getNode(theConfigurationPath_) << __E__;
+	            << theXDAQContextConfigTree_.getNode(theConfigurationPath_) << __E__;
 
 	__FE_COUT__ << "Configured Firmware Version: "
-		<< theXDAQContextConfigTree_.getNode(theConfigurationPath_)
-		.getNode("FirmwareVersion")
-		.getValue<unsigned int>()
-		<< __E__;
+	            << theXDAQContextConfigTree_.getNode(theConfigurationPath_)
+	                   .getNode("FirmwareVersion")
+	                   .getValue<unsigned int>()
+	            << __E__;
 
 	__FE_COUT__ << "Setting Destination IP: "
-		<< theXDAQContextConfigTree_.getNode(theConfigurationPath_)
-		.getNode("StreamToIPAddress")
-		.getValue<std::string>()
-		<< __E__;
+	            << theXDAQContextConfigTree_.getNode(theConfigurationPath_)
+	                   .getNode("StreamToIPAddress")
+	                   .getValue<std::string>()
+	            << __E__;
 	__FE_COUT__ << "And Destination Port: "
-		<< theXDAQContextConfigTree_.getNode(theConfigurationPath_)
-		.getNode("StreamToPort")
-		.getValue<unsigned int>()
-		<< __E__;
+	            << theXDAQContextConfigTree_.getNode(theConfigurationPath_)
+	                   .getNode("StreamToPort")
+	                   .getValue<unsigned int>()
+	            << __E__;
 
 	OtsUDPFirmwareCore::setDataDestination(
-		sendBuffer,
-		theXDAQContextConfigTree_.getNode(theConfigurationPath_)
-		.getNode("StreamToIPAddress")
-		.getValue<std::string>(),
-		theXDAQContextConfigTree_.getNode(theConfigurationPath_)
-		.getNode("StreamToPort")
-		.getValue<uint64_t>());
+	    sendBuffer,
+	    theXDAQContextConfigTree_.getNode(theConfigurationPath_)
+	        .getNode("StreamToIPAddress")
+	        .getValue<std::string>(),
+	    theXDAQContextConfigTree_.getNode(theConfigurationPath_)
+	        .getNode("StreamToPort")
+	        .getValue<uint64_t>());
 	OtsUDPHardware::write(sendBuffer);
 
 	__FE_COUT__ << "Reading back burst dest MAC/IP/Port: " << __E__;
@@ -336,13 +336,13 @@ bool FEOtsUDPTemplateInterface::running(void)
 	//__SS_THROW__;
 
 	int state = -1;
-	while (WorkLoop::continueWorkLoop_)
+	while(WorkLoop::continueWorkLoop_)
 	{
 		// while running
 		// play with the LEDs at address 0x1003
 
 		++state;
-		if (state < 8)
+		if(state < 8)
 			sleep(1);
 		else
 		{
@@ -407,7 +407,7 @@ void ots::FEOtsUDPTemplateInterface::universalRead(char* address, char* returnVa
 	__FE_COUT__ << "address size " << universalAddressSize_ << __E__;
 
 	__FE_COUT__ << "Universal Read Address: 0x";
-	for (unsigned int i = 0; i < universalAddressSize_; ++i)
+	for(unsigned int i = 0; i < universalAddressSize_; ++i)
 		printf("%2.2X", (unsigned char)address[universalAddressSize_ - 1 - i]);
 	std::cout << __E__;
 
@@ -420,7 +420,7 @@ void ots::FEOtsUDPTemplateInterface::universalRead(char* address, char* returnVa
 	std::memcpy(returnValue, readBuffer.substr(2).c_str(), universalDataSize_);
 
 	__FE_COUT__ << "Universal Read Data: 0x";
-	for (unsigned int i = 0; i < universalDataSize_; ++i)
+	for(unsigned int i = 0; i < universalDataSize_; ++i)
 		printf("%2.2X", (unsigned char)returnValue[universalDataSize_ - 1 - i]);
 	std::cout << __E__;
 
@@ -434,11 +434,11 @@ void ots::FEOtsUDPTemplateInterface::universalWrite(char* address, char* writeVa
 	__FE_COUT__ << "address size " << universalAddressSize_ << __E__;
 	__FE_COUT__ << "data size " << universalDataSize_ << __E__;
 	__FE_COUT__ << "Universal Write Address: 0x";
-	for (unsigned int i = 0; i < universalAddressSize_; ++i)
+	for(unsigned int i = 0; i < universalAddressSize_; ++i)
 		printf("%2.2X", (unsigned char)address[universalAddressSize_ - 1 - i]);
 	std::cout << __E__;
 	__FE_COUT__ << "Universal Write Data: 0x";
-	for (unsigned int i = 0; i < universalDataSize_; ++i)
+	for(unsigned int i = 0; i < universalDataSize_; ++i)
 		printf("%2.2X", (unsigned char)writeValue[universalDataSize_ - 1 - i]);
 	std::cout << __E__;
 
@@ -455,19 +455,19 @@ void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 {
 	__FE_COUT__ << "# of input args = " << argsIn.size() << __E__;
 	__FE_COUT__ << "# of output args = " << argsOut.size() << __E__;
-	for (auto& argIn : argsIn)
+	for(auto& argIn : argsIn)
 		__FE_COUT__ << argIn.first << ": " << argIn.second << __E__;
 
 	// macro commands section
 	{
-		char* address = new char[universalAddressSize_] {
-			0};  //create address buffer of interface size and init to all 0
-		char* data = new char[universalDataSize_] {
-			0};                 //create data buffer of interface size and init to all 0
+		char* address = new char[universalAddressSize_]{
+		    0};  // create address buffer of interface size and init to all 0
+		char* data = new char[universalDataSize_]{
+		    0};                 // create data buffer of interface size and init to all 0
 		uint64_t macroAddress;  // create macro address buffer (size 8 bytes)
-		//uint64_t macroData;     // create macro address buffer (size 8 bytes)
+		// uint64_t macroData;     // create macro address buffer (size 8 bytes)
 		std::map<std::string /*arg name*/, uint64_t /*arg val*/>
-			macroArgs;  // create map from arg name to 64-bit number
+		    macroArgs;  // create map from arg name to 64-bit number
 
 		// command-#0: Read(0x1002 /*address*/,myArg /*data*/);
 		macroAddress = 0x1002;
@@ -482,22 +482,22 @@ void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 		universalRead(address, data);
 		memcpy(&macroArgs["outArg1"], data, 8);            // copy buffer to argument map
 		__SET_ARG_OUT__("outArg1", macroArgs["outArg1"]);  // update output argument
-														   // result
+		                                                   // result
 
 		// command-#2: Write(0x1002 /*address*/,myOtherArg /*data*/);
 		macroAddress = 0x1002;
 		memcpy(address, &macroAddress, 8);  // copy macro address to buffer
 		macroArgs["myOtherArg"] = __GET_ARG_IN__(
-			"myOtherArg",
-			uint64_t);  // initialize from input arguments	//get macro data argument
+		    "myOtherArg",
+		    uint64_t);  // initialize from input arguments	//get macro data argument
 		memcpy(data, &macroArgs["myOtherArg"], 8);  // copy macro data argument to buffer
 		universalWrite(address, data);
 
 		// command-#3: Write(0x1001 /*address*/,myArg /*data*/);
 		macroAddress = 0x1001;
 		memcpy(address,
-			&macroAddress,
-			8);  // copy macro address to buffer	//get macro data argument
+		       &macroAddress,
+		       8);  // copy macro address to buffer	//get macro data argument
 		memcpy(data, &macroArgs["myArg"], 8);  // copy macro data argument to buffer
 		universalWrite(address, data);
 
@@ -509,7 +509,7 @@ void FEOtsUDPTemplateInterface::varTest(__ARGS__)
 		delete[] data;     // free the memory
 	}
 
-	for (auto& argOut : argsOut)
+	for(auto& argOut : argsOut)
 		__FE_COUT__ << argOut.first << ": " << argOut.second << __E__;
 
 }  // end varTest()
@@ -522,7 +522,7 @@ void FEOtsUDPTemplateInterface::varTest2(__ARGS__)
 {
 	__FE_COUT__ << "# of input args = " << argsIn.size() << __E__;
 	__FE_COUT__ << "# of output args = " << argsOut.size() << __E__;
-	for (auto& argIn : argsIn)
+	for(auto& argIn : argsIn)
 		__FE_COUT__ << argIn.first << ": " << argIn.second << __E__;
 
 	__SET_ARG_OUT__("myArg", "hello2");  // update output argument result
@@ -530,7 +530,7 @@ void FEOtsUDPTemplateInterface::varTest2(__ARGS__)
 	macroData *= 3;
 	__SET_ARG_OUT__("outArg1", macroData);  // update output argument result
 
-	for (auto& argOut : argsOut)
+	for(auto& argOut : argsOut)
 		__FE_COUT__ << argOut.first << ": " << argOut.second << __E__;
 
 }  // end varTest2()
@@ -543,19 +543,19 @@ void FEOtsUDPTemplateInterface::test(__ARGS__)
 {
 	__CFG_COUT__ << "# of input args = " << argsIn.size() << __E__;
 	__CFG_COUT__ << "# of output args = " << argsOut.size() << __E__;
-	for (auto& argIn : argsIn)
+	for(auto& argIn : argsIn)
 		__CFG_COUT__ << argIn.first << ": " << argIn.second << __E__;
 
 	// macro commands section
 	{
-		char* address = new char[universalAddressSize_] {
-			0};  //create address buffer of interface size and init to all 0
-		char* data = new char[universalDataSize_] {
-			0};                 //create data buffer of interface size and init to all 0
+		char* address = new char[universalAddressSize_]{
+		    0};  // create address buffer of interface size and init to all 0
+		char* data = new char[universalDataSize_]{
+		    0};                 // create data buffer of interface size and init to all 0
 		uint64_t macroAddress;  // create macro address buffer (size 8 bytes)
 		uint64_t macroData;     // create macro address buffer (size 8 bytes)
 		std::map<std::string /*arg name*/, uint64_t /*arg val*/>
-			macroArgs;  // create map from arg name to 64-bit number
+		    macroArgs;  // create map from arg name to 64-bit number
 
 		// command-#0: Write(0x4 /*address*/,0x2 /*data*/);
 		macroAddress = 0x4;
@@ -570,14 +570,13 @@ void FEOtsUDPTemplateInterface::test(__ARGS__)
 		universalRead(address, data);
 		memcpy(&macroArgs["outArg1"], data, 8);            // copy buffer to argument map
 		__SET_ARG_OUT__("outArg1", macroArgs["outArg1"]);  // update output argument
-														   // result
+		                                                   // result
 
 		delete[] address;  // free the memory
 		delete[] data;     // free the memory
 	}
 
-	for (auto& argOut : argsOut)
+	for(auto& argOut : argsOut)
 		__CFG_COUT__ << argOut.first << ": " << argOut.second << __E__;
 
 }  // end test()
-

@@ -65,7 +65,8 @@ std::vector<std::vector<std::string>> OtsSlowControlsInterface::getAlarmsLog(
 	return {};
 }
 
-std::array<std::string, 9> OtsSlowControlsInterface::getSettings(const std::string& /*Name*/)
+std::array<std::string, 9> OtsSlowControlsInterface::getSettings(
+    const std::string& /*Name*/)
 {
 	return {"a", "b", "c", "d", "e", "f", "g", "h", "i"};
 }
