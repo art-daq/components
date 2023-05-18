@@ -6,4 +6,3 @@ obj
 *.tmp
 *.bk
 *.tmp
-CMakePresets.json
