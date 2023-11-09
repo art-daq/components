@@ -97,6 +97,12 @@ catch(std::runtime_error& e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
+	try	{ throw; } //one more try to printout extra info
+	catch(const std::exception &e)
+	{
+		ss << "Exception message: " << e.what();
+	}
+	catch(...){}
 	__SS_THROW__;
 }
 
@@ -212,6 +218,12 @@ catch(std::runtime_error& e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
+	try	{ throw; } //one more try to printout extra info
+	catch(const std::exception &e)
+	{
+		ss << "Exception message: " << e.what();
+	}
+	catch(...){}
 	__COUT_ERR__ << "\n" << ss.str() << std::endl;
 	__SS_THROW__;
 }
@@ -308,6 +320,12 @@ catch(std::runtime_error& e)
 catch(...)
 {
 	__SS__ << "Unrecognized exception caught!" << std::endl;
+	try	{ throw; } //one more try to printout extra info
+	catch(const std::exception &e)
+	{
+		ss << "Exception message: " << e.what();
+	}
+	catch(...){}
 	__SS_THROW__;
 }
 
