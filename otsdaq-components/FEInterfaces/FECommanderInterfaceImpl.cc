@@ -39,6 +39,7 @@ ots::FECommanderInterface::FECommanderInterface(
                               .getValue<std::string>())
 	, onlyRunTransitions_(false)
 	, monitorRemoteAppStatus_(false)
+	, halted_(false)
 {
 	Socket::initialize();
 	universalAddressSize_ = 8;
@@ -90,17 +91,21 @@ ots::FECommanderInterface::~FECommanderInterface(void)
 //	child thread
 void FECommanderInterface::AppStatusWorkLoop(FECommanderInterface* fePtr)
 {
-	int i = 0;
-	while(1)
+	__COUT__ << "Started remote status checking loop..." << __E__;
+	std::string status;
+	bool verbose = false;
+	while(!fePtr->halted_)
 	{
 		sleep(1);
 
+		status = fePtr->sendAndReceive(fePtr->interfaceSocket_, "GetRemoteAppStatus", 
+			1 /* timeout seconds */, 0 /* timeout microseconds */, verbose);
+		__COUT_TYPE__(TLVL_DEBUG+20) << "Remote app status: " << status << __E__;
+
 		std::lock_guard<std::mutex> lock(fePtr->remoteAppStatusMutex_);	
-		fePtr->remoteAppStatus_ = "Check" + std::to_string(i++);
-
-		//TODO - UDP request to target GatewaySupervisor for its app status
-
-	}                  // end of infinite status checking loop
+		fePtr->remoteAppStatus_ = "Remote:" + status;
+	} // end of infinite status checking loop
+	__COUT__ << "Exited remote status checking loop." << __E__;
 }  // end AppStatusWorkLoop()
 
 //==============================================================================
@@ -142,6 +147,7 @@ void ots::FECommanderInterface::send(std::string buffer)
 //========================================================================================================================
 void ots::FECommanderInterface::halt(void)
 {
+	halted_ = true;
 	if(onlyRunTransitions_) 
 	{
 		__FE_COUT__ << "Only executing run transitions - skipping Halt transition." << __E__;

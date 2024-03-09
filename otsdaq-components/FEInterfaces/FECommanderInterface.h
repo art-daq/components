@@ -41,6 +41,7 @@ private:
 	bool		monitorRemoteAppStatus_;
 	std::mutex 	remoteAppStatusMutex_;
 	std::string remoteAppStatus_;
+	std::atomic<bool> halted_;
 };
 }
 
