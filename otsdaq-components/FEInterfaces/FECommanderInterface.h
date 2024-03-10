@@ -38,10 +38,13 @@ private:
 	std::string stateMachineName_;
 	std::string configurationAlias_;
 	bool		onlyRunTransitions_;
+	bool		expectTransitionAck_;
 	bool		monitorRemoteAppStatus_;
 	std::mutex 	remoteAppStatusMutex_;
 	std::string remoteAppStatus_;
 	std::atomic<bool> halted_;
+
+	bool		inRun_;
 };
 }
 
