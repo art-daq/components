@@ -7,3 +7,4 @@ obj
 *.bk
 *.tmp
 spack-build-*
+build-linux-*
