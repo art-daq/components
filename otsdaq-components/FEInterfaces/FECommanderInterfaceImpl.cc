@@ -124,7 +124,7 @@ void FECommanderInterface::AppStatusWorkLoop(FECommanderInterface* fePtr)
 			continue;
 		}
 		
-		__COUT_TYPE__(TLVL_DEBUG+20) << "Remote app status: " << status << __E__;
+		__COUTT__ << "Remote app status: " << status << __E__;
 
 		std::lock_guard<std::mutex> lock(fePtr->remoteAppStatusMutex_);	
 		fePtr->remoteAppStatus_ = "Remote:" + status;
